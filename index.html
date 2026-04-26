@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>SalamGuest Directory</title>
+
+<style>
+
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:system-ui;
+background:#f7f7f8;
+padding:12px;
+}
+
+.sidebar{
+background:#fff;
+padding:12px;
+border-radius:8px;
+border:1px solid #eee;
+margin-bottom:12px;
+}
+
+.search{
+display:flex;
+gap:8px;
+margin-bottom:10px;
+}
+
+input{
+flex:1;
+padding:8px;
+border-radius:6px;
+border:1px solid #ddd;
+}
+
+button{
+padding:8px;
+border:0;
+border-radius:6px;
+cursor:pointer;
+background:#eee;
+}
+
+.filters{
+display:flex;
+flex-direction:column;
+gap:6px;
+max-height:180px;
+overflow:auto;
+}
+
+.list{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+@media(max-width:700px){
+.list{grid-template-columns:1fr;}
+}
+
+.card{
+background:#fff;
+border-radius:8px;
+border:1px solid #eee;
+padding:8px;
+display:flex;
+flex-direction:column;
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:6px;
+}
+
+.card h3{
+margin:8px 0 4px;
+}
+
+.meta{
+font-size:13px;
+color:#666;
+}
+
+.tags{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-top:6px;
+}
+
+.tag{
+font-size:12px;
+background:#f1f1f1;
+padding:4px 8px;
+border-radius:999px;
+}
+
+.book{
+margin-top:10px;
+background:#0042FF;
+color:white;
+padding:10px;
+border-radius:6px;
+text-align:center;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="search">
+<input id="q" placeholder="Search hotels">
+<button onclick="clearSearch()">Clear</button>
+</div>
+
+<strong>Meals</strong>
+<div id="mealBox" class="filters"></div>
+
+<strong style="margin-top:10px;">Facilities</strong>
+<div id="facBox" class="filters"></div>
+
+<button onclick="clearFilters()" style="margin-top:10px;width:100%">
+Clear Filters
+</button>
+
+</div>
+
+<div id="list" class="list"></div>
+
+<script>
+
+const SHEET="https://docs.google.com/spreadsheets/d/1dgev7MkBjjj8lpnmJF6AnFQgJAhJrrI6dDub8Gc9YZ4/export?format=csv&gid=0";
+
+let data=[];
+let meals=new Set();
+let facs=new Set();
+let activeMeals=new Set();
+let activeFacs=new Set();
+
+function split(s){
+return (s||"").split(",").map(x=>x.trim()).filter(Boolean);
+}
+
+function csvToObj(csv){
+const lines=csv.split("\n").filter(Boolean);
+const h=lines[0].split(",").map(x=>x.trim().toLowerCase());
+
+return lines.slice(1).map((l,i)=>{
+const v=l.split(",");
+let o={};
+h.forEach((k,j)=>o[k]=(v[j]||"").trim());
+o.id=i;
+return o;
+});
+}
+
+async function load(){
+const res=await fetch(SHEET);
+const text=await res.text();
+data=csvToObj(text);
+
+data.forEach(d=>{
+split(d.meals).forEach(x=>meals.add(x));
+split(d.facilities).forEach(x=>facs.add(x));
+});
+
+renderFilters();
+render();
+}
+
+function renderFilters(){
+
+document.getElementById("mealBox").innerHTML=
+[...meals].map(m=>`
+<label><input type="checkbox" onchange="toggleMeal('${m}')"> ${m}</label>
+`).join("");
+
+document.getElementById("facBox").innerHTML=
+[...facs].map(f=>`
+<label><input type="checkbox" onchange="toggleFac('${f}')"> ${f}</label>
+`).join("");
+
+}
+
+function toggleMeal(m){
+activeMeals.has(m)?activeMeals.delete(m):activeMeals.add(m);
+render();
+}
+
+function toggleFac(f){
+activeFacs.has(f)?activeFacs.delete(f):activeFacs.add(f);
+render();
+}
+
+document.getElementById("q").addEventListener("input",render);
+
+function clearSearch(){
+document.getElementById("q").value="";
+render();
+}
+
+function clearFilters(){
+activeMeals.clear();
+activeFacs.clear();
+document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
+render();
+}
+
+let visible=20;
+
+window.addEventListener("scroll",()=>{
+if(window.innerHeight+window.scrollY>=document.body.offsetHeight-200){
+visible+=10;
+render();
+}
+});
+
+function render(){
+
+const q=document.getElementById("q").value.toLowerCase();
+
+const filtered=data.filter(d=>{
+
+const matchText=
+(d.name||"").toLowerCase().includes(q) ||
+(d.description||"").toLowerCase().includes(q);
+
+const meals=split(d.meals);
+const fac=split(d.facilities);
+
+const mealOK=
+activeMeals.size===0 ||
+[...activeMeals].every(m=>meals.includes(m));
+
+const facOK=
+activeFacs.size===0 ||
+[...activeFacs].every(f=>fac.includes(f));
+
+return matchText && mealOK && facOK;
+
+}).slice(0,visible);
+
+document.getElementById("list").innerHTML=
+
+filtered.map(d=>`
+
+<div class="card">
+
+<img src="${d.image||""}">
+
+<h3>${d.name||""}</h3>
+
+<div class="meta">${d.city||""}</div>
+
+<div class="tags">
+${split(d.tags).map(t=>`<span class="tag">${t}</span>`).join("")}
+</div>
+
+<a class="book" href="${d.link||"#"}" target="_blank">
+Book
+</a>
+
+</div>
+
+`).join("");
+
+}
+
+load();
+
+</script>
+
+</body>
+</html>
