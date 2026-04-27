@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+body{
+font-family:Lexend;
+margin:0;
+}
+
+.tag{
+display:inline-block;
+background:#697CA5;
+border:1px solid #001A66;
+color:white;
+padding:6px 10px;
+border-radius:20px;
+margin:4px;
+cursor:pointer;
+}
+
+.tag.active{
+background:#0042FD;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="filters"></div>
+
+<script>
+
+const FILTER_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=98977509&single=true&output=csv";
+
+function parseCSV(t){
+
+return t.split("\n").map(r=>r.split(","));
+
+}
+
+fetch(FILTER_SHEET)
+
+.then(r=>r.text())
+
+.then(t=>{
+
+let rows=parseCSV(t);
+
+let html="";
+
+rows.slice(1).forEach(r=>{
+
+html+=`<div class="tag">${r[1]}</div>`;
+
+});
+
+filters.innerHTML=html;
+
+});
+
+</script>
+
+</body>
+</html>
