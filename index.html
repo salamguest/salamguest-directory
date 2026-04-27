@@ -1,213 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Salam Guest</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700;900&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 
-/* =========================
-   BASE
-========================= */
-
 body{
 margin:0;
-font-family:system-ui;
-background:#f7f7f8;
-color:#111;
+font-family:'Lexend',sans-serif;
+background:#FDFDFD;
+color:#333;
 }
 
-/* =========================
-   HEADER
-========================= */
+h1,h2,h3{
+font-family:'Libre Bodoni',serif;
+color:#0042FD;
+font-weight:900;
+}
 
-.header{
+.nav{
+background:#0042FD;
+color:white;
+padding:18px 30px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 24px;
-background:#fff;
-border-bottom:1px solid #eee;
-position:sticky;
-top:0;
-z-index:10;
 }
 
 .logo{
-font-weight:700;
-font-size:18px;
+font-family:'Libre Bodoni';
+font-weight:900;
+font-size:24px;
 }
-
-/* =========================
-   HERO
-========================= */
 
 .hero{
 text-align:center;
-padding:40px 20px 20px;
+padding:80px 20px;
 }
 
 .hero h1{
-margin:0;
-font-size:28px;
+font-size:54px;
+margin-bottom:10px;
 }
 
-.hero p{
-color:#666;
-margin-top:8px;
+.tagline{
+font-size:18px;
+color:#333;
 }
 
-/* =========================
-   FILTER BAR
-========================= */
-
-.filters{
+.searchbar{
+max-width:800px;
+margin:40px auto;
 display:flex;
-flex-wrap:wrap;
-gap:8px;
-justify-content:center;
-margin-top:20px;
 }
 
-.filter{
-padding:8px 12px;
-border-radius:999px;
-border:1px solid #ddd;
-background:#fff;
+.searchbar input{
+flex:1;
+padding:14px;
+border-radius:30px 0 0 30px;
+border:2px solid #0042FD;
+font-size:16px;
+}
+
+.searchbar button{
+padding:14px 24px;
+border:none;
+background:#0042FD;
+color:white;
+border-radius:0 30px 30px 0;
 cursor:pointer;
-font-size:13px;
-user-select:none;
-transition:.2s;
 }
-
-.filter.active{
-background:#111;
-color:#fff;
-border-color:#111;
-}
-
-/* =========================
-   GRID
-========================= */
 
 .container{
-max-width:1100px;
-margin:auto;
-padding:20px;
+display:flex;
+gap:30px;
+padding:40px;
+}
+
+.sidebar{
+width:260px;
+}
+
+.filter-group{
+margin-bottom:30px;
+}
+
+.filter-title{
+font-family:'Libre Bodoni';
+margin-bottom:10px;
+}
+
+.filter-tag{
+display:inline-block;
+padding:6px 10px;
+border:1px solid #001A66;
+background:#697CA5;
+color:white;
+border-radius:20px;
+margin:4px;
+cursor:pointer;
+font-size:13px;
+}
+
+.filter-tag.active{
+background:#0042FD;
 }
 
 .grid{
+flex:1;
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+gap:26px;
 }
-
-@media(max-width:900px){
-.grid{grid-template-columns:repeat(2,1fr);}
-}
-
-@media(max-width:600px){
-.grid{grid-template-columns:1fr;}
-}
-
-/* =========================
-   CARD
-========================= */
 
 .card{
-background:#fff;
-border-radius:14px;
+background:white;
+border-radius:12px;
+box-shadow:0 4px 14px rgba(0,0,0,0.08);
 overflow:hidden;
-box-shadow:0 4px 12px rgba(0,0,0,0.05);
-display:flex;
-flex-direction:column;
 }
 
 .carousel{
 position:relative;
-height:180px;
-overflow:hidden;
-cursor:pointer;
+height:200px;
+background:#eee;
 }
 
 .carousel img{
 width:100%;
-height:180px;
+height:200px;
 object-fit:cover;
-display:none;
-}
-
-.carousel img.active{
-display:block;
+cursor:pointer;
 }
 
 .card-body{
-padding:14px;
-flex:1;
-display:flex;
-flex-direction:column;
+padding:16px;
 }
 
-.title{
-font-weight:600;
+.card-title{
+font-family:'Libre Bodoni';
+font-size:20px;
 margin-bottom:4px;
 }
 
-.city{
-font-size:13px;
-color:#777;
+.price{
+font-family:'Libre Bodoni';
+color:#0042FD;
+margin-top:6px;
+}
+
+.rating{
+color:#0042FD;
 margin-bottom:8px;
 }
 
-/* tags */
-
-.tags{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
+.card-tags{
+margin-top:10px;
 }
 
-.tag{
-font-size:11px;
-background:#f1f1f1;
+.card-tag{
+display:inline-block;
+border:1px solid #001A66;
+background:#697CA5;
+color:white;
+border-radius:16px;
 padding:4px 8px;
-border-radius:999px;
+font-size:12px;
+margin:2px;
 }
-
-/* book button */
 
 .book{
-margin-top:auto;
+margin-top:14px;
 display:block;
+background:#0042FD;
+color:white;
 text-align:center;
-padding:10px;
-background:#111;
-color:#fff;
-border-radius:8px;
+padding:12px;
+border-radius:30px;
 text-decoration:none;
-font-size:14px;
+letter-spacing:0.1em;
 }
-
-/* =========================
-   LIGHTBOX
-========================= */
 
 .lightbox{
 position:fixed;
-inset:0;
-background:rgba(0,0,0,0.85);
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.8);
 display:none;
 align-items:center;
 justify-content:center;
-z-index:100;
 }
 
 .lightbox img{
 max-width:90%;
-max-height:90%;
-border-radius:10px;
+max-height:80%;
+}
+
+@media(max-width:900px){
+
+.container{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+overflow-x:auto;
+white-space:nowrap;
+}
+
+.filter-group{
+display:inline-block;
+margin-right:20px;
+}
+
 }
 
 </style>
@@ -215,205 +226,196 @@ border-radius:10px;
 
 <body>
 
-<div class="header">
-<div class="logo">Salam Guest</div>
+<div class="nav">
+<div class="logo">⌂ SALAM, GUEST</div>
+<a class="book" href="#">Book A Stay</a>
 </div>
 
-<div class="hero">
+<section class="hero">
 
-<h1>Find Halal-Friendly Stays</h1>
-<p>Browse hotels, BnBs and villas with trusted filters</p>
-
-<!-- CATEGORY FILTER -->
-<div class="filters">
-<div class="filter active" data-type="category" data-value="Hotel">Hotel</div>
-<div class="filter" data-type="category" data-value="BnB">BnB</div>
-<div class="filter" data-type="category" data-value="Villa">Villa</div>
+<h1>⌂ SALAM, GUEST</h1>
+<div class="tagline">
+Search Halal-Filters, For Muslim Rentals & Stays
 </div>
 
-<!-- TAG FILTER -->
-<div class="filters" id="tagFilters">
-<div class="filter" data-type="tag" data-value="Halal Breakfast">Halal Breakfast</div>
-<div class="filter" data-type="tag" data-value="Prayer Mat">Prayer Mat</div>
-<div class="filter" data-type="tag" data-value="Airport Access">Airport Access</div>
+<div class="searchbar">
+<input id="searchInput" placeholder="Search city, hotel or keyword">
+<button onclick="applyFilters()">🔍</button>
 </div>
 
-</div>
+</section>
 
 <div class="container">
-<div class="grid" id="grid"></div>
+
+<div class="sidebar" id="filters"></div>
+
+<div class="grid" id="listings"></div>
+
 </div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
 <img id="lightboxImg">
 </div>
 
 <script>
 
-/* =========================
-   SAMPLE DATA (replace with Google Sheets later)
-========================= */
+const HOME_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=1375063654&single=true&output=csv";
+const FILTER_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=98977509&single=true&output=csv";
+const LISTING_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
-const hotels = [
-{
-name:"Sama-Sama Hotel",
-city:"Kuala Lumpur",
-category:"Hotel",
-tags:["Halal Breakfast","Airport Access"],
-images:[
-"IMAGE_URL_1",
-"IMAGE_URL_2",
-"IMAGE_URL_3"
-],
-link:"#"
-},
-{
-name:"Example Villa",
-city:"Langkawi",
-category:"Villa",
-tags:["Prayer Mat"],
-images:[
-"IMAGE_URL_1",
-"IMAGE_URL_2"
-],
-link:"#"
+let listings=[];
+let activeFilters=[];
+
+function parseCSV(text){
+return text.split("\n").map(r=>r.split(","));
 }
-];
 
-/* =========================
-   STATE
-========================= */
+async function loadFilters(){
 
-let activeCategory = "Hotel";
-let activeTags = [];
+let res=await fetch(FILTER_SHEET);
+let txt=await res.text();
+let rows=parseCSV(txt);
 
-/* =========================
-   FILTER UI
-========================= */
+let groups={};
 
-document.querySelectorAll(".filter").forEach(btn=>{
+rows.slice(1).forEach(r=>{
+let g=r[0];
+let label=r[1];
 
-btn.addEventListener("click",()=>{
+if(!groups[g])groups[g]=[];
+groups[g].push(label);
+});
 
-const type = btn.dataset.type;
-const value = btn.dataset.value;
+let html="";
 
-if(type==="category"){
+for(let g in groups){
 
-document.querySelectorAll('[data-type="category"]').forEach(b=>b.classList.remove("active"));
-btn.classList.add("active");
-activeCategory = value;
+html+=`<div class="filter-group">
+<div class="filter-title">${g}</div>`;
 
-}else{
+groups[g].forEach(tag=>{
+html+=`<div class="filter-tag" onclick="toggleFilter('${tag}',this)">
+${tag}
+</div>`;
+});
 
-btn.classList.toggle("active");
-
-if(activeTags.includes(value)){
-activeTags = activeTags.filter(t=>t!==value);
-}else{
-activeTags.push(value);
+html+="</div>";
 }
+
+document.getElementById("filters").innerHTML=html;
 
 }
 
-render();
+async function loadListings(){
 
+let res=await fetch(LISTING_SHEET);
+let txt=await res.text();
+let rows=parseCSV(txt);
+
+let headers=rows[0];
+
+listings=rows.slice(1).map(r=>{
+let obj={};
+headers.forEach((h,i)=>obj[h]=r[i]);
+return obj;
 });
 
-});
+renderListings(listings);
 
-/* =========================
-   CAROUSEL + LIGHTBOX
-========================= */
-
-function createCarousel(images){
-
-let index = 0;
-
-const wrap = document.createElement("div");
-wrap.className="carousel";
-
-images.forEach((img,i)=>{
-const el=document.createElement("img");
-el.src=img;
-if(i===0) el.classList.add("active");
-wrap.appendChild(el);
-});
-
-setInterval(()=>{
-
-const imgs = wrap.querySelectorAll("img");
-imgs[index].classList.remove("active");
-index = (index+1)%imgs.length;
-imgs[index].classList.add("active");
-
-},3000);
-
-wrap.addEventListener("click",()=>{
-
-document.getElementById("lightbox").style.display="flex";
-document.getElementById("lightboxImg").src=images[index];
-
-});
-
-return wrap;
 }
 
-/* =========================
-   RENDER
-========================= */
+function renderListings(data){
 
-function render(){
+let html="";
 
-const grid = document.getElementById("grid");
-grid.innerHTML="";
+data.forEach(l=>{
 
-hotels.filter(h=>{
+let imgs=l.images?l.images.split(";"):["https://via.placeholder.com/600x400?text=Replace+Image+URL"];
 
-const catMatch = h.category === activeCategory;
+html+=`
+<div class="card">
 
-const tagMatch =
-activeTags.length===0 ||
-activeTags.every(t=>h.tags.includes(t));
-
-return catMatch && tagMatch;
-
-}).forEach(h=>{
-
-const card = document.createElement("div");
-card.className="card";
-
-const carousel = createCarousel(h.images);
-
-const body = document.createElement("div");
-body.className="card-body";
-
-body.innerHTML=`
-<div class="title">${h.name}</div>
-<div class="city">${h.city}</div>
-
-<div class="tags">
-${h.tags.map(t=>`<span class="tag">${t}</span>`).join("")}
+<div class="carousel">
+<img src="${imgs[0]}" onclick="openLightbox('${imgs[0]}')">
 </div>
 
-<a class="book" href="${h.link}">Book</a>
+<div class="card-body">
+
+<div class="card-title">${l.name}</div>
+<div>${l.city}, ${l.country}</div>
+
+<div class="price">${l.price}</div>
+
+<div class="rating">${l.rating} / 5</div>
+
+<div>${l.description}</div>
+
+<div class="card-tags">
+${(l.card_tags||"").split(";").map(t=>`<span class="card-tag">${t}</span>`).join("")}
+</div>
+
+<a class="book" href="${l.link}" target="_blank">BOOK</a>
+
+</div>
+</div>
 `;
 
-card.appendChild(carousel);
-card.appendChild(body);
-
-grid.appendChild(card);
-
 });
+
+document.getElementById("listings").innerHTML=html;
 
 }
 
-document.getElementById("lightbox").addEventListener("click",()=>{
-document.getElementById("lightbox").style.display="none";
+function toggleFilter(tag,el){
+
+if(activeFilters.includes(tag)){
+activeFilters=activeFilters.filter(f=>f!==tag);
+el.classList.remove("active");
+}else{
+activeFilters.push(tag);
+el.classList.add("active");
+}
+
+applyFilters();
+
+}
+
+function applyFilters(){
+
+let search=document.getElementById("searchInput").value.toLowerCase();
+
+let filtered=listings.filter(l=>{
+
+let tagString=(l.filter_tags||"").toLowerCase();
+
+let matchFilters=activeFilters.every(f=>tagString.includes(f.toLowerCase()));
+
+let matchSearch=
+l.name.toLowerCase().includes(search)||
+l.city.toLowerCase().includes(search)||
+l.description.toLowerCase().includes(search);
+
+return matchFilters && matchSearch;
+
 });
 
-render();
+renderListings(filtered);
+
+}
+
+function openLightbox(src){
+
+document.getElementById("lightbox").style.display="flex";
+document.getElementById("lightboxImg").src=src;
+
+}
+
+function closeLightbox(){
+document.getElementById("lightbox").style.display="none";
+}
+
+loadFilters();
+loadListings();
 
 </script>
 
