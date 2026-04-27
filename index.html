@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <title>Salam Guest</title>
 
@@ -11,15 +12,14 @@
 
 body{
 margin:0;
-font-family:'Lexend',sans-serif;
+font-family:Lexend;
 background:#FDFDFD;
-color:#333;
+color:#333333;
 }
 
 h1,h2,h3{
-font-family:'Libre Bodoni',serif;
+font-family:'Libre Bodoni';
 color:#0042FD;
-font-weight:900;
 }
 
 .nav{
@@ -34,26 +34,25 @@ align-items:center;
 .logo{
 font-family:'Libre Bodoni';
 font-weight:900;
-font-size:24px;
+font-size:26px;
 }
 
 .hero{
 text-align:center;
-padding:80px 20px;
+padding:70px 20px;
 }
 
 .hero h1{
-font-size:54px;
+font-size:52px;
 margin-bottom:10px;
 }
 
 .tagline{
 font-size:18px;
-color:#333;
 }
 
 .searchbar{
-max-width:800px;
+max-width:700px;
 margin:40px auto;
 display:flex;
 }
@@ -61,80 +60,68 @@ display:flex;
 .searchbar input{
 flex:1;
 padding:14px;
-border-radius:30px 0 0 30px;
 border:2px solid #0042FD;
-font-size:16px;
+border-radius:30px 0 0 30px;
 }
 
 .searchbar button{
-padding:14px 24px;
-border:none;
 background:#0042FD;
 color:white;
+border:none;
+padding:14px 22px;
 border-radius:0 30px 30px 0;
 cursor:pointer;
 }
 
 .container{
 display:flex;
-gap:30px;
+gap:40px;
 padding:40px;
 }
 
 .sidebar{
-width:260px;
-}
-
-.filter-group{
-margin-bottom:30px;
+width:250px;
 }
 
 .filter-title{
-font-family:'Libre Bodoni';
-margin-bottom:10px;
+font-weight:bold;
+margin:15px 0 8px;
 }
 
-.filter-tag{
+.tag{
 display:inline-block;
-padding:6px 10px;
 border:1px solid #001A66;
 background:#697CA5;
 color:white;
+padding:6px 10px;
 border-radius:20px;
-margin:4px;
+margin:3px;
 cursor:pointer;
 font-size:13px;
 }
 
-.filter-tag.active{
+.tag.active{
 background:#0042FD;
 }
 
 .grid{
 flex:1;
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-gap:26px;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
 }
 
 .card{
 background:white;
 border-radius:12px;
-box-shadow:0 4px 14px rgba(0,0,0,0.08);
+box-shadow:0 4px 14px rgba(0,0,0,0.1);
 overflow:hidden;
 }
 
-.carousel{
-position:relative;
-height:200px;
-background:#eee;
-}
-
-.carousel img{
+.card img{
 width:100%;
 height:200px;
 object-fit:cover;
-cursor:pointer;
 }
 
 .card-body{
@@ -144,28 +131,30 @@ padding:16px;
 .card-title{
 font-family:'Libre Bodoni';
 font-size:20px;
-margin-bottom:4px;
 }
 
 .price{
 font-family:'Libre Bodoni';
 color:#0042FD;
-margin-top:6px;
 }
 
 .rating{
+font-family:'Libre Bodoni';
 color:#0042FD;
-margin-bottom:8px;
+}
+
+.small{
+font-size:11px;
+color:#333333;
 }
 
 .card-tags{
-margin-top:10px;
+margin-top:8px;
 }
 
 .card-tag{
-display:inline-block;
-border:1px solid #001A66;
 background:#697CA5;
+border:1px solid #001A66;
 color:white;
 border-radius:16px;
 padding:4px 8px;
@@ -174,8 +163,8 @@ margin:2px;
 }
 
 .book{
-margin-top:14px;
 display:block;
+margin-top:12px;
 background:#0042FD;
 color:white;
 text-align:center;
@@ -183,23 +172,6 @@ padding:12px;
 border-radius:30px;
 text-decoration:none;
 letter-spacing:0.1em;
-}
-
-.lightbox{
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.8);
-display:none;
-align-items:center;
-justify-content:center;
-}
-
-.lightbox img{
-max-width:90%;
-max-height:80%;
 }
 
 @media(max-width:900px){
@@ -214,33 +186,40 @@ overflow-x:auto;
 white-space:nowrap;
 }
 
-.filter-group{
-display:inline-block;
-margin-right:20px;
+.grid{
+grid-template-columns:1fr;
 }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="nav">
+
 <div class="logo">⌂ SALAM, GUEST</div>
+
 <a class="book" href="#">Book A Stay</a>
+
 </div>
 
 <section class="hero">
 
 <h1>⌂ SALAM, GUEST</h1>
+
 <div class="tagline">
 Search Halal-Filters, For Muslim Rentals & Stays
 </div>
 
 <div class="searchbar">
-<input id="searchInput" placeholder="Search city, hotel or keyword">
+
+<input id="search">
+
 <button onclick="applyFilters()">🔍</button>
+
 </div>
 
 </section>
@@ -253,127 +232,146 @@ Search Halal-Filters, For Muslim Rentals & Stays
 
 </div>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-<img id="lightboxImg">
-</div>
-
 <script>
 
-const HOME_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=1375063654&single=true&output=csv";
 const FILTER_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=98977509&single=true&output=csv";
+
 const LISTING_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
 let listings=[];
-let activeFilters=[];
+let active=[];
 
 function parseCSV(text){
+
 return text.split("\n").map(r=>r.split(","));
+
 }
 
 async function loadFilters(){
 
-let res=await fetch(FILTER_SHEET);
-let txt=await res.text();
-let rows=parseCSV(txt);
+let r=await fetch(FILTER_SHEET);
+let t=await r.text();
+
+let rows=parseCSV(t);
 
 let groups={};
 
-rows.slice(1).forEach(r=>{
-let g=r[0];
-let label=r[1];
+rows.slice(1).forEach(x=>{
+
+let g=x[0];
+let label=x[1];
 
 if(!groups[g])groups[g]=[];
+
 groups[g].push(label);
+
 });
 
 let html="";
 
 for(let g in groups){
 
-html+=`<div class="filter-group">
-<div class="filter-title">${g}</div>`;
+html+=`<div class="filter-title">${g}</div>`;
 
 groups[g].forEach(tag=>{
-html+=`<div class="filter-tag" onclick="toggleFilter('${tag}',this)">
-${tag}
-</div>`;
+
+html+=`<div class="tag" onclick="toggleTag('${tag}',this)">${tag}</div>`;
+
 });
 
-html+="</div>";
 }
 
-document.getElementById("filters").innerHTML=html;
+filters.innerHTML=html;
 
 }
 
 async function loadListings(){
 
-let res=await fetch(LISTING_SHEET);
-let txt=await res.text();
-let rows=parseCSV(txt);
+let r=await fetch(LISTING_SHEET);
+let t=await r.text();
 
-let headers=rows[0];
+let rows=parseCSV(t);
+
+let head=rows[0];
 
 listings=rows.slice(1).map(r=>{
-let obj={};
-headers.forEach((h,i)=>obj[h]=r[i]);
-return obj;
+
+let o={};
+
+head.forEach((h,i)=>o[h]=r[i]);
+
+return o;
+
 });
 
-renderListings(listings);
+render(listings);
 
 }
 
-function renderListings(data){
+function render(data){
 
 let html="";
 
 data.forEach(l=>{
 
-let imgs=l.images?l.images.split(";"):["https://via.placeholder.com/600x400?text=Replace+Image+URL"];
+let imgs=l.images?l.images.split(";"):["/images/placeholder.jpg"];
 
 html+=`
+
 <div class="card">
 
-<div class="carousel">
-<img src="${imgs[0]}" onclick="openLightbox('${imgs[0]}')">
-</div>
+<img src="/images/${imgs[0]}">
 
 <div class="card-body">
 
 <div class="card-title">${l.name}</div>
-<div>${l.city}, ${l.country}</div>
+
+<div>${l.city}</div>
 
 <div class="price">${l.price}</div>
 
-<div class="rating">${l.rating} / 5</div>
+<div class="rating">
+
+${l.rating} / 5
+
+<div class="small">Average Rating</div>
+
+</div>
 
 <div>${l.description}</div>
 
 <div class="card-tags">
+
 ${(l.card_tags||"").split(";").map(t=>`<span class="card-tag">${t}</span>`).join("")}
+
 </div>
 
 <a class="book" href="${l.link}" target="_blank">BOOK</a>
 
 </div>
+
 </div>
+
 `;
 
 });
 
-document.getElementById("listings").innerHTML=html;
+listingsDiv.innerHTML=html;
 
 }
 
-function toggleFilter(tag,el){
+function toggleTag(tag,el){
 
-if(activeFilters.includes(tag)){
-activeFilters=activeFilters.filter(f=>f!==tag);
+if(active.includes(tag)){
+
+active=active.filter(x=>x!==tag);
 el.classList.remove("active");
+
 }else{
-activeFilters.push(tag);
+
+active.push(tag);
 el.classList.add("active");
+
 }
 
 applyFilters();
@@ -382,39 +380,26 @@ applyFilters();
 
 function applyFilters(){
 
-let search=document.getElementById("searchInput").value.toLowerCase();
+let s=search.value.toLowerCase();
 
 let filtered=listings.filter(l=>{
 
-let tagString=(l.filter_tags||"").toLowerCase();
+let tags=(l.filter_tags||"").toLowerCase();
 
-let matchFilters=activeFilters.every(f=>tagString.includes(f.toLowerCase()));
+let ok=active.every(a=>tags.includes(a.toLowerCase()));
 
-let matchSearch=
-l.name.toLowerCase().includes(search)||
-l.city.toLowerCase().includes(search)||
-l.description.toLowerCase().includes(search);
+let searchok=l.name.toLowerCase().includes(s)||l.city.toLowerCase().includes(s);
 
-return matchFilters && matchSearch;
+return ok&&searchok;
 
 });
 
-renderListings(filtered);
+render(filtered);
 
-}
-
-function openLightbox(src){
-
-document.getElementById("lightbox").style.display="flex";
-document.getElementById("lightboxImg").src=src;
-
-}
-
-function closeLightbox(){
-document.getElementById("lightbox").style.display="none";
 }
 
 loadFilters();
+
 loadListings();
 
 </script>
