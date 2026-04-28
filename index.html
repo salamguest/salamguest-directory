@@ -1,28 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
 <meta charset="UTF-8">
-<title>Salam Guest</title>
+<title>SALAM, GUEST</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700;900&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@900&family=Lexend:wght@500&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-margin:0;
 font-family:Lexend;
 background:#FDFDFD;
+margin:0;
 color:#333333;
 }
 
 h1,h2,h3{
-font-family:'Libre Bodoni';
+font-family:"Libre Bodoni";
 color:#0042FD;
 }
 
-.nav{
+header{
 background:#0042FD;
 color:white;
 padding:18px 30px;
@@ -32,95 +30,67 @@ align-items:center;
 }
 
 .logo{
-font-family:'Libre Bodoni';
-font-weight:900;
+font-family:"Libre Bodoni";
 font-size:26px;
 }
 
-.hero{
-text-align:center;
-padding:70px 20px;
-}
-
-.hero h1{
-font-size:52px;
-margin-bottom:10px;
-}
-
-.tagline{
-font-size:18px;
-}
-
-.searchbar{
-max-width:700px;
-margin:40px auto;
-display:flex;
-}
-
-.searchbar input{
-flex:1;
-padding:14px;
+.cta{
 border:2px solid #0042FD;
-border-radius:30px 0 0 30px;
-}
-
-.searchbar button{
-background:#0042FD;
-color:white;
-border:none;
-padding:14px 22px;
-border-radius:0 30px 30px 0;
+background:#F7F6F6;
+padding:10px 18px;
+border-radius:40px;
+font-size:13px;
+text-transform:uppercase;
+letter-spacing:0.1em;
 cursor:pointer;
 }
 
 .container{
 display:flex;
-gap:40px;
-padding:40px;
+max-width:1400px;
+margin:auto;
+padding:30px;
 }
 
 .sidebar{
-width:250px;
+width:260px;
+padding-right:30px;
 }
 
 .filter-title{
-font-weight:bold;
-margin:15px 0 8px;
+font-family:"Libre Bodoni";
+margin-bottom:8px;
 }
 
-.tag{
-display:inline-block;
-border:1px solid #001A66;
-background:#697CA5;
-color:white;
-padding:6px 10px;
-border-radius:20px;
-margin:3px;
+.filter-group{
+margin-bottom:25px;
+}
+
+.filter-group label{
+display:block;
+margin-bottom:6px;
 cursor:pointer;
-font-size:13px;
-}
-
-.tag.active{
-background:#0042FD;
 }
 
 .grid{
 flex:1;
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:25px;
+gap:24px;
 }
 
 .card{
 background:white;
-border-radius:12px;
-box-shadow:0 4px 14px rgba(0,0,0,0.1);
+box-shadow:0 2px 12px rgba(0,0,0,0.08);
+border-radius:14px;
 overflow:hidden;
+display:flex;
+flex-direction:column;
 }
 
 .card img{
 width:100%;
-height:200px;
+height:180px;
 object-fit:cover;
 }
 
@@ -128,50 +98,56 @@ object-fit:cover;
 padding:16px;
 }
 
-.card-title{
-font-family:'Libre Bodoni';
-font-size:20px;
+.city{
+color:#697CA5;
+font-size:14px;
+margin-bottom:8px;
 }
 
 .price{
-font-family:'Libre Bodoni';
-color:#0042FD;
+font-family:"Libre Bodoni";
+font-size:20px;
+margin-bottom:6px;
 }
 
 .rating{
-font-family:'Libre Bodoni';
+font-family:"Libre Bodoni";
 color:#0042FD;
 }
 
-.small{
+.rating small{
+color:#333;
+font-family:Lexend;
 font-size:11px;
-color:#333333;
 }
 
-.card-tags{
-margin-top:8px;
+.tags{
+margin-top:10px;
 }
 
-.card-tag{
-background:#697CA5;
+.tag{
+display:inline-block;
 border:1px solid #001A66;
+background:#697CA5;
 color:white;
-border-radius:16px;
-padding:4px 8px;
-font-size:12px;
-margin:2px;
+padding:3px 8px;
+font-size:11px;
+border-radius:6px;
+margin-right:4px;
+margin-top:4px;
 }
 
-.book{
-display:block;
-margin-top:12px;
+.book-btn{
+margin-top:14px;
 background:#0042FD;
 color:white;
 text-align:center;
-padding:12px;
-border-radius:30px;
-text-decoration:none;
+padding:10px;
+border-radius:40px;
+font-size:12px;
 letter-spacing:0.1em;
+text-transform:uppercase;
+cursor:pointer;
 }
 
 @media(max-width:900px){
@@ -182,8 +158,14 @@ flex-direction:column;
 
 .sidebar{
 width:100%;
+display:flex;
 overflow-x:auto;
-white-space:nowrap;
+gap:18px;
+margin-bottom:20px;
+}
+
+.filter-group{
+min-width:180px;
 }
 
 .grid{
@@ -193,204 +175,92 @@ grid-template-columns:1fr;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="nav">
-
+<header>
 <div class="logo">⌂ SALAM, GUEST</div>
-
-<a class="book" href="#">Book A Stay</a>
-
-</div>
-
-<section class="hero">
-
-<h1>⌂ SALAM, GUEST</h1>
-
-<div class="tagline">
-Search Halal-Filters, For Muslim Rentals & Stays
-</div>
-
-<div class="searchbar">
-
-<input id="search">
-
-<button onclick="applyFilters()">🔍</button>
-
-</div>
-
-</section>
+<div class="cta">Book A Stay</div>
+</header>
 
 <div class="container">
 
-<div class="sidebar" id="filters"></div>
+<div class="sidebar">
 
-<div class="grid" id="listings"></div>
+<div class="filter-group">
+<div class="filter-title">Category</div>
+<label><input type="checkbox" value="hotel" class="filter"> Hotel</label>
+<label><input type="checkbox" value="bnb" class="filter"> BnB</label>
+<label><input type="checkbox" value="villa" class="filter"> Villa</label>
+</div>
+
+<div class="filter-group">
+<div class="filter-title">Meals</div>
+<label><input type="checkbox" value="halal-food" class="filter"> Halal Food</label>
+<label><input type="checkbox" value="breakfast" class="filter"> Breakfast</label>
+</div>
+
+<div class="filter-group">
+<div class="filter-title">Female Only</div>
+<label><input type="checkbox" value="female-floor" class="filter"> Female Floor</label>
+</div>
+
+</div>
+
+<div class="grid" id="grid"></div>
 
 </div>
 
 <script>
 
-const FILTER_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=98977509&single=true&output=csv";
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
-const LISTING_SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+fetch(SHEET_URL)
+.then(res=>res.text())
+.then(data=>{
 
-let listings=[];
-let active=[];
+const rows=data.split("\n").slice(1);
 
-function parseCSV(text){
-
-return text.split("\n").map(r=>r.split(","));
-
+const listings=rows.map(r=>{
+const c=r.split(",");
+return{
+name:c[0],
+city:c[1],
+country:c[2],
+category:c[3],
+price:c[4],
+rating:c[5],
+description:c[6],
+tags:c[7],
+gallery:c[8]
 }
-
-async function loadFilters(){
-
-let r=await fetch(FILTER_SHEET);
-let t=await r.text();
-
-let rows=parseCSV(t);
-
-let groups={};
-
-rows.slice(1).forEach(x=>{
-
-let g=x[0];
-let label=x[1];
-
-if(!groups[g])groups[g]=[];
-
-groups[g].push(label);
-
-});
-
-let html="";
-
-for(let g in groups){
-
-html+=`<div class="filter-title">${g}</div>`;
-
-groups[g].forEach(tag=>{
-
-html+=`<div class="tag" onclick="toggleTag('${tag}',this)">${tag}</div>`;
-
-});
-
-}
-
-filters.innerHTML=html;
-
-}
-
-async function loadListings(){
-
-let r=await fetch(LISTING_SHEET);
-let t=await r.text();
-
-let rows=parseCSV(t);
-
-let head=rows[0];
-
-listings=rows.slice(1).map(r=>{
-
-let o={};
-
-head.forEach((h,i)=>o[h]=r[i]);
-
-return o;
-
 });
 
 render(listings);
 
-}
-
-function render(data){
-
-let html="";
-
-data.forEach(l=>{
-
-let imgs=l.images?l.images.split(";"):["/images/placeholder.jpg"];
-
-html+=`
-
-<div class="card">
-
-<img src="/images/${imgs[0]}">
-
-<div class="card-body">
-
-<div class="card-title">${l.name}</div>
-
-<div>${l.city}</div>
-
-<div class="price">${l.price}</div>
-
-<div class="rating">
-
-${l.rating} / 5
-
-<div class="small">Average Rating</div>
-
-</div>
-
-<div>${l.description}</div>
-
-<div class="card-tags">
-
-${(l.card_tags||"").split(";").map(t=>`<span class="card-tag">${t}</span>`).join("")}
-
-</div>
-
-<a class="book" href="${l.link}" target="_blank">BOOK</a>
-
-</div>
-
-</div>
-
-`;
+document.querySelectorAll(".filter").forEach(f=>{
+f.addEventListener("change",()=>{
+applyFilters(listings);
+});
+});
 
 });
 
-listingsDiv.innerHTML=html;
+function applyFilters(listings){
 
+const active=[...document.querySelectorAll(".filter:checked")].map(f=>f.value);
+
+if(active.length==0){
+render(listings);
+return;
 }
 
-function toggleTag(tag,el){
+const filtered=listings.filter(l=>{
 
-if(active.includes(tag)){
+if(!l.tags) return false;
 
-active=active.filter(x=>x!==tag);
-el.classList.remove("active");
-
-}else{
-
-active.push(tag);
-el.classList.add("active");
-
-}
-
-applyFilters();
-
-}
-
-function applyFilters(){
-
-let s=search.value.toLowerCase();
-
-let filtered=listings.filter(l=>{
-
-let tags=(l.filter_tags||"").toLowerCase();
-
-let ok=active.every(a=>tags.includes(a.toLowerCase()));
-
-let searchok=l.name.toLowerCase().includes(s)||l.city.toLowerCase().includes(s);
-
-return ok&&searchok;
+return active.some(tag=>l.tags.includes(tag));
 
 });
 
@@ -398,9 +268,56 @@ render(filtered);
 
 }
 
-loadFilters();
+function render(list){
 
-loadListings();
+const grid=document.getElementById("grid");
+grid.innerHTML="";
+
+list.forEach(l=>{
+
+const img=`/salamguest-directory/images/${l.gallery}/1.jpg`;
+
+const tags=l.tags?l.tags.split(";"):[];
+let tagHTML="";
+
+tags.forEach(t=>{
+tagHTML+=`<span class="tag">${t}</span>`;
+});
+
+const card=`
+<div class="card">
+
+<img src="${img}" onerror="this.src='/salamguest-directory/images/placeholder.jpg'">
+
+<div class="card-body">
+
+<h3>${l.name}</h3>
+
+<div class="city">${l.city}</div>
+
+<div class="price">${l.price}</div>
+
+<div class="rating">
+${l.rating} / 5<br>
+<small>Average Rating</small>
+</div>
+
+<p>${l.description}</p>
+
+<div class="tags">${tagHTML}</div>
+
+<div class="book-btn">BOOK</div>
+
+</div>
+
+</div>
+`;
+
+grid.innerHTML+=card;
+
+});
+
+}
 
 </script>
 
