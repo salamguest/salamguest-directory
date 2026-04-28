@@ -1,218 +1,175 @@
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Salam Guest</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700;900&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>SalamGuest Directory</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Lexend;
-background:#FDFDFD;
-color:#333;
+font-family:Arial, sans-serif;
+background:#f6f6f6;
 }
 
-h1,h2,h3{
-font-family:'Libre Bodoni';
-color:#0042FD;
-}
+/* layout */
 
-.nav{
-background:#0042FD;
-color:white;
-padding:16px 24px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{
-font-family:'Libre Bodoni';
-font-weight:900;
-font-size:24px;
-}
-
-.hero{
-text-align:center;
-padding:60px 20px;
-}
-
-.hero h1{
-font-size:52px;
-margin:0;
-}
-
-.tagline{
-margin-top:10px;
-}
-
-.searchbar{
-max-width:700px;
-margin:30px auto;
+.container{
 display:flex;
 }
 
-.searchbar input{
-flex:1;
-padding:14px;
-border:2px solid #0042FD;
-border-radius:30px 0 0 30px;
-}
+/* sidebar */
 
-.searchbar button{
-background:#0042FD;
-color:white;
-border:none;
-padding:14px 20px;
-border-radius:0 30px 30px 0;
-cursor:pointer;
-}
-
-/* LAYOUT */
-.wrapper{
-display:flex;
-gap:30px;
-padding:30px;
-}
-
-/* SIDEBAR FILTERS */
 .sidebar{
 width:260px;
+background:white;
+padding:20px;
+border-right:1px solid #eee;
 }
 
-.filter-title{
+.filterTitle{
 font-weight:bold;
-margin:15px 0 8px;
-font-family:'Libre Bodoni';
+margin-bottom:10px;
 }
 
 .tag{
-display:inline-block;
+display:block;
 padding:6px 10px;
+margin:4px 0;
+border:1px solid #ccc;
 border-radius:20px;
-background:#697CA5;
-color:white;
-border:1px solid #001A66;
-margin:4px;
 cursor:pointer;
-font-size:13px;
+font-size:14px;
 }
 
 .tag.active{
 background:#0042FD;
+color:white;
+border-color:#0042FD;
 }
 
-/* GRID - 3 columns */
-.grid{
+/* main */
+
+.main{
 flex:1;
+padding:20px;
+}
+
+/* search */
+
+.search{
+margin-bottom:20px;
+}
+
+.search input{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+/* cards */
+
+.grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:22px;
+gap:20px;
 }
 
-/* CARD */
 .card{
 background:white;
-border-radius:12px;
-box-shadow:0 4px 14px rgba(0,0,0,0.08);
+border-radius:10px;
 overflow:hidden;
-display:flex;
-flex-direction:column;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 .card img{
 width:100%;
-height:190px;
+height:180px;
 object-fit:cover;
 }
 
-.card-body{
-padding:14px;
+.cardBody{
+padding:12px;
 }
 
 .title{
-font-family:'Libre Bodoni';
-font-size:20px;
+font-weight:bold;
+margin-bottom:4px;
 }
 
-.price{
-color:#0042FD;
-font-family:'Libre Bodoni';
-margin-top:4px;
-}
-
-.rating{
-font-family:'Libre Bodoni';
-color:#0042FD;
-}
-
-.small{
-font-size:11px;
+.location{
+font-size:13px;
 color:#666;
 }
 
-.tags{
-margin-top:8px;
+.price{
+font-weight:bold;
+color:#0042FD;
 }
 
-.tag-pill{
-background:#697CA5;
-border:1px solid #001A66;
-color:white;
-padding:4px 8px;
-border-radius:16px;
-font-size:12px;
-margin:2px;
-display:inline-block;
+.rating{
+font-size:14px;
+margin-top:6px;
+}
+
+.ratingSmall{
+font-size:10px;
+color:#777;
 }
 
 .book{
-margin-top:auto;
+display:block;
+margin-top:10px;
+padding:8px;
+text-align:center;
 background:#0042FD;
 color:white;
-text-align:center;
-padding:12px;
 text-decoration:none;
-letter-spacing:0.1em;
+border-radius:20px;
 }
 
-/* PAGINATION */
+/* pagination */
+
 .pagination{
+margin-top:20px;
 text-align:center;
-padding:20px;
 }
 
-.page-btn{
-background:#fff;
-border:2px solid #0042FD;
-color:#0042FD;
-padding:8px 12px;
-margin:3px;
-border-radius:8px;
+.pageBtn{
+padding:6px 10px;
+margin:4px;
+border:1px solid #0042FD;
+background:white;
 cursor:pointer;
 }
 
-.page-btn.active{
+.pageBtn.active{
 background:#0042FD;
-color:#fff;
+color:white;
 }
 
-/* MOBILE */
+/* mobile */
+
 @media(max-width:900px){
 
-.wrapper{
+.container{
 flex-direction:column;
 }
 
 .sidebar{
 width:100%;
+display:flex;
 overflow-x:auto;
 white-space:nowrap;
+}
+
+.tag{
+display:inline-block;
+margin-right:6px;
 }
 
 .grid{
@@ -226,27 +183,23 @@ grid-template-columns:1fr;
 
 <body>
 
-<div class="nav">
-<div class="logo">⌂ SALAM, GUEST</div>
+<div class="container">
+
+<div class="sidebar">
+
+<div class="filterTitle">Filters</div>
+
+<div id="filters"></div>
+
 </div>
 
-<div class="hero">
-<h1>⌂ SALAM, GUEST</h1>
-<div class="tagline">Search Halal-Filters, For Muslim Rentals & Stays</div>
+<div class="main">
+
+<div class="search">
+<input id="searchInput" placeholder="Search hotel or location">
 </div>
 
-<div class="searchbar">
-<input id="search" placeholder="Search hotels...">
-<button onclick="apply()">🔍</button>
-</div>
-
-<div class="wrapper">
-
-<div class="sidebar" id="filters"></div>
-
-<div style="flex:1">
-
-<div class="grid" id="grid"></div>
+<div class="grid" id="cards"></div>
 
 <div class="pagination" id="pagination"></div>
 
@@ -256,144 +209,148 @@ grid-template-columns:1fr;
 
 <script>
 
-/* SHEETS */
-const LISTING="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
-const FILTERS="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=98977509&single=true&output=csv";
+/* YOUR GOOGLE SHEET CSV */
+
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+
+/* settings */
+
+const MAX_ITEMS=20;
+const ITEMS_PER_PAGE=12;
 
 let data=[];
-let active=[];
-let page=1;
-const perPage=12;
+let activeFilters=[];
+let currentPage=1;
 
-function csv(t){
-return t.split("\n").map(r=>r.split(","));
-}
+/* CSV parser */
 
-/* LOAD LISTINGS */
-async function load(){
+function parseCSV(text){
 
-let r=await fetch(LISTING);
-let t=await r.text();
+const rows=text.trim().split("\n");
+const headers=rows.shift().split(",");
 
-let rows=csv(t);
-let h=rows[0];
-
-data=rows.slice(1).map(r=>{
-let o={};
-h.forEach((x,i)=>o[x]=r[i]);
-return o;
+return rows.map(row=>{
+const cols=row.split(",");
+let obj={};
+headers.forEach((h,i)=>obj[h.trim()]=cols[i]);
+return obj;
 });
 
-renderFilters();
+}
+
+/* load data */
+
+async function loadData(){
+
+const res=await fetch(SHEET_URL);
+const text=await res.text();
+
+data=parseCSV(text);
+
+buildFilters();
 render();
 
 }
 
-/* FILTERS */
-async function renderFilters(){
+/* build filters */
 
-let r=await fetch(FILTERS);
-let t=await r.text();
+function buildFilters(){
 
-let rows=csv(t);
+const set=new Set();
 
-let groups={};
+data.forEach(item=>{
 
-rows.slice(1).forEach(r=>{
-let g=r[0];
-let l=r[1];
-if(!groups[g])groups[g]=[];
-groups[g].push(l);
+(item.filter_tags||"").split(",").forEach(tag=>{
+if(tag)set.add(tag.trim());
 });
 
-let html="";
+});
 
-for(let g in groups){
+const container=document.getElementById("filters");
+container.innerHTML="";
 
-html+=`<div class="filter-title">${g}</div>`;
+set.forEach(tag=>{
 
-groups[g].forEach(t=>{
-html+=`<div class="tag" onclick="toggle('${t}',this)">${t}</div>`;
+const div=document.createElement("div");
+div.className="tag";
+div.innerText=tag;
+
+div.onclick=()=>toggleFilter(tag,div);
+
+container.appendChild(div);
+
 });
 
 }
 
-filters.innerHTML=html;
+/* toggle filter */
 
-}
+function toggleFilter(tag,el){
 
-/* FILTER TOGGLE */
-function toggle(t,el){
-
-if(active.includes(t)){
-active=active.filter(x=>x!==t);
+if(activeFilters.includes(tag)){
+activeFilters=activeFilters.filter(t=>t!==tag);
 el.classList.remove("active");
 }else{
-active.push(t);
+activeFilters.push(tag);
 el.classList.add("active");
 }
 
-page=1;
+currentPage=1;
 render();
 
 }
 
-/* APPLY */
-function apply(){
-page=1;
-render();
-}
+/* render cards */
 
-/* RENDER */
 function render(){
 
-let s=document.getElementById("search").value.toLowerCase();
+const search=document.getElementById("searchInput").value.toLowerCase();
 
-let filtered=data.filter(d=>{
+let filtered=data.filter(item=>{
 
-let tags=(d.filter_tags||"").toLowerCase();
+const tags=(item.filter_tags||"").toLowerCase();
 
-let ok=active.every(a=>tags.includes(a.toLowerCase()));
+const matchFilter=activeFilters.every(f=>tags.includes(f.toLowerCase()));
 
-let searchok=
-(d.name||"").toLowerCase().includes(s) ||
-(d.city||"").toLowerCase().includes(s);
+const matchSearch=
+(item.name||"").toLowerCase().includes(search) ||
+(item.location||"").toLowerCase().includes(search);
 
-return ok && searchok;
+return matchFilter && matchSearch;
 
 });
 
-/* PAGINATION */
-let start=(page-1)*perPage;
-let end=start+perPage;
-let pageData=filtered.slice(start,end);
+/* limit to 20 */
 
-grid.innerHTML=pageData.map(d=>`
+filtered=filtered.slice(0,MAX_ITEMS);
+
+const start=(currentPage-1)*ITEMS_PER_PAGE;
+const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
+
+const cards=document.getElementById("cards");
+
+cards.innerHTML=pageData.map(item=>`
 
 <div class="card">
 
-<img src="/images/${(d.images||"placeholder.jpg").split(";")[0]}">
+<img src="/images/placeholder.jpg">
 
-<div class="card-body">
+<div class="cardBody">
 
-<div class="title">${d.name}</div>
+<div class="title">${item.name||""}</div>
 
-<div>${d.city}</div>
+<div class="location">${item.location||""}</div>
 
-<div class="price">${d.price}</div>
+<div class="price">$${item.price||""}</div>
 
 <div class="rating">
-${d.rating} / 5
-<div class="small">Average Rating</div>
+${item.rating||""} / 5
+<div class="ratingSmall">Average Rating</div>
 </div>
 
-<div>${d.description}</div>
-
-<div class="tags">
-${(d.card_tags||"").split(";").map(t=>`<span class="tag-pill">${t}</span>`).join("")}
-</div>
-
-<a class="book" href="${d.link}" target="_blank">BOOK</a>
+<a class="book" href="${item.link||"#"}" target="_blank">
+BOOK
+</a>
 
 </div>
 
@@ -401,35 +358,43 @@ ${(d.card_tags||"").split(";").map(t=>`<span class="tag-pill">${t}</span>`).join
 
 `).join("");
 
-renderPages(filtered.length);
+renderPagination(filtered.length);
 
 }
 
-/* PAGINATION UI */
-function renderPages(total){
+/* pagination */
 
-let pages=Math.ceil(total/perPage);
+function renderPagination(total){
+
+const pages=Math.ceil(total/ITEMS_PER_PAGE);
 
 let html="";
 
 for(let i=1;i<=pages;i++){
 
-html+=`
-<button class="page-btn ${i===page?'active':''}" onclick="go(${i})">${i}</button>
-`;
+html+=`<button class="pageBtn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
 
 }
 
-pagination.innerHTML=html;
+document.getElementById("pagination").innerHTML=html;
 
 }
 
-function go(p){
-page=p;
+function goPage(p){
+currentPage=p;
 render();
 }
 
-load();
+/* search */
+
+document.getElementById("searchInput").addEventListener("input",()=>{
+
+currentPage=1;
+render();
+
+});
+
+loadData();
 
 </script>
 
