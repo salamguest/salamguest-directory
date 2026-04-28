@@ -11,17 +11,13 @@
 
 body{
 margin:0;
-font-family:Arial, sans-serif;
+font-family:Arial;
 background:#f6f6f6;
 }
-
-/* layout */
 
 .container{
 display:flex;
 }
-
-/* sidebar */
 
 .sidebar{
 width:260px;
@@ -51,14 +47,10 @@ color:white;
 border-color:#0042FD;
 }
 
-/* main */
-
 .main{
 flex:1;
 padding:20px;
 }
-
-/* search */
 
 .search{
 margin-bottom:20px;
@@ -70,8 +62,6 @@ padding:10px;
 border-radius:8px;
 border:1px solid #ccc;
 }
-
-/* cards */
 
 .grid{
 display:grid;
@@ -98,7 +88,6 @@ padding:12px;
 
 .title{
 font-weight:bold;
-margin-bottom:4px;
 }
 
 .location{
@@ -112,7 +101,6 @@ color:#0042FD;
 }
 
 .rating{
-font-size:14px;
 margin-top:6px;
 }
 
@@ -132,8 +120,6 @@ text-decoration:none;
 border-radius:20px;
 }
 
-/* pagination */
-
 .pagination{
 margin-top:20px;
 text-align:center;
@@ -151,8 +137,6 @@ cursor:pointer;
 background:#0042FD;
 color:white;
 }
-
-/* mobile */
 
 @media(max-width:900px){
 
@@ -188,7 +172,6 @@ grid-template-columns:1fr;
 <div class="sidebar">
 
 <div class="filterTitle">Filters</div>
-
 <div id="filters"></div>
 
 </div>
@@ -209,11 +192,7 @@ grid-template-columns:1fr;
 
 <script>
 
-/* YOUR GOOGLE SHEET CSV */
-
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
-
-/* settings */
 
 const MAX_ITEMS=20;
 const ITEMS_PER_PAGE=12;
@@ -222,23 +201,30 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 
-/* CSV parser */
+/* SAFE CSV PARSER */
 
 function parseCSV(text){
 
 const rows=text.trim().split("\n");
-const headers=rows.shift().split(",");
+const headers=rows[0].split(",");
 
-return rows.map(row=>{
-const cols=row.split(",");
+return rows.slice(1).map(row=>{
+
+const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+
 let obj={};
-headers.forEach((h,i)=>obj[h.trim()]=cols[i]);
+
+headers.forEach((h,i)=>{
+obj[h.trim()]=cols?.[i]?.replaceAll('"',"") || "";
+});
+
 return obj;
+
 });
 
 }
 
-/* load data */
+/* load sheet */
 
 async function loadData(){
 
@@ -283,7 +269,7 @@ container.appendChild(div);
 
 }
 
-/* toggle filter */
+/* toggle */
 
 function toggleFilter(tag,el){
 
@@ -300,7 +286,7 @@ render();
 
 }
 
-/* render cards */
+/* render */
 
 function render(){
 
@@ -319,8 +305,6 @@ const matchSearch=
 return matchFilter && matchSearch;
 
 });
-
-/* limit to 20 */
 
 filtered=filtered.slice(0,MAX_ITEMS);
 
@@ -348,9 +332,7 @@ ${item.rating||""} / 5
 <div class="ratingSmall">Average Rating</div>
 </div>
 
-<a class="book" href="${item.link||"#"}" target="_blank">
-BOOK
-</a>
+<a class="book" href="${item.link||"#"}" target="_blank">BOOK</a>
 
 </div>
 
@@ -385,9 +367,21 @@ currentPage=p;
 render();
 }
 
-/* search */
+/* SEARCH ENTER KEY */
 
-document.getElementById("searchInput").addEventListener("input",()=>{
+const searchInput=document.getElementById("searchInput");
+
+searchInput.addEventListener("keydown",(e)=>{
+
+if(e.key==="Enter"){
+e.preventDefault();
+currentPage=1;
+render();
+}
+
+});
+
+searchInput.addEventListener("input",()=>{
 
 currentPage=1;
 render();
