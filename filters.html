@@ -13,8 +13,8 @@
 
 body{
 margin:0;
+background:white;
 font-family:'Lexend',sans-serif;
-background:#f6f6f6;
 }
 
 .container{
@@ -25,30 +25,32 @@ display:flex;
 
 .sidebar{
 width:260px;
-background:white;
 padding:20px;
 border-right:1px solid #eee;
 }
 
+.filterCategory{
+margin-bottom:18px;
+}
+
 .filterTitle{
 font-weight:600;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .tag{
 display:block;
-padding:6px 10px;
+padding:7px 10px;
 margin:4px 0;
-border:1px solid #ccc;
-border-radius:20px;
+background:#f2f2f2;
+border-radius:18px;
 cursor:pointer;
-font-size:14px;
+font-size:13px;
 }
 
 .tag.active{
 background:#0042FD;
 color:white;
-border-color:#0042FD;
 }
 
 /* MAIN */
@@ -58,15 +60,13 @@ flex:1;
 padding:20px;
 }
 
-.search{
-margin-bottom:20px;
-}
+/* SEARCH */
 
 .search input{
 width:100%;
 padding:10px;
+border:1px solid #ddd;
 border-radius:8px;
-border:1px solid #ccc;
 font-family:'Lexend';
 }
 
@@ -75,7 +75,8 @@ font-family:'Lexend';
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:20px;
+gap:22px;
+margin-top:20px;
 }
 
 /* CARD */
@@ -83,8 +84,8 @@ gap:20px;
 .card{
 background:white;
 border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
 overflow:hidden;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
 display:flex;
 flex-direction:column;
 }
@@ -159,7 +160,7 @@ color:#0042FD;
 border:1px solid #0042FD;
 }
 
-/* NAV */
+/* PAGINATION */
 
 .bottomNav{
 display:flex;
@@ -168,8 +169,10 @@ align-items:center;
 margin-top:20px;
 }
 
-.pagination{
-text-align:right;
+.backTop{
+font-size:13px;
+color:#0042FD;
+cursor:pointer;
 }
 
 .pageBtn{
@@ -183,12 +186,6 @@ cursor:pointer;
 .pageBtn.active{
 background:#0042FD;
 color:white;
-}
-
-.backTop{
-font-size:13px;
-cursor:pointer;
-color:#0042FD;
 }
 
 /* LIGHTBOX */
@@ -223,12 +220,17 @@ flex-direction:column;
 width:100%;
 display:flex;
 overflow-x:auto;
-white-space:nowrap;
+gap:10px;
+}
+
+.filterCategory{
+display:flex;
+gap:6px;
 }
 
 .tag{
 display:inline-block;
-margin-right:6px;
+white-space:nowrap;
 }
 
 .grid{
@@ -244,17 +246,12 @@ grid-template-columns:1fr;
 
 <div class="container">
 
-<div class="sidebar">
-
-<div class="filterTitle">Filters</div>
-<div id="filters"></div>
-
-</div>
+<div class="sidebar" id="filters"></div>
 
 <div class="main">
 
 <div class="search">
-<input id="searchInput" placeholder="Search hotel">
+<input id="searchInput" placeholder="Search hotel, stay or any keyword">
 </div>
 
 <div class="grid" id="cards"></div>
@@ -265,7 +262,7 @@ grid-template-columns:1fr;
 Back To Top
 </div>
 
-<div class="pagination" id="pagination"></div>
+<div id="pagination"></div>
 
 </div>
 
@@ -279,7 +276,7 @@ Back To Top
 
 <script>
 
-const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+const SHEET_URL="YOUR_CSV_LINK_HERE";
 
 const MAX_ITEMS=20;
 const ITEMS_PER_PAGE=12;
@@ -288,33 +285,48 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 
-function parseCSV(text){
+/* FILTER CATEGORIES */
 
-const rows=text.trim().split("\n");
-const headers=rows[0].split(",");
+const FILTERS={
 
-return rows.slice(1).map(row=>{
+"Property Type":[
+"Hotel","Resort","Villa","Apartment"
+],
 
-const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+"Halal Essentials":[
+"Halal Food Nearby","Halal Kitchen","No Alcohol"
+],
 
-let obj={};
+"Amenities":[
+"Pool","Spa","Gym","Parking"
+]
 
-headers.forEach((h,i)=>{
-obj[h.trim()]=cols?.[i]?.replaceAll('"',"") || "";
-});
-
-return obj;
-
-});
-
-}
+};
 
 async function loadData(){
 
 const res=await fetch(SHEET_URL);
 const text=await res.text();
 
-data=parseCSV(text);
+const rows=text.split("\n").slice(1);
+
+data=rows.map(r=>{
+
+const c=r.split(",");
+
+return{
+name:c[0],
+city:c[1],
+country:c[2],
+description:c[3],
+price:c[4],
+rating:c[5],
+image_folder:c[6],
+link:c[7],
+tags:c[8]
+};
+
+});
 
 buildFilters();
 render();
@@ -323,27 +335,30 @@ render();
 
 function buildFilters(){
 
-const set=new Set();
+const sidebar=document.getElementById("filters");
 
-data.forEach(item=>{
-(item.filter_tags||"").split(",").forEach(tag=>{
-if(tag)set.add(tag.trim());
+for(let cat in FILTERS){
+
+const block=document.createElement("div");
+block.className="filterCategory";
+
+block.innerHTML=`<div class="filterTitle">${cat}</div>`;
+
+FILTERS[cat].forEach(tag=>{
+
+const t=document.createElement("div");
+t.className="tag";
+t.innerText=tag;
+
+t.onclick=()=>toggleFilter(tag,t);
+
+block.appendChild(t);
+
 });
-});
 
-const container=document.getElementById("filters");
+sidebar.appendChild(block);
 
-set.forEach(tag=>{
-
-const div=document.createElement("div");
-div.className="tag";
-div.innerText=tag;
-
-div.onclick=()=>toggleFilter(tag,div);
-
-container.appendChild(div);
-
-});
+}
 
 }
 
@@ -362,31 +377,18 @@ render();
 
 }
 
-function openLightbox(src){
-
-const lb=document.getElementById("lightbox");
-const img=document.getElementById("lightboxImg");
-
-img.src=src;
-lb.style.display="flex";
-
-}
-
-function closeLightbox(){
-document.getElementById("lightbox").style.display="none";
-}
-
 function render(){
 
 const search=document.getElementById("searchInput").value.toLowerCase();
 
 let filtered=data.filter(item=>{
 
-const tags=(item.filter_tags||"").toLowerCase();
+const tags=(item.tags||"").toLowerCase();
 
 const matchFilter=activeFilters.every(f=>tags.includes(f.toLowerCase()));
 
-const matchSearch=(item.name||"").toLowerCase().includes(search);
+const matchSearch=item.name.toLowerCase().includes(search) ||
+(item.description||"").toLowerCase().includes(search);
 
 return matchFilter && matchSearch;
 
@@ -395,43 +397,39 @@ return matchFilter && matchSearch;
 filtered=filtered.slice(0,MAX_ITEMS);
 
 const start=(currentPage-1)*ITEMS_PER_PAGE;
+
 const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
 
 const cards=document.getElementById("cards");
 
 cards.innerHTML=pageData.map(item=>{
 
-const folder=item.image_folder || "";
-const img=`/images/${folder}/1.jpg`;
+const img=`/images/${item.image_folder}/1.jpg`;
 
 return `
 
 <div class="card">
 
 <div class="carousel">
-
 <img src="${img}" onerror="this.src='/images/placeholder.jpg'" onclick="openLightbox(this.src)">
-
 </div>
 
 <div class="cardBody">
 
-<div class="title">${item.name||""}</div>
-
-<div class="location">${item.city||""}, ${item.country||""}</div>
-
-<div class="description">${item.description||""}</div>
+<div class="title">${item.name}</div>
+<div class="location">${item.city}, ${item.country}</div>
+<div class="description">${item.description}</div>
 
 <div class="bottom">
 
-<div class="price">${item.price||""}</div>
+<div class="price">${item.price}</div>
 
 <div class="rating">
-${item.rating||""} / 5
+${item.rating} / 5
 <div class="ratingSmall">Average Rating</div>
 </div>
 
-<a class="book" href="${item.link||"#"}" target="_blank">BOOK</a>
+<a class="book" href="${item.link}" target="_blank">BOOK</a>
 
 </div>
 
@@ -464,25 +462,34 @@ document.getElementById("pagination").innerHTML=html;
 }
 
 function goPage(p){
+
 currentPage=p;
 render();
+
 }
 
-const searchInput=document.getElementById("searchInput");
+function openLightbox(src){
 
-searchInput.addEventListener("keydown",(e)=>{
+const lb=document.getElementById("lightbox");
+const img=document.getElementById("lightboxImg");
+
+img.src=src;
+lb.style.display="flex";
+
+}
+
+function closeLightbox(){
+
+document.getElementById("lightbox").style.display="none";
+
+}
+
+document.getElementById("searchInput").addEventListener("keydown",e=>{
 
 if(e.key==="Enter"){
-e.preventDefault();
-currentPage=1;
 render();
 }
 
-});
-
-searchInput.addEventListener("input",()=>{
-currentPage=1;
-render();
 });
 
 loadData();
