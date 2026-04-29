@@ -7,17 +7,21 @@
 
 <title>SalamGuest Directory</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@600&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
 
 body{
 margin:0;
-font-family:Arial;
+font-family:'Lexend',sans-serif;
 background:#f6f6f6;
 }
 
 .container{
 display:flex;
 }
+
+/* SIDEBAR */
 
 .sidebar{
 width:260px;
@@ -27,7 +31,7 @@ border-right:1px solid #eee;
 }
 
 .filterTitle{
-font-weight:bold;
+font-weight:600;
 margin-bottom:10px;
 }
 
@@ -47,6 +51,8 @@ color:white;
 border-color:#0042FD;
 }
 
+/* MAIN */
+
 .main{
 flex:1;
 padding:20px;
@@ -61,7 +67,10 @@ width:100%;
 padding:10px;
 border-radius:8px;
 border:1px solid #ccc;
+font-family:'Lexend';
 }
+
+/* GRID */
 
 .grid{
 display:grid;
@@ -69,39 +78,62 @@ grid-template-columns:repeat(3,1fr);
 gap:20px;
 }
 
+/* CARD */
+
 .card{
 background:white;
 border-radius:10px;
 overflow:hidden;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
+display:flex;
+flex-direction:column;
 }
 
-.card img{
+.carousel img{
 width:100%;
 height:180px;
 object-fit:cover;
+cursor:pointer;
 }
 
 .cardBody{
-padding:12px;
+padding:14px;
+display:flex;
+flex-direction:column;
+flex-grow:1;
 }
 
 .title{
-font-weight:bold;
+font-family:'Libre Bodoni',serif;
+font-size:20px;
+margin-bottom:4px;
 }
 
 .location{
 font-size:13px;
-color:#666;
+color:#777;
+margin-bottom:8px;
+}
+
+.description{
+font-size:13px;
+color:#555;
+line-height:1.4;
+}
+
+.bottom{
+margin-top:auto;
 }
 
 .price{
-font-weight:bold;
-color:#0042FD;
+font-family:'Libre Bodoni',serif;
+font-size:18px;
+margin-top:10px;
 }
 
 .rating{
-margin-top:6px;
+margin-top:4px;
+font-size:14px;
 }
 
 .ratingSmall{
@@ -111,18 +143,33 @@ color:#777;
 
 .book{
 display:block;
-margin-top:10px;
-padding:8px;
+margin-top:8px;
+padding:9px;
 text-align:center;
 background:#0042FD;
 color:white;
 text-decoration:none;
 border-radius:20px;
+transition:0.2s;
+}
+
+.book:hover{
+background:#eee;
+color:#0042FD;
+border:1px solid #0042FD;
+}
+
+/* NAV */
+
+.bottomNav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:20px;
 }
 
 .pagination{
-margin-top:20px;
-text-align:center;
+text-align:right;
 }
 
 .pageBtn{
@@ -137,6 +184,34 @@ cursor:pointer;
 background:#0042FD;
 color:white;
 }
+
+.backTop{
+font-size:13px;
+cursor:pointer;
+color:#0042FD;
+}
+
+/* LIGHTBOX */
+
+.lightbox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:90%;
+}
+
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -179,15 +254,27 @@ grid-template-columns:1fr;
 <div class="main">
 
 <div class="search">
-<input id="searchInput" placeholder="Search hotel or location">
+<input id="searchInput" placeholder="Search hotel">
 </div>
 
 <div class="grid" id="cards"></div>
+
+<div class="bottomNav">
+
+<div class="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+Back To Top
+</div>
 
 <div class="pagination" id="pagination"></div>
 
 </div>
 
+</div>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<img id="lightboxImg">
 </div>
 
 <script>
@@ -200,8 +287,6 @@ const ITEMS_PER_PAGE=12;
 let data=[];
 let activeFilters=[];
 let currentPage=1;
-
-/* SAFE CSV PARSER */
 
 function parseCSV(text){
 
@@ -224,8 +309,6 @@ return obj;
 
 }
 
-/* load sheet */
-
 async function loadData(){
 
 const res=await fetch(SHEET_URL);
@@ -238,22 +321,17 @@ render();
 
 }
 
-/* build filters */
-
 function buildFilters(){
 
 const set=new Set();
 
 data.forEach(item=>{
-
 (item.filter_tags||"").split(",").forEach(tag=>{
 if(tag)set.add(tag.trim());
 });
-
 });
 
 const container=document.getElementById("filters");
-container.innerHTML="";
 
 set.forEach(tag=>{
 
@@ -268,8 +346,6 @@ container.appendChild(div);
 });
 
 }
-
-/* toggle */
 
 function toggleFilter(tag,el){
 
@@ -286,7 +362,19 @@ render();
 
 }
 
-/* render */
+function openLightbox(src){
+
+const lb=document.getElementById("lightbox");
+const img=document.getElementById("lightboxImg");
+
+img.src=src;
+lb.style.display="flex";
+
+}
+
+function closeLightbox(){
+document.getElementById("lightbox").style.display="none";
+}
 
 function render(){
 
@@ -298,9 +386,7 @@ const tags=(item.filter_tags||"").toLowerCase();
 
 const matchFilter=activeFilters.every(f=>tags.includes(f.toLowerCase()));
 
-const matchSearch=
-(item.name||"").toLowerCase().includes(search) ||
-(item.location||"").toLowerCase().includes(search);
+const matchSearch=(item.name||"").toLowerCase().includes(search);
 
 return matchFilter && matchSearch;
 
@@ -313,19 +399,32 @@ const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
 
 const cards=document.getElementById("cards");
 
-cards.innerHTML=pageData.map(item=>`
+cards.innerHTML=pageData.map(item=>{
+
+const folder=item.image_folder || "";
+const img=`/images/${folder}/1.jpg`;
+
+return `
 
 <div class="card">
 
-<img src="/images/placeholder.jpg">
+<div class="carousel">
+
+<img src="${img}" onerror="this.src='/images/placeholder.jpg'" onclick="openLightbox(this.src)">
+
+</div>
 
 <div class="cardBody">
 
 <div class="title">${item.name||""}</div>
 
-<div class="location">${item.location||""}</div>
+<div class="location">${item.city||""}, ${item.country||""}</div>
 
-<div class="price">$${item.price||""}</div>
+<div class="description">${item.description||""}</div>
+
+<div class="bottom">
+
+<div class="price">${item.price||""}</div>
 
 <div class="rating">
 ${item.rating||""} / 5
@@ -338,13 +437,15 @@ ${item.rating||""} / 5
 
 </div>
 
-`).join("");
+</div>
+
+`;
+
+}).join("");
 
 renderPagination(filtered.length);
 
 }
-
-/* pagination */
 
 function renderPagination(total){
 
@@ -367,8 +468,6 @@ currentPage=p;
 render();
 }
 
-/* SEARCH ENTER KEY */
-
 const searchInput=document.getElementById("searchInput");
 
 searchInput.addEventListener("keydown",(e)=>{
@@ -382,10 +481,8 @@ render();
 });
 
 searchInput.addEventListener("input",()=>{
-
 currentPage=1;
 render();
-
 });
 
 loadData();
