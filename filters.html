@@ -21,8 +21,6 @@ font-family:'Lexend',sans-serif;
 display:flex;
 }
 
-/* SIDEBAR */
-
 .sidebar{
 width:270px;
 padding:20px;
@@ -37,8 +35,6 @@ margin-bottom:18px;
 font-weight:500;
 margin-bottom:6px;
 }
-
-/* TAG */
 
 .tag{
 display:inline-flex;
@@ -57,14 +53,10 @@ background:#0042FD;
 color:white;
 }
 
-/* MAIN */
-
 .main{
 flex:1;
 padding:20px;
 }
-
-/* SEARCH */
 
 .search input{
 width:100%;
@@ -75,16 +67,12 @@ font-family:'Lexend';
 background:#eef3ff;
 }
 
-/* GRID */
-
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:22px;
 margin-top:20px;
 }
-
-/* CARD */
 
 .card{
 background:white;
@@ -161,19 +149,11 @@ color:#0042FD;
 border:1px solid #0042FD;
 }
 
-/* PAGINATION */
-
 .bottomNav{
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-top:20px;
-}
-
-.backTop{
-cursor:pointer;
-color:#0042FD;
-font-size:14px;
 }
 
 .pageBtn{
@@ -189,7 +169,10 @@ background:#0042FD;
 color:white;
 }
 
-/* LIGHTBOX */
+.backTop{
+cursor:pointer;
+color:#0042FD;
+}
 
 .lightbox{
 position:fixed;
@@ -208,8 +191,6 @@ z-index:999;
 max-width:90%;
 max-height:90%;
 }
-
-/* MOBILE */
 
 @media(max-width:900px){
 
@@ -243,16 +224,26 @@ grid-template-columns:1fr;
 <input id="searchInput" placeholder="Search hotel, stay or any keyword">
 </div>
 
+<div style="margin-top:10px;">
+<button onclick="clearFilters()" style="
+padding:8px 14px;
+border:2px solid #0042FD;
+border-radius:999px;
+background:white;
+color:#0042FD;
+cursor:pointer;
+font-family:Lexend;">
+Clear Filters
+</button>
+</div>
+
 <div class="grid" id="cards"></div>
 
 <div class="bottomNav">
-
 <div class="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
 Back To Top
 </div>
-
 <div id="pagination"></div>
-
 </div>
 
 </div>
@@ -274,10 +265,20 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 
+/* slug */
+
+function slugify(text){
+return text.toLowerCase().trim()
+.replace(/[^a-z0-9\s-]/g,'')
+.replace(/\s+/g,'-')
+.replace(/-+/g,'-');
+}
+
+/* csv */
+
 function parseCSV(text){
 const rows=text.trim().split("\n");
 const headers=rows[0].split(",");
-
 return rows.slice(1).map(row=>{
 const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 let obj={};
@@ -288,6 +289,8 @@ return obj;
 });
 }
 
+/* load */
+
 async function load(){
 const res=await fetch(SHEET_URL);
 const text=await res.text();
@@ -296,7 +299,7 @@ buildFilters();
 render();
 }
 
-/* FILTERS */
+/* filters */
 
 function buildFilters(){
 
@@ -321,11 +324,9 @@ if(!groups[cat])return;
 
 let block=document.createElement("div");
 block.className="filterCategory";
-
 block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
 groups[cat].forEach(val=>{
-
 let el=document.createElement("div");
 el.className="tag";
 el.innerText=val;
@@ -333,7 +334,6 @@ el.innerText=val;
 el.onclick=()=>toggle(cat+":"+val,el);
 
 block.appendChild(el);
-
 });
 
 container.appendChild(block);
@@ -354,7 +354,16 @@ currentPage=1;
 render();
 }
 
-/* LIGHTBOX */
+/* clear */
+
+function clearFilters(){
+activeFilters=[];
+currentPage=1;
+document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));
+render();
+}
+
+/* lightbox */
 
 function openLightbox(src){
 document.getElementById("lightboxImg").src=src;
@@ -365,27 +374,20 @@ function closeLightbox(){
 document.getElementById("lightbox").style.display="none";
 }
 
-/* RENDER */
+/* render */
 
 function render(){
 
 const search=document.getElementById("searchInput").value.toLowerCase();
 
 let filtered=data.filter(item=>{
-
 let tags=(item.filter_tags||"").toLowerCase();
-
 let match=activeFilters.every(f=>tags.includes(f.toLowerCase()));
-
 let matchSearch=(item.name||"").toLowerCase().includes(search);
-
 return match && matchSearch;
-
 });
 
 filtered=filtered.slice(0,MAX_ITEMS);
-
-/* PAGINATION */
 
 const start=(currentPage-1)*ITEMS_PER_PAGE;
 const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
@@ -394,60 +396,70 @@ const cards=document.getElementById("cards");
 
 cards.innerHTML=pageData.map(item=>{
 
-let img=`/images/${item.image_folder}/1.jpg`;
+const folder=slugify(item.name);
+const img=`/images/${folder}/1.jpg`;
 
 return `
-
 <div class="card">
-
 <div class="carousel">
-<img src="${img}" onerror="this.src='/images/placeholder.jpg'" onclick="openLightbox(this.src)">
+<img src="/images/placeholder.jpg"
+onerror="this.src='/images/placeholder.jpg'"
+data-real="${img}"
+onclick="openLightbox(this.src)">
 </div>
 
 <div class="cardBody">
-
 <div class="title">${item.name}</div>
 <div class="location">${item.city}, ${item.country}</div>
 <div class="description">${item.description}</div>
 
 <div class="bottom">
-
 <div class="price">${item.price}</div>
 
-<div class="rating">${item.rating} / 5
+<div class="rating">
+${item.rating} / 5
 <div class="ratingSmall">Average Rating</div>
 </div>
 
 <a class="book" href="${item.link}" target="_blank">BOOK</a>
-
 </div>
 
 </div>
-
 </div>
-
 `;
-
 }).join("");
+
+/* load real images safely */
+
+document.querySelectorAll(".carousel img").forEach(img=>{
+const real=img.dataset.real;
+const test=new Image();
+
+test.onload=()=>{
+img.src=real;
+};
+
+test.onerror=()=>{
+img.src="/images/placeholder.jpg";
+};
+
+test.src=real;
+
+});
 
 renderPagination(filtered.length);
 
 }
 
-/* PAGINATION UI */
+/* pagination */
 
 function renderPagination(total){
-
 const pages=Math.ceil(total/ITEMS_PER_PAGE);
-
 let html="";
-
 for(let i=1;i<=pages;i++){
 html+=`<button class="pageBtn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
 }
-
 document.getElementById("pagination").innerHTML=html;
-
 }
 
 function goPage(p){
@@ -455,7 +467,7 @@ currentPage=p;
 render();
 }
 
-/* SEARCH */
+/* search */
 
 document.getElementById("searchInput").addEventListener("keydown",e=>{
 if(e.key==="Enter") render();
