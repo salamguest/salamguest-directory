@@ -17,6 +17,8 @@ background:white;
 font-family:'Lexend',sans-serif;
 }
 
+/* LAYOUT */
+
 .container{
 display:flex;
 }
@@ -24,9 +26,15 @@ display:flex;
 /* SIDEBAR */
 
 .sidebar{
-width:260px;
+width:270px;
 padding:20px;
 border-right:1px solid #eee;
+}
+
+.filterHeader{
+font-size:14px;
+margin-bottom:15px;
+line-height:1.4;
 }
 
 .filterCategory{
@@ -34,18 +42,23 @@ margin-bottom:18px;
 }
 
 .filterTitle{
-font-weight:600;
-margin-bottom:8px;
+font-weight:500;
+margin-bottom:6px;
 }
 
+/* TAGS */
+
 .tag{
-display:block;
-padding:7px 10px;
-margin:4px 0;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:6px 10px;
+margin:4px 4px 0 0;
 background:#f2f2f2;
-border-radius:18px;
+border-radius:20px;
 cursor:pointer;
 font-size:13px;
+text-align:center;
 }
 
 .tag.active{
@@ -60,14 +73,11 @@ flex:1;
 padding:20px;
 }
 
-/* SEARCH */
-
 .search input{
 width:100%;
 padding:10px;
 border:1px solid #ddd;
 border-radius:8px;
-font-family:'Lexend';
 }
 
 /* GRID */
@@ -105,9 +115,8 @@ flex-grow:1;
 }
 
 .title{
-font-family:'Libre Bodoni',serif;
+font-family:'Libre Bodoni';
 font-size:20px;
-margin-bottom:4px;
 }
 
 .location{
@@ -119,7 +128,6 @@ margin-bottom:8px;
 .description{
 font-size:13px;
 color:#555;
-line-height:1.4;
 }
 
 .bottom{
@@ -127,13 +135,12 @@ margin-top:auto;
 }
 
 .price{
-font-family:'Libre Bodoni',serif;
+font-family:'Libre Bodoni';
 font-size:18px;
 margin-top:10px;
 }
 
 .rating{
-margin-top:4px;
 font-size:14px;
 }
 
@@ -149,9 +156,8 @@ padding:9px;
 text-align:center;
 background:#0042FD;
 color:white;
-text-decoration:none;
 border-radius:20px;
-transition:0.2s;
+text-decoration:none;
 }
 
 .book:hover{
@@ -165,14 +171,7 @@ border:1px solid #0042FD;
 .bottomNav{
 display:flex;
 justify-content:space-between;
-align-items:center;
 margin-top:20px;
-}
-
-.backTop{
-font-size:13px;
-color:#0042FD;
-cursor:pointer;
 }
 
 .pageBtn{
@@ -218,19 +217,12 @@ flex-direction:column;
 
 .sidebar{
 width:100%;
-display:flex;
-overflow-x:auto;
-gap:10px;
+border-right:none;
+border-bottom:1px solid #eee;
 }
 
 .filterCategory{
-display:flex;
-gap:6px;
-}
-
-.tag{
-display:inline-block;
-white-space:nowrap;
+display:block;
 }
 
 .grid{
@@ -246,7 +238,15 @@ grid-template-columns:1fr;
 
 <div class="container">
 
-<div class="sidebar" id="filters"></div>
+<div class="sidebar">
+
+<div class="filterHeader">
+Explore 50+ Halal-Filters to find Muslim-Friendly Accomodations & Stays wherever you go.
+</div>
+
+<div id="filters"></div>
+
+</div>
 
 <div class="main">
 
@@ -257,13 +257,8 @@ grid-template-columns:1fr;
 <div class="grid" id="cards"></div>
 
 <div class="bottomNav">
-
-<div class="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-Back To Top
-</div>
-
+<div onclick="window.scrollTo({top:0,behavior:'smooth'})">Back To Top</div>
 <div id="pagination"></div>
-
 </div>
 
 </div>
@@ -276,7 +271,7 @@ Back To Top
 
 <script>
 
-const SHEET_URL="YOUR_CSV_LINK_HERE";
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
 const MAX_ITEMS=20;
 const ITEMS_PER_PAGE=12;
@@ -285,97 +280,153 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 
-/* FILTER CATEGORIES */
+/* FILTER ORDER */
 
-const FILTERS={
+const FILTER_ORDER=[
+"Property Type",
+"Meals",
+"Facilities",
+"Transport",
+"Retail",
+"Leisure",
+"Convenience",
+"Female Only"
+];
 
-"Property Type":[
-"Hotel","Resort","Villa","Apartment"
-],
+/* SAFE CSV */
 
-"Halal Essentials":[
-"Halal Food Nearby","Halal Kitchen","No Alcohol"
-],
+function parseCSV(text){
 
-"Amenities":[
-"Pool","Spa","Gym","Parking"
-]
+const rows=text.trim().split("\n");
+const headers=rows[0].split(",");
 
-};
+return rows.slice(1).map(row=>{
+const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
-async function loadData(){
+let obj={};
+headers.forEach((h,i)=>{
+obj[h.trim()]=cols?.[i]?.replaceAll('"',"") || "";
+});
+return obj;
+});
+
+}
+
+/* LOAD */
+
+async function load(){
 
 const res=await fetch(SHEET_URL);
 const text=await res.text();
 
-const rows=text.split("\n").slice(1);
-
-data=rows.map(r=>{
-
-const c=r.split(",");
-
-return{
-name:c[0],
-city:c[1],
-country:c[2],
-description:c[3],
-price:c[4],
-rating:c[5],
-image_folder:c[6],
-link:c[7],
-tags:c[8]
-};
-
-});
+data=parseCSV(text);
 
 buildFilters();
 render();
 
 }
 
+/* BUILD FILTERS */
+
 function buildFilters(){
 
-const sidebar=document.getElementById("filters");
+const container=document.getElementById("filters");
+container.innerHTML="";
 
-for(let cat in FILTERS){
+/* group tags */
 
-const block=document.createElement("div");
+let groups={};
+
+data.forEach(item=>{
+
+(item.filter_tags||"").split(",").forEach(tag=>{
+
+let parts=tag.split(":");
+
+if(parts.length<2)return;
+
+let cat=parts[0].trim();
+let val=parts[1].trim();
+
+if(!groups[cat])groups[cat]=new Set();
+groups[cat].add(val);
+
+});
+
+});
+
+/* render in order */
+
+FILTER_ORDER.forEach(cat=>{
+
+if(!groups[cat])return;
+
+let block=document.createElement("div");
 block.className="filterCategory";
 
 block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
-FILTERS[cat].forEach(tag=>{
+groups[cat].forEach(tag=>{
 
-const t=document.createElement("div");
-t.className="tag";
-t.innerText=tag;
+let el=document.createElement("div");
+el.className="tag";
+el.innerText=tag;
 
-t.onclick=()=>toggleFilter(tag,t);
+el.onclick=()=>toggle(tag,cat,el);
 
-block.appendChild(t);
+block.appendChild(el);
 
 });
 
-sidebar.appendChild(block);
+container.appendChild(block);
+
+});
 
 }
 
-}
+/* TOGGLE */
 
-function toggleFilter(tag,el){
+function toggle(tag,cat,el){
 
-if(activeFilters.includes(tag)){
-activeFilters=activeFilters.filter(t=>t!==tag);
+let full=cat+":"+tag;
+
+if(activeFilters.includes(full)){
+activeFilters=activeFilters.filter(t=>t!==full);
 el.classList.remove("active");
 }else{
-activeFilters.push(tag);
+activeFilters.push(full);
 el.classList.add("active");
 }
 
-currentPage=1;
 render();
 
 }
+
+/* CAROUSEL */
+
+function startCarousel(img,folder){
+
+let i=1;
+
+setInterval(()=>{
+i=i===3?1:i+1;
+img.src=`/images/${folder}/${i}.jpg`;
+},2500);
+
+}
+
+/* LIGHTBOX */
+
+function openLightbox(src){
+document.getElementById("lightboxImg").src=src;
+document.getElementById("lightbox").style.display="flex";
+}
+
+function closeLightbox(){
+document.getElementById("lightbox").style.display="none";
+}
+
+/* RENDER */
 
 function render(){
 
@@ -383,28 +434,25 @@ const search=document.getElementById("searchInput").value.toLowerCase();
 
 let filtered=data.filter(item=>{
 
-const tags=(item.tags||"").toLowerCase();
+let tags=(item.filter_tags||"").toLowerCase();
 
-const matchFilter=activeFilters.every(f=>tags.includes(f.toLowerCase()));
+let match=activeFilters.every(f=>tags.includes(f.toLowerCase()));
 
-const matchSearch=item.name.toLowerCase().includes(search) ||
-(item.description||"").toLowerCase().includes(search);
+let matchSearch=(item.name||"").toLowerCase().includes(search);
 
-return matchFilter && matchSearch;
+return match && matchSearch;
 
 });
 
 filtered=filtered.slice(0,MAX_ITEMS);
 
-const start=(currentPage-1)*ITEMS_PER_PAGE;
-
-const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
-
 const cards=document.getElementById("cards");
 
-cards.innerHTML=pageData.map(item=>{
+cards.innerHTML=filtered.map(item=>{
 
-const img=`/images/${item.image_folder}/1.jpg`;
+let folder=item.image_folder||"";
+
+let img=`/images/${folder}/1.jpg`;
 
 return `
 
@@ -424,8 +472,7 @@ return `
 
 <div class="price">${item.price}</div>
 
-<div class="rating">
-${item.rating} / 5
+<div class="rating">${item.rating} / 5
 <div class="ratingSmall">Average Rating</div>
 </div>
 
@@ -441,58 +488,22 @@ ${item.rating} / 5
 
 }).join("");
 
-renderPagination(filtered.length);
+/* START CAROUSEL */
 
-}
-
-function renderPagination(total){
-
-const pages=Math.ceil(total/ITEMS_PER_PAGE);
-
-let html="";
-
-for(let i=1;i<=pages;i++){
-
-html+=`<button class="pageBtn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-
-}
-
-document.getElementById("pagination").innerHTML=html;
-
-}
-
-function goPage(p){
-
-currentPage=p;
-render();
-
-}
-
-function openLightbox(src){
-
-const lb=document.getElementById("lightbox");
-const img=document.getElementById("lightboxImg");
-
-img.src=src;
-lb.style.display="flex";
-
-}
-
-function closeLightbox(){
-
-document.getElementById("lightbox").style.display="none";
-
-}
-
-document.getElementById("searchInput").addEventListener("keydown",e=>{
-
-if(e.key==="Enter"){
-render();
-}
-
+document.querySelectorAll(".carousel img").forEach((img,i)=>{
+let folder=filtered[i].image_folder;
+if(folder) startCarousel(img,folder);
 });
 
-loadData();
+}
+
+/* SEARCH */
+
+document.getElementById("searchInput").addEventListener("keydown",e=>{
+if(e.key==="Enter") render();
+});
+
+load();
 
 </script>
 
