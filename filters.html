@@ -17,8 +17,6 @@ background:white;
 font-family:'Lexend',sans-serif;
 }
 
-/* LAYOUT */
-
 .container{
 display:flex;
 }
@@ -31,12 +29,6 @@ padding:20px;
 border-right:1px solid #eee;
 }
 
-.filterHeader{
-font-size:14px;
-margin-bottom:15px;
-line-height:1.4;
-}
-
 .filterCategory{
 margin-bottom:18px;
 }
@@ -46,7 +38,7 @@ font-weight:500;
 margin-bottom:6px;
 }
 
-/* TAGS */
+/* TAG */
 
 .tag{
 display:inline-flex;
@@ -58,7 +50,6 @@ background:#f2f2f2;
 border-radius:20px;
 cursor:pointer;
 font-size:13px;
-text-align:center;
 }
 
 .tag.active{
@@ -73,11 +64,15 @@ flex:1;
 padding:20px;
 }
 
+/* SEARCH */
+
 .search input{
 width:100%;
 padding:10px;
 border:1px solid #ddd;
 border-radius:8px;
+font-family:'Lexend';
+background:#eef3ff;
 }
 
 /* GRID */
@@ -171,7 +166,14 @@ border:1px solid #0042FD;
 .bottomNav{
 display:flex;
 justify-content:space-between;
+align-items:center;
 margin-top:20px;
+}
+
+.backTop{
+cursor:pointer;
+color:#0042FD;
+font-size:14px;
 }
 
 .pageBtn{
@@ -217,12 +219,7 @@ flex-direction:column;
 
 .sidebar{
 width:100%;
-border-right:none;
 border-bottom:1px solid #eee;
-}
-
-.filterCategory{
-display:block;
 }
 
 .grid{
@@ -238,15 +235,7 @@ grid-template-columns:1fr;
 
 <div class="container">
 
-<div class="sidebar">
-
-<div class="filterHeader">
-Explore 50+ Halal-Filters to find Muslim-Friendly Accomodations & Stays wherever you go.
-</div>
-
-<div id="filters"></div>
-
-</div>
+<div class="sidebar" id="filters"></div>
 
 <div class="main">
 
@@ -257,8 +246,13 @@ Explore 50+ Halal-Filters to find Muslim-Friendly Accomodations & Stays wherever
 <div class="grid" id="cards"></div>
 
 <div class="bottomNav">
-<div onclick="window.scrollTo({top:0,behavior:'smooth'})">Back To Top</div>
+
+<div class="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+Back To Top
+</div>
+
 <div id="pagination"></div>
+
 </div>
 
 </div>
@@ -280,85 +274,49 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 
-/* FILTER ORDER */
-
-const FILTER_ORDER=[
-"Property Type",
-"Meals",
-"Facilities",
-"Transport",
-"Retail",
-"Leisure",
-"Convenience",
-"Female Only"
-];
-
-/* SAFE CSV */
-
 function parseCSV(text){
-
 const rows=text.trim().split("\n");
 const headers=rows[0].split(",");
 
 return rows.slice(1).map(row=>{
 const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
-
 let obj={};
 headers.forEach((h,i)=>{
 obj[h.trim()]=cols?.[i]?.replaceAll('"',"") || "";
 });
 return obj;
 });
-
 }
-
-/* LOAD */
 
 async function load(){
-
 const res=await fetch(SHEET_URL);
 const text=await res.text();
-
 data=parseCSV(text);
-
 buildFilters();
 render();
-
 }
 
-/* BUILD FILTERS */
+/* FILTERS */
 
 function buildFilters(){
 
-const container=document.getElementById("filters");
-container.innerHTML="";
-
-/* group tags */
-
-let groups={};
+const groups={};
 
 data.forEach(item=>{
-
 (item.filter_tags||"").split(",").forEach(tag=>{
-
-let parts=tag.split(":");
-
-if(parts.length<2)return;
-
-let cat=parts[0].trim();
-let val=parts[1].trim();
+let [cat,val]=tag.split(":");
+if(!cat||!val)return;
 
 if(!groups[cat])groups[cat]=new Set();
-groups[cat].add(val);
-
+groups[cat].add(val.trim());
+});
 });
 
-});
+const order=["Property Type","Meals","Facilities","Transport","Retail","Leisure","Convenience","Female Only"];
 
-/* render in order */
+const container=document.getElementById("filters");
 
-FILTER_ORDER.forEach(cat=>{
-
+order.forEach(cat=>{
 if(!groups[cat])return;
 
 let block=document.createElement("div");
@@ -366,13 +324,13 @@ block.className="filterCategory";
 
 block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
-groups[cat].forEach(tag=>{
+groups[cat].forEach(val=>{
 
 let el=document.createElement("div");
 el.className="tag";
-el.innerText=tag;
+el.innerText=val;
 
-el.onclick=()=>toggle(tag,cat,el);
+el.onclick=()=>toggle(cat+":"+val,el);
 
 block.appendChild(el);
 
@@ -384,35 +342,16 @@ container.appendChild(block);
 
 }
 
-/* TOGGLE */
-
-function toggle(tag,cat,el){
-
-let full=cat+":"+tag;
-
-if(activeFilters.includes(full)){
-activeFilters=activeFilters.filter(t=>t!==full);
+function toggle(tag,el){
+if(activeFilters.includes(tag)){
+activeFilters=activeFilters.filter(t=>t!==tag);
 el.classList.remove("active");
 }else{
-activeFilters.push(full);
+activeFilters.push(tag);
 el.classList.add("active");
 }
-
+currentPage=1;
 render();
-
-}
-
-/* CAROUSEL */
-
-function startCarousel(img,folder){
-
-let i=1;
-
-setInterval(()=>{
-i=i===3?1:i+1;
-img.src=`/images/${folder}/${i}.jpg`;
-},2500);
-
 }
 
 /* LIGHTBOX */
@@ -446,13 +385,16 @@ return match && matchSearch;
 
 filtered=filtered.slice(0,MAX_ITEMS);
 
+/* PAGINATION */
+
+const start=(currentPage-1)*ITEMS_PER_PAGE;
+const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
+
 const cards=document.getElementById("cards");
 
-cards.innerHTML=filtered.map(item=>{
+cards.innerHTML=pageData.map(item=>{
 
-let folder=item.image_folder||"";
-
-let img=`/images/${folder}/1.jpg`;
+let img=`/images/${item.image_folder}/1.jpg`;
 
 return `
 
@@ -488,13 +430,29 @@ return `
 
 }).join("");
 
-/* START CAROUSEL */
+renderPagination(filtered.length);
 
-document.querySelectorAll(".carousel img").forEach((img,i)=>{
-let folder=filtered[i].image_folder;
-if(folder) startCarousel(img,folder);
-});
+}
 
+/* PAGINATION UI */
+
+function renderPagination(total){
+
+const pages=Math.ceil(total/ITEMS_PER_PAGE);
+
+let html="";
+
+for(let i=1;i<=pages;i++){
+html+=`<button class="pageBtn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+}
+
+document.getElementById("pagination").innerHTML=html;
+
+}
+
+function goPage(p){
+currentPage=p;
+render();
 }
 
 /* SEARCH */
