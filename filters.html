@@ -6,8 +6,9 @@
 <title>SalamGuest Directory - Basic Filters</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@600&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+:root{--base:"/salamguest-directory";}
 body { margin: 0; background: white; font-family: 'Lexend', sans-serif; }
-.container { display: flex; padding: 20px; }
+.container { display: flex; padding: 20px 12px; max-width:1200px; margin-left:8px; } /* nudged left */
 .sidebar { width: 270px; padding: 20px; border-right: 1px solid #eee; }
 .filterCategory { margin-bottom: 18px; }
 .filterTitle { font-weight: 500; margin-bottom: 6px; }
@@ -72,6 +73,7 @@ body { margin: 0; background: white; font-family: 'Lexend', sans-serif; }
 </div>
 
 <script>
+const BASE = "/salamguest-directory"; // ensure GitHub Pages project base
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 const MAX_ITEMS = 20;
 const ITEMS_PER_PAGE = 12;
@@ -192,8 +194,8 @@ function render(){
   const cards = document.getElementById("cards");
   cards.innerHTML = pageData.map(item=>{
     const folder = slugify(item.name);
-    const realPath = `images/${folder}/1.jpg`;
-    const placeholder = `images/placeholder.jpg`;
+    const realPath = `${BASE}/images/${folder}/1.jpg`;
+    const placeholder = `${BASE}/images/placeholder.jpg`;
     return `
       <div class="card">
         <div class="carousel">
@@ -201,7 +203,7 @@ function render(){
                data-real="${realPath}"
                alt="${escapeHtml(item.name)}"
                onclick="openLightbox(this.dataset.real || this.src)"
-               onerror="this.onerror=null;this.src='images/placeholder.jpg'">
+               onerror="this.onerror=null;this.src='${placeholder}'">
         </div>
 
         <div class="cardBody">
@@ -232,7 +234,7 @@ function render(){
     console.log("attempt image:", real);
     const test = new Image();
     test.onload = ()=> { img.src = real; };
-    test.onerror = ()=> { img.src = 'images/placeholder.jpg'; };
+    test.onerror = ()=> { img.src = `${BASE}/images/placeholder.jpg`; };
     test.src = real;
   });
 
