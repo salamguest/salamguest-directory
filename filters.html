@@ -10,7 +10,204 @@
 <link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@600&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-/* Your styling for layout here */
+
+body {
+  margin: 0;
+  background: white;
+  font-family: 'Lexend', sans-serif;
+}
+
+.container {
+  display: flex;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 270px;
+  padding: 20px;
+  border-right: 1px solid #eee;
+}
+
+.filterCategory {
+  margin-bottom: 18px;
+}
+
+.filterTitle {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  margin: 4px 4px 0 0;
+  background: #f2f2f2;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.tag.active {
+  background: #0042FD;
+  color: white;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.search input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Lexend';
+  background: #eef3ff;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.cardBody {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.title {
+  font-family: 'Libre Bodoni';
+  font-size: 20px;
+}
+
+.location {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.description {
+  font-size: 13px;
+  color: #555;
+}
+
+.bottom {
+  margin-top: auto;
+}
+
+.price {
+  font-family: 'Libre Bodoni';
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.rating {
+  font-size: 14px;
+}
+
+.ratingSmall {
+  font-size: 10px;
+  color: #777;
+}
+
+.book {
+  display: block;
+  margin-top: 8px;
+  padding: 9px;
+  text-align: center;
+  background: #0042FD;
+  color: white;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.book:hover {
+  background: #eee;
+  color: #0042FD;
+  border: 1px solid #0042FD;
+}
+
+.bottomNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pageBtn {
+  padding: 6px 10px;
+  margin: 4px;
+  border: 1px solid #0042FD;
+  background: white;
+  cursor: pointer;
+}
+
+.pageBtn.active {
+  background: #0042FD;
+  color: white;
+}
+
+.backTop {
+  cursor: pointer;
+  color: #0042FD;
+}
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 
 </head>
