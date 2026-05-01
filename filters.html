@@ -1,274 +1,421 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SalamGuest Directory - Basic Filters</title>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@600&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+<title>SalamGuest Directory</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-:root{--base:"/salamguest-directory";}
-body { margin: 0; background: white; font-family: 'Lexend', sans-serif; }
-.container { display: flex; padding: 20px 12px; max-width:1200px; margin-left:8px; } /* nudged left */
-.sidebar { width: 270px; padding: 20px; border-right: 1px solid #eee; }
-.filterCategory { margin-bottom: 18px; }
-.filterTitle { font-weight: 500; margin-bottom: 6px; }
-.tag { display: inline-flex; align-items: center; justify-content: center; padding: 6px 10px; margin: 4px 4px 0 0; background: #f2f2f2; border-radius: 20px; cursor: pointer; font-size: 13px; }
-.tag.active { background: #0042FD; color: white; }
-.main { flex: 1; padding: 20px; }
-.search { margin-bottom: 20px; }
-.search input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Lexend'; background: #eef3ff; }
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 20px; }
-.card { background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; display: flex; flex-direction: column; }
-.carousel img { width: 100%; height: 180px; object-fit: cover; cursor: pointer; display:block; background:#f6f6f6; }
-.cardBody { padding: 14px; display:flex; flex-direction:column; flex-grow:1; }
-.title { font-family: 'Libre Bodoni'; font-size: 20px; }
-.location { font-size: 13px; color: #777; margin-bottom: 8px; }
-.description { font-size: 13px; color: #555; }
-.bottom { margin-top: auto; }
-.price { font-family: 'Libre Bodoni'; font-size: 18px; margin-top: 10px; }
-.rating { font-size: 14px; }
-.ratingSmall { font-size: 10px; color: #777; }
-.book { display: block; margin-top: 8px; padding: 9px; text-align: center; background: #0042FD; color: white; border-radius: 20px; text-decoration: none; }
-.book:hover { background: #eee; color: #0042FD; border: 1px solid #0042FD; }
-.bottomNav { display:flex; justify-content:space-between; align-items:center; margin-top:20px; }
-.pageBtn { padding:6px 10px; margin:4px; border:1px solid #0042FD; background:white; cursor:pointer; }
-.pageBtn.active { background:#0042FD; color:white; }
-.backTop { cursor:pointer; color:#0042FD; }
-.lightbox { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:none; justify-content:center; align-items:center; z-index:999; }
-.lightbox img { max-width: 90%; max-height: 90%; }
-@media (max-width:900px) {
-  .container { flex-direction: column; }
-  .sidebar { width:100%; border-bottom:1px solid #eee; }
-  .grid { grid-template-columns:1fr; }
+
+body{
+margin:0;
+font-family:Lexend;
+background:#fff;
 }
+
+.container{
+display:flex;
+padding:20px;
+}
+
+.sidebar{
+width:260px;
+padding:10px;
+}
+
+.filterTitle{
+font-weight:500;
+margin-top:15px;
+margin-bottom:6px;
+}
+
+.tag{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:6px 10px;
+margin:4px 4px 0 0;
+background:#f2f2f2;
+border-radius:20px;
+font-size:13px;
+cursor:pointer;
+}
+
+.tag.active{
+background:#0042FD;
+color:#fff;
+}
+
+.main{
+flex:1;
+padding:10px 20px;
+}
+
+.search input{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ddd;
+background:#eef3ff;
+font-family:Lexend;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:22px;
+margin-top:20px;
+}
+
+.card{
+background:#fff;
+border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+overflow:hidden;
+display:flex;
+flex-direction:column;
+}
+
+/* ✅ SWIPE CAROUSEL */
+.carousel{
+display:flex;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+}
+
+.carousel img{
+width:100%;
+height:180px;
+object-fit:cover;
+flex-shrink:0;
+scroll-snap-align:start;
+}
+
+.cardBody{
+padding:14px;
+display:flex;
+flex-direction:column;
+flex-grow:1;
+}
+
+.title{
+font-family:"Libre Bodoni";
+font-size:20px;
+}
+
+.location{
+font-size:13px;
+color:#666;
+margin-bottom:6px;
+}
+
+.description{
+font-size:13px;
+color:#444;
+}
+
+.bottom{
+margin-top:auto;
+}
+
+.price{
+font-family:"Libre Bodoni";
+font-size:18px;
+margin-top:10px;
+}
+
+.rating{
+font-size:14px;
+color:#0042FD;
+}
+
+.ratingSmall{
+font-size:10px;
+color:#777;
+}
+
+.cardTags span{
+display:inline-block;
+background:#eaf0ff;
+color:#0042FD;
+padding:5px 8px;
+border-radius:14px;
+font-size:11px;
+margin:3px 3px 0 0;
+}
+
+.book{
+display:block;
+margin-top:10px;
+padding:10px;
+text-align:center;
+background:#0042FD;
+color:#fff;
+border-radius:999px;
+text-decoration:none;
+}
+
+.book:hover{
+background:#f2f2f2;
+color:#0042FD;
+border:1px solid #0042FD;
+}
+
+.bottomNav{
+display:flex;
+justify-content:space-between;
+margin-top:20px;
+}
+
+.pageBtn{
+padding:6px 10px;
+margin:3px;
+border:1px solid #0042FD;
+background:#fff;
+cursor:pointer;
+}
+
+.pageBtn.active{
+background:#0042FD;
+color:#fff;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+.container{
+flex-direction:column;
+padding:10px;
+}
+
+.sidebar{
+width:100%;
+}
+
+.main{
+padding:10px 5px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
 </style>
 </head>
+
 <body>
 
 <div class="container">
-  <div class="sidebar" id="filters"></div>
 
-  <div class="main">
-    <div class="search">
-      <input id="searchInput" placeholder="Search hotel, stay or any keyword">
-    </div>
+<div class="sidebar" id="filters"></div>
 
-    <div style="margin-top:10px;">
-      <button onclick="clearFilters()" style="padding:8px 14px;border:2px solid #0042FD;border-radius:999px;background:white;color:#0042FD;cursor:pointer;font-family:Lexend;">
-        Clear Filters
-      </button>
-    </div>
+<div class="main">
 
-    <div class="grid" id="cards"></div>
-
-    <div class="bottomNav">
-      <div class="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back To Top</div>
-      <div id="pagination"></div>
-    </div>
-  </div>
+<div class="search">
+<input id="searchInput" placeholder="Search hotel, stay or any keyword">
 </div>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <img id="lightboxImg" alt="">
+<div style="margin-top:10px;">
+<button onclick="clearFilters()" style="
+padding:8px 14px;
+border:2px solid #0042FD;
+border-radius:999px;
+background:white;
+color:#0042FD;
+cursor:pointer;">
+Clear Filters
+</button>
+</div>
+
+<div class="grid" id="cards"></div>
+
+<div class="bottomNav">
+<div onclick="window.scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;color:#0042FD;">
+Back To Top
+</div>
+<div id="pagination"></div>
+</div>
+
+</div>
 </div>
 
 <script>
-const BASE = "/salamguest-directory"; // ensure GitHub Pages project base
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
-const MAX_ITEMS = 20;
-const ITEMS_PER_PAGE = 12;
 
-let data = [];
-let activeFilters = [];
-let currentPage = 1;
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
-function slugify(text){
-  return (text||"").toLowerCase().trim()
-    .replace(/[^a-z0-9\s-]/g,'')
-    .replace(/\s+/g,'-')
-    .replace(/-+/g,'-');
+const MAX_ITEMS=20;
+const PER_PAGE=12;
+
+let data=[];
+let filters=[];
+let page=1;
+
+function slug(text){
+return text.toLowerCase().replace(/[^a-z0-9]/g,"");
 }
 
-function parseCSV(text){
-  const rows = text.trim().split("\n");
-  const headers = rows[0].split(",");
-  return rows.slice(1).map(row=>{
-    const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
-    let obj = {};
-    headers.forEach((h,i)=>{
-      obj[h.trim()] = (cols[i] || "").replaceAll('"',"").trim();
-    });
-    return obj;
-  });
+function parseCSV(t){
+let r=t.trim().split("\n");
+let h=r[0].split(",");
+return r.slice(1).map(row=>{
+let c=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+let o={};
+h.forEach((k,i)=>o[k.trim()]=c?.[i]?.replaceAll('"',"")||"");
+return o;
+});
 }
 
 async function load(){
-  try{
-    const res = await fetch(SHEET_URL);
-    const text = await res.text();
-    data = parseCSV(text);
-    buildFilters();
-    render();
-  }catch(err){
-    console.error("Failed to load sheet:", err);
-  }
+let res=await fetch(SHEET_URL);
+let txt=await res.text();
+data=parseCSV(txt);
+buildFilters();
+render();
 }
 
 function buildFilters(){
-  const groups = {};
-  data.forEach(item=>{
-    (item.filter_tags||"").split(",").forEach(tag=>{
-      let [cat,val] = tag.split(":");
-      if(!cat||!val) return;
-      cat = cat.trim(); val = val.trim();
-      if(!groups[cat]) groups[cat] = new Set();
-      groups[cat].add(val);
-    });
-  });
 
-  const order = ["Property Type","Meals","Facilities","Transport","Retail","Leisure","Convenience","Female Only"];
-  const container = document.getElementById("filters");
-  container.innerHTML = "";
+let groups={};
 
-  order.forEach(cat=>{
-    if(!groups[cat]) return;
-    const block = document.createElement("div");
-    block.className = "filterCategory";
-    block.innerHTML = `<div class="filterTitle">${cat}</div>`;
-    groups[cat].forEach(val=>{
-      const el = document.createElement("div");
-      el.className = "tag";
-      el.innerText = val;
-      el.onclick = ()=> toggle(cat+":"+val, el);
-      block.appendChild(el);
-    });
-    container.appendChild(block);
-  });
+data.forEach(i=>{
+(i.filter_tags||"").split(",").forEach(t=>{
+let [cat,val]=t.split(":");
+if(!cat||!val)return;
+if(!groups[cat])groups[cat]=new Set();
+groups[cat].add(val.trim());
+});
+});
+
+let order=["Property Type","Meals","Facilities","Transport","Retail","Leisure","Convenience","Female Only"];
+
+let el=document.getElementById("filters");
+
+order.forEach(cat=>{
+if(!groups[cat])return;
+
+let box=document.createElement("div");
+box.innerHTML=`<div class="filterTitle">${cat}</div>`;
+
+groups[cat].forEach(v=>{
+let t=document.createElement("div");
+t.className="tag";
+t.innerText=v;
+t.onclick=()=>toggle(cat+":"+v,t);
+box.appendChild(t);
+});
+
+el.appendChild(box);
+});
+
 }
 
-function toggle(tag, el){
-  if(activeFilters.includes(tag)){
-    activeFilters = activeFilters.filter(t=>t!==tag);
-    el.classList.remove("active");
-  } else {
-    activeFilters.push(tag);
-    el.classList.add("active");
-  }
-  currentPage = 1;
-  render();
+function toggle(tag,el){
+if(filters.includes(tag)){
+filters=filters.filter(x=>x!==tag);
+el.classList.remove("active");
+}else{
+filters.push(tag);
+el.classList.add("active");
+}
+page=1;
+render();
 }
 
 function clearFilters(){
-  activeFilters = [];
-  currentPage = 1;
-  document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));
-  document.getElementById("searchInput").value = "";
-  render();
-}
-
-function openLightbox(src){
-  if(!src) return;
-  document.getElementById("lightboxImg").src = src;
-  document.getElementById("lightbox").style.display = "flex";
-}
-
-function closeLightbox(){
-  document.getElementById("lightbox").style.display = "none";
+filters=[];
+document.querySelectorAll(".tag").forEach(t=>t.classList.remove("active"));
+render();
 }
 
 function render(){
-  const search = document.getElementById("searchInput").value.toLowerCase();
 
-  let filtered = data.filter(item=>{
-    const tags = (item.filter_tags||"").toLowerCase();
-    const match = activeFilters.every(f=> tags.includes(f.toLowerCase()));
-    const matchSearch = (item.name||"").toLowerCase().includes(search) || (item.description||"").toLowerCase().includes(search);
-    return match && matchSearch;
-  });
+let search=document.getElementById("searchInput").value.toLowerCase();
 
-  filtered = filtered.slice(0, MAX_ITEMS);
-
-  const start = (currentPage-1)*ITEMS_PER_PAGE;
-  const pageData = filtered.slice(start, start+ITEMS_PER_PAGE);
-
-  const cards = document.getElementById("cards");
-  cards.innerHTML = pageData.map(item=>{
-    const folder = slugify(item.name);
-    const realPath = `${BASE}/images/${folder}/1.jpg`;
-    const placeholder = `${BASE}/images/placeholder.jpg`;
-    return `
-      <div class="card">
-        <div class="carousel">
-          <img src="${placeholder}"
-               data-real="${realPath}"
-               alt="${escapeHtml(item.name)}"
-               onclick="openLightbox(this.dataset.real || this.src)"
-               onerror="this.onerror=null;this.src='${placeholder}'">
-        </div>
-
-        <div class="cardBody">
-          <div class="title">${escapeHtml(item.name)}</div>
-          <div class="location">${escapeHtml(item.city)}, ${escapeHtml(item.country)}</div>
-          <div class="description">${escapeHtml(item.description)}</div>
-
-          <div class="bottom">
-            <div class="price">${escapeHtml(item.price)}</div>
-
-            <div class="rating">
-              ${escapeHtml(item.rating)} / 5
-              <div class="ratingSmall">Average Rating</div>
-            </div>
-
-            <div class="tags">${(item.card_tags || "").split(",").map(tag=>`<span class="tag">${escapeHtml(tag.trim())}</span>`).join("")}</div>
-
-            <a class="book" href="${escapeAttr(item.link)}" target="_blank" rel="noopener">BOOK</a>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  document.querySelectorAll(".carousel img").forEach(img=>{
-    const real = img.dataset.real;
-    if(!real) return;
-    console.log("attempt image:", real);
-    const test = new Image();
-    test.onload = ()=> { img.src = real; };
-    test.onerror = ()=> { img.src = `${BASE}/images/placeholder.jpg`; };
-    test.src = real;
-  });
-
-  renderPagination(filtered.length);
-}
-
-function renderPagination(total){
-  const pages = Math.max(1, Math.ceil(total/ITEMS_PER_PAGE));
-  let html = "";
-  for(let i=1;i<=pages;i++){
-    html += `<button class="pageBtn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-  }
-  document.getElementById("pagination").innerHTML = html;
-}
-
-function goPage(p){
-  currentPage = p;
-  render();
-}
-
-document.getElementById("searchInput").addEventListener("keydown", e=>{
-  if(e.key === "Enter") render();
+let list=data.filter(i=>{
+let t=(i.filter_tags||"").toLowerCase();
+let ok=filters.every(f=>t.includes(f.toLowerCase()));
+let s=(i.name+i.description).toLowerCase().includes(search);
+return ok&&s;
 });
 
-function escapeHtml(str){
-  if(!str && str !== 0) return "";
-  return String(str).replace(/[&<>"']/g, s=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
-}
-function escapeAttr(str){
-  if(!str && str !== 0) return "";
-  return String(str).replace(/"/g,'&quot;');
+list=list.slice(0,MAX_ITEMS);
+
+let start=(page-1)*PER_PAGE;
+let view=list.slice(start,start+PER_PAGE);
+
+let el=document.getElementById("cards");
+
+el.innerHTML=view.map(i=>{
+
+let folder=slug(i.name);
+
+let imgs=[1,2,3].map(n=>`
+<img src="/salamguest-directory/images/${folder}/${n}.jpg"
+onerror="this.src='/salamguest-directory/images/placeholder.jpg'">
+`).join("");
+
+return `
+<div class="card">
+
+<div class="carousel">${imgs}</div>
+
+<div class="cardBody">
+<div class="title">${i.name}</div>
+<div class="location">${i.city}, ${i.country}</div>
+<div class="description">${i.description}</div>
+
+<div class="bottom">
+
+<div class="price">${i.price}</div>
+
+<div class="rating">
+${i.rating} / 5
+<div class="ratingSmall">Average Rating</div>
+</div>
+
+<div class="cardTags">
+${(i.card_tags||"").split(",").map(t=>`<span>${t}</span>`).join("")}
+</div>
+
+<a class="book" href="${i.link}" target="_blank">BOOK</a>
+
+</div>
+</div>
+</div>
+`;
+
+}).join("");
+
+paginate(list.length);
+
 }
 
+function paginate(total){
+let pages=Math.ceil(total/PER_PAGE);
+let html="";
+for(let i=1;i<=pages;i++){
+html+=`<button class="pageBtn ${i===page?'active':''}" onclick="go(${i})">${i}</button>`;
+}
+document.getElementById("pagination").innerHTML=html;
+}
+
+function go(p){
+page=p;
+render();
+}
+
+document.getElementById("searchInput").addEventListener("keydown",e=>{
+if(e.key==="Enter") render();
+});
+
 load();
+
 </script>
 
 </body>
