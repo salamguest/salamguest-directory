@@ -11,201 +11,209 @@
 
 <style>
 
-body{
-margin:0;
-background:white;
-font-family:'Lexend',sans-serif;
+body {
+  margin: 0;
+  background: white;
+  font-family: 'Lexend', sans-serif;
 }
 
-.container{
-display:flex;
+.container {
+  display: flex;
 }
 
-.sidebar{
-width:270px;
-padding:20px;
-border-right:1px solid #eee;
+/* SIDEBAR */
+
+.sidebar {
+  width: 270px;
+  padding: 20px;
+  border-right: 1px solid #eee;
 }
 
-.filterCategory{
-margin-bottom:18px;
+.filterCategory {
+  margin-bottom: 18px;
 }
 
-.filterTitle{
-font-weight:500;
-margin-bottom:6px;
+.filterTitle {
+  font-weight: 500;
+  margin-bottom: 6px;
 }
 
-.tag{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-padding:6px 10px;
-margin:4px 4px 0 0;
-background:#f2f2f2;
-border-radius:20px;
-cursor:pointer;
-font-size:13px;
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  margin: 4px 4px 0 0;
+  background: #f2f2f2;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
 }
 
-.tag.active{
-background:#0042FD;
-color:white;
+.tag.active {
+  background: #0042FD;
+  color: white;
 }
 
-.main{
-flex:1;
-padding:20px;
+.main {
+  flex: 1;
+  padding: 20px;
 }
 
-.search input{
-width:100%;
-padding:10px;
-border:1px solid #ddd;
-border-radius:8px;
-font-family:'Lexend';
-background:#eef3ff;
+/* SEARCH */
+
+.search input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Lexend';
+  background: #eef3ff;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:22px;
-margin-top:20px;
+/* GRID */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 20px;
 }
 
-.card{
-background:white;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,0.08);
-overflow:hidden;
-display:flex;
-flex-direction:column;
+/* CARD */
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.carousel img{
-width:100%;
-height:180px;
-object-fit:cover;
-cursor:pointer;
+.carousel img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  cursor: pointer;
 }
 
-.cardBody{
-padding:14px;
-display:flex;
-flex-direction:column;
-flex-grow:1;
+.cardBody {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-.title{
-font-family:'Libre Bodoni';
-font-size:20px;
+.title {
+  font-family: 'Libre Bodoni';
+  font-size: 20px;
 }
 
-.location{
-font-size:13px;
-color:#777;
-margin-bottom:8px;
+.location {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 8px;
 }
 
-.description{
-font-size:13px;
-color:#555;
+.description {
+  font-size: 13px;
+  color: #555;
 }
 
-.bottom{
-margin-top:auto;
+.bottom {
+  margin-top: auto;
 }
 
-.price{
-font-family:'Libre Bodoni';
-font-size:18px;
-margin-top:10px;
+.price {
+  font-family: 'Libre Bodoni';
+  font-size: 18px;
+  margin-top: 10px;
 }
 
-.rating{
-font-size:14px;
+.rating {
+  font-size: 14px;
 }
 
-.ratingSmall{
-font-size:10px;
-color:#777;
+.ratingSmall {
+  font-size: 10px;
+  color: #777;
 }
 
-.book{
-display:block;
-margin-top:8px;
-padding:9px;
-text-align:center;
-background:#0042FD;
-color:white;
-border-radius:20px;
-text-decoration:none;
+.book {
+  display: block;
+  margin-top: 8px;
+  padding: 9px;
+  text-align: center;
+  background: #0042FD;
+  color: white;
+  border-radius: 20px;
+  text-decoration: none;
 }
 
-.book:hover{
-background:#eee;
-color:#0042FD;
-border:1px solid #0042FD;
+.book:hover {
+  background: #eee;
+  color: #0042FD;
+  border: 1px solid #0042FD;
 }
 
-.bottomNav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:20px;
+.bottomNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.pageBtn{
-padding:6px 10px;
-margin:4px;
-border:1px solid #0042FD;
-background:white;
-cursor:pointer;
+.pageBtn {
+  padding: 6px 10px;
+  margin: 4px;
+  border: 1px solid #0042FD;
+  background: white;
+  cursor: pointer;
 }
 
-.pageBtn.active{
-background:#0042FD;
-color:white;
+.pageBtn.active {
+  background: #0042FD;
+  color: white;
 }
 
-.backTop{
-cursor:pointer;
-color:#0042FD;
+.backTop {
+  cursor: pointer;
+  color: #0042FD;
 }
 
-.lightbox{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:999;
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-.lightbox img{
-max-width:90%;
-max-height:90%;
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
 }
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
-.container{
-flex-direction:column;
-}
+  .container {
+    flex-direction: column;
+  }
 
-.sidebar{
-width:100%;
-border-bottom:1px solid #eee;
-}
+  .sidebar {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+  }
 
-.grid{
-grid-template-columns:1fr;
-}
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
 }
 
@@ -265,16 +273,12 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 
-/* slug */
-
 function slugify(text){
 return text.toLowerCase().trim()
 .replace(/[^a-z0-9\s-]/g,'')
 .replace(/\s+/g,'-')
 .replace(/-+/g,'-');
 }
-
-/* csv */
 
 function parseCSV(text){
 const rows=text.trim().split("\n");
@@ -289,8 +293,6 @@ return obj;
 });
 }
 
-/* load */
-
 async function load(){
 const res=await fetch(SHEET_URL);
 const text=await res.text();
@@ -299,10 +301,7 @@ buildFilters();
 render();
 }
 
-/* filters */
-
 function buildFilters(){
-
 const groups={};
 
 data.forEach(item=>{
@@ -334,6 +333,7 @@ el.innerText=val;
 el.onclick=()=>toggle(cat+":"+val,el);
 
 block.appendChild(el);
+
 });
 
 container.appendChild(block);
@@ -354,16 +354,12 @@ currentPage=1;
 render();
 }
 
-/* clear */
-
 function clearFilters(){
 activeFilters=[];
 currentPage=1;
 document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));
 render();
 }
-
-/* lightbox */
 
 function openLightbox(src){
 document.getElementById("lightboxImg").src=src;
@@ -374,8 +370,6 @@ function closeLightbox(){
 document.getElementById("lightbox").style.display="none";
 }
 
-/* render */
-
 function render(){
 
 const search=document.getElementById("searchInput").value.toLowerCase();
@@ -383,7 +377,7 @@ const search=document.getElementById("searchInput").value.toLowerCase();
 let filtered=data.filter(item=>{
 let tags=(item.filter_tags||"").toLowerCase();
 let match=activeFilters.every(f=>tags.includes(f.toLowerCase()));
-let matchSearch=(item.name||"").toLowerCase().includes(search);
+let matchSearch=(item.name||"").toLowerCase().includes(search) || (item.description||"").toLowerCase().includes(search);
 return match && matchSearch;
 });
 
@@ -397,7 +391,7 @@ const cards=document.getElementById("cards");
 cards.innerHTML=pageData.map(item=>{
 
 const folder=slugify(item.name);
-const img=`/images/${folder}/1.jpg`;
+let img=`/images/${folder}/1.jpg`;
 
 return `
 <div class="card">
@@ -406,6 +400,7 @@ return `
 onerror="this.src='/images/placeholder.jpg'"
 data-real="${img}"
 onclick="openLightbox(this.src)">
+<span style="position:absolute;right:10px;top:10px;color:white;font-size:16px;background:rgba(0, 0, 0, 0.5);padding:5px;border-radius:12px;cursor:pointer;">🔍</span>
 </div>
 
 <div class="cardBody">
@@ -421,6 +416,8 @@ ${item.rating} / 5
 <div class="ratingSmall">Average Rating</div>
 </div>
 
+<div class="tags">${(item.card_tags || "").split(",").map(tag=>`<span class="tag">${tag}</span>`).join("")}</div>
+
 <a class="book" href="${item.link}" target="_blank">BOOK</a>
 </div>
 
@@ -429,29 +426,22 @@ ${item.rating} / 5
 `;
 }).join("");
 
-/* load real images safely */
+renderPagination(filtered.length);
 
 document.querySelectorAll(".carousel img").forEach(img=>{
 const real=img.dataset.real;
 const test=new Image();
-
 test.onload=()=>{
 img.src=real;
 };
-
 test.onerror=()=>{
 img.src="/images/placeholder.jpg";
 };
-
 test.src=real;
 
 });
 
-renderPagination(filtered.length);
-
 }
-
-/* pagination */
 
 function renderPagination(total){
 const pages=Math.ceil(total/ITEMS_PER_PAGE);
@@ -466,8 +456,6 @@ function goPage(p){
 currentPage=p;
 render();
 }
-
-/* search */
 
 document.getElementById("searchInput").addEventListener("keydown",e=>{
 if(e.key==="Enter") render();
