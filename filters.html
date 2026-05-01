@@ -85,6 +85,11 @@ flex-direction:column;
 display:flex;
 overflow-x:auto;
 scroll-snap-type:x mandatory;
+gap:0;
+
+/* smoother mobile feel */
+scroll-behavior:smooth;
+-webkit-overflow-scrolling:touch;
 }
 
 .carousel img{
@@ -93,6 +98,12 @@ height:180px;
 object-fit:cover;
 flex-shrink:0;
 scroll-snap-align:start;
+
+/* 🔒 Disable clicking behaviour */
+pointer-events:none;
+user-select:none;
+-webkit-user-drag:none;
+-webkit-touch-callout:none;
 }
 
 .cardBody{
