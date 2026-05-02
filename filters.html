@@ -85,11 +85,7 @@ flex-direction:column;
 display:flex;
 overflow-x:auto;
 scroll-snap-type:x mandatory;
-gap:0;
-
-/* smoother mobile feel */
-scroll-behavior:smooth;
--webkit-overflow-scrolling:touch;
+gap:10px;
 }
 
 .carousel img{
@@ -98,12 +94,15 @@ height:180px;
 object-fit:cover;
 flex-shrink:0;
 scroll-snap-align:start;
-
-/* 🔒 Disable clicking behaviour */
 pointer-events:none;
-user-select:none;
--webkit-user-drag:none;
--webkit-touch-callout:none;
+}
+
+.carousel iframe{
+width:100%;
+height:180px;
+flex-shrink:0;
+scroll-snap-align:start;
+border:0;
 }
 
 .cardBody{
@@ -195,29 +194,50 @@ background:#0042FD;
 color:#fff;
 }
 
-/* MOBILE */
+.backTop{
+cursor:pointer;
+color:#0042FD;
+}
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
 @media(max-width:900px){
+  .container{
+    flex-direction:column;
+    padding:10px;
+  }
 
-.container{
-flex-direction:column;
-padding:10px;
-}
+  .sidebar{
+    width:100%;
+  }
 
-.sidebar{
-width:100%;
-}
+  .main{
+    padding:10px 5px;
+  }
 
-.main{
-padding:10px 5px;
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
+  .grid{
+    grid-template-columns:1fr;
+  }
 }
 
 </style>
+
 </head>
 
 <body>
@@ -261,163 +281,171 @@ Back To Top
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
 const MAX_ITEMS=20;
-const PER_PAGE=12;
+const ITEMS_PER_PAGE=12;
 
 let data=[];
-let filters=[];
-let page=1;
+let activeFilters=[];
+let currentPage=1;
 
-function slug(text){
-return text.toLowerCase().replace(/[^a-z0-9]/g,"");
+function slugify(text){
+return text.toLowerCase().trim()
+.replace(/[^a-z0-9\s-]/g,'')
+.replace(/\s+/g,'-')
+.replace(/-+/g,'-');
 }
 
-function parseCSV(t){
-let r=t.trim().split("\n");
-let h=r[0].split(",");
-return r.slice(1).map(row=>{
-let c=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
-let o={};
-h.forEach((k,i)=>o[k.trim()]=c?.[i]?.replaceAll('"',"")||"");
-return o;
+function parseCSV(text){
+const rows=text.trim().split("\n");
+const headers=rows[0].split(",");
+return rows.slice(1).map(row=>{
+const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+let obj={};
+headers.forEach((h,i)=>{
+obj[h.trim()]=cols?.[i]?.replaceAll('"',"") || "";
 });
+return obj;
+});
+
 }
 
 async function load(){
-let res=await fetch(SHEET_URL);
-let txt=await res.text();
-data=parseCSV(txt);
+const res=await fetch(SHEET_URL);
+const text=await res.text();
+data=parseCSV(text);
 buildFilters();
 render();
 }
 
 function buildFilters(){
+const groups={};
 
-let groups={};
-
-data.forEach(i=>{
-(i.filter_tags||"").split(",").forEach(t=>{
-let [cat,val]=t.split(":");
+data.forEach(item=>{
+(item.filter_tags||"").split(",").forEach(tag=>{
+let [cat,val]=tag.split(":");
 if(!cat||!val)return;
+
 if(!groups[cat])groups[cat]=new Set();
 groups[cat].add(val.trim());
 });
 });
 
-let order=["Property Type","Meals","Facilities","Transport","Retail","Leisure","Convenience","Female Only"];
+const order=["Property Type","Meals","Facilities","Transport","Retail","Leisure","Convenience","Female Only"];
 
-let el=document.getElementById("filters");
+const container=document.getElementById("filters");
 
 order.forEach(cat=>{
 if(!groups[cat])return;
 
-let box=document.createElement("div");
-box.innerHTML=`<div class="filterTitle">${cat}</div>`;
+let block=document.createElement("div");
+block.className="filterCategory";
+block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
-groups[cat].forEach(v=>{
-let t=document.createElement("div");
-t.className="tag";
-t.innerText=v;
-t.onclick=()=>toggle(cat+":"+v,t);
-box.appendChild(t);
+groups[cat].forEach(val=>{
+let el=document.createElement("div");
+el.className="tag";
+el.innerText=val;
+
+el.onclick=()=>toggle(cat+":"+val,el);
+
+block.appendChild(el);
+
 });
 
-el.appendChild(box);
+container.appendChild(block);
+
 });
 
 }
 
 function toggle(tag,el){
-if(filters.includes(tag)){
-filters=filters.filter(x=>x!==tag);
+if(activeFilters.includes(tag)){
+activeFilters=activeFilters.filter(t=>t!==tag);
 el.classList.remove("active");
 }else{
-filters.push(tag);
+activeFilters.push(tag);
 el.classList.add("active");
 }
-page=1;
+currentPage=1;
 render();
 }
 
 function clearFilters(){
-filters=[];
-document.querySelectorAll(".tag").forEach(t=>t.classList.remove("active"));
+activeFilters=[];
+currentPage=1;
+document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));
 render();
 }
 
 function render(){
 
-let search=document.getElementById("searchInput").value.toLowerCase();
+const search=document.getElementById("searchInput").value.toLowerCase();
 
-let list=data.filter(i=>{
-let t=(i.filter_tags||"").toLowerCase();
-let ok=filters.every(f=>t.includes(f.toLowerCase()));
-let s=(i.name+i.description).toLowerCase().includes(search);
-return ok&&s;
+let filtered=data.filter(item=>{
+let tags=(item.filter_tags||"").toLowerCase();
+let match=activeFilters.every(f=>tags.includes(f.toLowerCase()));
+let matchSearch=(item.name||"").toLowerCase().includes(search) || (item.description||"").toLowerCase().includes(search);
+return match && matchSearch;
 });
 
-list=list.slice(0,MAX_ITEMS);
+filtered=filtered.slice(0,MAX_ITEMS);
 
-let start=(page-1)*PER_PAGE;
-let view=list.slice(start,start+PER_PAGE);
+const start=(currentPage-1)*ITEMS_PER_PAGE;
+const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
 
-let el=document.getElementById("cards");
+const cards=document.getElementById("cards");
 
-el.innerHTML=view.map(i=>{
+cards.innerHTML=pageData.map(item=>{
 
-let folder=slug(i.name);
+const folder=slugify(item.name);
+let mediaUrls = (item.media || "").split(","); // Split by commas
 
-let imgs=[1,2,3].map(n=>`
-<img src="/salamguest-directory/images/${folder}/${n}.jpg"
-onerror="this.src='/salamguest-directory/images/placeholder.jpg'">
-`).join("");
+// Render both images and videos
+const mediaContent = mediaUrls.map(media => {
+  if (media.includes("https://")) {
+    // This is a video URL
+    return `<iframe width="100%" height="180" src="${media}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  } else {
+    // This is an image URL
+    return `<img src="/salamguest-directory/images/${folder}/${media}" onerror="this.src='/salamguest-directory/images/placeholder.jpg'">`;
+  }
+}).join(""); // Combine images and videos
 
 return `
 <div class="card">
-
-<div class="carousel">${imgs}</div>
-
-<div class="cardBody">
-<div class="title">${i.name}</div>
-<div class="location">${i.city}, ${i.country}</div>
-<div class="description">${i.description}</div>
-
-<div class="bottom">
-
-<div class="price">${i.price}</div>
-
-<div class="rating">
-${i.rating} / 5
-<div class="ratingSmall">Average Rating</div>
-</div>
-
-<div class="cardTags">
-${(i.card_tags||"").split(",").map(t=>`<span>${t}</span>`).join("")}
-</div>
-
-<a class="book" href="${i.link}" target="_blank">BOOK</a>
-
-</div>
-</div>
+  <div class="carousel">${mediaContent}</div>
+  <div class="cardBody">
+    <div class="title">${item.name}</div>
+    <div class="location">${item.city}, ${item.country}</div>
+    <div class="description">${item.description}</div>
+    <div class="bottom">
+      <div class="price">${item.price}</div>
+      <div class="rating">
+        ${item.rating} / 5
+        <div class="ratingSmall">Average Rating</div>
+      </div>
+      <div class="cardTags">${(item.card_tags || "").split(",").map(tag => `<span>${tag}</span>`).join("")}</div>
+      <a class="book" href="${item.link}" target="_blank">BOOK</a>
+    </div>
+  </div>
 </div>
 `;
-
 }).join("");
 
-paginate(list.length);
+renderPagination(filtered.length);
 
 }
 
-function paginate(total){
-let pages=Math.ceil(total/PER_PAGE);
+function renderPagination(total){
+const pages=Math.ceil(total/ITEMS_PER_PAGE);
 let html="";
 for(let i=1;i<=pages;i++){
-html+=`<button class="pageBtn ${i===page?'active':''}" onclick="go(${i})">${i}</button>`;
+html+=`<button class="pageBtn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
 }
 document.getElementById("pagination").innerHTML=html;
 }
 
-function go(p){
-page=p;
+function goPage(p){
+currentPage=p;
 render();
 }
 
