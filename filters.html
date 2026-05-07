@@ -18,23 +18,19 @@ background:#fff;
 color:#222;
 }
 
-/* LAYOUT */
 .container{
 display:flex;
 padding:20px;
 gap:20px;
 }
 
+/* SIDEBAR */
+
 .sidebar{
 width:260px;
 flex-shrink:0;
 }
 
-.main{
-flex:1;
-}
-
-/* FILTERS */
 .filterTitle{
 font-size:14px;
 font-weight:500;
@@ -52,6 +48,8 @@ background:#f2f2f2;
 border-radius:999px;
 font-size:13px;
 cursor:pointer;
+transition:0.2s;
+text-align:center;
 }
 
 .tag.active{
@@ -59,21 +57,19 @@ background:#0042FD;
 color:#fff;
 }
 
-/* SEARCH */
-.search input{
-width:100%;
-padding:12px;
-border-radius:12px;
-border:1px solid #dbe4ff;
-background:#eef3ff;
-font-family:Lexend;
-box-sizing:border-box;
+/* MAIN */
+
+.main{
+flex:1;
 }
 
-/* CURRENCY */
 .currencyBar{
-margin-bottom:12px;
+margin-bottom:14px;
 font-size:14px;
+}
+
+.currencyLabel{
+margin-right:6px;
 }
 
 #currencySelect{
@@ -83,34 +79,94 @@ background:transparent;
 font-family:Lexend;
 color:#0042FD;
 cursor:pointer;
+outline:none;
+font-size:14px;
+}
+
+.search input{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:14px;
+box-sizing:border-box;
 }
 
 /* GRID */
+
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:20px;
+gap:22px;
 margin-top:20px;
 }
 
 /* CARD */
+
 .card{
 background:#fff;
 border-radius:14px;
-box-shadow:0 3px 14px rgba(0,0,0,0.08);
 overflow:hidden;
+box-shadow:0 3px 14px rgba(0,0,0,0.08);
 display:flex;
 flex-direction:column;
 }
 
-/* IMAGE */
+/* CAROUSEL */
+
+.carouselWrap{
+position:relative;
+}
+
+.carousel{
+display:flex;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+scroll-behavior:smooth;
+-ms-overflow-style:none;
+scrollbar-width:none;
+}
+
+.carousel::-webkit-scrollbar{
+display:none;
+}
+
 .carousel img{
 width:100%;
 height:210px;
 object-fit:cover;
+flex-shrink:0;
+scroll-snap-align:start;
+pointer-events:none;
 }
 
-/* BODY */
+/* INDICATOR */
+
+.carouselIndicators{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:5px;
+}
+
+.carouselIndicators span{
+width:16px;
+height:3px;
+border-radius:999px;
+background:rgba(255,255,255,0.45);
+transition:0.2s;
+}
+
+.carouselIndicators span.active{
+background:#fff;
+}
+
+/* CARD BODY */
+
 .cardBody{
 padding:16px;
 display:flex;
@@ -121,62 +177,146 @@ flex-grow:1;
 .title{
 font-family:"Libre Bodoni";
 font-size:22px;
+line-height:1.2;
+margin-bottom:4px;
 }
 
 .location{
 font-size:13px;
 color:#666;
-margin-bottom:6px;
+margin-bottom:10px;
 }
 
 .description{
 font-size:13px;
+line-height:1.5;
 color:#444;
 }
 
-/* PRICE */
+.bottom{
+margin-top:auto;
+padding-top:12px;
+}
+
 .price{
 font-family:"Libre Bodoni";
 font-size:20px;
-margin-top:10px;
+margin-bottom:8px;
 }
 
 .currencyClickable{
 text-decoration:underline;
 }
 
-/* TAGS (FIXED PADDING) */
+.rating{
+font-size:14px;
+color:#0042FD;
+}
+
+.ratingSmall{
+font-size:10px;
+color:#777;
+margin-top:2px;
+}
+
+/* CARD TAGS */
+
 .cardTags{
 margin-top:10px;
-display:flex;
-flex-wrap:wrap;
-gap:6px;
 }
 
 .cardTags span{
+display:inline-flex;
+align-items:center;
+justify-content:center;
 background:#eaf0ff;
 color:#0042FD;
-padding:8px 12px;
+padding:7px 12px;
 border-radius:999px;
 font-size:11px;
+margin:4px 4px 0 0;
+line-height:1.2;
 }
 
-/* BUTTON */
+/* BOOK BUTTON */
+
 .book{
+display:block;
 margin-top:12px;
 padding:12px;
 text-align:center;
 background:#0042FD;
 color:#fff;
-border-radius:999px;
 text-decoration:none;
+border-radius:999px;
+transition:0.2s;
+border:2px solid #0042FD;
+}
+
+.book:hover{
+background:#f5f5f5;
+color:#0042FD;
+}
+
+/* BOTTOM NAV */
+
+.bottomNav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:24px;
+}
+
+.pageBtn{
+padding:7px 12px;
+margin:2px;
+border:1px solid #0042FD;
+background:#fff;
+color:#0042FD;
+cursor:pointer;
+border-radius:8px;
+}
+
+.pageBtn.active{
+background:#0042FD;
+color:#fff;
+}
+
+/* NO RESULTS */
+
+#noResults{
+display:none;
+text-align:center;
+margin-top:40px;
+font-size:14px;
+color:#666;
 }
 
 /* MOBILE */
+
 @media(max-width:900px){
-.container{flex-direction:column;}
-.sidebar{width:100%;}
-.grid{grid-template-columns:1fr;}
+
+.container{
+flex-direction:column;
+padding:12px;
+}
+
+.sidebar{
+width:100%;
+}
+
+.main{
+width:100%;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.search input{
+width:100%;
+}
+
 }
 
 </style>
@@ -185,27 +325,21 @@ text-decoration:none;
 
 <body>
 
-<div class="container">
+<div id="filtersSection" class="container">
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="filters"></div>
 
-<!-- MAIN -->
 <div class="main">
 
 <div class="currencyBar">
-Currency:
+<span class="currencyLabel">Currency:</span>
+
 <select id="currencySelect" onchange="changeCurrency(this.value)">
 <option value="MYR">MYR</option>
 <option value="USD">USD</option>
-<option value="SGD">SGD</option>
 <option value="GBP">GBP</option>
 <option value="EUR">EUR</option>
 <option value="JPY">JPY</option>
-<option value="SAR">SAR</option>
-<option value="AED">AED</option>
-<option value="IDR">IDR</option>
-<option value="TRY">TRY</option>
 </select>
 </div>
 
@@ -213,107 +347,126 @@ Currency:
 <input id="searchInput" placeholder="Search hotel, stay or any keyword">
 </div>
 
+<div style="margin-top:10px;">
+
+<button onclick="clearAll()" style="
+padding:8px 16px;
+border-radius:999px;
+border:2px solid #0042FD;
+background:white;
+color:#0042FD;
+cursor:pointer;
+font-family:Lexend;
+">
+Clear
+</button>
+
+</div>
+
+<div id="noResults">
+No results found. Please try a different keyword.
+</div>
+
 <div class="grid" id="cards"></div>
+
+<div class="bottomNav">
+
+<div onclick="scrollTopSmooth()" style="
+cursor:pointer;
+color:#0042FD;
+font-size:14px;
+">
+Back To Top
+</div>
+
+<div id="pagination"></div>
+
+</div>
 
 </div>
 </div>
 
 <script>
 
-const SHEET_URL="YOUR_SHEET_URL_HERE";
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+
+const MAX_ITEMS=20;
+const ITEMS_PER_PAGE=12;
 
 let data=[];
 let activeFilters=[];
+let currentPage=1;
+
 let currentCurrency="MYR";
 
-/* LIVE RATES */
-let exchangeRates={MYR:1};
+let exchangeRates={
+MYR:1
+};
 
 async function loadRates(){
 
 try{
 
 const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
+
 const json=await res.json();
 
 exchangeRates={
 MYR:1,
 USD:json.rates.USD,
-SGD:json.rates.SGD,
 GBP:json.rates.GBP,
 EUR:json.rates.EUR,
-JPY:json.rates.JPY,
-SAR:json.rates.SAR,
-AED:json.rates.AED,
-IDR:json.rates.IDR,
-TRY:json.rates.TRY
+JPY:json.rates.JPY
 };
 
-}catch(e){
+}catch(err){
 
-/* fallback */
 exchangeRates={
 MYR:1,
 USD:0.21,
-SGD:0.30,
 GBP:0.16,
 EUR:0.19,
-JPY:30,
-SAR:0.79,
-AED:0.77,
-IDR:3300,
-TRY:6.5
+JPY:30
 };
 
 }
 
 }
 
-/* CURRENCY SWITCH */
-function changeCurrency(c){
-currentCurrency=c;
+function changeCurrency(currency){
+currentCurrency=currency;
 render();
 }
 
-/* PRICE FORMAT */
 function formatPrice(price){
 
 let num=parseFloat(price)||0;
 
 let converted=num*exchangeRates[currentCurrency];
 
-converted=converted.toFixed(2);
+converted=Math.round(converted);
 
-return `<span class="currencyClickable">${currentCurrency}</span> ${converted} / night`;
-}
-
-/* LOAD */
-async function load(){
-
-await loadRates();
-
-const res=await fetch(SHEET_URL);
-const text=await res.text();
-
-data=parseCSV(text);
-
-render();
+return `
+<span class="currencyClickable">${currentCurrency}</span>
+ ${converted} / night
+`;
 
 }
 
 function parseCSV(text){
 
 const rows=text.trim().split("\n");
+
 const headers=rows[0].split(",");
 
-return rows.slice(1).map(r=>{
+return rows.slice(1).map(row=>{
 
-const cols=r.split(",");
+const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
 let obj={};
 
 headers.forEach((h,i)=>{
-obj[h.trim()]=cols[i];
+obj[h.trim()]=cols?.[i]?.replaceAll('"',"")||"";
 });
 
 return obj;
@@ -322,51 +475,383 @@ return obj;
 
 }
 
-/* RENDER */
-function render(){
+async function load(){
 
-const search=document.getElementById("searchInput").value.toLowerCase();
+await loadRates();
 
-let filtered=data.filter(i=>{
+const res=await fetch(SHEET_URL);
 
-return (i.name||"").toLowerCase().includes(search)
-|| (i.description||"").toLowerCase().includes(search);
+const text=await res.text();
 
-});
+data=parseCSV(text);
 
-const cards=document.getElementById("cards");
+buildFilters();
 
-cards.innerHTML=filtered.map(i=>`
-
-<div class="card">
-
-<img src="${i.image}" onerror="this.src='images/placeholder.jpg'">
-
-<div class="cardBody">
-
-<div class="title">${i.name}</div>
-<div class="location">${i.location}</div>
-<div class="description">${i.description}</div>
-
-<div class="price">
-${formatPrice(i.price)}
-</div>
-
-<div class="cardTags">
-${(i.tags||"").split(",").map(t=>`<span>${t}</span>`).join("")}
-</div>
-
-<a class="book" href="${i.link}" target="_blank">BOOK</a>
-
-</div>
-
-</div>
-
-`).join("");
+render();
 
 }
 
-document.getElementById("searchInput").addEventListener("input",render);
+function buildFilters(){
+
+const groups={};
+
+data.forEach(item=>{
+
+(item.filter_tags||"").split(",").forEach(tag=>{
+
+if(tag.toLowerCase().includes("view:")) return;
+
+let [cat,val]=tag.split(":");
+
+if(!cat||!val)return;
+
+if(!groups[cat])groups[cat]=new Set();
+
+groups[cat].add(val.trim());
+
+});
+
+});
+
+const order=[
+"Property Type",
+"Meals",
+"Facilities",
+"Transport",
+"Retail",
+"Leisure",
+"Convenience",
+"Female Only"
+];
+
+const container=document.getElementById("filters");
+
+order.forEach(cat=>{
+
+if(!groups[cat])return;
+
+let block=document.createElement("div");
+
+block.innerHTML=`<div class="filterTitle">${cat}</div>`;
+
+groups[cat].forEach(val=>{
+
+let el=document.createElement("div");
+
+el.className="tag";
+
+el.innerText=val;
+
+el.onclick=()=>toggle(cat+":"+val,el);
+
+block.appendChild(el);
+
+});
+
+container.appendChild(block);
+
+});
+
+}
+
+function toggle(tag,el){
+
+if(activeFilters.includes(tag)){
+
+activeFilters=activeFilters.filter(t=>t!==tag);
+
+el.classList.remove("active");
+
+}else{
+
+activeFilters.push(tag);
+
+el.classList.add("active");
+
+}
+
+currentPage=1;
+
+render();
+
+}
+
+function applyCurated(list){
+
+activeFilters=list;
+
+currentPage=1;
+
+document.querySelectorAll(".tag").forEach(tag=>{
+tag.classList.remove("active");
+});
+
+document.querySelectorAll(".tag").forEach(tagEl=>{
+
+const val=tagEl.innerText;
+
+const cat=tagEl.parentElement.querySelector(".filterTitle")?.innerText;
+
+const combined=cat+":"+val;
+
+if(list.includes(combined)){
+tagEl.classList.add("active");
+}
+
+});
+
+render();
+
+document.getElementById("filtersSection")
+.scrollIntoView({behavior:"smooth"});
+
+}
+
+function clearAll(){
+
+activeFilters=[];
+
+currentPage=1;
+
+document.querySelectorAll(".tag").forEach(t=>{
+t.classList.remove("active");
+});
+
+document.getElementById("searchInput").value="";
+
+render();
+
+}
+
+function scrollTopSmooth(){
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function render(){
+
+const search=document.getElementById("searchInput")
+.value.toLowerCase();
+
+let filtered=data.filter(item=>{
+
+let tags=(item.filter_tags||"").toLowerCase();
+
+let isBasic=tags.includes("view: basic");
+
+let matchFilters=activeFilters.every(f=>
+tags.includes(f.toLowerCase())
+);
+
+let searchMatch=
+(item.name||"").toLowerCase().includes(search)
+||
+(item.description||"").toLowerCase().includes(search);
+
+return isBasic && matchFilters && searchMatch;
+
+});
+
+if(filtered.length===0){
+
+document.getElementById("noResults")
+.style.display="block";
+
+}else{
+
+document.getElementById("noResults")
+.style.display="none";
+
+}
+
+filtered=filtered.slice(0,MAX_ITEMS);
+
+const start=(currentPage-1)*ITEMS_PER_PAGE;
+
+const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
+
+const cards=document.getElementById("cards");
+
+cards.innerHTML=pageData.map(item=>{
+
+const folder=(item.media||"").trim();
+
+let mediaContent="";
+
+if(folder){
+
+for(let i=1;i<=10;i++){
+
+mediaContent+=`
+<img
+src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
+onerror="this.remove()"
+>
+`;
+
+}
+
+}else{
+
+mediaContent=`
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+`;
+
+}
+
+return `
+
+<div class="card">
+
+<div class="carouselWrap">
+
+<div class="carousel">
+${mediaContent}
+</div>
+
+<div class="carouselIndicators"></div>
+
+</div>
+
+<div class="cardBody">
+
+<div class="title">
+${item.name}
+</div>
+
+<div class="location">
+${item.city}, ${item.country}
+</div>
+
+<div class="description">
+${item.description}
+</div>
+
+<div class="bottom">
+
+<div class="price">
+${formatPrice(item.price)}
+</div>
+
+<div class="rating">
+${item.rating} / 5
+<div class="ratingSmall">
+Average Rating
+</div>
+</div>
+
+<div class="cardTags">
+${(item.card_tags||"")
+.split(",")
+.map(tag=>`<span>${tag}</span>`)
+.join("")}
+</div>
+
+<a class="book"
+href="${item.link}"
+target="_blank">
+BOOK
+</a>
+
+</div>
+</div>
+</div>
+
+`;
+
+}).join("");
+
+setTimeout(()=>{
+
+document.querySelectorAll(".carouselWrap")
+.forEach(wrap=>{
+
+const carousel=wrap.querySelector(".carousel");
+
+const indicators=wrap.querySelector(".carouselIndicators");
+
+const items=carousel.children.length;
+
+if(items<=1)return;
+
+indicators.innerHTML="";
+
+for(let i=0;i<items;i++){
+
+const dot=document.createElement("span");
+
+if(i===0)dot.classList.add("active");
+
+indicators.appendChild(dot);
+
+}
+
+carousel.addEventListener("scroll",()=>{
+
+const index=Math.round(
+carousel.scrollLeft/carousel.offsetWidth
+);
+
+indicators.querySelectorAll("span")
+.forEach((d,i)=>{
+
+d.classList.toggle("active",i===index);
+
+});
+
+});
+
+});
+
+},300);
+
+renderPagination(filtered.length);
+
+}
+
+function renderPagination(total){
+
+const pages=Math.ceil(total/ITEMS_PER_PAGE);
+
+let html="";
+
+for(let i=1;i<=pages;i++){
+
+html+=`
+<button
+class="pageBtn ${i===currentPage?'active':''}"
+onclick="goPage(${i})"
+>
+${i}
+</button>
+`;
+
+}
+
+document.getElementById("pagination").innerHTML=html;
+
+}
+
+function goPage(p){
+
+currentPage=p;
+
+render();
+
+}
+
+document.getElementById("searchInput")
+.addEventListener("keydown",e=>{
+
+if(e.key==="Enter"){
+render();
+}
+
+});
 
 load();
 
