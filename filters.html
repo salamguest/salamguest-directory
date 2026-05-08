@@ -18,18 +18,24 @@ background:#fff;
 color:#222;
 }
 
+/* LAYOUT */
+
 .container{
 display:flex;
 padding:20px;
 gap:20px;
 }
 
-/* SIDEBAR */
-
 .sidebar{
 width:260px;
 flex-shrink:0;
 }
+
+.main{
+flex:1;
+}
+
+/* FILTERS */
 
 .filterTitle{
 font-size:14px;
@@ -49,7 +55,6 @@ border-radius:999px;
 font-size:13px;
 cursor:pointer;
 transition:0.2s;
-text-align:center;
 }
 
 .tag.active{
@@ -57,31 +62,7 @@ background:#0042FD;
 color:#fff;
 }
 
-/* MAIN */
-
-.main{
-flex:1;
-}
-
-.currencyBar{
-margin-bottom:14px;
-font-size:14px;
-}
-
-.currencyLabel{
-margin-right:6px;
-}
-
-#currencySelect{
-border:none;
-border-bottom:1px solid #0042FD;
-background:transparent;
-font-family:Lexend;
-color:#0042FD;
-cursor:pointer;
-outline:none;
-font-size:14px;
-}
+/* SEARCH */
 
 .search input{
 width:100%;
@@ -142,7 +123,7 @@ scroll-snap-align:start;
 pointer-events:none;
 }
 
-/* INDICATOR */
+/* INDICATORS */
 
 .carouselIndicators{
 position:absolute;
@@ -198,19 +179,36 @@ margin-top:auto;
 padding-top:12px;
 }
 
-.price{
-font-family:"Libre Bodoni";
-font-size:20px;
-margin-bottom:8px;
+/* PRICE */
+
+.priceWrap{
+margin-top:10px;
 }
 
-.currencyClickable{
-text-decoration:underline;
+.priceAmount{
+font-family:"Libre Bodoni";
+font-size:24px;
+line-height:1;
 }
+
+.priceCurrency{
+margin-top:7px;
+font-size:11px;
+color:#666;
+letter-spacing:0.3px;
+}
+
+.priceCurrency span{
+border-bottom:1px dotted #666;
+cursor:pointer;
+}
+
+/* RATING */
 
 .rating{
 font-size:14px;
 color:#0042FD;
+margin-top:10px;
 }
 
 .ratingSmall{
@@ -222,7 +220,10 @@ margin-top:2px;
 /* CARD TAGS */
 
 .cardTags{
-margin-top:10px;
+margin-top:12px;
+display:flex;
+flex-wrap:wrap;
+gap:6px;
 }
 
 .cardTags span{
@@ -231,10 +232,9 @@ align-items:center;
 justify-content:center;
 background:#eaf0ff;
 color:#0042FD;
-padding:7px 12px;
+padding:8px 12px;
 border-radius:999px;
 font-size:11px;
-margin:4px 4px 0 0;
 line-height:1.2;
 }
 
@@ -242,7 +242,7 @@ line-height:1.2;
 
 .book{
 display:block;
-margin-top:12px;
+margin-top:14px;
 padding:12px;
 text-align:center;
 background:#0042FD;
@@ -292,6 +292,29 @@ font-size:14px;
 color:#666;
 }
 
+/* CURRENCY MENU */
+
+#currencyMenu{
+display:none;
+position:fixed;
+background:white;
+border-radius:12px;
+box-shadow:0 4px 18px rgba(0,0,0,0.12);
+padding:8px;
+z-index:9999;
+}
+
+.currencyOption{
+padding:8px 12px;
+cursor:pointer;
+border-radius:8px;
+font-size:13px;
+}
+
+.currencyOption:hover{
+background:#eef3ff;
+}
+
 /* MOBILE */
 
 @media(max-width:900px){
@@ -330,18 +353,6 @@ width:100%;
 <div class="sidebar" id="filters"></div>
 
 <div class="main">
-
-<div class="currencyBar">
-<span class="currencyLabel">Currency:</span>
-
-<select id="currencySelect" onchange="changeCurrency(this.value)">
-<option value="MYR">MYR</option>
-<option value="USD">USD</option>
-<option value="GBP">GBP</option>
-<option value="EUR">EUR</option>
-<option value="JPY">JPY</option>
-</select>
-</div>
 
 <div class="search">
 <input id="searchInput" placeholder="Search hotel, stay or any keyword">
@@ -386,6 +397,23 @@ Back To Top
 </div>
 </div>
 
+<!-- CURRENCY MENU -->
+
+<div id="currencyMenu">
+
+<div onclick="setCurrency('MYR')" class="currencyOption">MYR</div>
+<div onclick="setCurrency('USD')" class="currencyOption">USD</div>
+<div onclick="setCurrency('SGD')" class="currencyOption">SGD</div>
+<div onclick="setCurrency('GBP')" class="currencyOption">GBP</div>
+<div onclick="setCurrency('EUR')" class="currencyOption">EUR</div>
+<div onclick="setCurrency('JPY')" class="currencyOption">JPY</div>
+<div onclick="setCurrency('SAR')" class="currencyOption">SAR</div>
+<div onclick="setCurrency('AED')" class="currencyOption">AED</div>
+<div onclick="setCurrency('IDR')" class="currencyOption">IDR</div>
+<div onclick="setCurrency('TRY')" class="currencyOption">TRY</div>
+
+</div>
+
 <script>
 
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
@@ -396,8 +424,9 @@ const ITEMS_PER_PAGE=12;
 let data=[];
 let activeFilters=[];
 let currentPage=1;
-
 let currentCurrency="MYR";
+
+/* EXCHANGE RATES */
 
 let exchangeRates={
 MYR:1
@@ -414,9 +443,14 @@ const json=await res.json();
 exchangeRates={
 MYR:1,
 USD:json.rates.USD,
+SGD:json.rates.SGD,
 GBP:json.rates.GBP,
 EUR:json.rates.EUR,
-JPY:json.rates.JPY
+JPY:json.rates.JPY,
+SAR:json.rates.SAR,
+AED:json.rates.AED,
+IDR:json.rates.IDR,
+TRY:json.rates.TRY
 };
 
 }catch(err){
@@ -424,19 +458,52 @@ JPY:json.rates.JPY
 exchangeRates={
 MYR:1,
 USD:0.21,
+SGD:0.30,
 GBP:0.16,
 EUR:0.19,
-JPY:30
+JPY:30,
+SAR:0.79,
+AED:0.77,
+IDR:3300,
+TRY:6.5
 };
 
 }
 
 }
 
-function changeCurrency(currency){
-currentCurrency=currency;
-render();
+function toggleCurrencyMenu(e){
+
+e.stopPropagation();
+
+const menu=document.getElementById("currencyMenu");
+
+menu.style.display="block";
+
+menu.style.left=e.pageX+"px";
+menu.style.top=e.pageY+"px";
+
 }
+
+function setCurrency(currency){
+
+currentCurrency=currency;
+
+document.getElementById("currencyMenu").style.display="none";
+
+render();
+
+}
+
+window.addEventListener("click",(e)=>{
+
+if(!e.target.closest(".priceCurrency")){
+
+document.getElementById("currencyMenu").style.display="none";
+
+}
+
+});
 
 function formatPrice(price){
 
@@ -444,12 +511,7 @@ let num=parseFloat(price)||0;
 
 let converted=num*exchangeRates[currentCurrency];
 
-converted=Math.round(converted);
-
-return `
-<span class="currencyClickable">${currentCurrency}</span>
- ${converted} / night
-`;
+return converted.toFixed(2);
 
 }
 
@@ -573,37 +635,6 @@ el.classList.add("active");
 currentPage=1;
 
 render();
-
-}
-
-function applyCurated(list){
-
-activeFilters=list;
-
-currentPage=1;
-
-document.querySelectorAll(".tag").forEach(tag=>{
-tag.classList.remove("active");
-});
-
-document.querySelectorAll(".tag").forEach(tagEl=>{
-
-const val=tagEl.innerText;
-
-const cat=tagEl.parentElement.querySelector(".filterTitle")?.innerText;
-
-const combined=cat+":"+val;
-
-if(list.includes(combined)){
-tagEl.classList.add("active");
-}
-
-});
-
-render();
-
-document.getElementById("filtersSection")
-.scrollIntoView({behavior:"smooth"});
 
 }
 
@@ -733,8 +764,18 @@ ${item.description}
 
 <div class="bottom">
 
-<div class="price">
+<div class="priceWrap">
+
+<div class="priceAmount">
 ${formatPrice(item.price)}
+</div>
+
+<div class="priceCurrency">
+<span onclick="toggleCurrencyMenu(event)">
+${currentCurrency}
+</span> / night
+</div>
+
 </div>
 
 <div class="rating">
