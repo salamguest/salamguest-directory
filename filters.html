@@ -13,29 +13,23 @@
 
 body{
 margin:0;
-font-family:Lexend;
+font-family:Lexend,sans-serif;
 background:#fff;
 color:#222;
 }
 
-/* LAYOUT */
-
 .container{
 display:flex;
-padding:20px;
 gap:20px;
+padding:20px;
 }
+
+/* SIDEBAR */
 
 .sidebar{
 width:260px;
 flex-shrink:0;
 }
-
-.main{
-flex:1;
-}
-
-/* FILTERS */
 
 .filterTitle{
 font-size:14px;
@@ -55,6 +49,7 @@ border-radius:999px;
 font-size:13px;
 cursor:pointer;
 transition:0.2s;
+text-align:center;
 }
 
 .tag.active{
@@ -62,7 +57,11 @@ background:#0042FD;
 color:#fff;
 }
 
-/* SEARCH */
+/* MAIN */
+
+.main{
+flex:1;
+}
 
 .search input{
 width:100%;
@@ -73,6 +72,25 @@ background:#eef3ff;
 font-family:Lexend;
 font-size:14px;
 box-sizing:border-box;
+}
+
+/* BUTTONS */
+
+.topButtons{
+margin-top:10px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.clearBtn{
+padding:8px 16px;
+border-radius:999px;
+border:2px solid #0042FD;
+background:white;
+color:#0042FD;
+cursor:pointer;
+font-family:Lexend;
 }
 
 /* GRID */
@@ -87,8 +105,8 @@ margin-top:20px;
 /* CARD */
 
 .card{
-background:#fff;
-border-radius:14px;
+background:white;
+border-radius:16px;
 overflow:hidden;
 box-shadow:0 3px 14px rgba(0,0,0,0.08);
 display:flex;
@@ -99,6 +117,7 @@ flex-direction:column;
 
 .carouselWrap{
 position:relative;
+overflow:hidden;
 }
 
 .carousel{
@@ -116,11 +135,10 @@ display:none;
 
 .carousel img{
 width:100%;
-height:210px;
+height:220px;
 object-fit:cover;
 flex-shrink:0;
 scroll-snap-align:start;
-pointer-events:none;
 }
 
 /* INDICATORS */
@@ -132,18 +150,19 @@ left:50%;
 transform:translateX(-50%);
 display:flex;
 gap:5px;
+z-index:2;
 }
 
 .carouselIndicators span{
 width:16px;
 height:3px;
 border-radius:999px;
-background:rgba(255,255,255,0.45);
+background:rgba(255,255,255,0.4);
 transition:0.2s;
 }
 
 .carouselIndicators span.active{
-background:#fff;
+background:white;
 }
 
 /* CARD BODY */
@@ -156,8 +175,8 @@ flex-grow:1;
 }
 
 .title{
-font-family:"Libre Bodoni";
-font-size:22px;
+font-family:"Libre Bodoni",serif;
+font-size:24px;
 line-height:1.2;
 margin-bottom:4px;
 }
@@ -170,29 +189,25 @@ margin-bottom:10px;
 
 .description{
 font-size:13px;
-line-height:1.5;
+line-height:1.6;
 color:#444;
-}
-
-.bottom{
-margin-top:auto;
-padding-top:12px;
+white-space:pre-line;
 }
 
 /* PRICE */
 
 .priceWrap{
-margin-top:10px;
+margin-top:14px;
 }
 
 .priceAmount{
-font-family:"Libre Bodoni";
-font-size:24px;
+font-family:"Libre Bodoni",serif;
+font-size:26px;
 line-height:1;
 }
 
 .priceCurrency{
-margin-top:7px;
+margin-top:8px;
 font-size:11px;
 color:#666;
 letter-spacing:0.3px;
@@ -206,9 +221,9 @@ cursor:pointer;
 /* RATING */
 
 .rating{
+margin-top:12px;
 font-size:14px;
 color:#0042FD;
-margin-top:10px;
 }
 
 .ratingSmall{
@@ -238,19 +253,56 @@ font-size:11px;
 line-height:1.2;
 }
 
+/* EXTRA INFO */
+
+.extraInfo{
+margin-top:12px;
+font-size:12px;
+line-height:1.6;
+color:#555;
+white-space:pre-line;
+}
+
+/* QUICK LINKS */
+
+.quickLinks{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-top:12px;
+}
+
+.quickLinks a{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:8px 12px;
+border-radius:999px;
+background:#f3f6ff;
+color:#0042FD;
+font-size:11px;
+text-decoration:none;
+transition:0.2s;
+}
+
+.quickLinks a:hover{
+background:#0042FD;
+color:white;
+}
+
 /* BOOK BUTTON */
 
 .book{
 display:block;
-margin-top:14px;
+margin-top:16px;
 padding:12px;
 text-align:center;
 background:#0042FD;
-color:#fff;
+color:white;
 text-decoration:none;
 border-radius:999px;
-transition:0.2s;
 border:2px solid #0042FD;
+transition:0.2s;
 }
 
 .book:hover{
@@ -258,7 +310,11 @@ background:#f5f5f5;
 color:#0042FD;
 }
 
-/* BOTTOM NAV */
+/* BOTTOM */
+
+.bottom{
+margin-top:auto;
+}
 
 .bottomNav{
 display:flex;
@@ -271,7 +327,7 @@ margin-top:24px;
 padding:7px 12px;
 margin:2px;
 border:1px solid #0042FD;
-background:#fff;
+background:white;
 color:#0042FD;
 cursor:pointer;
 border-radius:8px;
@@ -279,7 +335,7 @@ border-radius:8px;
 
 .pageBtn.active{
 background:#0042FD;
-color:#fff;
+color:white;
 }
 
 /* NO RESULTS */
@@ -315,6 +371,43 @@ font-size:13px;
 background:#eef3ff;
 }
 
+/* REDIRECT */
+
+#redirectOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:99999;
+}
+
+.redirectBox{
+background:white;
+padding:24px;
+border-radius:18px;
+text-align:center;
+width:240px;
+box-shadow:0 10px 40px rgba(0,0,0,0.15);
+}
+
+.spinner{
+width:32px;
+height:32px;
+border:3px solid #ddd;
+border-top-color:#0042FD;
+border-radius:50%;
+margin:0 auto 16px;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+}
+
 /* MOBILE */
 
 @media(max-width:900px){
@@ -328,16 +421,8 @@ padding:12px;
 width:100%;
 }
 
-.main{
-width:100%;
-}
-
 .grid{
 grid-template-columns:1fr;
-}
-
-.search input{
-width:100%;
 }
 
 }
@@ -348,7 +433,7 @@ width:100%;
 
 <body>
 
-<div id="filtersSection" class="container">
+<div class="container">
 
 <div class="sidebar" id="filters"></div>
 
@@ -358,17 +443,9 @@ width:100%;
 <input id="searchInput" placeholder="Search hotel, stay or any keyword">
 </div>
 
-<div style="margin-top:10px;">
+<div class="topButtons">
 
-<button onclick="clearAll()" style="
-padding:8px 16px;
-border-radius:999px;
-border:2px solid #0042FD;
-background:white;
-color:#0042FD;
-cursor:pointer;
-font-family:Lexend;
-">
+<button class="clearBtn" onclick="clearAll()">
 Clear
 </button>
 
@@ -414,6 +491,22 @@ Back To Top
 
 </div>
 
+<!-- REDIRECT -->
+
+<div id="redirectOverlay">
+
+<div class="redirectBox">
+
+<div class="spinner"></div>
+
+<div style="font-size:14px;">
+Redirecting to booking partner...
+</div>
+
+</div>
+
+</div>
+
 <script>
 
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
@@ -426,11 +519,11 @@ let activeFilters=[];
 let currentPage=1;
 let currentCurrency="MYR";
 
-/* EXCHANGE RATES */
-
 let exchangeRates={
 MYR:1
 };
+
+/* EXCHANGE RATES */
 
 async function loadRates(){
 
@@ -472,6 +565,8 @@ TRY:6.5
 
 }
 
+/* CURRENCY */
+
 function toggleCurrencyMenu(e){
 
 e.stopPropagation();
@@ -495,15 +590,21 @@ render();
 
 }
 
-window.addEventListener("click",(e)=>{
+document.addEventListener("click",(e)=>{
 
-if(!e.target.closest(".priceCurrency")){
+const menu=document.getElementById("currencyMenu");
 
-document.getElementById("currencyMenu").style.display="none";
-
+if(
+!e.target.closest(".priceCurrency")
+&&
+!e.target.closest("#currencyMenu")
+){
+menu.style.display="none";
 }
 
 });
+
+/* FORMAT PRICE */
 
 function formatPrice(price){
 
@@ -514,6 +615,8 @@ let converted=num*exchangeRates[currentCurrency];
 return converted.toFixed(2);
 
 }
+
+/* CSV */
 
 function parseCSV(text){
 
@@ -537,6 +640,8 @@ return obj;
 
 }
 
+/* LOAD */
+
 async function load(){
 
 await loadRates();
@@ -552,6 +657,8 @@ buildFilters();
 render();
 
 }
+
+/* FILTERS */
 
 function buildFilters(){
 
@@ -616,6 +723,8 @@ container.appendChild(block);
 
 }
 
+/* TOGGLE */
+
 function toggle(tag,el){
 
 if(activeFilters.includes(tag)){
@@ -638,6 +747,8 @@ render();
 
 }
 
+/* CLEAR */
+
 function clearAll(){
 
 activeFilters=[];
@@ -654,6 +765,8 @@ render();
 
 }
 
+/* SCROLL */
+
 function scrollTopSmooth(){
 
 window.scrollTo({
@@ -662,6 +775,26 @@ behavior:"smooth"
 });
 
 }
+
+/* REDIRECT */
+
+function redirectBooking(url){
+
+document.getElementById("redirectOverlay")
+.style.display="flex";
+
+setTimeout(()=>{
+
+window.open(url,"_blank");
+
+document.getElementById("redirectOverlay")
+.style.display="none";
+
+},900);
+
+}
+
+/* RENDER */
 
 function render(){
 
@@ -720,7 +853,8 @@ for(let i=1;i<=10;i++){
 mediaContent+=`
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.remove()"
+onerror="this.style.display='none'"
+onload="this.dataset.loaded='true'"
 >
 `;
 
@@ -792,9 +926,33 @@ ${(item.card_tags||"")
 .join("")}
 </div>
 
+<div class="extraInfo">
+${item.extra_info || ""}
+</div>
+
+<div class="quickLinks">
+
+${(item.quick_links||"")
+.split(",")
+.map(link=>{
+
+const parts=link.split("|");
+
+if(parts.length<2)return "";
+
+return `
+<a href="${parts[1]}">
+${parts[0]}
+</a>
+`;
+
+}).join("")}
+
+</div>
+
 <a class="book"
-href="${item.link}"
-target="_blank">
+href="javascript:void(0)"
+onclick="redirectBooking('${item.link}')">
 BOOK
 </a>
 
@@ -815,7 +973,9 @@ const carousel=wrap.querySelector(".carousel");
 
 const indicators=wrap.querySelector(".carouselIndicators");
 
-const items=carousel.children.length;
+const items=[
+...carousel.children
+].filter(img=>img.dataset.loaded==="true").length;
 
 if(items<=1)return;
 
@@ -854,6 +1014,8 @@ renderPagination(filtered.length);
 
 }
 
+/* PAGINATION */
+
 function renderPagination(total){
 
 const pages=Math.ceil(total/ITEMS_PER_PAGE);
@@ -884,6 +1046,8 @@ currentPage=p;
 render();
 
 }
+
+/* SEARCH ENTER */
 
 document.getElementById("searchInput")
 .addEventListener("keydown",e=>{
