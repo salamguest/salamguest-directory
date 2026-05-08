@@ -184,7 +184,7 @@ margin-bottom:4px;
 .location{
 font-size:13px;
 color:#666;
-margin-bottom:10px;
+margin-bottom:6px;
 }
 
 .description{
@@ -211,11 +211,10 @@ margin-top:8px;
 font-size:11px;
 color:#666;
 letter-spacing:0.3px;
-}
-
-.priceCurrency span{
-border-bottom:1px dotted #666;
 cursor:pointer;
+display:inline-block;
+border-bottom:1px dotted #666;
+width:fit-content;
 }
 
 /* RATING */
@@ -232,16 +231,16 @@ color:#777;
 margin-top:2px;
 }
 
-/* CARD TAGS */
+/* TAGS + QUICK LINKS */
 
-.cardTags{
-margin-top:12px;
+.tagsRow{
 display:flex;
 flex-wrap:wrap;
 gap:6px;
+margin-top:12px;
 }
 
-.cardTags span{
+.cardTag{
 display:inline-flex;
 align-items:center;
 justify-content:center;
@@ -253,41 +252,22 @@ font-size:11px;
 line-height:1.2;
 }
 
-/* EXTRA INFO */
-
-.extraInfo{
-margin-top:12px;
-font-size:12px;
-line-height:1.6;
-color:#555;
-white-space:pre-line;
-}
-
-/* QUICK LINKS */
-
-.quickLinks{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
-margin-top:12px;
-}
-
-.quickLinks a{
+.quickLink{
 display:inline-flex;
 align-items:center;
 justify-content:center;
+background:#f1f1f1;
+color:#444;
 padding:8px 12px;
 border-radius:999px;
-background:#f3f6ff;
-color:#0042FD;
 font-size:11px;
+line-height:1.2;
 text-decoration:none;
 transition:0.2s;
 }
 
-.quickLinks a:hover{
-background:#0042FD;
-color:white;
+.quickLink:hover{
+background:#e4e4e4;
 }
 
 /* BOOK BUTTON */
@@ -904,10 +884,9 @@ ${item.description}
 ${formatPrice(item.price)}
 </div>
 
-<div class="priceCurrency">
-<span onclick="toggleCurrencyMenu(event)">
-${currentCurrency}
-</span> / night
+<div class="priceCurrency"
+onclick="toggleCurrencyMenu(event)">
+${currentCurrency} / night
 </div>
 
 </div>
@@ -919,18 +898,15 @@ Average Rating
 </div>
 </div>
 
-<div class="cardTags">
+<div class="tagsRow">
+
 ${(item.card_tags||"")
 .split(",")
-.map(tag=>`<span>${tag}</span>`)
+.filter(tag=>tag.trim()!=="")
+.map(tag=>`
+<span class="cardTag">${tag}</span>
+`)
 .join("")}
-</div>
-
-<div class="extraInfo">
-${item.extra_info || ""}
-</div>
-
-<div class="quickLinks">
 
 ${(item.quick_links||"")
 .split(",")
@@ -941,7 +917,7 @@ const parts=link.split("|");
 if(parts.length<2)return "";
 
 return `
-<a href="${parts[1]}">
+<a class="quickLink" href="${parts[1]}">
 ${parts[0]}
 </a>
 `;
