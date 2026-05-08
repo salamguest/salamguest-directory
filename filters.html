@@ -108,7 +108,7 @@ margin-top:20px;
 background:white;
 border-radius:16px;
 overflow:hidden;
-box-shadow:0 3px 14px rgba(0,0,0,0.08);
+box-shadow:0 3px 10px rgba(0,0,0,0.14);
 display:flex;
 flex-direction:column;
 }
@@ -184,7 +184,7 @@ margin-bottom:4px;
 .location{
 font-size:13px;
 color:#666;
-margin-bottom:6px;
+margin-bottom:2px;
 }
 
 .description{
@@ -231,7 +231,7 @@ color:#777;
 margin-top:2px;
 }
 
-/* TAGS + QUICK LINKS */
+/* TAGS */
 
 .tagsRow{
 display:flex;
@@ -252,25 +252,7 @@ font-size:11px;
 line-height:1.2;
 }
 
-.quickLink{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-background:#f1f1f1;
-color:#444;
-padding:8px 12px;
-border-radius:999px;
-font-size:11px;
-line-height:1.2;
-text-decoration:none;
-transition:0.2s;
-}
-
-.quickLink:hover{
-background:#e4e4e4;
-}
-
-/* BOOK BUTTON */
+/* BOOK */
 
 .book{
 display:block;
@@ -287,6 +269,25 @@ transition:0.2s;
 
 .book:hover{
 background:#f5f5f5;
+color:#0042FD;
+}
+
+/* RELATED LINKS */
+
+.relatedLinks{
+margin-top:12px;
+font-size:11px;
+line-height:1.7;
+color:#666;
+}
+
+.relatedLinks a{
+color:#666;
+text-decoration:underline;
+margin-right:10px;
+}
+
+.relatedLinks a:hover{
 color:#0042FD;
 }
 
@@ -328,20 +329,10 @@ font-size:14px;
 color:#666;
 }
 
-/* CURRENCY MENU */
-
-#currencyMenu{
-display:none;
-position:fixed;
-background:white;
-border-radius:12px;
-box-shadow:0 4px 18px rgba(0,0,0,0.12);
-padding:8px;
-z-index:9999;
-}
+/* CURRENCY MODAL */
 
 .currencyOption{
-padding:8px 12px;
+padding:10px 12px;
 cursor:pointer;
 border-radius:8px;
 font-size:13px;
@@ -454,20 +445,45 @@ Back To Top
 </div>
 </div>
 
-<!-- CURRENCY MENU -->
+<!-- CURRENCY MODAL -->
 
-<div id="currencyMenu">
+<div id="currencyModal" style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+z-index:99999;
+align-items:center;
+justify-content:center;
+">
 
-<div onclick="setCurrency('MYR')" class="currencyOption">MYR</div>
-<div onclick="setCurrency('USD')" class="currencyOption">USD</div>
-<div onclick="setCurrency('SGD')" class="currencyOption">SGD</div>
-<div onclick="setCurrency('GBP')" class="currencyOption">GBP</div>
-<div onclick="setCurrency('EUR')" class="currencyOption">EUR</div>
-<div onclick="setCurrency('JPY')" class="currencyOption">JPY</div>
-<div onclick="setCurrency('SAR')" class="currencyOption">SAR</div>
-<div onclick="setCurrency('AED')" class="currencyOption">AED</div>
-<div onclick="setCurrency('IDR')" class="currencyOption">IDR</div>
-<div onclick="setCurrency('TRY')" class="currencyOption">TRY</div>
+<div style="
+background:white;
+padding:20px;
+border-radius:18px;
+width:240px;
+">
+
+<div style="
+font-size:15px;
+margin-bottom:14px;
+font-weight:500;
+">
+Choose Currency
+</div>
+
+<div class="currencyOption" onclick="setCurrency('MYR')">MYR</div>
+<div class="currencyOption" onclick="setCurrency('USD')">USD</div>
+<div class="currencyOption" onclick="setCurrency('SGD')">SGD</div>
+<div class="currencyOption" onclick="setCurrency('GBP')">GBP</div>
+<div class="currencyOption" onclick="setCurrency('EUR')">EUR</div>
+<div class="currencyOption" onclick="setCurrency('JPY')">JPY</div>
+<div class="currencyOption" onclick="setCurrency('SAR')">SAR</div>
+<div class="currencyOption" onclick="setCurrency('AED')">AED</div>
+<div class="currencyOption" onclick="setCurrency('IDR')">IDR</div>
+<div class="currencyOption" onclick="setCurrency('TRY')">TRY</div>
+
+</div>
 
 </div>
 
@@ -545,46 +561,7 @@ TRY:6.5
 
 }
 
-/* CURRENCY */
-
-function toggleCurrencyMenu(e){
-
-e.stopPropagation();
-
-const menu=document.getElementById("currencyMenu");
-
-menu.style.display="block";
-
-menu.style.left=e.pageX+"px";
-menu.style.top=e.pageY+"px";
-
-}
-
-function setCurrency(currency){
-
-currentCurrency=currency;
-
-document.getElementById("currencyMenu").style.display="none";
-
-render();
-
-}
-
-document.addEventListener("click",(e)=>{
-
-const menu=document.getElementById("currencyMenu");
-
-if(
-!e.target.closest(".priceCurrency")
-&&
-!e.target.closest("#currencyMenu")
-){
-menu.style.display="none";
-}
-
-});
-
-/* FORMAT PRICE */
+/* PRICE */
 
 function formatPrice(price){
 
@@ -593,6 +570,26 @@ let num=parseFloat(price)||0;
 let converted=num*exchangeRates[currentCurrency];
 
 return converted.toFixed(2);
+
+}
+
+/* CURRENCY */
+
+function toggleCurrencyMenu(){
+
+document.getElementById("currencyModal")
+.style.display="flex";
+
+}
+
+function setCurrency(currency){
+
+currentCurrency=currency;
+
+document.getElementById("currencyModal")
+.style.display="none";
+
+render();
 
 }
 
@@ -885,7 +882,7 @@ ${formatPrice(item.price)}
 </div>
 
 <div class="priceCurrency"
-onclick="toggleCurrencyMenu(event)">
+onclick="toggleCurrencyMenu()">
 ${currentCurrency} / night
 </div>
 
@@ -908,6 +905,16 @@ ${(item.card_tags||"")
 `)
 .join("")}
 
+</div>
+
+<a class="book"
+href="javascript:void(0)"
+onclick="redirectBooking('${item.link}')">
+BOOK
+</a>
+
+<div class="relatedLinks">
+
 ${(item.quick_links||"")
 .split(",")
 .map(link=>{
@@ -917,7 +924,7 @@ const parts=link.split("|");
 if(parts.length<2)return "";
 
 return `
-<a class="quickLink" href="${parts[1]}">
+<a href="${parts[1]}">
 ${parts[0]}
 </a>
 `;
@@ -925,12 +932,6 @@ ${parts[0]}
 }).join("")}
 
 </div>
-
-<a class="book"
-href="javascript:void(0)"
-onclick="redirectBooking('${item.link}')">
-BOOK
-</a>
 
 </div>
 </div>
