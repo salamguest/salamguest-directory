@@ -74,13 +74,14 @@ font-size:14px;
 box-sizing:border-box;
 }
 
-/* BUTTONS */
+/* TOP BUTTONS */
 
 .topButtons{
 margin-top:10px;
 display:flex;
 gap:10px;
 flex-wrap:wrap;
+align-items:center;
 }
 
 .clearBtn{
@@ -91,6 +92,28 @@ background:white;
 color:#0042FD;
 cursor:pointer;
 font-family:Lexend;
+}
+
+.sortSelect{
+padding:8px 14px;
+border-radius:999px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:13px;
+cursor:pointer;
+outline:none;
+}
+
+.currencyTopBtn{
+padding:8px 14px;
+border-radius:999px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:13px;
+cursor:pointer;
+color:#0042FD;
 }
 
 /* GRID */
@@ -277,12 +300,12 @@ color:#0042FD;
 .relatedLinks{
 margin-top:12px;
 font-size:11px;
-line-height:1.7;
-color:#666;
+line-height:1.8;
+letter-spacing:0.4px;
 }
 
 .relatedLinks a{
-color:#666;
+color:#324a7d;
 text-decoration:underline;
 margin-right:10px;
 }
@@ -396,6 +419,17 @@ width:100%;
 grid-template-columns:1fr;
 }
 
+.topButtons{
+flex-direction:column;
+align-items:stretch;
+}
+
+.clearBtn,
+.sortSelect,
+.currencyTopBtn{
+width:100%;
+}
+
 }
 
 </style>
@@ -418,6 +452,19 @@ grid-template-columns:1fr;
 
 <button class="clearBtn" onclick="clearAll()">
 Clear
+</button>
+
+<select id="sortSelect" class="sortSelect" onchange="render()">
+<option value="default">Sort</option>
+<option value="lowHigh">Price: Low to High</option>
+<option value="highLow">Price: High to Low</option>
+<option value="ratingHigh">Highest Rated</option>
+<option value="ratingLow">Lowest Rated</option>
+</select>
+
+<button class="currencyTopBtn"
+onclick="toggleCurrencyMenu()">
+MYR ▼
 </button>
 
 </div>
@@ -586,6 +633,9 @@ function setCurrency(currency){
 
 currentCurrency=currency;
 
+document.querySelector(".currencyTopBtn").innerHTML=
+currency+" ▼";
+
 document.getElementById("currencyModal")
 .style.display="none";
 
@@ -738,6 +788,8 @@ t.classList.remove("active");
 
 document.getElementById("searchInput").value="";
 
+document.getElementById("sortSelect").value="default";
+
 render();
 
 }
@@ -796,6 +848,50 @@ let searchMatch=
 return isBasic && matchFilters && searchMatch;
 
 });
+
+/* SORT */
+
+const sort=document.getElementById("sortSelect")?.value || "default";
+
+if(sort==="lowHigh"){
+
+filtered.sort((a,b)=>
+(parseFloat(a.price)||0)
+-
+(parseFloat(b.price)||0)
+);
+
+}
+
+if(sort==="highLow"){
+
+filtered.sort((a,b)=>
+(parseFloat(b.price)||0)
+-
+(parseFloat(a.price)||0)
+);
+
+}
+
+if(sort==="ratingHigh"){
+
+filtered.sort((a,b)=>
+(parseFloat(b.rating)||0)
+-
+(parseFloat(a.rating)||0)
+);
+
+}
+
+if(sort==="ratingLow"){
+
+filtered.sort((a,b)=>
+(parseFloat(a.rating)||0)
+-
+(parseFloat(b.rating)||0)
+);
+
+}
 
 if(filtered.length===0){
 
