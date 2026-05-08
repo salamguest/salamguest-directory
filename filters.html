@@ -63,15 +63,38 @@ color:#fff;
 flex:1;
 }
 
+/* SEARCH */
+
+.search{
+position:relative;
+}
+
 .search input{
 width:100%;
-padding:12px;
-border-radius:12px;
+padding:14px 50px 14px 14px;
+border-radius:14px;
 border:1px solid #dbe4ff;
 background:#eef3ff;
 font-family:Lexend;
 font-size:14px;
 box-sizing:border-box;
+box-shadow:
+inset 0 2px 5px rgba(0,0,0,0.08);
+outline:none;
+}
+
+.search input:focus{
+border-color:#0042FD;
+}
+
+.searchIcon{
+position:absolute;
+right:16px;
+top:50%;
+transform:translateY(-50%);
+font-size:18px;
+color:#0042FD;
+pointer-events:none;
 }
 
 /* TOP BUTTONS */
@@ -94,6 +117,8 @@ cursor:pointer;
 font-family:Lexend;
 }
 
+/* SORT */
+
 .sortSelect{
 padding:8px 14px;
 border-radius:999px;
@@ -103,7 +128,12 @@ font-family:Lexend;
 font-size:13px;
 cursor:pointer;
 outline:none;
+text-align:center;
+text-align-last:center;
+color:#444;
 }
+
+/* CURRENCY */
 
 .currencyTopBtn{
 padding:8px 14px;
@@ -113,7 +143,7 @@ background:#eef3ff;
 font-family:Lexend;
 font-size:13px;
 cursor:pointer;
-color:#0042FD;
+color:#444;
 }
 
 /* GRID */
@@ -430,6 +460,15 @@ align-items:stretch;
 width:100%;
 }
 
+.sortSelect{
+text-align:center;
+text-align-last:center;
+}
+
+.currencyTopBtn{
+text-align:center;
+}
+
 }
 
 </style>
@@ -444,9 +483,22 @@ width:100%;
 
 <div class="main">
 
+<!-- SEARCH -->
+
 <div class="search">
-<input id="searchInput" placeholder="Search hotel, stay or any keyword">
+
+<input
+id="searchInput"
+placeholder="Search hotel, stay or any keyword"
+>
+
+<div class="searchIcon">
+⌕
 </div>
+
+</div>
+
+<!-- TOP BUTTONS -->
 
 <div class="topButtons">
 
@@ -455,7 +507,7 @@ Clear
 </button>
 
 <select id="sortSelect" class="sortSelect" onchange="render()">
-<option value="default">Sort</option>
+<option value="default">Sort ▼</option>
 <option value="lowHigh">Price: Low to High</option>
 <option value="highLow">Price: High to Low</option>
 <option value="ratingHigh">Highest Rated</option>
@@ -552,586 +604,24 @@ Redirecting to booking partner...
 
 <script>
 
-const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+/* YES — HTML inside Google Sheets IS possible.
 
-const MAX_ITEMS=20;
-const ITEMS_PER_PAGE=12;
+Example in description column:
 
-let data=[];
-let activeFilters=[];
-let currentPage=1;
-let currentCurrency="MYR";
+Verified by SalamGuest
+<a href='verification.html'>ⓘ</a>
 
-let exchangeRates={
-MYR:1
-};
+BUT:
 
-/* EXCHANGE RATES */
+For security/simplicity,
+better approach is:
+- create separate column:
+verification_link
 
-async function loadRates(){
+Then render it safely in template.
 
-try{
-
-const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
-
-const json=await res.json();
-
-exchangeRates={
-MYR:1,
-USD:json.rates.USD,
-SGD:json.rates.SGD,
-GBP:json.rates.GBP,
-EUR:json.rates.EUR,
-JPY:json.rates.JPY,
-SAR:json.rates.SAR,
-AED:json.rates.AED,
-IDR:json.rates.IDR,
-TRY:json.rates.TRY
-};
-
-}catch(err){
-
-exchangeRates={
-MYR:1,
-USD:0.21,
-SGD:0.30,
-GBP:0.16,
-EUR:0.19,
-JPY:30,
-SAR:0.79,
-AED:0.77,
-IDR:3300,
-TRY:6.5
-};
-
-}
-
-}
-
-/* PRICE */
-
-function formatPrice(price){
-
-let num=parseFloat(price)||0;
-
-let converted=num*exchangeRates[currentCurrency];
-
-return converted.toFixed(2);
-
-}
-
-/* CURRENCY */
-
-function toggleCurrencyMenu(){
-
-document.getElementById("currencyModal")
-.style.display="flex";
-
-}
-
-function setCurrency(currency){
-
-currentCurrency=currency;
-
-document.querySelector(".currencyTopBtn").innerHTML=
-currency+" ▼";
-
-document.getElementById("currencyModal")
-.style.display="none";
-
-render();
-
-}
-
-/* CSV */
-
-function parseCSV(text){
-
-const rows=text.trim().split("\n");
-
-const headers=rows[0].split(",");
-
-return rows.slice(1).map(row=>{
-
-const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
-
-let obj={};
-
-headers.forEach((h,i)=>{
-obj[h.trim()]=cols?.[i]?.replaceAll('"',"")||"";
-});
-
-return obj;
-
-});
-
-}
-
-/* LOAD */
-
-async function load(){
-
-await loadRates();
-
-const res=await fetch(SHEET_URL);
-
-const text=await res.text();
-
-data=parseCSV(text);
-
-buildFilters();
-
-render();
-
-}
-
-/* FILTERS */
-
-function buildFilters(){
-
-const groups={};
-
-data.forEach(item=>{
-
-(item.filter_tags||"").split(",").forEach(tag=>{
-
-if(tag.toLowerCase().includes("view:")) return;
-
-let [cat,val]=tag.split(":");
-
-if(!cat||!val)return;
-
-if(!groups[cat])groups[cat]=new Set();
-
-groups[cat].add(val.trim());
-
-});
-
-});
-
-const order=[
-"Property Type",
-"Meals",
-"Facilities",
-"Transport",
-"Retail",
-"Leisure",
-"Convenience",
-"Female Only"
-];
-
-const container=document.getElementById("filters");
-
-order.forEach(cat=>{
-
-if(!groups[cat])return;
-
-let block=document.createElement("div");
-
-block.innerHTML=`<div class="filterTitle">${cat}</div>`;
-
-groups[cat].forEach(val=>{
-
-let el=document.createElement("div");
-
-el.className="tag";
-
-el.innerText=val;
-
-el.onclick=()=>toggle(cat+":"+val,el);
-
-block.appendChild(el);
-
-});
-
-container.appendChild(block);
-
-});
-
-}
-
-/* TOGGLE */
-
-function toggle(tag,el){
-
-if(activeFilters.includes(tag)){
-
-activeFilters=activeFilters.filter(t=>t!==tag);
-
-el.classList.remove("active");
-
-}else{
-
-activeFilters.push(tag);
-
-el.classList.add("active");
-
-}
-
-currentPage=1;
-
-render();
-
-}
-
-/* CLEAR */
-
-function clearAll(){
-
-activeFilters=[];
-
-currentPage=1;
-
-document.querySelectorAll(".tag").forEach(t=>{
-t.classList.remove("active");
-});
-
-document.getElementById("searchInput").value="";
-
-document.getElementById("sortSelect").value="default";
-
-render();
-
-}
-
-/* SCROLL */
-
-function scrollTopSmooth(){
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-/* REDIRECT */
-
-function redirectBooking(url){
-
-document.getElementById("redirectOverlay")
-.style.display="flex";
-
-setTimeout(()=>{
-
-window.open(url,"_blank");
-
-document.getElementById("redirectOverlay")
-.style.display="none";
-
-},900);
-
-}
-
-/* RENDER */
-
-function render(){
-
-const search=document.getElementById("searchInput")
-.value.toLowerCase();
-
-let filtered=data.filter(item=>{
-
-let tags=(item.filter_tags||"").toLowerCase();
-
-let isBasic=tags.includes("view: basic");
-
-let matchFilters=activeFilters.every(f=>
-tags.includes(f.toLowerCase())
-);
-
-let searchMatch=
-(item.name||"").toLowerCase().includes(search)
-||
-(item.description||"").toLowerCase().includes(search);
-
-return isBasic && matchFilters && searchMatch;
-
-});
-
-/* SORT */
-
-const sort=document.getElementById("sortSelect")?.value || "default";
-
-if(sort==="lowHigh"){
-
-filtered.sort((a,b)=>
-(parseFloat(a.price)||0)
--
-(parseFloat(b.price)||0)
-);
-
-}
-
-if(sort==="highLow"){
-
-filtered.sort((a,b)=>
-(parseFloat(b.price)||0)
--
-(parseFloat(a.price)||0)
-);
-
-}
-
-if(sort==="ratingHigh"){
-
-filtered.sort((a,b)=>
-(parseFloat(b.rating)||0)
--
-(parseFloat(a.rating)||0)
-);
-
-}
-
-if(sort==="ratingLow"){
-
-filtered.sort((a,b)=>
-(parseFloat(a.rating)||0)
--
-(parseFloat(b.rating)||0)
-);
-
-}
-
-if(filtered.length===0){
-
-document.getElementById("noResults")
-.style.display="block";
-
-}else{
-
-document.getElementById("noResults")
-.style.display="none";
-
-}
-
-filtered=filtered.slice(0,MAX_ITEMS);
-
-const start=(currentPage-1)*ITEMS_PER_PAGE;
-
-const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
-
-const cards=document.getElementById("cards");
-
-cards.innerHTML=pageData.map(item=>{
-
-const folder=(item.media||"").trim();
-
-let mediaContent="";
-
-if(folder){
-
-for(let i=1;i<=10;i++){
-
-mediaContent+=`
-<img
-src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.style.display='none'"
-onload="this.dataset.loaded='true'"
->
-`;
-
-}
-
-}else{
-
-mediaContent=`
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
-`;
-
-}
-
-return `
-
-<div class="card">
-
-<div class="carouselWrap">
-
-<div class="carousel">
-${mediaContent}
-</div>
-
-<div class="carouselIndicators"></div>
-
-</div>
-
-<div class="cardBody">
-
-<div class="title">
-${item.name}
-</div>
-
-<div class="location">
-${item.city}, ${item.country}
-</div>
-
-<div class="description">
-${item.description}
-</div>
-
-<div class="bottom">
-
-<div class="priceWrap">
-
-<div class="priceAmount">
-${formatPrice(item.price)}
-</div>
-
-<div class="priceCurrency"
-onclick="toggleCurrencyMenu()">
-${currentCurrency} / night
-</div>
-
-</div>
-
-<div class="rating">
-${item.rating} / 5
-<div class="ratingSmall">
-Average Rating
-</div>
-</div>
-
-<div class="tagsRow">
-
-${(item.card_tags||"")
-.split(",")
-.filter(tag=>tag.trim()!=="")
-.map(tag=>`
-<span class="cardTag">${tag}</span>
-`)
-.join("")}
-
-</div>
-
-<a class="book"
-href="javascript:void(0)"
-onclick="redirectBooking('${item.link}')">
-BOOK
-</a>
-
-<div class="relatedLinks">
-
-${(item.quick_links||"")
-.split(",")
-.map(link=>{
-
-const parts=link.split("|");
-
-if(parts.length<2)return "";
-
-return `
-<a href="${parts[1]}">
-${parts[0]}
-</a>
-`;
-
-}).join("")}
-
-</div>
-
-</div>
-</div>
-</div>
-
-`;
-
-}).join("");
-
-setTimeout(()=>{
-
-document.querySelectorAll(".carouselWrap")
-.forEach(wrap=>{
-
-const carousel=wrap.querySelector(".carousel");
-
-const indicators=wrap.querySelector(".carouselIndicators");
-
-const items=[
-...carousel.children
-].filter(img=>img.dataset.loaded==="true").length;
-
-if(items<=1)return;
-
-indicators.innerHTML="";
-
-for(let i=0;i<items;i++){
-
-const dot=document.createElement("span");
-
-if(i===0)dot.classList.add("active");
-
-indicators.appendChild(dot);
-
-}
-
-carousel.addEventListener("scroll",()=>{
-
-const index=Math.round(
-carousel.scrollLeft/carousel.offsetWidth
-);
-
-indicators.querySelectorAll("span")
-.forEach((d,i)=>{
-
-d.classList.toggle("active",i===index);
-
-});
-
-});
-
-});
-
-},300);
-
-renderPagination(filtered.length);
-
-}
-
-/* PAGINATION */
-
-function renderPagination(total){
-
-const pages=Math.ceil(total/ITEMS_PER_PAGE);
-
-let html="";
-
-for(let i=1;i<=pages;i++){
-
-html+=`
-<button
-class="pageBtn ${i===currentPage?'active':''}"
-onclick="goPage(${i})"
->
-${i}
-</button>
-`;
-
-}
-
-document.getElementById("pagination").innerHTML=html;
-
-}
-
-function goPage(p){
-
-currentPage=p;
-
-render();
-
-}
-
-/* SEARCH ENTER */
-
-document.getElementById("searchInput")
-.addEventListener("keydown",e=>{
-
-if(e.key==="Enter"){
-render();
-}
-
-});
-
-load();
+Much easier long-term maintenance.
+*/
 
 </script>
 
