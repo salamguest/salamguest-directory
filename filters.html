@@ -256,35 +256,30 @@ flex-direction:column;
 align-items:flex-start;
 }
 
-.priceTopRow{
-display:flex;
-align-items:flex-start;
-gap:8px;
-}
-
 .priceLabel{
 font-family:"Libre Bodoni",serif;
 font-size:10px;
 letter-spacing:1.4px;
-color:#777;
-padding-top:4px;
+color:#111;
+line-height:1;
+margin-bottom:8px;
 }
 
 .priceAmount{
 font-family:"Libre Bodoni",serif;
 font-size:26px;
 line-height:1;
+color:#111;
 }
 
 .priceCurrency{
-margin-top:6px;
-margin-left:54px;
+margin-top:8px;
 font-size:11px;
-color:#666;
+color:#111;
 letter-spacing:0.3px;
 cursor:pointer;
 display:inline-block;
-border-bottom:1px dotted #666;
+border-bottom:1px dotted #111;
 width:fit-content;
 }
 
@@ -1044,16 +1039,12 @@ ${item.description}
 
 <div class="priceWrap">
 
-<div class="priceTopRow">
-
 <div class="priceLabel">
 EST FROM
 </div>
 
 <div class="priceAmount">
 ${formatPrice(item.price)}
-</div>
-
 </div>
 
 <div class="priceCurrency"
