@@ -1,41 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SalamGuest Directory</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
-font-family:Lexend,sans-serif;
-background:#fff;
+background:#ffffff;
+font-family:'Lexend',sans-serif;
 color:#222;
 }
 
+/* LAYOUT */
+
 .container{
 display:flex;
-gap:20px;
+gap:24px;
 padding:20px;
+align-items:flex-start;
 }
-
-/* SIDEBAR */
 
 .sidebar{
 width:260px;
 flex-shrink:0;
 }
 
+.main{
+flex:1;
+min-width:0;
+}
+
+/* FILTERS */
+
 .filterTitle{
 font-size:14px;
 font-weight:500;
-margin-top:18px;
-margin-bottom:8px;
+margin-top:20px;
+margin-bottom:10px;
+color:#111;
 }
 
 .tag{
@@ -54,13 +68,7 @@ text-align:center;
 
 .tag.active{
 background:#0042FD;
-color:#fff;
-}
-
-/* MAIN */
-
-.main{
-flex:1;
+color:white;
 }
 
 /* SEARCH */
@@ -71,16 +79,15 @@ position:relative;
 
 .search input{
 width:100%;
-padding:12px 52px 12px 14px;
-border-radius:12px;
+padding:14px 54px 14px 16px;
+border-radius:14px;
 border:1px solid #dbe4ff;
 background:#eef3ff;
-font-family:Lexend;
+font-family:'Lexend',sans-serif;
 font-size:14px;
-box-sizing:border-box;
-box-shadow:
-inset 0 2px 6px rgba(0,0,0,0.08);
 outline:none;
+box-shadow:
+inset 0 2px 7px rgba(0,0,0,0.08);
 }
 
 .searchBtn{
@@ -88,8 +95,8 @@ position:absolute;
 right:8px;
 top:50%;
 transform:translateY(-50%);
-width:36px;
-height:36px;
+width:38px;
+height:38px;
 border:none;
 background:#0042FD;
 border-radius:999px;
@@ -111,29 +118,29 @@ fill:none;
 /* TOP BUTTONS */
 
 .topButtons{
-margin-top:10px;
 display:flex;
 gap:10px;
+margin-top:12px;
 flex-wrap:wrap;
 align-items:center;
 }
 
 .clearBtn{
-padding:8px 16px;
+padding:9px 16px;
 border-radius:999px;
 border:2px solid #0042FD;
 background:white;
 color:#0042FD;
+font-family:'Lexend',sans-serif;
 cursor:pointer;
-font-family:Lexend;
 }
 
 .sortSelect{
-padding:8px 14px;
+padding:9px 14px;
 border-radius:999px;
 border:1px solid #dbe4ff;
 background:#eef3ff;
-font-family:Lexend;
+font-family:'Lexend',sans-serif;
 font-size:13px;
 cursor:pointer;
 outline:none;
@@ -141,13 +148,14 @@ color:#444;
 }
 
 .currencyTopBtn{
-padding:8px 14px;
+padding:9px 14px;
 border-radius:999px;
 border:1px solid #dbe4ff;
 background:#eef3ff;
-font-family:Lexend;
+font-family:'Lexend',sans-serif;
 font-size:13px;
 cursor:pointer;
+outline:none;
 color:#444;
 }
 
@@ -157,14 +165,14 @@ color:#444;
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:22px;
-margin-top:20px;
+margin-top:22px;
 }
 
 /* CARD */
 
 .card{
 background:white;
-border-radius:16px;
+border-radius:18px;
 overflow:hidden;
 box-shadow:0 3px 10px rgba(0,0,0,0.14);
 display:flex;
@@ -199,7 +207,7 @@ flex-shrink:0;
 scroll-snap-align:start;
 }
 
-/* INDICATORS */
+/* CAROUSEL LINES */
 
 .carouselIndicators{
 position:absolute;
@@ -233,7 +241,7 @@ flex-grow:1;
 }
 
 .title{
-font-family:"Libre Bodoni",serif;
+font-family:'Libre Bodoni',serif;
 font-size:24px;
 line-height:1.2;
 margin-bottom:4px;
@@ -256,10 +264,22 @@ white-space:pre-line;
 
 .priceWrap{
 margin-top:14px;
+display:flex;
+align-items:flex-start;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.priceLabel{
+font-family:'Libre Bodoni',serif;
+font-size:10px;
+letter-spacing:1.4px;
+color:#777;
+padding-top:4px;
 }
 
 .priceAmount{
-font-family:"Libre Bodoni",serif;
+font-family:'Libre Bodoni',serif;
 font-size:26px;
 line-height:1;
 }
@@ -273,6 +293,7 @@ cursor:pointer;
 display:inline-block;
 border-bottom:1px dotted #666;
 width:fit-content;
+margin-left:2px;
 }
 
 /* RATING */
@@ -310,7 +331,7 @@ font-size:11px;
 line-height:1.2;
 }
 
-/* BOOK */
+/* BOOK BUTTON */
 
 .book{
 display:block;
@@ -330,7 +351,7 @@ background:#f5f5f5;
 color:#0042FD;
 }
 
-/* RELATED LINKS */
+/* QUICK LINKS */
 
 .relatedLinks{
 margin-top:12px;
@@ -349,11 +370,13 @@ margin-right:10px;
 color:#0042FD;
 }
 
-/* BOTTOM */
+/* PUSH CONTENT */
 
 .bottom{
 margin-top:auto;
 }
+
+/* PAGINATION */
 
 .bottomNav{
 display:flex;
@@ -387,20 +410,7 @@ font-size:14px;
 color:#666;
 }
 
-/* CURRENCY MODAL */
-
-.currencyOption{
-padding:10px 12px;
-cursor:pointer;
-border-radius:8px;
-font-size:13px;
-}
-
-.currencyOption:hover{
-background:#eef3ff;
-}
-
-/* REDIRECT */
+/* REDIRECT OVERLAY */
 
 #redirectOverlay{
 position:fixed;
@@ -471,12 +481,6 @@ text-align:center;
 text-align-last:center;
 }
 
-.currencyTopBtn{
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
 }
 
 </style>
@@ -487,17 +491,24 @@ align-items:center;
 
 <div class="container">
 
+<!-- SIDEBAR -->
+
 <div class="sidebar" id="filters"></div>
+
+<!-- MAIN -->
 
 <div class="main">
 
+<!-- SEARCH -->
+
 <div class="search">
 
-<input id="searchInput"
-placeholder="Search hotel, stay or any keyword">
+<input
+id="searchInput"
+placeholder="Search hotel, stay or any keyword"
+>
 
-<button class="searchBtn"
-onclick="render()">
+<button class="searchBtn" onclick="render()">
 
 <svg viewBox="0 0 24 24">
 <circle cx="11" cy="11" r="7"></circle>
@@ -508,15 +519,15 @@ onclick="render()">
 
 </div>
 
+<!-- TOP BUTTONS -->
+
 <div class="topButtons">
 
 <button class="clearBtn" onclick="clearAll()">
 Clear
 </button>
 
-<select id="sortSelect"
-class="sortSelect"
-onchange="render()">
+<select id="sortSelect" class="sortSelect" onchange="render()">
 
 <option value="default">Sort</option>
 <option value="lowHigh">Price: Low to High</option>
@@ -526,22 +537,42 @@ onchange="render()">
 
 </select>
 
-<button class="currencyTopBtn"
-onclick="toggleCurrencyMenu()">
-MYR ▼
-</button>
+<select id="currencySelect"
+class="currencyTopBtn"
+onchange="setCurrency(this.value)">
+
+<option value="MYR">MYR</option>
+<option value="USD">USD</option>
+<option value="SGD">SGD</option>
+<option value="GBP">GBP</option>
+<option value="EUR">EUR</option>
+<option value="JPY">JPY</option>
+<option value="SAR">SAR</option>
+<option value="AED">AED</option>
+<option value="IDR">IDR</option>
+<option value="TRY">TRY</option>
+
+</select>
 
 </div>
+
+<!-- NO RESULTS -->
 
 <div id="noResults">
 No results found. Please try a different keyword.
 </div>
 
+<!-- CARDS -->
+
 <div class="grid" id="cards"></div>
+
+<!-- BOTTOM -->
 
 <div class="bottomNav">
 
-<div onclick="scrollTopSmooth()" style="
+<div
+onclick="scrollTopSmooth()"
+style="
 cursor:pointer;
 color:#0042FD;
 font-size:14px;
@@ -554,48 +585,6 @@ Back To Top
 </div>
 
 </div>
-</div>
-
-<!-- CURRENCY MODAL -->
-
-<div id="currencyModal" style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.45);
-z-index:99999;
-align-items:center;
-justify-content:center;
-">
-
-<div style="
-background:white;
-padding:20px;
-border-radius:18px;
-width:240px;
-">
-
-<div style="
-font-size:15px;
-margin-bottom:14px;
-font-weight:500;
-">
-Choose Currency
-</div>
-
-<div class="currencyOption" onclick="setCurrency('MYR')">MYR</div>
-<div class="currencyOption" onclick="setCurrency('USD')">USD</div>
-<div class="currencyOption" onclick="setCurrency('SGD')">SGD</div>
-<div class="currencyOption" onclick="setCurrency('GBP')">GBP</div>
-<div class="currencyOption" onclick="setCurrency('EUR')">EUR</div>
-<div class="currencyOption" onclick="setCurrency('JPY')">JPY</div>
-<div class="currencyOption" onclick="setCurrency('SAR')">SAR</div>
-<div class="currencyOption" onclick="setCurrency('AED')">AED</div>
-<div class="currencyOption" onclick="setCurrency('IDR')">IDR</div>
-<div class="currencyOption" onclick="setCurrency('TRY')">TRY</div>
-
-</div>
-
 </div>
 
 <!-- REDIRECT -->
@@ -616,10 +605,16 @@ Redirecting to booking partner...
 
 <script>
 
-const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+/* GOOGLE SHEET CSV */
+
+const SHEET_URL="YOUR CSV URL HERE";
+
+/* SETTINGS */
 
 const MAX_ITEMS=20;
 const ITEMS_PER_PAGE=12;
+
+/* DATA */
 
 let data=[];
 let activeFilters=[];
@@ -630,13 +625,15 @@ let exchangeRates={
 MYR:1
 };
 
-/* EXCHANGE RATES */
+/* LOAD EXCHANGE RATES */
 
 async function loadRates(){
 
 try{
 
-const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
+const res=await fetch(
+"https://api.exchangerate.host/latest?base=MYR"
+);
 
 const json=await res.json();
 
@@ -661,18 +658,14 @@ USD:0.21,
 SGD:0.30,
 GBP:0.16,
 EUR:0.19,
-JPY:30,
-SAR:0.79,
-AED:0.77,
-IDR:3300,
-TRY:6.5
+JPY:30
 };
 
 }
 
 }
 
-/* PRICE */
+/* FORMAT PRICE */
 
 function formatPrice(price){
 
@@ -686,28 +679,15 @@ return converted.toFixed(2);
 
 /* CURRENCY */
 
-function toggleCurrencyMenu(){
-
-document.getElementById("currencyModal")
-.style.display="flex";
-
-}
-
 function setCurrency(currency){
 
 currentCurrency=currency;
-
-document.querySelector(".currencyTopBtn").innerHTML=
-currency+" ▼";
-
-document.getElementById("currencyModal")
-.style.display="none";
 
 render();
 
 }
 
-/* CSV */
+/* CSV PARSER */
 
 function parseCSV(text){
 
@@ -722,7 +702,9 @@ const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 let obj={};
 
 headers.forEach((h,i)=>{
+
 obj[h.trim()]=cols?.[i]?.replaceAll('"',"")||"";
+
 });
 
 return obj;
@@ -731,7 +713,7 @@ return obj;
 
 }
 
-/* LOAD */
+/* LOAD DATA */
 
 async function load(){
 
@@ -749,7 +731,7 @@ render();
 
 }
 
-/* FILTERS */
+/* BUILD FILTERS */
 
 function buildFilters(){
 
@@ -757,15 +739,19 @@ const groups={};
 
 data.forEach(item=>{
 
-(item.filter_tags||"").split(",").forEach(tag=>{
+(item.filter_tags||"")
+.split(",")
+.forEach(tag=>{
 
-if(tag.toLowerCase().includes("view:")) return;
+if(tag.toLowerCase().includes("view:"))
+return;
 
 let [cat,val]=tag.split(":");
 
 if(!cat||!val)return;
 
-if(!groups[cat])groups[cat]=new Set();
+if(!groups[cat])
+groups[cat]=new Set();
 
 groups[cat].add(val.trim());
 
@@ -792,7 +778,9 @@ if(!groups[cat])return;
 
 let block=document.createElement("div");
 
-block.innerHTML=`<div class="filterTitle">${cat}</div>`;
+block.innerHTML=`
+<div class="filterTitle">${cat}</div>
+`;
 
 groups[cat].forEach(val=>{
 
@@ -814,7 +802,7 @@ container.appendChild(block);
 
 }
 
-/* TOGGLE */
+/* FILTER TOGGLE */
 
 function toggle(tag,el){
 
@@ -846,9 +834,9 @@ activeFilters=[];
 
 currentPage=1;
 
-document.querySelectorAll(".tag").forEach(t=>{
-t.classList.remove("active");
-});
+document
+.querySelectorAll(".tag")
+.forEach(t=>t.classList.remove("active"));
 
 document.getElementById("searchInput").value="";
 
@@ -891,12 +879,15 @@ document.getElementById("redirectOverlay")
 
 function render(){
 
-const search=document.getElementById("searchInput")
-.value.toLowerCase();
+const search=document
+.getElementById("searchInput")
+.value
+.toLowerCase();
 
 let filtered=data.filter(item=>{
 
-let tags=(item.filter_tags||"").toLowerCase();
+let tags=(item.filter_tags||"")
+.toLowerCase();
 
 let isBasic=tags.includes("view: basic");
 
@@ -905,17 +896,27 @@ tags.includes(f.toLowerCase())
 );
 
 let searchMatch=
-(item.name||"").toLowerCase().includes(search)
-||
-(item.description||"").toLowerCase().includes(search);
+(item.name||"")
+.toLowerCase()
+.includes(search)
 
-return isBasic && matchFilters && searchMatch;
+||
+
+(item.description||"")
+.toLowerCase()
+.includes(search);
+
+return isBasic &&
+matchFilters &&
+searchMatch;
 
 });
 
 /* SORT */
 
-const sort=document.getElementById("sortSelect")?.value || "default";
+const sort=document
+.getElementById("sortSelect")
+.value;
 
 if(sort==="lowHigh"){
 
@@ -937,43 +938,29 @@ filtered.sort((a,b)=>
 
 }
 
-if(sort==="ratingHigh"){
-
-filtered.sort((a,b)=>
-(parseFloat(b.rating)||0)
--
-(parseFloat(a.rating)||0)
-);
-
-}
-
-if(sort==="ratingLow"){
-
-filtered.sort((a,b)=>
-(parseFloat(a.rating)||0)
--
-(parseFloat(b.rating)||0)
-);
-
-}
-
-if(filtered.length===0){
+/* NO RESULTS */
 
 document.getElementById("noResults")
-.style.display="block";
+.style.display=
+filtered.length===0
+?
+"block"
+:
+"none";
 
-}else{
-
-document.getElementById("noResults")
-.style.display="none";
-
-}
+/* LIMIT */
 
 filtered=filtered.slice(0,MAX_ITEMS);
 
-const start=(currentPage-1)*ITEMS_PER_PAGE;
+/* PAGINATION */
 
-const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
+const start=
+(currentPage-1)*ITEMS_PER_PAGE;
+
+const pageData=
+filtered.slice(start,start+ITEMS_PER_PAGE);
+
+/* CARDS */
 
 const cards=document.getElementById("cards");
 
@@ -988,11 +975,13 @@ if(folder){
 for(let i=1;i<=10;i++){
 
 mediaContent+=`
+
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
 onerror="this.style.display='none'"
 onload="this.dataset.loaded='true'"
 >
+
 `;
 
 }
@@ -1000,7 +989,11 @@ onload="this.dataset.loaded='true'"
 }else{
 
 mediaContent=`
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+
+<img
+src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
+>
+
 `;
 
 }
@@ -1037,12 +1030,15 @@ ${item.description}
 
 <div class="priceWrap">
 
+<div class="priceLabel">
+EST FROM
+</div>
+
 <div class="priceAmount">
 ${formatPrice(item.price)}
 </div>
 
-<div class="priceCurrency"
-onclick="toggleCurrencyMenu()">
+<div class="priceCurrency">
 ${currentCurrency} / night
 </div>
 
@@ -1050,9 +1046,11 @@ ${currentCurrency} / night
 
 <div class="rating">
 ${item.rating} / 5
+
 <div class="ratingSmall">
 Average Rating
 </div>
+
 </div>
 
 <div class="tagsRow">
@@ -1061,15 +1059,21 @@ ${(item.card_tags||"")
 .split(",")
 .filter(tag=>tag.trim()!=="")
 .map(tag=>`
-<span class="cardTag">${tag}</span>
+
+<span class="cardTag">
+${tag}
+</span>
+
 `)
 .join("")}
 
 </div>
 
-<a class="book"
+<a
+class="book"
 href="javascript:void(0)"
-onclick="redirectBooking('${item.link}')">
+onclick="redirectBooking('${item.link}')"
+>
 BOOK
 </a>
 
@@ -1101,18 +1105,25 @@ ${parts[0]}
 
 }).join("");
 
+/* CAROUSEL LINES */
+
 setTimeout(()=>{
 
-document.querySelectorAll(".carouselWrap")
+document
+.querySelectorAll(".carouselWrap")
 .forEach(wrap=>{
 
-const carousel=wrap.querySelector(".carousel");
+const carousel=
+wrap.querySelector(".carousel");
 
-const indicators=wrap.querySelector(".carouselIndicators");
+const indicators=
+wrap.querySelector(".carouselIndicators");
 
 const items=[
 ...carousel.children
-].filter(img=>img.dataset.loaded==="true").length;
+].filter(img=>
+img.dataset.loaded==="true"
+).length;
 
 if(items<=1)return;
 
@@ -1122,7 +1133,8 @@ for(let i=0;i<items;i++){
 
 const dot=document.createElement("span");
 
-if(i===0)dot.classList.add("active");
+if(i===0)
+dot.classList.add("active");
 
 indicators.appendChild(dot);
 
@@ -1131,13 +1143,18 @@ indicators.appendChild(dot);
 carousel.addEventListener("scroll",()=>{
 
 const index=Math.round(
-carousel.scrollLeft/carousel.offsetWidth
+carousel.scrollLeft/
+carousel.offsetWidth
 );
 
-indicators.querySelectorAll("span")
+indicators
+.querySelectorAll("span")
 .forEach((d,i)=>{
 
-d.classList.toggle("active",i===index);
+d.classList.toggle(
+"active",
+i===index
+);
 
 });
 
@@ -1155,24 +1172,31 @@ renderPagination(filtered.length);
 
 function renderPagination(total){
 
-const pages=Math.ceil(total/ITEMS_PER_PAGE);
+const pages=Math.ceil(
+total/ITEMS_PER_PAGE
+);
 
 let html="";
 
 for(let i=1;i<=pages;i++){
 
 html+=`
+
 <button
 class="pageBtn ${i===currentPage?'active':''}"
 onclick="goPage(${i})"
 >
+
 ${i}
+
 </button>
+
 `;
 
 }
 
-document.getElementById("pagination").innerHTML=html;
+document.getElementById("pagination")
+.innerHTML=html;
 
 }
 
@@ -1184,9 +1208,10 @@ render();
 
 }
 
-/* SEARCH ENTER */
+/* ENTER SEARCH */
 
-document.getElementById("searchInput")
+document
+.getElementById("searchInput")
 .addEventListener("keydown",e=>{
 
 if(e.key==="Enter"){
@@ -1201,6 +1226,3 @@ load();
 
 </body>
 </html>
-
-
-  
