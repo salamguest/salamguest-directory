@@ -252,9 +252,14 @@ white-space:pre-line;
 .priceWrap{
 margin-top:14px;
 display:flex;
+flex-direction:column;
+align-items:flex-start;
+}
+
+.priceTopRow{
+display:flex;
 align-items:flex-start;
 gap:8px;
-flex-wrap:wrap;
 }
 
 .priceLabel{
@@ -272,7 +277,8 @@ line-height:1;
 }
 
 .priceCurrency{
-margin-top:8px;
+margin-top:6px;
+margin-left:54px;
 font-size:11px;
 color:#666;
 letter-spacing:0.3px;
@@ -280,7 +286,6 @@ cursor:pointer;
 display:inline-block;
 border-bottom:1px dotted #666;
 width:fit-content;
-margin-left:2px;
 }
 
 /* RATING */
@@ -1039,8 +1044,16 @@ ${item.description}
 
 <div class="priceWrap">
 
+<div class="priceTopRow">
+
+<div class="priceLabel">
+EST FROM
+</div>
+
 <div class="priceAmount">
 ${formatPrice(item.price)}
+</div>
+
 </div>
 
 <div class="priceCurrency"
