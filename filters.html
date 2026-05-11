@@ -29,6 +29,32 @@ width:260px;
 flex-shrink:0;
 }
 
+/* =========================
+LOADING FILTERS
+========================= */
+
+#loadingFilters{
+font-family:"Libre Bodoni",serif;
+font-size:13px;
+letter-spacing:1.8px;
+text-transform:uppercase;
+color:#0042FD;
+margin-bottom:14px;
+animation:softBlink 1.8s ease-in-out infinite;
+}
+
+@keyframes softBlink{
+0%{
+opacity:0.45;
+}
+50%{
+opacity:1;
+}
+100%{
+opacity:0.45;
+}
+}
+
 .filterTitle{
 font-size:14px;
 font-weight:500;
@@ -608,25 +634,15 @@ MODAL
 
 <div class="container">
 
-<div class="sidebar" id="filters"></div>
+<div class="sidebar">
 
-<div id="loadingFilters" style="
-font-size:13px;
-color:#777;
-padding-top:4px;
-">
-Loading filters...
+<div id="loadingFilters">
+LOADING FILTERS
 </div>
 
 <div id="filters"></div>
 
-</div>
-
-<div class="main">
-
-<!-- =========================
-LOCKED FILTER PREVIEW (4 ROWS)
-========================= -->
+<!-- LOCKED FILTER PREVIEW -->
 <div class="locked-grid">
 
   <div class="locked-chip" onclick="openModal()">
@@ -670,6 +686,22 @@ LOCKED FILTER PREVIEW (4 ROWS)
   </div>
 
 </div>
+
+</div>
+
+<div id="loadingFilters" style="
+font-size:13px;
+color:#777;
+padding-top:4px;
+">
+Loading filters...
+</div>
+
+<div id="filters"></div>
+
+</div>
+
+<div class="main">
 
 <!-- =========================
 PAYWALL MODAL
@@ -971,6 +1003,8 @@ const order=[
 ];
 
 const container=document.getElementById("filters");
+
+document.getElementById("loadingFilters").style.display="none";
 
 document.getElementById("loadingFilters").style.display="none";
 
