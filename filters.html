@@ -610,6 +610,18 @@ MODAL
 
 <div class="sidebar" id="filters"></div>
 
+<div id="loadingFilters" style="
+font-size:13px;
+color:#777;
+padding-top:4px;
+">
+Loading filters...
+</div>
+
+<div id="filters"></div>
+
+</div>
+
 <div class="main">
 
 <!-- =========================
@@ -959,6 +971,8 @@ const order=[
 ];
 
 const container=document.getElementById("filters");
+
+document.getElementById("loadingFilters").style.display="none";
 
 order.forEach(cat=>{
 
