@@ -1333,21 +1333,20 @@ BOOK ↗
 
 <div class="relatedLinks">
 
-${(item.quick_links||"")
-.split(";")
-.map(link=>{
+${(() => {
+  const links = (item.quick_links || "")
+    .split(";")
+    .map(l => l.trim())
+    .filter(l => l.includes("|") && l.split("|")[1]?.trim());
 
-const parts=link.split("|");
+  return links.map(link => {
+    const [label, url] = link.split("|");
 
-if(parts.length<2)return "";
-
-return `
-<a href="${parts[1]}">
-${parts[0]}
-</a>
-`;
-
-}).join("")}
+    return label && url
+      ? `<a href="${url.trim()}" target="_blank">${label.trim()}</a>`
+      : "";
+  }).join("");
+})()}
 
 </div>
 
