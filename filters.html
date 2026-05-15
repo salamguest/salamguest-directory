@@ -1258,9 +1258,11 @@ return `
 
 <div class="carouselWrap">
 
+${item.ai_label === "yes" ? `
 <div class="aiLabel">
 AI generated representation
 </div>
+` : ""}
 
 <div class="carousel">
 ${mediaContent}
