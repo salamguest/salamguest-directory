@@ -203,8 +203,6 @@ flex-direction:column;
 .carouselWrap{
 position:relative;
 overflow:hidden;
-min-height:220px;
-background:#f5f5f5;
 }
 
 .carousel{
@@ -214,7 +212,6 @@ scroll-snap-type:x mandatory;
 scroll-behavior:smooth;
 -ms-overflow-style:none;
 scrollbar-width:none;
-min-height:220px;
 }
 
 .carousel::-webkit-scrollbar{
@@ -629,13 +626,8 @@ MODAL
 }
 
 .primary-btn {
-  background: #0042FD;
-  border: 1px solid #0042FD;
-  border-radius: 100%;
+  background: black;
   color: white;
-  font-family: Lexend;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 
@@ -735,19 +727,14 @@ PAYWALL MODAL
 ========================= -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <h3 class="title">Unlock Advanced Full Filters</h3>
+    <h3>Unlock Advanced Filters</h3>
     <p>
-      Access 50+ Muslim-friendly travel filters including halal dining, prayer access,
+      Access Muslim-friendly travel filters including halal dining, prayer access,
       bidet availability, and comfort-based hotel scoring.
     </p>
 
-    <button class="primary-btn">Unlock for $20</button>
-  <p style="font-size:10px;text-transform:uppercase;">
-    One-time payment only <br/>
-    No monthly contract  <br/>
-    Valid for 2 months
-    </p>
-  
+    <button class="primary-btn">Unlock for $20 (2 months)</button>
+    <br/>
     <button onclick="closeModal()">Close</button>
   </div>
 </div>
@@ -1240,19 +1227,19 @@ const cards=document.getElementById("cards");
 
 cards.innerHTML=pageData.map(item=>{
 
-const folder = (item.media || "").trim();
+const folder=(item.media||"").trim();
 
-let mediaContent = "";
+let mediaContent="";
 
 if(folder){
 
-for(let i = 1; i <= 10; i++){
+for(let i=1;i<=10;i++){
 
-  mediaContent += `
+mediaContent+=`
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.dataset.error='true'; this.style.display='none';"
-onload="this.dataset.loaded='true';"
+onerror="this.style.display='none'"
+onload="this.dataset.loaded='true'"
 >
 `;
 
@@ -1260,11 +1247,8 @@ onload="this.dataset.loaded='true';"
 
 }else{
 
-mediaContent = `
-<img
-src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
-onerror="this.src='https://placehold.co/800x450?text=No+Image'"
->
+mediaContent=`
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
 `;
 
 }
@@ -1375,23 +1359,6 @@ ${(() => {
 }).join("");
 
 setTimeout(()=>{
-
-document.querySelectorAll(".carousel").forEach(carousel => {
-
-  const imgs = [...carousel.querySelectorAll("img")];
-
-  const validImgs = imgs.filter(img =>
-    img.dataset.error !== "true"
-  );
-
-  if(validImgs.length === 0){
-
-    carousel.innerHTML =
-      `<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">`;
-
-  }
-
-});
 
 document.querySelectorAll(".carouselWrap")
 .forEach(wrap=>{
