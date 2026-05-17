@@ -1248,11 +1248,11 @@ if(folder){
 
 for(let i = 1; i <= 10; i++){
 
-  mediaContent += `
+mediaContent += `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.dataset.error='true'; this.style.display='none';"
-onload="this.dataset.loaded='true';"
+onerror="this.remove()"
+onload="this.dataset.loaded='true'"
 >
 `;
 
@@ -1261,10 +1261,7 @@ onload="this.dataset.loaded='true';"
 }else{
 
 mediaContent = `
-<img
-src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
-onerror="this.src='https://placehold.co/800x450?text=No+Image'"
->
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
 `;
 
 }
@@ -1274,12 +1271,6 @@ return `
 <div class="card">
 
 <div class="carouselWrap">
-
-${item.image_label ? `
-<div class="aiLabel">
-${item.image_label}
-</div>
-` : ""}
 
 <div class="carousel">
 ${mediaContent}
@@ -1347,24 +1338,6 @@ onclick="redirectBooking('${item.link}')">
 BOOK ↗
 </a>
 
-<div class="relatedLinks">
-
-${(() => {
-  const links = (item.quick_links || "")
-    .split(";")
-    .map(l => l.trim())
-    .filter(l => l.includes("|") && l.split("|")[1]?.trim());
-
-  return links.map(link => {
-    const [label, url] = link.split("|");
-
-    return label && url
-      ? `<a href="${url.trim()}" target="_blank">${label.trim()}</a>`
-      : "";
-  }).join("");
-})()}
-
-</div>
 
 </div>
 </div>
@@ -1376,22 +1349,6 @@ ${(() => {
 
 setTimeout(()=>{
 
-document.querySelectorAll(".carousel").forEach(carousel => {
-
-  const imgs = [...carousel.querySelectorAll("img")];
-
-  const validImgs = imgs.filter(img =>
-    img.dataset.error !== "true"
-  );
-
-  if(validImgs.length === 0){
-
-    carousel.innerHTML =
-      `<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">`;
-
-  }
-
-});
 
 document.querySelectorAll(".carouselWrap")
 .forEach(wrap=>{
