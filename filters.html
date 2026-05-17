@@ -534,45 +534,45 @@ LOCKED FILTER CHIPS (UPDATED)
 ========================= */
 
 .locked-chip {
-display: inline-flex;
-align-items: center;
-gap: 6px;
-padding: 6px 10px;
-border-radius: 999px;
-background: #f2f2f2;
-font-size: 12px;
-color: #777;
-cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f2f2f2;
+  font-size: 12px;
+  color: #777;
+  cursor: pointer;
 }
 
 /* blurred text ONLY */
 .locked-chip span {
-filter: blur(2px);
+  filter: blur(2px);
 }
 
 /* =========================
 FLAT LOCK ICON (FIXED - NO HANDBAG LOOK)
 ========================= */
 .lock-icon {
-width: 10px;
-height: 10px;
-background: #8c8c8c;
-border-radius: 2px;
-display: inline-block;
-flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  background: #8c8c8c;
+  border-radius: 2px;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 /* top shackle (closed lock look) */
 .lock-icon::before {
-content: "";
-position: absolute;
-width: 8px;
-height: 6px;
-border: 2px solid #8c8c8c;
-border-bottom: none;
-border-radius: 6px 6px 0 0;
-top: -7px;
-left: 1px;
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 6px;
+  border: 2px solid #8c8c8c;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  top: -7px;
+  left: 1px;
 }
 
 /* =========================
@@ -590,9 +590,9 @@ margin-bottom:18px;
 MOBILE SPACING IMPROVEMENT
 ========================= */
 @media (max-width: 768px) {
-.locked-grid {
-margin-bottom: 24px;
-}
+  .locked-grid {
+    margin-bottom: 24px;
+  }
 }
 
 
@@ -600,42 +600,42 @@ margin-bottom: 24px;
 MODAL
 ========================= */
 .modal-overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0,0,0,0.6);
-display: none;
-justify-content: center;
-align-items: center;
-z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
 .modal {
-background: white;
-padding: 20px;
-border-radius: 12px;
-max-width: 320px;
-text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 320px;
+  text-align: center;
 }
 
 .modal button {
-margin-top: 10px;
-padding: 10px 12px;
-border: none;
-border-radius: 8px;
-cursor: pointer;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .primary-btn {
-background: #0042FD;
-border: 1px solid #0042FD;
-border-radius: 100%;
-color: white;
-font-family: Lexend;
-text-transform: uppercase;
-letter-spacing: 1px;
+  background: #0042FD;
+  border: 1px solid #0042FD;
+  border-radius: 100%;
+  color: white;
+  font-family: Lexend;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 
@@ -649,7 +649,7 @@ z-index:3;
 
 background:rgba(255,255,255,0.78);
 color:#8C8C8C;
-
+  
 font-size:9px;
 padding:4px 10px;
 
@@ -661,7 +661,7 @@ backdrop-filter:blur(6px);
 
 font-family:Lexend,sans-serif;
 letter-spacing:0.3px;
-}
+}  
 
 </style>
 
@@ -682,45 +682,45 @@ LOADING FILTERS
 <!-- LOCKED FILTER PREVIEW -->
 <div class="locked-grid">
 
-<div class="locked-chip" onclick="openModal()">
-<span>Halal Certified Hotels</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Halal Certified Hotels</span>
+    <div class="lock-icon"></div>
+  </div>
 
-<div class="locked-chip" onclick="openModal()">
-<span>Bidet Available</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Bidet Available</span>
+    <div class="lock-icon"></div>
+  </div>
 
-<div class="locked-chip" onclick="openModal()">
-<span>Prayer Room Nearby</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Prayer Room Nearby</span>
+    <div class="lock-icon"></div>
+  </div>
 
-<div class="locked-chip" onclick="openModal()">
-<span>Family Friendly</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Family Friendly</span>
+    <div class="lock-icon"></div>
+  </div>
 
-<div class="locked-chip" onclick="openModal()">
-<span>Near Mosque</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Near Mosque</span>
+    <div class="lock-icon"></div>
+  </div>
 
-<div class="locked-chip" onclick="openModal()">
-<span>Quiet Stay</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Quiet Stay</span>
+    <div class="lock-icon"></div>
+  </div>
 
-<div class="locked-chip" onclick="openModal()">
-<span>Luxury Muslim Stay</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Luxury Muslim Stay</span>
+    <div class="lock-icon"></div>
+  </div>
 
-<div class="locked-chip" onclick="openModal()">
-<span>Transit Friendly</span>
-<div class="lock-icon"></div>
-</div>
+  <div class="locked-chip" onclick="openModal()">
+    <span>Transit Friendly</span>
+    <div class="lock-icon"></div>
+  </div>
 
 </div>
 
@@ -734,22 +734,22 @@ LOADING FILTERS
 PAYWALL MODAL
 ========================= -->
 <div class="modal-overlay" id="modal">
-<div class="modal">
-<h3 class="title">Unlock Advanced Full Filters</h3>
-<p>
-Access 50+ Muslim-friendly travel filters including halal dining, prayer access,
-bidet availability, and comfort-based hotel scoring.
-</p>
+  <div class="modal">
+    <h3 class="title">Unlock Advanced Full Filters</h3>
+    <p>
+      Access 50+ Muslim-friendly travel filters including halal dining, prayer access,
+      bidet availability, and comfort-based hotel scoring.
+    </p>
 
-<button class="primary-btn">Unlock for $`20</button>
-<p style="font-size:10px;text-transform:uppercase;">
-One-time payment only <br/>
-No monthly contract <br/>
-Valid for 2 months
-</p>
-
-<button onclick="closeModal()">Close</button>
-</div>
+    <button class="primary-btn">Unlock for $20</button>
+  <p style="font-size:10px;text-transform:uppercase;">
+    One-time payment only <br/>
+    No monthly contract  <br/>
+    Valid for 2 months
+    </p>
+  
+    <button onclick="closeModal()">Close</button>
+  </div>
 </div>
 
 
@@ -967,7 +967,7 @@ const headers=rows[0].split(",");
 
 return rows.slice(1).map(row=>{
 
-const cols=row.match(/(".?"|[^",]+)(?=\s,|\s*`$)/g);
+const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
 let obj={};
 
@@ -1007,7 +1007,7 @@ const groups={};
 
 data.forEach(item=>{
 
-(item.filter_tags || "").split(/[;,]/).forEach(tag=>{
+(item.filter_tags||"").split(",").forEach(tag=>{
 
 if(tag.toLowerCase().includes("view:")) return;
 
@@ -1046,7 +1046,7 @@ if(!groups[cat])return;
 
 let block=document.createElement("div");
 
-block.innerHTML=<div class="filterTitle"&gt;${cat}</div>`;
+block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
 groups[cat].forEach(val=>{
 
@@ -1158,10 +1158,14 @@ let matchFilters=activeFilters.every(f=>
 tags.includes(f.toLowerCase())
 );
 
-let fullSearchText = ${item.name || ""}
- {item.city || ""}
- {item.filter_tags || ""}
- {item.location || ""}
+let fullSearchText = `
+${item.name || ""}
+${item.description || ""}
+${item.city || ""}
+${item.country || ""}
+${item.filter_tags || ""}
+${item.card_tags || ""}
+${item.location || ""}
 `.toLowerCase();
 
 let searchMatch = fullSearchText.includes(search);
@@ -1178,6 +1182,7 @@ if(sort==="lowHigh"){
 
 filtered.sort((a,b)=>
 (parseFloat(a.price)||0)
+-
 (parseFloat(b.price)||0)
 );
 
@@ -1187,6 +1192,7 @@ if(sort==="highLow"){
 
 filtered.sort((a,b)=>
 (parseFloat(b.price)||0)
+-
 (parseFloat(a.price)||0)
 );
 
@@ -1196,6 +1202,7 @@ if(sort==="ratingHigh"){
 
 filtered.sort((a,b)=>
 (parseFloat(b.rating)||0)
+-
 (parseFloat(a.rating)||0)
 );
 
@@ -1205,6 +1212,7 @@ if(sort==="ratingLow"){
 
 filtered.sort((a,b)=>
 (parseFloat(a.rating)||0)
+-
 (parseFloat(b.rating)||0)
 );
 
@@ -1240,9 +1248,12 @@ if(folder){
 
 for(let i = 1; i <= 10; i++){
 
-mediaContent += &lt;img src="https://salamguest.github.io/salamguest-directory/images/${folder}/`${i}.jpg"
+  mediaContent += `
+<img
+src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
 onerror="this.dataset.error='true'; this.style.display='none';"
 onload="this.dataset.loaded='true';"
+>
 `;
 
 }
@@ -1253,6 +1264,7 @@ mediaContent = `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
 onerror="this.src='https://placehold.co/800x450?text=No+Image'"
+>
 `;
 
 }
@@ -1263,15 +1275,14 @@ return `
 
 <div class="carouselWrap">
 
-latex
-{item.image_label ? ` &lt;div class="aiLabel"&gt; 
-
-{item.image_label}
+${item.image_label ? `
+<div class="aiLabel">
+${item.image_label}
 </div>
 ` : ""}
 
 <div class="carousel">
-$`{mediaContent}
+${mediaContent}
 </div>
 
 <div class="carouselIndicators"></div>
@@ -1281,15 +1292,15 @@ $`{mediaContent}
 <div class="cardBody">
 
 <div class="title">
-`${item.name}
+${item.name}
 </div>
 
 <div class="location">
- {item.country}
+${item.city}, ${item.country}
 </div>
 
 <div class="description">
-$`{item.description}
+${item.description}
 </div>
 
 <div class="bottom">
@@ -1301,18 +1312,18 @@ EST FROM
 </div>
 
 <div class="priceAmount">
-`${formatPrice(item.price)}
+${formatPrice(item.price)}
 </div>
 
 <div class="priceCurrency"
 onclick="toggleCurrencyMenu()">
-$`{currentCurrency} / night
+${currentCurrency} / night
 </div>
 
 </div>
 
 <div class="rating">
-`${item.rating} / 5
+${item.rating} / 5
 <div class="ratingSmall">
 Average Rating
 </div>
@@ -1320,10 +1331,11 @@ Average Rating
 
 <div class="tagsRow">
 
-latex
-{(item.card_tags||"") .split(",") .filter(tag=&gt;tag.trim()!=="") .map(tag=>` &lt;span class="cardTag"&gt;
-
-{tag}</span>
+${(item.card_tags||"")
+.split(",")
+.filter(tag=>tag.trim()!=="")
+.map(tag=>`
+<span class="cardTag">${tag}</span>
 `)
 .join("")}
 
@@ -1331,25 +1343,25 @@ latex
 
 <a class="book"
 href="javascript:void(0)"
-onclick="redirectBooking('$`{item.link}')">
+onclick="redirectBooking('${item.link}')">
 BOOK ↗
 </a>
 
 <div class="relatedLinks">
 
-`${(() => {
-const links = (item.quick_links || "")
-.split(";")
-.map(l => l.trim())
-.filter(l => l.includes("|") && l.split("|")[1]?.trim());
+${(() => {
+  const links = (item.quick_links || "")
+    .split(";")
+    .map(l => l.trim())
+    .filter(l => l.includes("|") && l.split("|")[1]?.trim());
 
-return links.map(link => {
-const [label, url] = link.split("|");
+  return links.map(link => {
+    const [label, url] = link.split("|");
 
-return label && url
-? <a href="${url.trim()}" target="_blank">${label.trim()}&lt;/a>
-: "";
-}).join("");
+    return label && url
+      ? `<a href="${url.trim()}" target="_blank">${label.trim()}</a>`
+      : "";
+  }).join("");
 })()}
 
 </div>
@@ -1366,18 +1378,18 @@ setTimeout(()=>{
 
 document.querySelectorAll(".carousel").forEach(carousel => {
 
-const imgs = [...carousel.querySelectorAll("img")];
+  const imgs = [...carousel.querySelectorAll("img")];
 
-const validImgs = imgs.filter(img =>
-img.dataset.error !== "true"
-);
+  const validImgs = imgs.filter(img =>
+    img.dataset.error !== "true"
+  );
 
-if(validImgs.length === 0){
+  if(validImgs.length === 0){
 
-carousel.innerHTML =
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">;
+    carousel.innerHTML =
+      `<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">`;
 
-}
+  }
 
 });
 
@@ -1439,8 +1451,11 @@ let html="";
 
 for(let i=1;i<=pages;i++){
 
-html+=&lt;button class="pageBtn ${i===currentPage?'active':''}"
-onclick="goPage(`${i})"
+html+=`
+<button
+class="pageBtn ${i===currentPage?'active':''}"
+onclick="goPage(${i})"
+>
 ${i}
 </button>
 `;
@@ -1475,11 +1490,11 @@ load();
 /* OPEN MODAL INFO LOCKED FILTERS */
 
 function openModal() {
-document.getElementById("modal").style.display = "flex";
+  document.getElementById("modal").style.display = "flex";
 }
 
 function closeModal() {
-document.getElementById("modal").style.display = "none";
+  document.getElementById("modal").style.display = "none";
 }
 
 
