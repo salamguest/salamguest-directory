@@ -1246,17 +1246,17 @@ let mediaContent = "";
 
 if(folder){
 
-  for(let i = 1; i <= 10; i++){
+for(let i = 1; i <= 10; i++){
 
-    mediaContent += `
+  mediaContent += `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.style.display='none';"
-onload="this.dataset.loaded='true'"
+onerror="this.dataset.error='true'; this.style.display='none';"
+onload="this.dataset.loaded='true';"
 >
 `;
 
-  }
+}
 
 }else{
 
@@ -1375,6 +1375,23 @@ ${(() => {
 }).join("");
 
 setTimeout(()=>{
+
+document.querySelectorAll(".carousel").forEach(carousel => {
+
+  const imgs = [...carousel.querySelectorAll("img")];
+
+  const validImgs = imgs.filter(img =>
+    img.dataset.error !== "true"
+  );
+
+  if(validImgs.length === 0){
+
+    carousel.innerHTML =
+      `<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">`;
+
+  }
+
+});
 
 document.querySelectorAll(".carouselWrap")
 .forEach(wrap=>{
