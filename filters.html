@@ -630,31 +630,6 @@ MODAL
   color: white;
 }
 
-
-/* AI LABEL */
-
-.aiLabel{
-position:absolute;
-top:10px;
-right:10px;
-z-index:3;
-
-background:rgba(255,255,255,0.78);
-color:#8C8C8C;
-  
-font-size:9px;
-padding:4px 10px;
-
-border-radius:999px;
-
-border:1px solid rgba(255,255,255,0.5);
-
-backdrop-filter:blur(6px);
-
-font-family:Lexend,sans-serif;
-letter-spacing:0.3px;
-}  
-
 </style>
 
 </head>
@@ -1259,12 +1234,6 @@ return `
 
 <div class="carouselWrap">
 
-${item.image_label ? `
-<div class="aiLabel">
-${item.image_label}
-</div>
-` : ""}
-
 <div class="carousel">
 ${mediaContent}
 </div>
@@ -1333,20 +1302,21 @@ BOOK ↗
 
 <div class="relatedLinks">
 
-${(() => {
-  const links = (item.quick_links || "")
-    .split(";")
-    .map(l => l.trim())
-    .filter(l => l.includes("|") && l.split("|")[1]?.trim());
+${(item.quick_links||"")
+.split(",")
+.map(link=>{
 
-  return links.map(link => {
-    const [label, url] = link.split("|");
+const parts=link.split("|");
 
-    return label && url
-      ? `<a href="${url.trim()}" target="_blank">${label.trim()}</a>`
-      : "";
-  }).join("");
-})()}
+if(parts.length<2)return "";
+
+return `
+<a href="${parts[1]}">
+${parts[0]}
+</a>
+`;
+
+}).join("")}
 
 </div>
 
