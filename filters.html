@@ -203,6 +203,8 @@ flex-direction:column;
 .carouselWrap{
 position:relative;
 overflow:hidden;
+min-height:220px;
+background:#f5f5f5;
 }
 
 .carousel{
@@ -212,6 +214,7 @@ scroll-snap-type:x mandatory;
 scroll-behavior:smooth;
 -ms-overflow-style:none;
 scrollbar-width:none;
+min-height:220px;
 }
 
 .carousel::-webkit-scrollbar{
@@ -626,9 +629,39 @@ MODAL
 }
 
 .primary-btn {
-  background: black;
+  background: #0042FD;
+  border: 1px solid #0042FD;
+  border-radius: 100%;
   color: white;
+  font-family: Lexend;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
+
+
+/* AI LABEL */
+
+.aiLabel{
+position:absolute;
+top:10px;
+right:10px;
+z-index:3;
+
+background:rgba(255,255,255,0.78);
+color:#8C8C8C;
+  
+font-size:9px;
+padding:4px 10px;
+
+border-radius:999px;
+
+border:1px solid rgba(255,255,255,0.5);
+
+backdrop-filter:blur(6px);
+
+font-family:Lexend,sans-serif;
+letter-spacing:0.3px;
+}  
 
 </style>
 
@@ -702,14 +735,19 @@ PAYWALL MODAL
 ========================= -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <h3>Unlock Advanced Filters</h3>
+    <h3 class="title">Unlock Advanced Full Filters</h3>
     <p>
-      Access Muslim-friendly travel filters including halal dining, prayer access,
+      Access 50+ Muslim-friendly travel filters including halal dining, prayer access,
       bidet availability, and comfort-based hotel scoring.
     </p>
 
-    <button class="primary-btn">Unlock for $20 (2 months)</button>
-    <br/>
+    <button class="primary-btn">Unlock for $20</button>
+  <p style="font-size:10px;text-transform:uppercase;">
+    One-time payment only <br/>
+    No monthly contract  <br/>
+    Valid for 2 months
+    </p>
+  
     <button onclick="closeModal()">Close</button>
   </div>
 </div>
@@ -1202,19 +1240,19 @@ const cards=document.getElementById("cards");
 
 cards.innerHTML=pageData.map(item=>{
 
-const folder=(item.media||"").trim();
+const folder = (item.media || "").trim();
 
-let mediaContent="";
+let mediaContent = "";
 
 if(folder){
 
-for(let i=1;i<=10;i++){
+for(let i = 1; i <= 10; i++){
 
-mediaContent+=`
+  mediaContent += `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.style.display='none'"
-onload="this.dataset.loaded='true'"
+onerror="this.dataset.error='true'; this.style.display='none';"
+onload="this.dataset.loaded='true';"
 >
 `;
 
@@ -1222,8 +1260,11 @@ onload="this.dataset.loaded='true'"
 
 }else{
 
-mediaContent=`
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+mediaContent = `
+<img
+src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
+onerror="this.src='https://placehold.co/800x450?text=No+Image'"
+>
 `;
 
 }
@@ -1233,6 +1274,12 @@ return `
 <div class="card">
 
 <div class="carouselWrap">
+
+${item.image_label ? `
+<div class="aiLabel">
+${item.image_label}
+</div>
+` : ""}
 
 <div class="carousel">
 ${mediaContent}
@@ -1302,21 +1349,20 @@ BOOK ↗
 
 <div class="relatedLinks">
 
-${(item.quick_links||"")
-.split(",")
-.map(link=>{
+${(() => {
+  const links = (item.quick_links || "")
+    .split(";")
+    .map(l => l.trim())
+    .filter(l => l.includes("|") && l.split("|")[1]?.trim());
 
-const parts=link.split("|");
+  return links.map(link => {
+    const [label, url] = link.split("|");
 
-if(parts.length<2)return "";
-
-return `
-<a href="${parts[1]}">
-${parts[0]}
-</a>
-`;
-
-}).join("")}
+    return label && url
+      ? `<a href="${url.trim()}" target="_blank">${label.trim()}</a>`
+      : "";
+  }).join("");
+})()}
 
 </div>
 
@@ -1329,6 +1375,23 @@ ${parts[0]}
 }).join("");
 
 setTimeout(()=>{
+
+document.querySelectorAll(".carousel").forEach(carousel => {
+
+  const imgs = [...carousel.querySelectorAll("img")];
+
+  const validImgs = imgs.filter(img =>
+    img.dataset.error !== "true"
+  );
+
+  if(validImgs.length === 0){
+
+    carousel.innerHTML =
+      `<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">`;
+
+  }
+
+});
 
 document.querySelectorAll(".carouselWrap")
 .forEach(wrap=>{
