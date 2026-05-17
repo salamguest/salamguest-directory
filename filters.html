@@ -214,6 +214,7 @@ scroll-snap-type:x mandatory;
 scroll-behavior:smooth;
 -ms-overflow-style:none;
 scrollbar-width:none;
+min-height:220px;
 }
 
 .carousel::-webkit-scrollbar{
@@ -1252,6 +1253,22 @@ if(folder){
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
 
 onerror="
+this.style.display='none';
+
+const carousel=this.parentElement;
+
+setTimeout(()=>{
+
+if([...carousel.querySelectorAll('img')]
+  .every(img=>img.style.display==='none')){
+
+  carousel.innerHTML =
+  '<img src=\"https://salamguest.github.io/salamguest-directory/images/placeholder.jpg\">';
+
+}
+
+},50);
+"
 this.remove();
 
 const carousel = this.parentElement;
@@ -1270,9 +1287,10 @@ onload="this.dataset.loaded='true'"
 
 }else{
 
-  mediaContent = `
+mediaContent = `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
+onerror="this.src='https://placehold.co/800x450?text=No+Image'"
 >
 `;
 
