@@ -1251,34 +1251,7 @@ if(folder){
     mediaContent += `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-
-onerror="
-this.style.display='none';
-
-const carousel=this.parentElement;
-
-setTimeout(()=>{
-
-if([...carousel.querySelectorAll('img')]
-  .every(img=>img.style.display==='none')){
-
-  carousel.innerHTML =
-  '<img src=\"https://salamguest.github.io/salamguest-directory/images/placeholder.jpg\">';
-
-}
-
-},50);
-"
-this.remove();
-
-const carousel = this.parentElement;
-
-if(carousel.children.length===0){
-carousel.innerHTML =
-'<img src=&quot;https://salamguest.github.io/salamguest-directory/images/placeholder.jpg&quot;>';
-}
-"
-
+onerror="this.style.display='none';"
 onload="this.dataset.loaded='true'"
 >
 `;
