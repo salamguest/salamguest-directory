@@ -203,6 +203,8 @@ flex-direction:column;
 .carouselWrap{
 position:relative;
 overflow:hidden;
+min-height:220px;
+background:#f5f5f5;
 }
 
 .carousel{
@@ -1237,28 +1239,41 @@ const cards=document.getElementById("cards");
 
 cards.innerHTML=pageData.map(item=>{
 
-const folder=(item.media||"").trim();
+const folder = (item.media || "").trim();
 
-let mediaContent="";
+let mediaContent = "";
 
 if(folder){
 
-for(let i=1;i<=10;i++){
+  for(let i = 1; i <= 10; i++){
 
-mediaContent+=`
+    mediaContent += `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.style.display='none'"
+
+onerror="
+this.remove();
+
+const carousel = this.parentElement;
+
+if(carousel.children.length===0){
+carousel.innerHTML =
+'<img src=&quot;https://salamguest.github.io/salamguest-directory/images/placeholder.jpg&quot;>';
+}
+"
+
 onload="this.dataset.loaded='true'"
 >
 `;
 
-}
+  }
 
 }else{
 
-mediaContent=`
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+  mediaContent = `
+<img
+src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
+>
 `;
 
 }
