@@ -1398,6 +1398,23 @@ document.querySelectorAll(".carouselWrap")
 
 const carousel=wrap.querySelector(".carousel");
 
+/* Fix for gray blank image
+ instead of placeholder image
+ for no uploaded images on cards */
+ 
+ const visibleImages = [...carousel.querySelectorAll("img")]
+.filter(img => img.style.display !== "none");
+
+if(visibleImages.length === 0){
+
+carousel.innerHTML = `
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+`;
+
+return;
+
+}
+
 const indicators=wrap.querySelector(".carouselIndicators");
 
 const items=[
