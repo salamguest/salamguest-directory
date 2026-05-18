@@ -1450,9 +1450,21 @@ return;
 
 const indicators=wrap.querySelector(".carouselIndicators");
 
-const items=[
+const loadedImages = [
 ...carousel.children
-].filter(img=>img.dataset.loaded==="true").length;
+].filter(img => img.dataset.loaded === "true");
+
+if(loadedImages.length === 0){
+
+carousel.innerHTML = `
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+`;
+
+return;
+
+}
+
+const items = loadedImages.length;
 
 if(items<=1)return;
 
