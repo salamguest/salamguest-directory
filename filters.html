@@ -961,18 +961,60 @@ render();
 
 function parseCSV(text){
 
-const rows=text.trim().split("\n");
+const rows = [];
+let row = [];
+let current = "";
+let inQuotes = false;
 
-const headers=rows[0].split(",");
+for(let i = 0; i < text.length; i++){
 
-return rows.slice(1).map(row=>{
+const char = text[i];
+const next = text[i + 1];
 
-const cols=row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+if(char === '"'){
 
-let obj={};
+if(inQuotes && next === '"'){
+current += '"';
+i++;
+}else{
+inQuotes = !inQuotes;
+}
+
+}else if(char === "," && !inQuotes){
+
+row.push(current);
+current = "";
+
+}else if((char === "\n" || char === "\r") && !inQuotes){
+
+if(current || row.length){
+row.push(current);
+rows.push(row);
+row = [];
+current = "";
+}
+
+}else{
+
+current += char;
+
+}
+
+}
+
+if(current || row.length){
+row.push(current);
+rows.push(row);
+}
+
+const headers = rows[0].map(h => h.trim());
+
+return rows.slice(1).map(cols => {
+
+let obj = {};
 
 headers.forEach((h,i)=>{
-obj[h.trim()]=cols?.[i]?.replaceAll('"',"")||"";
+obj[h] = (cols[i] || "").trim();
 });
 
 return obj;
