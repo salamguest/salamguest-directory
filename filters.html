@@ -1251,7 +1251,7 @@ for(let i = 1; i <= 10; i++){
 mediaContent += `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.remove()"
+onerror="this.style.display='none'"
 onload="this.dataset.loaded='true'"
 >
 `;
@@ -1261,7 +1261,9 @@ onload="this.dataset.loaded='true'"
 }else{
 
 mediaContent = `
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+<img
+src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
+>
 `;
 
 }
@@ -1348,7 +1350,6 @@ BOOK ↗
 }).join("");
 
 setTimeout(()=>{
-
 
 document.querySelectorAll(".carouselWrap")
 .forEach(wrap=>{
