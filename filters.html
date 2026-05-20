@@ -1070,7 +1070,7 @@ data=parseCSV(text);
 
 buildFilters();
 
-render();
+applyURLFilters();
 
 }
 
@@ -1549,6 +1549,68 @@ render();
 }
 
 });
+
+/* =========================
+AUTO LOAD SEARCH/FILTER FROM URL
+========================= */
+
+function applyURLFilters(){
+
+const params =
+new URLSearchParams(window.location.search);
+
+const search =
+params.get("search");
+
+const filter =
+params.get("filter");
+
+/* AUTO SEARCH */
+
+if(search){
+
+document.getElementById(
+"searchInput"
+).value = search;
+
+}
+
+/* AUTO FILTER TAG */
+
+if(filter){
+
+document.querySelectorAll(".tag")
+.forEach(tag=>{
+
+if(
+tag.innerText.trim()
+.toLowerCase()
+===
+filter.trim()
+.toLowerCase()
+){
+
+tag.classList.add("active");
+
+activeFilters.push(
+tag.parentElement
+.querySelector(".filterTitle")
+.innerText
++
+":"
++
+tag.innerText.trim()
+);
+
+}
+
+});
+
+}
+
+render();
+
+}
 
 load();
 
