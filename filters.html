@@ -678,6 +678,57 @@ color:#909090;
 box-shadow: 0 2px 10px rgba(0,0,0,.08);
 }
 
+/* round info button */
+.info{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  border:1px solid #ccc;
+  background:#fff;
+  color:#333;
+  font-size:12px;
+  line-height:1;
+  cursor:help;
+  padding:0;
+  margin-left:4px;
+}
+
+/* visually hide tooltip by default */
+.tooltip{
+  position:absolute;
+  white-space:nowrap;
+  background:#111;
+  color:#fff;
+  padding:8px 10px;
+  border-radius:6px;
+  font-size:13px;
+  transform-origin:top left;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .12s ease, transform .12s ease;
+  z-index:1000;
+  margin-top:6px;
+}
+
+/* show tooltip on focus or hover of the button */
+.info:focus + .tooltip,
+.info:hover + .tooltip{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+/* basic positioning (adjust as needed) */
+.info{ position:relative; }
+.info + .tooltip{
+  position:absolute;
+  left:50%;
+  transform:translate(-50%, 6px) scale(.98);
+}
+
 </style>
 
 </head>
@@ -1379,8 +1430,14 @@ ${item.description}
 <div class="priceWrap">
 
 <div class="priceLabel">
-STARTING FROM
+STARTING FROM 
+<button class="info" aria-describedby="price-info" aria-label="Price info">i</button>
+<span id="price-info" class="tooltip" role="tooltip">
+  Estimated from — final price depends on dates, availability, and fees.
+</span>
 </div>
+
+
 
 <div class="priceAmount">
 ${formatPrice(item.price)}
