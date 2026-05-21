@@ -1455,8 +1455,9 @@ return;
 const indicators=wrap.querySelector(".carouselIndicators");
 
 const loadedImages = [
-...carousel.children
+...carousel.querySelectorAll("img")
 ].filter(img =>
+img.dataset.loaded === "true" &&
 img.style.display !== "none"
 );
 
@@ -1472,7 +1473,12 @@ return;
 
 const items = loadedImages.length;
 
-if(items<=1)return;
+if(items<=1){
+
+indicators.innerHTML="";
+return;
+
+}
 
 indicators.innerHTML="";
 
