@@ -241,17 +241,68 @@ gap:5px;
 z-index:2;
 }
 
+.carouselIndicators{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:10px;
+}
+
+.carouselIndicators{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:10px;
+}
+
 .carouselIndicators span{
-width:16px;
-height:3px;
+width:28px;
+height:4px;
 border-radius:999px;
-background:rgba(255,255,255,0.4);
-transition:0.2s;
+background:#d8d8d8;
+transition:.25s;
 }
 
 .carouselIndicators span.active{
-background:white;
+width:42px;
+background:#0042FD;
 }
+
+/* Carousel Arrows */
+.carouselWrapInner{
+position:relative;
+}
+
+.carouselArrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:36px;
+height:36px;
+border:none;
+border-radius:50%;
+background:rgba(255,255,255,.88);
+backdrop-filter:blur(6px);
+font-size:26px;
+cursor:pointer;
+z-index:10;
+box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+.carouselArrow.left{
+left:10px;
+}
+
+.carouselArrow.right{
+right:10px;
+}
+
+.carouselArrow:hover{
+transform:translateY(-50%) scale(1.06);
+}
+
 
 /* CARD BODY */
 
@@ -1354,8 +1405,20 @@ ${item.image_label}
 </div>
 ` : ""}
 
+<div class="carouselWrapInner">
+
+<button class="carouselArrow left">
+‹
+</button>
+
 <div class="carousel">
 ${mediaContent}
+</div>
+
+<button class="carouselArrow right">
+›
+</button>
+
 </div>
 
 <div class="carouselIndicators"></div>
@@ -1495,6 +1558,27 @@ if(i===0)dot.classList.add("active");
 indicators.appendChild(dot);
 
 }
+
+const leftBtn = wrap.querySelector(".left");
+const rightBtn = wrap.querySelector(".right");
+
+leftBtn?.addEventListener("click",()=>{
+
+carousel.scrollBy({
+left:-carousel.offsetWidth,
+behavior:"smooth"
+});
+
+});
+
+rightBtn?.addEventListener("click",()=>{
+
+carousel.scrollBy({
+left:carousel.offsetWidth,
+behavior:"smooth"
+});
+
+});
 
 carousel.addEventListener("scroll",()=>{
 
