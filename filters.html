@@ -231,35 +231,22 @@ scroll-snap-align:start;
 
 /* INDICATORS */
 
-.carouselControls{
+.carouselIndicators{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
 display:flex;
-align-items:center;
-justify-content:center;
-gap:12px;
-margin-top:12px;
-}
-
-.carouselNav{
-border:none;
-background:none;
-font-size:20px;
-cursor:pointer;
-color:#0042FD;
-padding:0;
-line-height:1;
-opacity:.7;
-transition:.2s;
-}
-
-.carouselNav:hover{
-opacity:1;
-transform:scale(1.1);
+gap:5px;
+z-index:2;
 }
 
 .carouselIndicators{
 display:flex;
+justify-content:center;
 align-items:center;
 gap:8px;
+margin-top:10px;
 }
 
 .carouselIndicators span{
@@ -1381,17 +1368,7 @@ ${item.image_label}
 ${mediaContent}
 </div>
 
-<div class="carouselControls">
-
-<button class="carouselNav left">
-‹
-</button>
-
 <div class="carouselIndicators"></div>
-
-<button class="carouselNav right">
-›
-</button>
 
 </div>
 
@@ -1528,27 +1505,6 @@ if(i===0)dot.classList.add("active");
 indicators.appendChild(dot);
 
 }
-
-const leftBtn = wrap.querySelector(".left");
-const rightBtn = wrap.querySelector(".right");
-
-leftBtn?.addEventListener("click",()=>{
-
-carousel.scrollBy({
-left:-carousel.offsetWidth,
-behavior:"smooth"
-});
-
-});
-
-rightBtn?.addEventListener("click",()=>{
-
-carousel.scrollBy({
-left:carousel.offsetWidth,
-behavior:"smooth"
-});
-
-});
 
 carousel.addEventListener("scroll",()=>{
 
