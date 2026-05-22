@@ -231,30 +231,35 @@ scroll-snap-align:start;
 
 /* INDICATORS */
 
-.carouselIndicators{
-position:absolute;
-bottom:10px;
-left:50%;
-transform:translateX(-50%);
+.carouselControls{
 display:flex;
-gap:5px;
-z-index:2;
+align-items:center;
+justify-content:center;
+gap:12px;
+margin-top:12px;
+}
+
+.carouselNav{
+border:none;
+background:none;
+font-size:20px;
+cursor:pointer;
+color:#0042FD;
+padding:0;
+line-height:1;
+opacity:.7;
+transition:.2s;
+}
+
+.carouselNav:hover{
+opacity:1;
+transform:scale(1.1);
 }
 
 .carouselIndicators{
 display:flex;
-justify-content:center;
 align-items:center;
 gap:8px;
-margin-top:10px;
-}
-
-.carouselIndicators{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:8px;
-margin-top:10px;
 }
 
 .carouselIndicators span{
@@ -270,37 +275,31 @@ width:42px;
 background:#0042FD;
 }
 
-/* Carousel Arrows */
-.carouselWrapInner{
-position:relative;
+/* carousel arrows <--->  */
+
+.carouselControls{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+margin-top:12px;
 }
 
-.carouselArrow{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-width:36px;
-height:36px;
+.carouselNav{
 border:none;
-border-radius:50%;
-background:rgba(255,255,255,.88);
-backdrop-filter:blur(6px);
-font-size:26px;
+background:none;
+font-size:20px;
 cursor:pointer;
-z-index:10;
-box-shadow:0 2px 8px rgba(0,0,0,.12);
+color:#0042FD;
+padding:0;
+line-height:1;
+opacity:.7;
+transition:.2s;
 }
 
-.carouselArrow.left{
-left:10px;
-}
-
-.carouselArrow.right{
-right:10px;
-}
-
-.carouselArrow:hover{
-transform:translateY(-50%) scale(1.06);
+.carouselNav:hover{
+opacity:1;
+transform:scale(1.1);
 }
 
 
@@ -1405,11 +1404,6 @@ ${item.image_label}
 </div>
 ` : ""}
 
-<div class="carouselWrapInner">
-
-<button class="carouselArrow left">
-‹
-</button>
 
 <div class="carousel">
 ${mediaContent}
@@ -1421,7 +1415,31 @@ ${mediaContent}
 
 </div>
 
+<div class="carouselControls">
+
+<button class="carouselNav left">
+‹
+</button>
+
+<div class="carouselControls">
+
+<button class="carouselNav left">
+‹
+</button>
+
 <div class="carouselIndicators"></div>
+
+<button class="carouselNav right">
+›
+</button>
+
+</div>
+
+<button class="carouselNav right">
+›
+</button>
+
+</div>
 
 </div>
 
