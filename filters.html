@@ -16,6 +16,7 @@ margin:0;
 font-family:Lexend,sans-serif;
 background:#fff;
 color:#222;
+overflow-x: hidden;
 }
 
 .container{
@@ -623,6 +624,12 @@ MODAL
   z-index: 999999;
 }
 
+ .modal,
+.currencyBox {
+  position: relative;
+  z-index: 1000000;
+}
+  
 .modal {
   background: white;
   padding: 20px;
@@ -757,7 +764,16 @@ LOADING FILTERS
 
 <div class="main">
 
+<div class="modal">
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <h3 style="margin:0;">Unlock Advanced Filters</h3>
+    <span onclick="closeModal()" style="cursor:pointer;font-size:18px;">✕</span>
+  </div>
 
+  <p>Access Muslim-friendly travel filters...</p>
+
+  <button class="primary-btn">Unlock</button>
+</div>
 
 
 <div class="search">
