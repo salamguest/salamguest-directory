@@ -701,42 +701,42 @@ LOADING FILTERS
 <!-- LOCKED FILTER PREVIEW -->
 <div class="locked-grid">
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Halal Certified</span>
     <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Mini Fridge Provided</span>
     <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Prayer Room Nearby</span>
     <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Family Friendly</span>
     <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Nearby Mosque</span>
     <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Quiet Stay</span>
     <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Luxury Muslim Stay</span>
     <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openModal()">
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Transit Friendly</span>
     <div class="lock-icon"></div>
   </div>
@@ -1616,15 +1616,6 @@ render();
 
 load();
 
-/* OPEN MODAL INFO LOCKED FILTERS */
-
-function openModal() {
-  document.getElementById("modal").style.display = "flex";
-}
-
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-}
 
 /* Payhip basic filters homepage */
   
@@ -1650,6 +1641,47 @@ const observer = new ResizeObserver(() => {
 
 observer.observe(document.body)
 
+
+/* Premium Popup */
+
+function openPremiumPopup(event){
+
+const popup =
+document.getElementById("premiumPopup");
+
+popup.style.display = "block";
+
+const x = event.clientX;
+const y = event.clientY;
+
+popup.style.left = (x + 12) + "px";
+popup.style.top = (y + 12) + "px";
+
+}
+
+function closePremiumPopup(){
+
+document.getElementById("premiumPopup")
+.style.display = "none";
+
+}
+
+document.addEventListener("click", function(e){
+
+const popup =
+document.getElementById("premiumPopup");
+
+if(
+!popup.contains(e.target)
+&&
+!e.target.closest(".locked-chip")
+){
+
+popup.style.display = "none";
+
+}
+
+});
   
 </script>
 
