@@ -1247,6 +1247,11 @@ render();
 
 function scrollTopSmooth(){
 
+window.parent.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
 window.scrollTo({
 top:0,
 behavior:"smooth"
