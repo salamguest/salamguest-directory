@@ -619,6 +619,8 @@ background:white;
 border-radius:18px;
 padding:18px;
 width:260px;
+max-width:calc(100vw - 28px);
+box-sizing:border-box;
 box-shadow:0 10px 40px rgba(0,0,0,0.14);
 z-index:999999;
 border:1px solid #eef3ff;
@@ -787,7 +789,7 @@ onchange="render()">
 </select>
 
 <button class="currencyTopBtn"
-onclick="toggleCurrencyMenu()">
+onclick="openCurrencyPopup(event)">
 MYR ▼
 </button>
 
@@ -818,32 +820,7 @@ Back To Top
 
 <!-- CURRENCY MODAL -->
 
-<div id="currencyModal">
 
-<div class="currencyBox">
-
-<div style="
-font-size:15px;
-margin-bottom:14px;
-font-weight:500;
-">
-Choose Currency
-</div>
-
-<div class="currencyOption" onclick="setCurrency('MYR')">MYR</div>
-<div class="currencyOption" onclick="setCurrency('USD')">USD</div>
-<div class="currencyOption" onclick="setCurrency('SGD')">SGD</div>
-<div class="currencyOption" onclick="setCurrency('GBP')">GBP</div>
-<div class="currencyOption" onclick="setCurrency('EUR')">EUR</div>
-<div class="currencyOption" onclick="setCurrency('JPY')">JPY</div>
-<div class="currencyOption" onclick="setCurrency('SAR')">SAR</div>
-<div class="currencyOption" onclick="setCurrency('AED')">AED</div>
-<div class="currencyOption" onclick="setCurrency('IDR')">IDR</div>
-<div class="currencyOption" onclick="setCurrency('TRY')">TRY</div>
-
-</div>
-
-</div>
 
 <!-- REDIRECT -->
 
@@ -882,6 +859,63 @@ Coming Soon
 </button>
 
 </div>
+
+
+<div id="currencyPopup"
+class="premiumPopup">
+
+<div class="closeMini"
+onclick="closeCurrencyPopup()">
+✕
+</div>
+
+<div class="premiumTitle">
+Choose Currency
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('MYR')">
+MYR
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('USD')">
+USD
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('SGD')">
+SGD
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('GBP')">
+GBP
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('EUR')">
+EUR
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('JPY')">
+JPY
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('SAR')">
+SAR
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('AED')">
+AED
+</div>
+
+</div>
+
+
 
 <script>
 
@@ -955,12 +989,49 @@ return converted.toFixed(2);
 
 /* CURRENCY */
 
-function toggleCurrencyMenu(){
 
-document.getElementById("currencyModal")
-.style.display="flex";
+function openCurrencyPopup(event){
+
+const popup =
+document.getElementById("currencyPopup");
+
+popup.style.display = "block";
+
+const popupWidth = 260;
+const padding = 14;
+const screenWidth = window.innerWidth;
+
+let x = event.clientX;
+let y = event.clientY;
+
+let left = x;
+let top = y + 10;
+
+if(left + popupWidth > screenWidth){
+
+left =
+screenWidth - popupWidth - padding;
 
 }
+
+if(left < padding){
+
+left = padding;
+
+}
+
+popup.style.left = left + "px";
+popup.style.top = top + "px";
+
+}
+
+function closeCurrencyPopup(){
+
+document.getElementById("currencyPopup")
+.style.display = "none";
+
+}
+
 
 function setCurrency(currency){
 
@@ -969,8 +1040,7 @@ currentCurrency=currency;
 document.querySelector(".currencyTopBtn").innerHTML=
 currency+" ▼";
 
-document.getElementById("currencyModal")
-.style.display="none";
+closeCurrencyPopup();
 
 render();
 
@@ -1379,7 +1449,7 @@ ${formatPrice(item.price)}
 </div>
 
 <div class="priceCurrency"
-onclick="toggleCurrencyMenu()">
+onclick="openCurrencyPopup(event)">
 ${currentCurrency} / night
 </div>
 
@@ -1651,11 +1721,37 @@ document.getElementById("premiumPopup");
 
 popup.style.display = "block";
 
-const x = event.clientX;
-const y = event.clientY;
+/* popup width */
+const popupWidth = 270;
+const padding = 14;
 
-popup.style.left = (x + 12) + "px";
-popup.style.top = (y + 12) + "px";
+/* screen width */
+const screenWidth = window.innerWidth;
+
+/* click position */
+let x = event.clientX;
+let y = event.clientY;
+
+/* default position */
+let left = x;
+let top = y + 10;
+
+/* prevent overflow right */
+if(left + popupWidth > screenWidth){
+
+left = screenWidth - popupWidth - padding;
+
+}
+
+/* never too left */
+if(left < padding){
+
+left = padding;
+
+}
+
+popup.style.left = left + "px";
+popup.style.top = top + "px";
 
 }
 
@@ -1666,18 +1762,40 @@ document.getElementById("premiumPopup")
 
 }
 
+/* close clicking outside */
 document.addEventListener("click", function(e){
 
-const popup =
+/* PREMIUM POPUP */
+
+const premium =
 document.getElementById("premiumPopup");
 
 if(
-!popup.contains(e.target)
+premium &&
+!premium.contains(e.target)
 &&
 !e.target.closest(".locked-chip")
 ){
 
-popup.style.display = "none";
+premium.style.display = "none";
+
+}
+
+/* CURRENCY POPUP */
+
+const currency =
+document.getElementById("currencyPopup");
+
+if(
+currency &&
+!currency.contains(e.target)
+&&
+!e.target.closest(".currencyTopBtn")
+&&
+!e.target.closest(".priceCurrency")
+){
+
+currency.style.display = "none";
 
 }
 
