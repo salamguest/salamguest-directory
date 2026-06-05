@@ -685,6 +685,87 @@ color:#909090;
 box-shadow: 0 2px 10px rgba(0,0,0,.08);
 }
 
+/* =========================
+STICKY FILTERS BUTTON
+========================= */
+
+#stickyFiltersBtn{
+position:fixed;
+bottom:22px;
+right:18px;
+z-index:9999;
+
+display:none;
+align-items:center;
+justify-content:center;
+
+padding:12px 18px;
+
+border:none;
+border-radius:999px;
+
+background:#0042FD;
+color:white;
+
+font-family:Lexend,sans-serif;
+font-size:13px;
+font-weight:500;
+
+box-shadow:0 6px 18px rgba(0,0,0,0.16);
+
+cursor:pointer;
+transition:0.25s ease;
+}
+
+#stickyFiltersBtn:hover{
+transform:translateY(-2px);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+#stickyFiltersBtn{
+bottom:18px;
+right:14px;
+font-size:12px;
+padding:11px 16px;
+}
+
+}
+
+/* =========================
+SEARCH RESULTS POPUP
+========================= */
+
+#searchOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.38);
+
+display:none;
+align-items:center;
+justify-content:center;
+
+z-index:99999;
+}
+
+.searchBox{
+background:white;
+padding:24px;
+border-radius:18px;
+width:260px;
+text-align:center;
+box-shadow:0 10px 40px rgba(0,0,0,0.16);
+}
+
+#searchStatusText{
+font-family:"Libre Bodoni",serif;
+font-size:16px;
+line-height:1.5;
+color:#111;
+margin-top:10px;
+white-space:pre-line;
+}
 
 </style>
 
@@ -704,7 +785,7 @@ box-shadow: 0 2px 10px rgba(0,0,0,.08);
 
 <div class="container">
 
-<div class="sidebar">
+<div class="sidebar" id="filtersTop">
 
 <div id="loadingFilters">
 LOADING FILTERS
@@ -782,7 +863,7 @@ onclick="render()">
 
 </div>
 
-<div class="topButtons">
+<div class="topButtons" id="searchSection">
 
 <button class="clearBtn" onclick="clearAll()">
 Clear
@@ -832,6 +913,27 @@ Back To Top
 </div>
 
 </div>
+</div>
+
+<!-- STICKY FILTERS BUTTON -->
+<button id="stickyFiltersBtn" onclick="scrollToFilters()">
+FILTERS ☰
+</button>
+
+<!-- SEARCH RESULTS POPUP -->
+
+<div id="searchOverlay">
+
+<div class="searchBox">
+
+<div class="spinner"></div>
+
+<div id="searchStatusText">
+SEARCHING
+</div>
+
+</div>
+
 </div>
 
 <!-- CURRENCY MODAL -->
@@ -948,6 +1050,8 @@ let currentCurrency="MYR";
 let exchangeRates={
 MYR:1
 };
+
+let hasLoaded = false;  // Step 5: flag to skip popup on first load
 
 /* EXCHANGE RATES */
 
@@ -1585,6 +1689,11 @@ d.classList.toggle("active",i===index);
 
 renderPagination(filtered.length);
 
+if (hasLoaded) {
+    showSearchPopup(filtered.length);
+}
+hasLoaded = true;
+
 }
 
 /* PAGINATION */
@@ -1826,6 +1935,106 @@ behavior:"smooth"
 window.scrollTo({
 top:0,
 behavior:"smooth"
+});
+
+}
+
+/* =========================
+STICKY FILTERS BUTTON
+========================= */
+
+const stickyBtn =
+document.getElementById("stickyFiltersBtn");
+
+const searchSection =
+document.getElementById("searchSection");
+
+function checkStickyFilters(){
+
+const triggerPoint =
+searchSection.getBoundingClientRect().bottom;
+
+if(triggerPoint < 0){
+
+stickyBtn.style.display = "flex";
+
+}else{
+
+stickyBtn.style.display = "none";
+
+}
+
+}
+
+window.addEventListener(
+"scroll",
+checkStickyFilters
+);
+
+/* SCROLL TO FILTERS */
+
+function scrollToFilters(){
+
+document
+.getElementById("filtersTop")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+/* =========================
+SEARCH FEEDBACK POPUP
+========================= */
+
+async function showSearchPopup(resultCount){
+
+const overlay =
+document.getElementById(
+"searchOverlay"
+);
+
+const text =
+document.getElementById(
+"searchStatusText"
+);
+
+overlay.style.display="flex";
+
+text.innerHTML="SEARCHING";
+
+await new Promise(resolve=>
+setTimeout(resolve,700)
+);
+
+if(resultCount>0){
+
+text.innerHTML=
+`${resultCount} RESULTS FOUND ↓
+Scroll down to view stays`;
+
+}else{
+
+text.innerHTML=
+`NO RESULTS FOUND ↓
+Try fewer filters`;
+
+}
+
+await new Promise(resolve=>
+setTimeout(resolve,900)
+);
+
+overlay.style.display="none";
+
+/* smooth nudge toward results */
+
+document
+.getElementById("cards")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
 });
 
 }
