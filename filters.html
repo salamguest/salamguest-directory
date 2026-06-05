@@ -767,6 +767,57 @@ margin-top:10px;
 white-space:pre-line;
 }
 
+/* =========================
+SHARE ICON (4-node share symbol)
+background: #697CA5
+icon: white
+========================= */
+
+.share-icon {
+  width: 22px;
+  height: 22px;
+  background: #697CA5;
+  border-radius: 6px;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* dots */
+.share-icon::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  top: 5px;
+  left: 5px;
+  box-shadow:
+    8px 4px 0 #fff,   /* top right */
+    0 8px 0 #fff,     /* bottom left */
+    8px 12px 0 #fff;  /* bottom right */
+}
+
+/* connecting lines */
+.share-icon::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid #fff;
+  border-top: none;
+  border-left: none;
+  top: 6px;
+  left: 6px;
+  transform: rotate(45deg);
+  opacity: 0.9;
+}
+
+.share-icon:hover {
+  transform: scale(1.05);
+  transition: 0.2s ease;
+
 </style>
 
 
@@ -936,6 +987,37 @@ SEARCHING
 
 </div>
 
+<!-- =========================
+BOTTOM FLOATING SEARCH BAR
+========================= -->
+<div id="bottomFilterBar" style="
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-top:1px solid #ddd;
+  padding:12px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:9999;
+  font-family:Lexend,sans-serif;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+">
+  <span id="filterCount">Filters = 0 selected</span>
+  <button id="floatingSearchBtn" style="
+    background:#0042FD;
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:8px 16px;
+    cursor:pointer;
+    font-family:Lexend,sans-serif;
+  ">SEARCH</button>
+</div>
+
 <!-- CURRENCY MODAL -->
 
 
@@ -949,7 +1031,7 @@ SEARCHING
 <div class="spinner"></div>
 
 <div style="font-size:14px;">
-Redirecting to booking partner...
+Redirecting to booking partner
 </div>
 
 </div>
@@ -1313,6 +1395,16 @@ block.appendChild(el);
 
 });
 
+// ==== ADD LOCKED CHIPS BELOW CATEGORY ====
+const lockedChips = ["Halal Certified Hotels", "Bidet Available"]; // customize per category
+lockedChips.forEach(chipText => {
+  let chip = document.createElement("div");
+  chip.className = "locked-chip";
+  chip.innerHTML = `<span>${chipText}</span><div class="lock-icon"></div>`;
+  chip.onclick = () => openModal(); // opens the floating tooltip/modal
+  block.appendChild(chip);
+});
+
 container.appendChild(block);
 
 });
@@ -1321,26 +1413,19 @@ container.appendChild(block);
 
 /* TOGGLE */
 
-function toggle(tag,el){
+function toggle(tag, el){
+  if(activeFilters.includes(tag)){
+    activeFilters = activeFilters.filter(t => t !== tag);
+    el.classList.remove("active");
+  } else {
+    activeFilters.push(tag);
+    el.classList.add("active");
+  }
 
-if(activeFilters.includes(tag)){
+  currentPage = 1;
 
-activeFilters=activeFilters.filter(t=>t!==tag);
-
-el.classList.remove("active");
-
-}else{
-
-activeFilters.push(tag);
-
-el.classList.add("active");
-
-}
-
-currentPage=1;
-
-render();
-
+  // Only update the floating bar
+  updateBottomBar();
 }
 
 /* CLEAR */
@@ -1412,7 +1497,9 @@ ${item.card_tags || ""}
 ${item.location || ""}
 `.toLowerCase();
 
-let searchMatch = fullSearchText.includes(search);
+// split search input into words and match each word anywhere in the card fields
+const searchWords = search.split(/\s+/).filter(Boolean);
+let searchMatch = searchWords.every(word => fullSearchText.includes(word));
 
 return isBasic && matchFilters && searchMatch;
 
@@ -1593,7 +1680,12 @@ href="javascript:void(0)"
 onclick="redirectBooking('${item.link}')">
 BOOK ↗
 </a>
-<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">Prices and availability may vary.</p>
+<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">Prices and availability may vary</p>
+
+<a class="shareBtn" href="javascript:void(0)" onclick="shareCard('${item.name}', '${item.link}')">
+  <span class="share-icon"></span
+Share
+</a>
 
 
 </div>
@@ -2018,7 +2110,7 @@ Scroll down to view stays`;
 
 text.innerHTML=
 `NO RESULTS FOUND ↓
-Try fewer filters`;
+Try other filters`;
 
 }
 
@@ -2038,6 +2130,67 @@ block:"start"
 });
 
 }
+
+
+
+
+function updateBottomBar(){
+  const bar = document.getElementById("bottomFilterBar");
+  const count = activeFilters.length;
+
+  if(count > 0){
+    bar.style.display = "flex";
+    document.getElementById("filterCount").innerText = `Filters = ${count} selected`;
+  } else {
+    bar.style.display = "none";
+  }
+}
+
+document.getElementById("floatingSearchBtn").addEventListener("click", function(){
+  render(); // perform search
+  document.getElementById("bottomFilterBar").style.display = "none";
+  document.getElementById("cards").scrollIntoView({ behavior: "smooth" });
+});
+  
+/* share card */
+ function shareCard(title, url) {
+  if (navigator.share) {
+    navigator.share({ title: title, url: url }).catch(err => console.log("Share cancelled", err));
+  } else {
+    alert("Copy this link to share: " + url);
+  }
+} 
+
+/* Sticky Filters Floating Tooltip */
+function showFloatingTooltip(msg) {
+  let tooltip = document.getElementById("floatingTooltip");
+  if(!tooltip){
+    tooltip = document.createElement("div");
+    tooltip.id = "floatingTooltip";
+    tooltip.style.cssText = `
+      position:fixed;
+      bottom:60px;
+      left:50%;
+      transform:translateX(-50%);
+      background:white;
+      padding:10px 14px;
+      border-radius:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      font-family:Lexend,sans-serif;
+      color:#0042FD;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+    `;
+    document.body.appendChild(tooltip);
+    tooltip.addEventListener("click", ()=>tooltip.style.display="none");
+  }
+  tooltip.innerText = msg;
+  tooltip.style.display = "flex";
+
+  setTimeout(()=>tooltip.style.display="none", 2200);
+}
+  
   
 </script>
 
