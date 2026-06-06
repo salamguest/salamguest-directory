@@ -392,8 +392,8 @@ display:block;
 margin-top:12px;
 padding:10px;
 text-align:center;
-background:#697CA5;
-color:#001A66;
+background:white;
+color:#697CA5;
 text-decoration:none;
 border-radius:999px;
 border:2px solid #697CA5;
@@ -560,16 +560,23 @@ align-items:center;
 LOCKED FILTER CHIPS (UPDATED)
 ========================= */
 
-.locked-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #f2f2f2;
-  font-size: 12px;
-  color: #777;
-  cursor: pointer;
+.locked-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+
+  padding:8px 14px; /* same as active chips */
+  margin:4px 4px 0 0;
+
+  background:#f2f2f2;
+  border-radius:999px;
+
+  font-size:13px; /* same size */
+  color:#777;
+
+  cursor:pointer;
+  transition:.2s;
 }
 
 /* blurred text ONLY */
@@ -609,8 +616,13 @@ LOCKED GRID (spacing fix only)
 display:flex;
 flex-wrap:wrap;
 gap:8px;
-margin-top:14px;
-margin-bottom:18px;
+margin-top:10px;
+padding-top:4px;
+margin-bottom:8px;
+}
+
+.hiddenPremiumFilters{
+display:none;
 }
 
 /* =========================
@@ -858,9 +870,9 @@ LOADING FILTERS
 <div id="filters"></div>
 
 <!-- LOCKED FILTER PREVIEW -->
-<div class="locked-grid">
+<div class="locked-grid hiddenPremiumFilters">
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
+  <div class="locked-grid" onclick="openPremiumPopup(event)">
     <span>Halal Certified</span>
     <div class="lock-icon"></div>
   </div>
@@ -953,7 +965,7 @@ MYR ▼
 </div>
 
 <div id="noResults">
-No results found. Please try a different keyword.
+No results found. Please try a different search.
 </div>
 
 <div class="grid" id="cards"></div>
@@ -978,11 +990,6 @@ Back To Top
 
 </div>
 </div>
-
-<!-- STICKY FILTERS BUTTON -->
-<button id="stickyFiltersBtn" onclick="scrollToFilters()">
-FILTERS ☰
-</button>
 
 <!-- SEARCH RESULTS POPUP -->
 
@@ -1019,7 +1026,21 @@ BOTTOM FLOATING SEARCH BAR
   font-family:Libre Bodoni,sans-serif;
   box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
 ">
-  <span id="filterCount">FILTERS ☰ 0 SELECTED</span>
+
+  <button id="filterCount"
+onclick="scrollToFilters()"
+style="
+background:none;
+border:none;
+padding:0;
+cursor:pointer;
+font-family:Lexend,sans-serif;
+font-size:14px;
+color:#001A66;
+">
+FILTERS ☰ 0 SELECTED
+</button>
+
   <button id="floatingSearchBtn" style="
     background:#0042FD;
     color:#fff;
@@ -1409,20 +1430,32 @@ block.appendChild(el);
 });
 
 // ==== ADD LOCKED CHIPS BELOW CATEGORY ====
-const lockedChips = ["Halal Certified Hotels", "Bidet Available"]; // customize per category
+
+const lockedContainer = document.createElement("div");
+lockedContainer.className = "locked-grid";
+
+const lockedChips = [
+  "Halal Certified Hotels",
+  "Bidet Available"
+];
+
 lockedChips.forEach(chipText => {
+
   let chip = document.createElement("div");
   chip.className = "locked-chip";
-  chip.innerHTML = `<span>${chipText}</span><div class="lock-icon"></div>`;
-  chip.onclick = () => openModal(); // opens the floating tooltip/modal
-  block.appendChild(chip);
+
+  chip.innerHTML = `
+    <span>${chipText}</span>
+    <div class="lock-icon"></div>
+  `;
+
+  // IMPORTANT: reuse SAME popup as first locked chips
+  chip.onclick = (event) => openPremiumPopup(event);
+
+  lockedContainer.appendChild(chip);
 });
 
-container.appendChild(block);
-
-});
-
-}
+block.appendChild(lockedContainer);
 
 /* TOGGLE */
 
@@ -2115,14 +2148,13 @@ setTimeout(resolve,700)
 if(resultCount>0){
 
 text.innerHTML=
-`${resultCount} RESULTS FOUND ↓
-Scroll down to view`;
+`${resultCount} RESULTS FOUND ↓`;
 
 }else{
 
 text.innerHTML=
 `NO RESULTS FOUND ↓
-Try other filters`;
+Try a different search`;
 
 }
 
