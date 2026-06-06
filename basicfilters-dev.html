@@ -1163,20 +1163,17 @@ let activeFilters=[];
 let currentPage=1;
 let currentCurrency="MYR";
 
-let exchangeRates={
-MYR:1
-};
+let exchangeRates={ MYR:1 };
 
-let hasLoaded = false;  // Step 5: flag to skip popup on first load
+let hasLoaded=false;
 
-/* EXCHANGE RATES */
+/* =========================
+EXCHANGE RATES
+========================= */
 
 async function loadRates(){
-
 try{
-
 const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
-
 const json=await res.json();
 
 exchangeRates={
@@ -1193,1059 +1190,343 @@ TRY:json.rates.TRY
 };
 
 }catch(err){
-
 exchangeRates={
-MYR:1,
-USD:0.21,
-SGD:0.30,
-GBP:0.16,
-EUR:0.19,
-JPY:30,
-SAR:0.79,
-AED:0.77,
-IDR:3300,
-TRY:6.5
+MYR:1,USD:0.21,SGD:0.30,GBP:0.16,EUR:0.19,
+JPY:30,SAR:0.79,AED:0.77,IDR:3300,TRY:6.5
 };
-
+}
 }
 
-}
-
-/* PRICE */
+/* =========================
+PRICE
+========================= */
 
 function formatPrice(price){
-
 let num=parseFloat(price)||0;
-
-let converted=num*exchangeRates[currentCurrency];
-
-return converted.toFixed(2);
-
+return (num*exchangeRates[currentCurrency]).toFixed(2);
 }
 
-/* CURRENCY */
-
+/* =========================
+CURRENCY
+========================= */
 
 function openCurrencyPopup(event){
+const popup=document.getElementById("currencyPopup");
+popup.style.display="block";
 
-const popup =
-document.getElementById("currencyPopup");
+const w=260,p=14,sw=window.innerWidth;
+let x=event.clientX,y=event.clientY;
 
-popup.style.display = "block";
+let left=x,top=y+10;
 
-const popupWidth = 260;
-const padding = 14;
-const screenWidth = window.innerWidth;
+if(left+w>sw) left=sw-w-p;
+if(left<p) left=p;
 
-let x = event.clientX;
-let y = event.clientY;
-
-let left = x;
-let top = y + 10;
-
-if(left + popupWidth > screenWidth){
-
-left =
-screenWidth - popupWidth - padding;
-
-}
-
-if(left < padding){
-
-left = padding;
-
-}
-
-popup.style.left = left + "px";
-popup.style.top = top + "px";
-
+popup.style.left=left+"px";
+popup.style.top=top+"px";
 }
 
 function closeCurrencyPopup(){
-
-document.getElementById("currencyPopup")
-.style.display = "none";
-
+document.getElementById("currencyPopup").style.display="none";
 }
 
-
-function setCurrency(currency){
-
-currentCurrency=currency;
-
-document.querySelector(".currencyTopBtn").innerHTML=
-currency+" ▼";
-
+function setCurrency(c){
+currentCurrency=c;
+document.querySelector(".currencyTopBtn").innerHTML=c+" ▼";
 closeCurrencyPopup();
-
 render();
-
 }
 
-/* CSV */
+/* =========================
+CSV PARSER
+========================= */
 
 function parseCSV(text){
+const rows=[],row=[],headers=[];
+let cur="",q=false;
 
-const rows = [];
-let row = [];
-let current = "";
-let inQuotes = false;
+for(let i=0;i<text.length;i++){
+const c=text[i],n=text[i+1];
 
-for(let i = 0; i < text.length; i++){
-
-const char = text[i];
-const next = text[i + 1];
-
-if(char === '"'){
-
-if(inQuotes && next === '"'){
-current += '"';
-i++;
-}else{
-inQuotes = !inQuotes;
+if(c=='"'){
+if(q&&n=='"'){cur+='"';i++;}
+else q=!q;
+}
+else if(c==","&&!q){row.push(cur);cur="";}
+else if((c=="\n"||c=="\r")&&!q){
+if(cur||row.length){row.push(cur);rows.push(row);row=[];cur="";}
+}
+else cur+=c;
 }
 
-}else if(char === "," && !inQuotes){
+if(cur||row.length){row.push(cur);rows.push(row);}
 
-row.push(current);
-current = "";
+const head=rows[0].map(h=>h.trim());
 
-}else if((char === "\n" || char === "\r") && !inQuotes){
-
-if(current || row.length){
-row.push(current);
-rows.push(row);
-row = [];
-current = "";
-}
-
-}else{
-
-current += char;
-
-}
-
-}
-
-if(current || row.length){
-row.push(current);
-rows.push(row);
-}
-
-const headers = rows[0].map(h => h.trim());
-
-return rows.slice(1).map(cols => {
-
-let obj = {};
-
-headers.forEach((h,i)=>{
-obj[h] = (cols[i] || "").trim();
-});
-
+return rows.slice(1).map(r=>{
+let obj={};
+head.forEach((h,i)=>obj[h]=(r[i]||"").trim());
 return obj;
-
 });
-
 }
 
-/* LOAD */
+/* =========================
+LOAD DATA
+========================= */
 
 async function load(){
-
 await loadRates();
-
 const res=await fetch(SHEET_URL);
-
 const text=await res.text();
-
 data=parseCSV(text);
 
 buildFilters();
-
 applyURLFilters();
-
 }
 
-/* FILTERS */
+/* =========================
+FILTERS (FIXED STRUCTURE)
+========================= */
 
 function buildFilters(){
 
 const groups={};
 
 data.forEach(item=>{
-
 (item.filter_tags||"").split(",").forEach(tag=>{
-
 if(tag.toLowerCase().includes("view:")) return;
 
 let [cat,val]=tag.split(":");
+if(!cat||!val) return;
 
-if(!cat||!val)return;
-
-if(!groups[cat])groups[cat]=new Set();
-
+if(!groups[cat]) groups[cat]=new Set();
 groups[cat].add(val.trim());
-
 });
-
 });
 
 const order=[
-"Property Type",
-"Meals",
-"Facilities",
-"Transport",
-"Retail",
-"Leisure",
-"Convenience",
-"Female Only"
+"Property Type","Meals","Facilities","Transport",
+"Retail","Leisure","Convenience","Female Only"
 ];
 
 const container=document.getElementById("filters");
-
 document.getElementById("loadingFilters").style.display="none";
 
-document.getElementById("loadingFilters").style.display="none";
+container.innerHTML=""; // IMPORTANT RESET
 
 order.forEach(cat=>{
 
-if(!groups[cat])return;
+if(!groups[cat]) return;
 
 let block=document.createElement("div");
-
 block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
+/* ACTIVE TAGS */
 groups[cat].forEach(val=>{
-
 let el=document.createElement("div");
-
 el.className="tag";
-
 el.innerText=val;
-
 el.onclick=()=>toggle(cat+":"+val,el);
-
 block.appendChild(el);
-
 });
 
-// ==== ADD LOCKED CHIPS BELOW CATEGORY ====
+/* LOCKED CHIPS */
+const lockedContainer=document.createElement("div");
+lockedContainer.className="locked-grid";
 
-const lockedContainer = document.createElement("div");
-lockedContainer.className = "locked-grid";
-
-const lockedChips = [
-  "Halal Certified Hotels",
-  "Bidet Available"
-];
-
-lockedChips.forEach(chipText => {
-
-  let chip = document.createElement("div");
-  chip.className = "locked-chip";
-
-  chip.innerHTML = `
-    <span>${chipText}</span>
-    <div class="lock-icon"></div>
-  `;
-
-  // IMPORTANT: reuse SAME popup as first locked chips
-  chip.onclick = (event) => openPremiumPopup(event);
-
-  lockedContainer.appendChild(chip);
+["Halal Certified Hotels","Bidet Available"].forEach(text=>{
+let chip=document.createElement("div");
+chip.className="locked-chip";
+chip.innerHTML=`<span>${text}</span><div class="lock-icon"></div>`;
+chip.onclick=(e)=>openPremiumPopup(e);
+lockedContainer.appendChild(chip);
 });
 
 block.appendChild(lockedContainer);
 
-});
-
+/* IMPORTANT FIX */
 container.appendChild(block);
 
 });
-
 }
 
-/* TOGGLE */
+/* =========================
+TOGGLE FILTERS
+========================= */
 
-function toggle(tag, el){
-  if(activeFilters.includes(tag)){
-    activeFilters = activeFilters.filter(t => t !== tag);
-    el.classList.remove("active");
-  } else {
-    activeFilters.push(tag);
-    el.classList.add("active");
-  }
-
-  currentPage = 1;
-
-  // Only update the floating bar
-  updateBottomBar();
+function toggle(tag,el){
+if(activeFilters.includes(tag)){
+activeFilters=activeFilters.filter(t=>t!==tag);
+el.classList.remove("active");
+}else{
+activeFilters.push(tag);
+el.classList.add("active");
+}
+currentPage=1;
+updateBottomBar();
 }
 
-/* CLEAR */
+/* =========================
+CLEAR
+========================= */
 
 function clearAll(){
-
 activeFilters=[];
-
 currentPage=1;
 
-document.querySelectorAll(".tag").forEach(t=>{
-t.classList.remove("active");
-});
+document.querySelectorAll(".tag")
+.forEach(t=>t.classList.remove("active"));
 
 document.getElementById("searchInput").value="";
-
 document.getElementById("sortSelect").value="default";
 
 render();
-
 }
 
-/* SCROLL */
-
-
-
-/* REDIRECT */
-
-function redirectBooking(url){
-
-document.getElementById("redirectOverlay")
-.style.display="flex";
-
-setTimeout(()=>{
-
-window.open(url,"_blank");
-
-document.getElementById("redirectOverlay")
-.style.display="none";
-
-},900);
-
-}
-
-/* RENDER */
+/* =========================
+RENDER
+========================= */
 
 function render(){
 
-const search=document.getElementById("searchInput")
-.value.toLowerCase();
+const search=document.getElementById("searchInput").value.toLowerCase();
 
 let filtered=data.filter(item=>{
 
 let tags=(item.filter_tags||"").toLowerCase();
-
 let isBasic=tags.includes("view: basic");
 
-let matchFilters=activeFilters.every(f=>
-tags.includes(f.toLowerCase())
-);
+let matchFilters=activeFilters.every(f=>tags.includes(f.toLowerCase()));
 
-let fullSearchText = `
-${item.name || ""}
-${item.description || ""}
-${item.city || ""}
-${item.country || ""}
-${item.filter_tags || ""}
-${item.card_tags || ""}
-${item.location || ""}
+let text=`
+${item.name||""}
+${item.description||""}
+${item.city||""}
+${item.country||""}
+${item.card_tags||""}
 `.toLowerCase();
 
-// split search input into words and match each word anywhere in the card fields
-const searchWords = search.split(/\s+/).filter(Boolean);
-let searchMatch = searchWords.every(word => fullSearchText.includes(word));
+let searchMatch=search.split(/\s+/).every(w=>text.includes(w));
 
 return isBasic && matchFilters && searchMatch;
-
 });
 
 /* SORT */
+const sort=document.getElementById("sortSelect")?.value;
 
-const sort=document.getElementById("sortSelect")?.value || "default";
-
-if(sort==="lowHigh"){
-
-filtered.sort((a,b)=>
-(parseFloat(a.price)||0)
--
-(parseFloat(b.price)||0)
-);
-
-}
-
-if(sort==="highLow"){
-
-filtered.sort((a,b)=>
-(parseFloat(b.price)||0)
--
-(parseFloat(a.price)||0)
-);
-
-}
-
-if(sort==="ratingHigh"){
-
-filtered.sort((a,b)=>
-(parseFloat(b.rating)||0)
--
-(parseFloat(a.rating)||0)
-);
-
-}
-
-if(sort==="ratingLow"){
-
-filtered.sort((a,b)=>
-(parseFloat(a.rating)||0)
--
-(parseFloat(b.rating)||0)
-);
-
-}
-
-if(filtered.length===0){
-
-document.getElementById("noResults")
-.style.display="block";
-
-}else{
-
-document.getElementById("noResults")
-.style.display="none";
-
-}
+if(sort==="lowHigh") filtered.sort((a,b)=>a.price-b.price);
+if(sort==="highLow") filtered.sort((a,b)=>b.price-a.price);
+if(sort==="ratingHigh") filtered.sort((a,b)=>b.rating-a.rating);
+if(sort==="ratingLow") filtered.sort((a,b)=>a.rating-b.rating);
 
 filtered=filtered.slice(0,MAX_ITEMS);
 
 const start=(currentPage-1)*ITEMS_PER_PAGE;
-
 const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
 
-const cards=document.getElementById("cards");
-
-cards.innerHTML=pageData.map(item=>{
-
-const folder = (item.media || "").trim();
-
-let mediaContent = "";
-
-if(folder){
-
-for(let i = 1; i <= 10; i++){
-
-mediaContent += `
-<img
-src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.style.display='none'"
-onload="this.dataset.loaded='true'"
->
-`;
-
-}
-
-}else{
-
-mediaContent = `
-<img
-src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
->
-`;
-
-}
-
-return `
-
+document.getElementById("cards").innerHTML=pageData.map(item=>`
 <div class="card">
-
-<div class="carouselWrap">
-
-${item.image_label &&
-item.image_label.trim() !== "-" ? `
-<div class="imageLabel">
-${item.image_label}
-</div>
-` : ""}
-
-<div class="carousel">
-${mediaContent}
-</div>
-
-<div class="carouselIndicators"></div>
-
-</div>
-
 <div class="cardBody">
 
-<div class="title">
-${item.name}
-</div>
+<div class="title">${item.name}</div>
+<div class="location">${item.city}, ${item.country}</div>
+<div class="description">${item.description}</div>
 
-<div class="location">
-${item.city}, ${item.country}
-</div>
+<div class="priceAmount">${formatPrice(item.price)}</div>
 
-<div class="description">
-${item.description}
-</div>
+<a class="book" onclick="redirectBooking('${item.link}')">BOOK ↗</a>
 
-<div class="bottom">
-
-<div class="priceWrap">
-
-<div class="priceLabel">
-ESTIMATED STARTING FROM 
-</div>
-
-
-
-<div class="priceAmount">
-${formatPrice(item.price)}
-</div>
-
-<div class="priceCurrency"
-onclick="openCurrencyPopup(event)">
-${currentCurrency} / night
-</div>
-
-</div>
-
-<div class="rating">
-${item.rating} / 5
-<div class="ratingSmall">
-Average Guest Rating <br/>
-Based On Public Reviews
-</div>
-</div>
-
-<div class="tagsRow">
-
-${(item.card_tags||"")
-.split(",")
-.filter(tag=>tag.trim()!=="")
-.map(tag=>`
-<span class="cardTag">${tag}</span>
-`)
-.join("")}
-
-</div>
-
-<a class="book"
-href="javascript:void(0)"
-onclick="redirectBooking('${item.link}')">
-BOOK ↗
-</a>
-<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">Prices and availability may vary</p>
-
-<a class="shareBtn" href="javascript:void(0)" onclick="shareCard('${item.name}', '${item.link}')">
-➦
-</a>
-
+<!-- FIXED SHARE POSITION -->
+<a class="shareBtn" onclick="shareCard('${item.name}','${item.link}')">➜</a>
 
 </div>
 </div>
-</div>
-
-`;
-
-}).join("");
-
-setTimeout(()=>{
-
-document.querySelectorAll(".carouselWrap")
-.forEach(wrap=>{
-
-const carousel=wrap.querySelector(".carousel");
-
-/* Fix for gray blank image
- instead of placeholder image
- for no uploaded images on cards */
- 
- const visibleImages = [...carousel.querySelectorAll("img")]
-.filter(img => img.style.display !== "none");
-
-if(visibleImages.length === 0){
-
-carousel.innerHTML = `
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
-`;
-
-return;
-
-}
-
-const indicators=wrap.querySelector(".carouselIndicators");
-
-const loadedImages = [
-...carousel.querySelectorAll("img")
-].filter(img =>
-img.dataset.loaded === "true" &&
-img.style.display !== "none"
-);
-
-if(loadedImages.length === 0){
-
-carousel.innerHTML = `
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
-`;
-
-return;
-
-}
-
-const items = loadedImages.length;
-
-if(items<=1){
-
-indicators.innerHTML="";
-return;
-
-}
-
-indicators.innerHTML="";
-
-for(let i=0;i<items;i++){
-
-const dot=document.createElement("span");
-
-if(i===0)dot.classList.add("active");
-
-indicators.appendChild(dot);
-
-}
-
-carousel.addEventListener("scroll",()=>{
-
-const index=Math.round(
-carousel.scrollLeft/carousel.offsetWidth
-);
-
-indicators.querySelectorAll("span")
-.forEach((d,i)=>{
-
-d.classList.toggle("active",i===index);
-
-});
-
-});
-
-});
-
-},1000);
+`).join("");
 
 renderPagination(filtered.length);
 
-if (hasLoaded) {
-    showSearchPopup(filtered.length);
-}
-hasLoaded = true;
-
+if(hasLoaded) showSearchPopup(filtered.length);
+hasLoaded=true;
 }
 
-/* PAGINATION */
+/* =========================
+PAGINATION
+========================= */
 
 function renderPagination(total){
-
 const pages=Math.ceil(total/ITEMS_PER_PAGE);
-
 let html="";
 
 for(let i=1;i<=pages;i++){
-
-html+=`
-<button
-class="pageBtn ${i===currentPage?'active':''}"
-onclick="goPage(${i})"
->
-${i}
-</button>
-`;
-
+html+=`<button class="pageBtn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
 }
 
 document.getElementById("pagination").innerHTML=html;
-
 }
 
 function goPage(p){
-
 currentPage=p;
-
-render();
-
-}
-
-/* SEARCH ENTER */
-
-document.getElementById("searchInput")
-.addEventListener("keydown",e=>{
-
-if(e.key==="Enter"){
 render();
 }
-
-});
 
 /* =========================
-AUTO LOAD SEARCH/FILTER FROM URL
+BOTTOM BAR
 ========================= */
 
-function applyURLFilters(){
+function updateBottomBar(){
+const bar=document.getElementById("bottomFilterBar");
+const count=activeFilters.length;
 
-const params =
-new URLSearchParams(window.location.search);
-
-const search =
-params.get("search");
-
-const filter =
-params.get("filter");
-
-/* AUTO SEARCH */
-
-if(search){
-
-document.getElementById(
-"searchInput"
-).value = search;
-
+if(count>0){
+bar.style.display="flex";
+document.getElementById("filterCount").innerText=
+`FILTERS ☰ ${count} SELECTED`;
+}else bar.style.display="none";
 }
 
-/* AUTO FILTER TAG */
+/* =========================
+SEARCH POPUP
+========================= */
 
-if(filter){
+async function showSearchPopup(count){
+const overlay=document.getElementById("searchOverlay");
+const text=document.getElementById("searchStatusText");
 
-document.querySelectorAll(".tag")
-.forEach(tag=>{
+overlay.style.display="flex";
+text.innerHTML="SEARCHING";
 
-if(
-tag.innerText.trim()
-.toLowerCase()
-===
-filter.trim()
-.toLowerCase()
-){
+await new Promise(r=>setTimeout(r,600));
 
-tag.classList.add("active");
+text.innerHTML=count>0
+? `${count} RESULTS FOUND ↓`
+: `NO RESULTS FOUND ↓`;
 
-activeFilters.push(
-tag.parentElement
-.querySelector(".filterTitle")
-.innerText
-+
-":"
-+
-tag.innerText.trim()
-);
+await new Promise(r=>setTimeout(r,800));
+overlay.style.display="none";
 
+document.getElementById("cards")
+.scrollIntoView({behavior:"smooth"});
 }
 
+/* =========================
+SHARE
+========================= */
+
+function shareCard(title,url){
+if(navigator.share){
+navigator.share({
+title:`SalamGuest: ${title}`,
+text:"Discover halal-friendly stays on SalamGuest",
+url:url
 });
-
+}else{
+alert(url);
 }
-
-render();
-
 }
 
 load();
 
-
-/* Payhip basic filters homepage */
-  
-function sendHeight() {
-  const height = document.body.scrollHeight;
-
-  window.parent.postMessage({
-    type: "SET_IFRAME_HEIGHT",
-    height: height
-  }, "*");
-}
-
-// run on load
-window.addEventListener("load", sendHeight);
-
-// run after images load
-window.addEventListener("resize", sendHeight);
-
-// observer for dynamic changes (filters/cards)
-const observer = new ResizeObserver(() => {
-  sendHeight();
-});
-
-observer.observe(document.body)
-
-
-/* Premium Popup */
-
-function openPremiumPopup(event){
-
-const popup =
-document.getElementById("premiumPopup");
-
-popup.style.display = "block";
-
-/* popup width */
-const popupWidth = 270;
-const padding = 14;
-
-/* screen width */
-const screenWidth = window.innerWidth;
-
-/* click position */
-let x = event.clientX;
-let y = event.clientY;
-
-/* default position */
-let left = x;
-let top = y + 10;
-
-/* prevent overflow right */
-if(left + popupWidth > screenWidth){
-
-left = screenWidth - popupWidth - padding;
-
-}
-
-/* never too left */
-if(left < padding){
-
-left = padding;
-
-}
-
-popup.style.left = left + "px";
-popup.style.top = top + "px";
-
-}
-
-function closePremiumPopup(){
-
-document.getElementById("premiumPopup")
-.style.display = "none";
-
-}
-
-/* close clicking outside */
-document.addEventListener("click", function(e){
-
-/* PREMIUM POPUP */
-
-const premium =
-document.getElementById("premiumPopup");
-
-if(
-premium &&
-!premium.contains(e.target)
-&&
-!e.target.closest(".locked-chip")
-){
-
-premium.style.display = "none";
-
-}
-
-/* CURRENCY POPUP */
-
-const currency =
-document.getElementById("currencyPopup");
-
-if(
-currency &&
-!currency.contains(e.target)
-&&
-!e.target.closest(".currencyTopBtn")
-&&
-!e.target.closest(".priceCurrency")
-){
-
-currency.style.display = "none";
-
-}
-
-});
-  
-  
-function scrollTopSmooth(){
-
-document.documentElement.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-document.body.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-/* =========================
-STICKY FILTERS BUTTON
-========================= */
-
-const stickyBtn =
-document.getElementById("stickyFiltersBtn");
-
-const searchSection =
-document.getElementById("searchSection");
-
-function checkStickyFilters(){
-
-const triggerPoint =
-searchSection.getBoundingClientRect().bottom;
-
-if(triggerPoint < 0){
-
-stickyBtn.style.display = "flex";
-
-}else{
-
-stickyBtn.style.display = "none";
-
-}
-
-}
-
-window.addEventListener(
-"scroll",
-checkStickyFilters
-);
-
-/* SCROLL TO FILTERS */
-
-function scrollToFilters(){
-
-document
-.getElementById("filtersTop")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-}
-
-/* =========================
-SEARCH FEEDBACK POPUP
-========================= */
-
-async function showSearchPopup(resultCount){
-
-const overlay =
-document.getElementById(
-"searchOverlay"
-);
-
-const text =
-document.getElementById(
-"searchStatusText"
-);
-
-overlay.style.display="flex";
-
-text.innerHTML="SEARCHING";
-
-await new Promise(resolve=>
-setTimeout(resolve,700)
-);
-
-if(resultCount>0){
-
-text.innerHTML=
-`${resultCount} RESULTS FOUND ↓`;
-
-}else{
-
-text.innerHTML=
-`NO RESULTS FOUND ↓
-Try a different search`;
-
-}
-
-await new Promise(resolve=>
-setTimeout(resolve,900)
-);
-
-overlay.style.display="none";
-
-/* smooth nudge toward results */
-
-document
-.getElementById("cards")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-}
-
-
-
-
-function updateBottomBar(){
-  const bar = document.getElementById("bottomFilterBar");
-  const count = activeFilters.length;
-
-  if(count > 0){
-    bar.style.display = "flex";
-    document.getElementById("filterCount").innerText = `FILTERS ☰ ${count} SELECTED`;
-  } else {
-    bar.style.display = "none";
-  }
-}
-
-document.getElementById("floatingSearchBtn").addEventListener("click", function(){
-  render(); // perform search
-  document.getElementById("bottomFilterBar").style.display = "none";
-  document.getElementById("cards").scrollIntoView({ behavior: "smooth" });
-});
-  
-/* share card */
- function shareCard(title, url) {
-  if (navigator.share) {
-    navigator.share({ title: title, url: url }).catch(err => console.log("Share cancelled", err));
-  } else {
-    alert("Copy this link to share: " + url);
-  }
-} 
-
-/* Sticky Filters Floating Tooltip */
-function showFloatingTooltip(msg) {
-  let tooltip = document.getElementById("floatingTooltip");
-  if(!tooltip){
-    tooltip = document.createElement("div");
-    tooltip.id = "floatingTooltip";
-    tooltip.style.cssText = `
-      position:fixed;
-      bottom:60px;
-      left:50%;
-      transform:translateX(-50%);
-      background:white;
-      padding:10px 14px;
-      border-radius:12px;
-      box-shadow:0 2px 6px rgba(0,0,0,0.1);
-      font-family:Lexend,sans-serif;
-      color:#0042FD;
-      z-index:9999;
-      display:flex;
-      align-items:center;
-    `;
-    document.body.appendChild(tooltip);
-    tooltip.addEventListener("click", ()=>tooltip.style.display="none");
-  }
-  tooltip.innerText = msg;
-  tooltip.style.display = "flex";
-
-  setTimeout(()=>tooltip.style.display="none", 2200);
-}
-  
-  
 </script>
-
 
   
 </body>
