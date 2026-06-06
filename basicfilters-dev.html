@@ -1217,7 +1217,7 @@ premiumRow.className = "locked-grid";
 
 /* CATEGORY: MEALS */
 
-if(cat==="Meals"){
+if(cat === "Meals"){
 
 premiumRow.innerHTML = `
 
@@ -1243,11 +1243,17 @@ onclick="openPremiumPopup(event)">
 
 }
 
+/* only append if category has chips */
+
+if(premiumRow.innerHTML.trim() !== ""){
 block.appendChild(premiumRow);
+}
 
 container.appendChild(block);
 
 });
+
+}
 
 /* TOGGLE */
 
