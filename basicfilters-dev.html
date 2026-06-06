@@ -1290,64 +1290,96 @@ FILTERS (FIXED STRUCTURE)
 
 function buildFilters(){
 
-const groups={};
+  const groups={};
 
-data.forEach(item=>{
-(item.filter_tags||"").split(",").forEach(tag=>{
-if(tag.toLowerCase().includes("view:")) return;
+  data.forEach(item=>{
 
-let [cat,val]=tag.split(":");
-if(!cat||!val) return;
+    (item.filter_tags||"").split(",").forEach(tag=>{
 
-if(!groups[cat]) groups[cat]=new Set();
-groups[cat].add(val.trim());
-});
-});
+      if(tag.toLowerCase().includes("view:")) return;
 
-const order=[
-"Property Type","Meals","Facilities","Transport",
-"Retail","Leisure","Convenience","Female Only"
-];
+      let [cat,val]=tag.split(":");
 
-const container=document.getElementById("filters");
-document.getElementById("loadingFilters").style.display="none";
+      if(!cat||!val) return;
 
-container.innerHTML=""; // IMPORTANT RESET
+      if(!groups[cat]) groups[cat]=new Set();
 
-order.forEach(cat=>{
+      groups[cat].add(val.trim());
 
-if(!groups[cat]) return;
+    });
 
-let block=document.createElement("div");
-block.innerHTML=`<div class="filterTitle">${cat}</div>`;
+  });
 
-/* ACTIVE TAGS */
-groups[cat].forEach(val=>{
-let el=document.createElement("div");
-el.className="tag";
-el.innerText=val;
-el.onclick=()=>toggle(cat+":"+val,el);
-block.appendChild(el);
-});
+  const order=[
+    "Property Type",
+    "Meals",
+    "Facilities",
+    "Transport",
+    "Retail",
+    "Leisure",
+    "Convenience",
+    "Female Only"
+  ];
 
-/* LOCKED CHIPS */
-const lockedContainer=document.createElement("div");
-lockedContainer.className="locked-grid";
+  const container=document.getElementById("filters");
 
-["Halal Certified Hotels","Bidet Available"].forEach(text=>{
-let chip=document.createElement("div");
-chip.className="locked-chip";
-chip.innerHTML=`<span>${text}</span><div class="lock-icon"></div>`;
-chip.onclick=(e)=>openPremiumPopup(e);
-lockedContainer.appendChild(chip);
-});
+  document.getElementById("loadingFilters").style.display="none";
 
-block.appendChild(lockedContainer);
+  container.innerHTML=""; // IMPORTANT reset
 
-/* IMPORTANT FIX */
-container.appendChild(block);
+  order.forEach(cat=>{
 
-});
+    if(!groups[cat]) return;
+
+    const block=document.createElement("div");
+
+    block.innerHTML=`<div class="filterTitle">${cat}</div>`;
+
+    // TAGS
+    groups[cat].forEach(val=>{
+
+      let el=document.createElement("div");
+
+      el.className="tag";
+      el.innerText=val;
+
+      el.onclick=()=>toggle(cat+":"+val,el);
+
+      block.appendChild(el);
+
+    });
+
+    // ==== LOCKED CHIPS ====
+    const lockedContainer=document.createElement("div");
+    lockedContainer.className="locked-grid";
+
+    const lockedChips=[
+      "Halal Certified Hotels",
+      "Bidet Available"
+    ];
+
+    lockedChips.forEach(text=>{
+
+      const chip=document.createElement("div");
+      chip.className="locked-chip";
+
+      chip.innerHTML=`
+        <span>${text}</span>
+        <div class="lock-icon"></div>
+      `;
+
+      chip.onclick=(event)=>openPremiumPopup(event);
+
+      lockedContainer.appendChild(chip);
+
+    });
+
+    block.appendChild(lockedContainer);
+
+    container.appendChild(block); // ✅ MUST be INSIDE loop
+
+  });
+
 }
 
 /* =========================
