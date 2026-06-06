@@ -1215,6 +1215,10 @@ const premiumRow = document.createElement("div");
 
 premiumRow.className = "locked-grid";
 
+/* CATEGORY: MEALS */
+
+if(cat==="Meals"){
+
 premiumRow.innerHTML = `
 
 <div class="locked-chip"
@@ -1225,19 +1229,25 @@ onclick="openPremiumPopup(event)">
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
-  <span>Bidet Available</span>
+  <span>Suhoor Service</span>
+  <div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+  <span>Iftar Buffet</span>
   <div class="lock-icon"></div>
 </div>
 
 `;
+
+}
 
 block.appendChild(premiumRow);
 
 container.appendChild(block);
 
 });
-
-}
 
 /* TOGGLE */
 
