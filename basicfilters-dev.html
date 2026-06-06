@@ -1211,25 +1211,27 @@ block.appendChild(el);
 
 /* MANUAL LOCKED CHIPS */
 
-block.innerHTML += `
+const premiumRow = document.createElement("div");
 
-<div class="locked-grid">
+premiumRow.className = "locked-grid";
 
-  <div class="locked-chip"
-  onclick="openPremiumPopup(event)">
-    <span>Halal Certified</span>
-    <div class="lock-icon"></div>
-  </div>
+premiumRow.innerHTML = `
 
-  <div class="locked-chip"
-  onclick="openPremiumPopup(event)">
-    <span>Bidet Available</span>
-    <div class="lock-icon"></div>
-  </div>
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+  <span>Halal Certified</span>
+  <div class="lock-icon"></div>
+</div>
 
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+  <span>Bidet Available</span>
+  <div class="lock-icon"></div>
 </div>
 
 `;
+
+block.appendChild(premiumRow);
 
 container.appendChild(block);
 
