@@ -815,7 +815,7 @@ LOADING FILTERS
 
 <div id="filters"></div>
 
-<!-- LOCKED FILTER PREVIEW -->
+<!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
 <div class="locked-grid" style="display:none;">
 
   <div class="locked-chip" onclick="openPremiumPopup(event)">
@@ -1116,12 +1116,14 @@ document.getElementById("currencyPopup");
 
 popup.style.display = "block";
 
+popup.style.position = "absolute";
+
 const popupWidth = 260;
 const padding = 14;
 const screenWidth = window.innerWidth;
 
-let x = event.clientX;
-let y = event.clientY;
+let x = event.pageX;
+let y = event.pageY;
 
 let left = x;
 let top = y + 10;
@@ -1942,6 +1944,8 @@ document.getElementById("premiumPopup");
 
 popup.style.display = "block";
 
+popup.style.position = "absolute";
+
 /* popup width */
 const popupWidth = 270;
 const padding = 14;
@@ -1950,8 +1954,8 @@ const padding = 14;
 const screenWidth = window.innerWidth;
 
 /* click position */
-let x = event.clientX;
-let y = event.clientY;
+let x = event.pageX;
+let y = event.pageY;
 
 /* default position */
 let left = x;
