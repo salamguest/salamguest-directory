@@ -871,10 +871,10 @@ LOADING FILTERS
 <div class="search">
 
 <input id="searchInput"
-placeholder="Search hotel, stay or any keyword">
+placeholder="Search hotel, stay or l">
 
 <button class="searchBtn"
-onclick="render()">
+onclick="runStickySearch()">
 
 <svg viewBox="0 0 24 24">
 <circle cx="11" cy="11" r="7"></circle>
@@ -1453,13 +1453,27 @@ document.getElementById("searchInput").value="";
 
 document.getElementById("sortSelect").value="default";
 
+/* sync sticky bar */
+updateStickyBar();
+
 render();
 
 }
 
 /* SCROLL */
 
+/* SCROLL TO FILTERS */
 
+function scrollToFilters(){
+
+document
+.getElementById("filters")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
 
 /* REDIRECT */
 
