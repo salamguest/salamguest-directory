@@ -699,6 +699,95 @@ color:#909090;
 box-shadow: 0 2px 10px rgba(0,0,0,.08);
 }
 
+/* =========================
+BOTTOM STICKY BAR
+========================= */
+
+#bottomFilterBar{
+
+position:fixed;
+
+bottom:16px;
+left:50%;
+
+transform:
+translateX(-50%);
+
+display:none;
+
+align-items:center;
+gap:10px;
+
+background:white;
+
+padding:10px;
+
+border-radius:18px;
+
+box-shadow:
+0 4px 14px
+rgba(0,0,0,0.12);
+
+z-index:9999;
+
+font-family:
+Lexend,sans-serif;
+
+}
+
+#filterCount{
+
+background:#F5F6F8;
+
+padding:12px 16px;
+
+border-radius:14px;
+
+font-size:13px;
+font-weight:500;
+
+cursor:pointer;
+
+white-space:nowrap;
+
+}
+
+#floatingSearchBtn{
+
+background:#697CA5;
+color:white;
+
+padding:12px 18px;
+
+border-radius:14px;
+
+display:flex;
+align-items:center;
+gap:8px;
+
+font-size:13px;
+font-weight:600;
+
+cursor:pointer;
+
+white-space:nowrap;
+
+}
+
+/* SAME SEARCH ICON */
+#floatingSearchBtn
+.searchIcon{
+
+border-color:white;
+
+}
+
+#floatingSearchBtn
+.searchIcon::after{
+
+background:white;
+
+}
 
 </style>
 
@@ -1325,7 +1414,8 @@ function toggle(tag,el){
 
 if(activeFilters.includes(tag)){
 
-activeFilters=activeFilters.filter(t=>t!==tag);
+activeFilters =
+activeFilters.filter(t => t !== tag);
 
 el.classList.remove("active");
 
@@ -1337,9 +1427,13 @@ el.classList.add("active");
 
 }
 
-currentPage=1;
+currentPage = 1;
 
+/* render results */
 render();
+
+/* update sticky bar */
+updateStickyBar();
 
 }
 
@@ -1933,10 +2027,81 @@ behavior:"smooth"
 });
 
 }
+
+/* =========================
+BOTTOM STICKY BAR
+========================= */
+
+function updateStickyBar(){
+
+const bar =
+document.getElementById("bottomFilterBar");
+
+const count =
+activeFilters.length;
+
+if(count > 0){
+
+bar.style.display = "flex";
+
+document.getElementById(
+"filterCount"
+).innerHTML =
+`FILTERS ☰ ${count} SELECTED`;
+
+}else{
+
+bar.style.display = "none";
+
+}
+
+}
+
+/* SEARCH BUTTON */
+
+function runStickySearch(){
+
+render();
+
+setTimeout(()=>{
+
+document
+.getElementById("cards")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+},900);
+
+}
   
 </script>
 
+<!-- =========================
+BOTTOM STICKY FILTER BAR
+========================= -->
 
+<div id="bottomFilterBar">
+
+<div
+id="filterCount"
+onclick="scrollToFilters()">
+
+FILTERS ☰ 0 SELECTED
+
+</div>
+
+<div
+id="floatingSearchBtn"
+onclick="runStickySearch()">
+
+SEARCH
+<div class="searchIcon"></div>
+
+</div>
+
+</div>
   
 </body>
 </html>
