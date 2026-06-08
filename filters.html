@@ -2043,31 +2043,6 @@ render();
 load();
 
 
-/* Payhip basic filters homepage */
-  
-function sendHeight() {
-  const height = document.body.scrollHeight;
-
-  window.parent.postMessage({
-    type: "SET_IFRAME_HEIGHT",
-    height: height
-  }, "*");
-}
-
-// run on load
-window.addEventListener("load", sendHeight);
-
-// run after images load
-window.addEventListener("resize", sendHeight);
-
-// observer for dynamic changes (filters/cards)
-const observer = new ResizeObserver(() => {
-  sendHeight();
-});
-
-observer.observe(document.body)
-
-
 /* Premium Popup */
 
 function openPremiumPopup(event){
