@@ -1336,7 +1336,14 @@ el.className="tag";
 
 el.innerText=val;
 
-el.onclick=()=>toggle(cat+":"+val,el);
+el.onclick=(event)=>{
+
+event.preventDefault();
+event.stopPropagation();
+
+toggle(cat+":"+val,el);
+
+};
 
 block.appendChild(el);
 
@@ -1530,11 +1537,13 @@ el.classList.add("active");
 
 currentPage = 1;
 
-/* render results */
-render();
-
-/* update sticky bar */
+/* refresh UI */
 updateStickyBar();
+
+/* helps mobile browsers repaint */
+requestAnimationFrame(()=>{
+render();
+});
 
 }
 
