@@ -706,35 +706,31 @@ BOTTOM FILTER STICKY BAR
 ========================= */
 
 #bottomFilterBar{
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
 
-position:fixed !important;
-left:0;
-right:0;
-bottom:0 !important;
+  width: 100% !important;
 
-width:100%;
+  display: none;
 
-display:none;
-align-items:center;
-justify-content:space-between;
+  align-items: center;
+  justify-content: space-between;
 
-padding:12px 16px;
+  padding: 12px 16px;
 
-background:rgba(255,255,255,0.96);
-backdrop-filter:blur(14px);
--webkit-backdrop-filter:blur(14px);
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
-box-shadow:
-0 -2px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
 
-z-index:999999;
+  z-index: 2147483647 !important;
 
-box-sizing:border-box;
-padding-bottom:
-max(12px, env(safe-area-inset-bottom));
+  box-sizing: border-box;
 
-transform:translateZ(0);
-will-change:transform;
+  transform: none !important;
 }
 
 
@@ -792,10 +788,14 @@ background:white;
 
 }
 
-html,
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body{
-position:relative;
-overflow-x:hidden;
+  overflow-x: hidden;
 }
 
 /* SEARCH POPUP */
