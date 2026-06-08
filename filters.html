@@ -707,35 +707,37 @@ BOTTOM FILTER STICKY BAR
 
 #bottomFilterBar{
 
-position:sticky;
-bottom:12px;
+position:fixed;
 
-width:calc(100% - 24px);
-margin:0 auto;
+left:50%;
+transform:translateX(-50%);
+
+bottom:max(12px, env(safe-area-inset-bottom));
+
+width:min(94%, 620px);
 
 display:none;
 justify-content:space-between;
 align-items:center;
 
-padding:12px;
+padding:12px 14px;
 
-background:rgba(255,255,255,0.96);
-backdrop-filter:blur(6px);
+background:rgba(255,255,255,.96);
+backdrop-filter:blur(10px);
 
-border-radius:20px;
+border-radius:22px;
 
 box-shadow:
-0 4px 18px rgba(0,0,0,.08);
+0 8px 30px rgba(0,0,0,.10);
 
-z-index:9999;
+z-index:2147483646;
 
-margin-top:20px;
+/* prevents browser weirdness */
+will-change:transform;
+-webkit-transform:
+translateX(-50%)
+translateZ(0);
 
-font-family:Lexend,sans-serif;
-
-cursor:pointer;
-touch-action:manipulation;
--webkit-user-select: none;
 }
 
 
@@ -802,20 +804,26 @@ overflow-x:hidden;
 /* SEARCH POPUP */
 
 #searchOverlay{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-min-height:100vh;
+
+position:fixed;
 
 inset:0;
-background:rgba(255,255,255,0.82);
-backdrop-filter:blur(5px);
+
 display:none;
 justify-content:center;
 align-items:center;
-z-index:99999;
+
+background:
+rgba(255,255,255,.74);
+
+backdrop-filter:
+blur(3px);
+
+z-index:2147483647;
+
+-webkit-backdrop-filter:
+blur(3px);
+
 }
 
 .searchPopup{
@@ -2336,7 +2344,109 @@ document.getElementById(
 showSearchPopup(count);
 
 }  
-  
+
+/* =========================
+FIXED BAR MOBILE VIEWPORT
+========================= */
+
+function fixBottomBarViewport(){
+
+const bar =
+document.getElementById(
+"bottomFilterBar"
+);
+
+if(!bar) return;
+
+const viewport =
+window.visualViewport;
+
+if(viewport){
+
+bar.style.bottom =
+(
+viewport.height
+-
+window.innerHeight
++
+12
+) + "px";
+
+}
+
+}
+
+/* run on resize/scroll */
+window.addEventListener(
+"resize",
+fixBottomBarViewport
+);
+
+window.addEventListener(
+"scroll",
+fixBottomBarViewport
+);
+
+if(window.visualViewport){
+
+window.visualViewport
+.addEventListener(
+"resize",
+fixBottomBarViewport
+);
+
+window.visualViewport
+.addEventListener(
+"scroll",
+fixBottomBarViewport
+);
+
+}
+
+/* =========================
+OVERLAY FIX
+========================= */
+
+function fixOverlayViewport(){
+
+const overlay =
+document.getElementById(
+"searchOverlay"
+);
+
+if(!overlay) return;
+
+const viewport =
+window.visualViewport;
+
+if(viewport){
+
+overlay.style.width =
+viewport.width + "px";
+
+overlay.style.height =
+viewport.height + "px";
+
+}
+
+}
+
+window.addEventListener(
+"resize",
+fixOverlayViewport
+);
+
+if(window.visualViewport){
+
+window.visualViewport
+.addEventListener(
+"resize",
+fixOverlayViewport
+);
+
+}
+
+
 </script>
 
 <!-- =========================
