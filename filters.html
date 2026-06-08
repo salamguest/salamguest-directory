@@ -2243,68 +2243,7 @@ function runStickySearch(){
 
   }, 800);
 }
-  
-/* =========================
-SEARCH TRANSITION POPUP
-========================= */
-
-
-const overlay =
-document.getElementById(
-"searchOverlay"
-);
-
-const text =
-document.getElementById(
-"searchStatusText"
-);
-
-overlay.style.display =
-"flex";
-
-/* SEARCHING */
-text.innerHTML =
-"SEARCHING...";
-
-await new Promise(r =>
-setTimeout(r,900)
-);
-
-/* RESULTS */
-if(resultCount > 0){
-
-text.innerHTML =
-`${resultCount} MATCHES FOUND ↓`;
-
-}else{
-
-text.innerHTML =
-`NO MATCHES FOUND ↓
-<br>
-Try adjusting filters`;
-
-}
-
-/* pause before scroll */
-await new Promise(r =>
-setTimeout(r,1200)
-);
-
-overlay.style.display =
-"none";
-
-/* scroll to results */
-
-document
-.getElementById("cards")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-}
-
-
+ 
 
 </script>
 
