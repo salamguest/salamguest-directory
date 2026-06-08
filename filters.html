@@ -548,31 +548,45 @@ LOCKED FILTER CHIPS (UPDATED)
 ========================= */
 
 .locked-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #f2f2f2;
-  font-size: 12px;
-  color: #777;
-  cursor: pointer;
+  display:inline-flex;
+align-items:center;
+justify-content:center;
+
+padding:9px 14px;
+border-radius:999px;
+
+background:#EEF1F7;
+color:#b2bad1;
+
+font-family:Lexend,sans-serif;
+font-size:13px;
+font-weight:500;
+
+cursor:pointer;
+transition:0.2s ease;
+
+opacity:0.82;
+}
+
+.locked-chip:hover{
+opacity:1;
+transform:translateY(-1px);
 }
 
 /* blurred text ONLY */
 .locked-chip span {
-  filter: blur(2px);
-}
+  filter: blur(0.5px);
+} 
 
 /* =========================
-FLAT LOCK ICON (FIXED - NO HANDBAG LOOK)
+FLAT LOCK ICON (FIXED - NO HANDBAG LOOK
 ========================= */
 .lock-icon {
   width: 10px;
   height: 10px;
   background: #8c8c8c;
   border-radius: 2px;
-  display: inline-block;
+  display: none;
   flex-shrink: 0;
 }
 
@@ -596,8 +610,8 @@ LOCKED GRID (spacing fix only)
 display:flex;
 flex-wrap:wrap;
 gap:8px;
-margin-top:14px;
-margin-bottom:18px;
+margin-top:10px;
+margin-bottom:6px;
 }
 
 /* =========================
@@ -685,6 +699,123 @@ color:#909090;
 box-shadow: 0 2px 10px rgba(0,0,0,.08);
 }
 
+/* =========================
+BOTTOM STICKY BAR
+========================= */
+
+#bottomFilterBar{
+
+position:fixed;
+
+bottom:16px;
+left:50%;
+
+transform:
+translateX(-50%);
+
+display:none;
+
+align-items:center;
+gap:10px;
+
+background:white;
+
+padding:10px;
+
+border-radius:18px;
+
+box-shadow:
+0 4px 14px
+rgba(0,0,0,0.12);
+
+z-index:9999;
+
+font-family:Lexend,sans-serif;
+
+cursor:pointer;
+touch-action:manipulation;
+-webkit-user-select: none;
+}
+
+#filterCount{
+
+background:#F5F6F8;
+padding:12px 16px;
+
+border-radius:14px;
+
+font-size:13px;
+font-weight:500;
+
+cursor:pointer;
+white-space:nowrap;
+
+cursor:pointer;
+touch-action:manipulation;
+}
+
+#floatingSearchBtn{
+
+background:#697CA5;
+color:white;
+
+padding:12px 18px;
+
+border-radius:14px;
+
+display:flex;
+align-items:center;
+gap:8px;
+
+font-size:13px;
+font-weight:600;
+
+cursor:pointer;
+
+white-space:nowrap;
+
+}
+
+/* SAME SEARCH ICON */
+#floatingSearchBtn
+.searchIcon{
+
+border-color:white;
+
+}
+
+#floatingSearchBtn
+.searchIcon::after{
+
+background:white;
+
+}
+
+/* SEARCH POPUP */
+
+#searchOverlay{
+position:fixed;
+inset:0;
+background:rgba(255,255,255,0.82);
+backdrop-filter:blur(5px);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.searchPopup{
+background:white;
+padding:20px 28px;
+border-radius:20px;
+box-shadow:0 6px 24px rgba(0,0,0,0.08);
+font-family:Lexend,sans-serif;
+font-size:15px;
+letter-spacing:.4px;
+color:#697CA5;
+text-align:center;
+}
+
 
 </style>
 
@@ -712,8 +843,8 @@ LOADING FILTERS
 
 <div id="filters"></div>
 
-<!-- LOCKED FILTER PREVIEW -->
-<div class="locked-grid">
+<!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
+<div class="locked-grid" style="display:none;">
 
   <div class="locked-chip" onclick="openPremiumPopup(event)">
     <span>Halal Certified</span>
@@ -771,7 +902,7 @@ LOADING FILTERS
 placeholder="Search hotel, stay or any keyword">
 
 <button class="searchBtn"
-onclick="render()">
+onclick="runStickySearch()">
 
 <svg viewBox="0 0 24 24">
 <circle cx="11" cy="11" r="7"></circle>
@@ -808,7 +939,7 @@ MYR ▼
 </div>
 
 <div id="noResults">
-No results found. Please try a different keyword.
+No results found. Please try a different search.
 </div>
 
 <div class="grid" id="cards"></div>
@@ -867,7 +998,7 @@ Unlock Premium Filters
 </div>
 
 <div class="premiumText">
-Discover prayer access, bidets, halal dining, female-friendly spaces, private pools and more.
+Discover full filters including prayer access, bidets, halal dining, female-friendly spaces, private pools and more.
 </div>
 
 <button class="premiumBtn">
@@ -1013,12 +1144,14 @@ document.getElementById("currencyPopup");
 
 popup.style.display = "block";
 
+popup.style.position = "absolute";
+
 const popupWidth = 260;
 const padding = 14;
 const screenWidth = window.innerWidth;
 
-let x = event.clientX;
-let y = event.clientY;
+let x = event.pageX;
+let y = event.pageY;
 
 let left = x;
 let top = y + 10;
@@ -1209,6 +1342,167 @@ block.appendChild(el);
 
 });
 
+/* MANUAL LOCKED CHIPS */
+
+const premiumRow = document.createElement("div");
+
+premiumRow.className = "locked-grid";
+
+/* CATEGORY: MEALS */
+
+if(cat === "Meals"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Dinner</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Snacks</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Certified Room Service</span>
+<div class="lock-icon"></div>
+</div>
+
+`;
+
+}
+
+/* CATEGORY: FACILITIES */
+
+if(cat === "Facilities"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Designated Smoking Spaces</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Air Conditioning</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Ceiling Fan</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary High Speed Wi-Fi</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>TV With Entertainment Channels </span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Mini Fridge Provided</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Bathrobes And Slippers Provided</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Coffee And Tea Making Facilities</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Electric Kettle Available</span>
+<div class="lock-icon"></div>
+</div>
+
+
+`;
+
+}
+
+/* CATEGORY: TRANSPORT */
+
+if(cat === "Transport"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>On Demand Transport</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary Parking For Guests</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary Valet Parking For Guests</span>
+<div class="lock-icon"></div>
+</div>
+
+`;
+
+}
+
+/* CATEGORY: FEMALE ONLY */
+
+if(cat === "Female Only"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Spa Room</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Changing Facilities</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Gym</span>
+<div class="lock-icon"></div>
+</div>
+
+`;
+
+}
+
+/* only append if category has chips */
+
+if(premiumRow.innerHTML.trim() !== ""){
+block.appendChild(premiumRow);
+}
+
 container.appendChild(block);
 
 });
@@ -1221,7 +1515,8 @@ function toggle(tag,el){
 
 if(activeFilters.includes(tag)){
 
-activeFilters=activeFilters.filter(t=>t!==tag);
+activeFilters =
+activeFilters.filter(t => t !== tag);
 
 el.classList.remove("active");
 
@@ -1233,9 +1528,13 @@ el.classList.add("active");
 
 }
 
-currentPage=1;
+currentPage = 1;
 
+/* render results */
 render();
+
+/* update sticky bar */
+updateStickyBar();
 
 }
 
@@ -1255,13 +1554,27 @@ document.getElementById("searchInput").value="";
 
 document.getElementById("sortSelect").value="default";
 
+/* sync sticky bar */
+updateStickyBar();
+
 render();
 
 }
 
 /* SCROLL */
 
+/* SCROLL TO FILTERS */
 
+function scrollToFilters(){
+
+document
+.getElementById("filters")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
 
 /* REDIRECT */
 
@@ -1730,6 +2043,8 @@ document.getElementById("premiumPopup");
 
 popup.style.display = "block";
 
+popup.style.position = "absolute";
+
 /* popup width */
 const popupWidth = 270;
 const padding = 14;
@@ -1738,8 +2053,8 @@ const padding = 14;
 const screenWidth = window.innerWidth;
 
 /* click position */
-let x = event.clientX;
-let y = event.clientY;
+let x = event.pageX;
+let y = event.pageY;
 
 /* default position */
 let left = x;
@@ -1829,10 +2144,216 @@ behavior:"smooth"
 });
 
 }
+
+/* =========================
+BOTTOM STICKY BAR
+========================= */
+
+function updateStickyBar(){
+
+const bar =
+document.getElementById("bottomFilterBar");
+
+const count =
+activeFilters.length;
+
+if(count > 0){
+
+bar.style.display = "flex";
+
+document.getElementById(
+"filterCount"
+).innerHTML =
+`⌂ FILTERS ↑ ${count} SELECTED`;
+}else{
+
+bar.style.display = "none";
+
+}
+
+}
+
+/* SEARCH BUTTON */
+
+async function runStickySearch(){
+
+/* show popup */
+const overlay =
+document.getElementById(
+"searchOverlay"
+);
+
+const text =
+document.getElementById(
+"searchStatusText"
+);
+
+overlay.style.display="flex";
+
+text.innerHTML="SEARCHING";
+
+/* slower luxury feel */
+await new Promise(resolve=>
+setTimeout(resolve,1000)
+);
+
+/* run search */
+render();
+
+/* count visible cards */
+const resultCount =
+document.querySelectorAll(
+"#cards .card"
+).length;
+
+if(resultCount > 0){
+
+text.innerHTML =
+`${resultCount} RESULTS FOUND ↓`;
+
+}else{
+
+text.innerHTML =
+`NO RESULTS FOUND ↓
+Try another search`;
+
+}
+
+/* slower transition */
+await new Promise(resolve=>
+setTimeout(resolve,1400)
+);
+
+overlay.style.display="none";
+
+/* smooth scroll */
+document
+.getElementById("cards")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+  
+/* =========================
+SEARCH TRANSITION POPUP
+========================= */
+
+async function showSearchPopup(resultCount){
+
+const overlay =
+document.getElementById(
+"searchOverlay"
+);
+
+const text =
+document.getElementById(
+"searchStatusText"
+);
+
+overlay.style.display =
+"flex";
+
+/* SEARCHING */
+text.innerHTML =
+"SEARCHING...";
+
+await new Promise(r =>
+setTimeout(r,900)
+);
+
+/* RESULTS */
+if(resultCount > 0){
+
+text.innerHTML =
+`${resultCount} MATCHES FOUND ↓`;
+
+}else{
+
+text.innerHTML =
+`NO MATCHES FOUND ↓
+<br>
+Try adjusting filters`;
+
+}
+
+/* pause before scroll */
+await new Promise(r =>
+setTimeout(r,1200)
+);
+
+overlay.style.display =
+"none";
+
+/* scroll to results */
+
+document
+.getElementById("cards")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+/* SEARCH BUTTON */
+
+function runStickySearch(){
+
+render();
+
+/* count visible cards */
+const count =
+document.getElementById(
+"cards"
+).children.length;
+
+/* popup */
+showSearchPopup(count);
+
+}  
   
 </script>
 
+<!-- =========================
+BOTTOM STICKY FILTER BAR
+========================= -->
 
+<div id="bottomFilterBar">
+
+<div
+id="filterCount"
+onclick="scrollToFilters()">
+
+⌂ FILTERS ↑ 0 SELECTED
+
+</div>
+
+<div
+id="floatingSearchBtn"
+onclick="runStickySearch()">
+
+SEARCH
+<div class="searchIcon"></div>
+
+</div>
+
+</div>
+
+<!-- SEARCH POPUP -->
+
+<div id="searchOverlay">
+
+<div class="searchPopup">
+
+<div id="searchStatusText">
+SEARCHING
+</div>
+
+</div>
+
+</div>
   
 </body>
 </html>
