@@ -789,6 +789,32 @@ background:white;
 
 }
 
+/* SEARCH POPUP */
+
+#searchOverlay{
+position:fixed;
+inset:0;
+background:rgba(255,255,255,0.82);
+backdrop-filter:blur(5px);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.searchPopup{
+background:white;
+padding:20px 28px;
+border-radius:20px;
+box-shadow:0 6px 24px rgba(0,0,0,0.08);
+font-family:Lexend,sans-serif;
+font-size:15px;
+letter-spacing:.4px;
+color:#697CA5;
+text-align:center;
+}
+
+
 </style>
 
 
@@ -2077,11 +2103,118 @@ bar.style.display = "none";
 
 /* SEARCH BUTTON */
 
-function runStickySearch(){
+async function runStickySearch(){
 
+/* show popup */
+const overlay =
+document.getElementById(
+"searchOverlay"
+);
+
+const text =
+document.getElementById(
+"searchStatusText"
+);
+
+overlay.style.display="flex";
+
+text.innerHTML="SEARCHING";
+
+/* slower luxury feel */
+await new Promise(resolve=>
+setTimeout(resolve,1000)
+);
+
+/* run search */
 render();
 
-setTimeout(()=>{
+/* count visible cards */
+const resultCount =
+document.querySelectorAll(
+"#cards .card"
+).length;
+
+if(resultCount > 0){
+
+text.innerHTML =
+`${resultCount} RESULTS FOUND ↓`;
+
+}else{
+
+text.innerHTML =
+`NO RESULTS FOUND ↓
+Try another search`;
+
+}
+
+/* slower transition */
+await new Promise(resolve=>
+setTimeout(resolve,1400)
+);
+
+overlay.style.display="none";
+
+/* smooth scroll */
+document
+.getElementById("cards")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+  
+/* =========================
+SEARCH TRANSITION POPUP
+========================= */
+
+async function showSearchPopup(resultCount){
+
+const overlay =
+document.getElementById(
+"searchOverlay"
+);
+
+const text =
+document.getElementById(
+"searchStatusText"
+);
+
+overlay.style.display =
+"flex";
+
+/* SEARCHING */
+text.innerHTML =
+"SEARCHING...";
+
+await new Promise(r =>
+setTimeout(r,900)
+);
+
+/* RESULTS */
+if(resultCount > 0){
+
+text.innerHTML =
+`${resultCount} MATCHES FOUND ↓`;
+
+}else{
+
+text.innerHTML =
+`NO MATCHES FOUND ↓
+<br>
+Try adjusting filters`;
+
+}
+
+/* pause before scroll */
+await new Promise(r =>
+setTimeout(r,1200)
+);
+
+overlay.style.display =
+"none";
+
+/* scroll to results */
 
 document
 .getElementById("cards")
@@ -2090,9 +2223,24 @@ behavior:"smooth",
 block:"start"
 });
 
-},900);
-
 }
+
+/* SEARCH BUTTON */
+
+function runStickySearch(){
+
+render();
+
+/* count visible cards */
+const count =
+document.getElementById(
+"cards"
+).children.length;
+
+/* popup */
+showSearchPopup(count);
+
+}  
   
 </script>
 
@@ -2116,6 +2264,20 @@ onclick="runStickySearch()">
 
 SEARCH
 <div class="searchIcon"></div>
+
+</div>
+
+</div>
+
+<!-- SEARCH POPUP -->
+
+<div id="searchOverlay">
+
+<div class="searchPopup">
+
+<div id="searchStatusText">
+SEARCHING
+</div>
 
 </div>
 
