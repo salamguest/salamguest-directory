@@ -2203,74 +2203,51 @@ bar.style.display = "none";
 
 }
 
-/* SEARCH BUTTON */
+/* =========================
+SEARCH BUTTON (FINAL CLEAN VERSION)
+========================= */
 
-async function runStickySearch(){
+function runStickySearch(){
 
-/* show popup */
-const overlay =
-document.getElementById(
-"searchOverlay"
-);
+  const overlay = document.getElementById("searchOverlay");
+  const text = document.getElementById("searchStatusText");
 
-const text =
-document.getElementById(
-"searchStatusText"
-);
+  // show overlay first
+  overlay.style.display = "flex";
+  text.innerHTML = "SEARCHING...";
 
-overlay.style.display="flex";
+  // run render AFTER small delay (feels smoother)
+  setTimeout(() => {
 
-text.innerHTML="SEARCHING";
+    render();
 
-/* slower luxury feel */
-await new Promise(resolve=>
-setTimeout(resolve,1000)
-);
+    const count = document.getElementById("cards").children.length;
 
-/* run search */
-render();
+    if(count > 0){
+      text.innerHTML = `${count} RESULTS FOUND ↓`;
+    } else {
+      text.innerHTML = `NO RESULTS FOUND ↓<br>Try adjusting filters`;
+    }
 
-/* count visible cards */
-const resultCount =
-document.querySelectorAll(
-"#cards .card"
-).length;
+    // slow premium pause
+    setTimeout(() => {
 
-if(resultCount > 0){
+      overlay.style.display = "none";
 
-text.innerHTML =
-`${resultCount} RESULTS FOUND ↓`;
+      document.getElementById("cards").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
 
-}else{
+    }, 1200);
 
-text.innerHTML =
-`NO RESULTS FOUND ↓
-Try another search`;
-
-}
-
-/* slower transition */
-await new Promise(resolve=>
-setTimeout(resolve,1400)
-);
-
-overlay.style.display="none";
-
-/* smooth scroll */
-document
-.getElementById("cards")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
+  }, 800);
 }
   
 /* =========================
 SEARCH TRANSITION POPUP
 ========================= */
 
-async function showSearchPopup(resultCount){
 
 const overlay =
 document.getElementById(
@@ -2326,26 +2303,6 @@ block:"start"
 });
 
 }
-
-/* SEARCH BUTTON */
-
-function runStickySearch(){
-
-render();
-
-/* count visible cards */
-const count =
-document.getElementById(
-"cards"
-).children.length;
-
-/* popup */
-showSearchPopup(count);
-
-}  
-
-
-
 
 
 
