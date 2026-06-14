@@ -706,14 +706,15 @@ BOTTOM FILTER STICKY BAR
 ========================= */
 
 #bottomFilterBar{
+  position: fixed !important;
+  bottom: 12px !important;
+  left: 12px !important;
+  right: 12px !important;
 
-position:fixed;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 
-left:12px;
-right:12px;
-bottom:12px;
-
-display:none;
+  z-index: 2147483647 !important;
 
 align-items:center;
 justify-content:space-between;
@@ -730,8 +731,6 @@ border-radius:20px;
 
 box-shadow:0 8px 30px rgba(0,0,0,.12);
 
-z-index:999999;
-
 box-sizing:border-box;
 
 transition:
@@ -747,6 +746,11 @@ opacity .25s ease;
 display:none !important;
 }
 
+}
+
+html, body {
+  height: auto !important;
+  overflow-x: hidden;
 }
 
 #filterCount{
@@ -1114,18 +1118,14 @@ let activeFilters=[];
 let currentPage=1;
 let currentCurrency="MYR";
 
-let exchangeRates={
-MYR:1
-};
+let exchangeRates={ MYR:1 };
 
-/* EXCHANGE RATES */
-
+/* =========================
+LOAD RATES
+========================= */
 async function loadRates(){
-
 try{
-
 const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
-
 const json=await res.json();
 
 exchangeRates={
@@ -1136,1236 +1136,260 @@ GBP:json.rates.GBP,
 EUR:json.rates.EUR,
 JPY:json.rates.JPY,
 SAR:json.rates.SAR,
-AED:json.rates.AED,
-IDR:json.rates.IDR,
-TRY:json.rates.TRY
+AED:json.rates.AED
 };
 
 }catch(err){
-
-exchangeRates={
-MYR:1,
-USD:0.21,
-SGD:0.30,
-GBP:0.16,
-EUR:0.19,
-JPY:30,
-SAR:0.79,
-AED:0.77,
-IDR:3300,
-TRY:6.5
-};
-
+exchangeRates={MYR:1,USD:0.21,SGD:0.3,GBP:0.16,EUR:0.19};
+}
 }
 
-}
-
-/* PRICE */
-
+/* =========================
+FORMAT PRICE
+========================= */
 function formatPrice(price){
-
 let num=parseFloat(price)||0;
-
-let converted=num*exchangeRates[currentCurrency];
-
-return converted.toFixed(2);
-
+return (num * exchangeRates[currentCurrency]).toFixed(2);
 }
 
-/* CURRENCY */
-
+/* =========================
+CURRENCY
+========================= */
+function setCurrency(c){
+currentCurrency=c;
+document.querySelector(".currencyTopBtn").innerHTML=c+" ▼";
+closeCurrencyPopup();
+render();
+}
 
 function openCurrencyPopup(event){
+const popup=document.getElementById("currencyPopup");
+popup.style.display="block";
+popup.style.position="absolute";
 
-const popup =
-document.getElementById("currencyPopup");
+let x=event.pageX;
+let y=event.pageY;
 
-popup.style.display = "block";
-
-popup.style.position = "absolute";
-
-const popupWidth = 260;
-const padding = 14;
-const screenWidth = window.innerWidth;
-
-let x = event.pageX;
-let y = event.pageY;
-
-let left = x;
-let top = y + 10;
-
-if(left + popupWidth > screenWidth){
-
-left =
-screenWidth - popupWidth - padding;
-
-}
-
-if(left < padding){
-
-left = padding;
-
-}
-
-popup.style.left = left + "px";
-popup.style.top = top + "px";
-
+popup.style.left=x+"px";
+popup.style.top=(y+10)+"px";
 }
 
 function closeCurrencyPopup(){
-
-document.getElementById("currencyPopup")
-.style.display = "none";
-
+document.getElementById("currencyPopup").style.display="none";
 }
 
-
-function setCurrency(currency){
-
-currentCurrency=currency;
-
-document.querySelector(".currencyTopBtn").innerHTML=
-currency+" ▼";
-
-closeCurrencyPopup();
-
-render();
-
-}
-
-/* CSV */
-
-function parseCSV(text){
-
-const rows = [];
-let row = [];
-let current = "";
-let inQuotes = false;
-
-for(let i = 0; i < text.length; i++){
-
-const char = text[i];
-const next = text[i + 1];
-
-if(char === '"'){
-
-if(inQuotes && next === '"'){
-current += '"';
-i++;
-}else{
-inQuotes = !inQuotes;
-}
-
-}else if(char === "," && !inQuotes){
-
-row.push(current);
-current = "";
-
-}else if((char === "\n" || char === "\r") && !inQuotes){
-
-if(current || row.length){
-row.push(current);
-rows.push(row);
-row = [];
-current = "";
-}
-
-}else{
-
-current += char;
-
-}
-
-}
-
-if(current || row.length){
-row.push(current);
-rows.push(row);
-}
-
-const headers = rows[0].map(h => h.trim());
-
-return rows.slice(1).map(cols => {
-
-let obj = {};
-
-headers.forEach((h,i)=>{
-obj[h] = (cols[i] || "").trim();
-});
-
-return obj;
-
-});
-
-}
-
-/* LOAD */
-
-async function load(){
-
-await loadRates();
-
-const res=await fetch(SHEET_URL);
-
-const text=await res.text();
-
-data=parseCSV(text);
-
-buildFilters();
-
-applyURLFilters();
-
-}
-
-/* FILTERS */
-
-function buildFilters(){
-
-const groups={};
-
-data.forEach(item=>{
-
-(item.filter_tags||"").split(",").forEach(tag=>{
-
-if(tag.toLowerCase().includes("view:")) return;
-
-let [cat,val]=tag.split(":");
-
-if(!cat||!val)return;
-
-if(!groups[cat])groups[cat]=new Set();
-
-groups[cat].add(val.trim());
-
-});
-
-});
-
-const order=[
-"Property Type",
-"Meals",
-"Facilities",
-"Transport",
-"Retail",
-"Leisure",
-"Convenience",
-"Female Only"
-];
-
-const container=document.getElementById("filters");
-
-document.getElementById("loadingFilters").style.display="none";
-
-document.getElementById("loadingFilters").style.display="none";
-
-order.forEach(cat=>{
-
-if(!groups[cat])return;
-
-let block=document.createElement("div");
-
-block.innerHTML=`<div class="filterTitle">${cat}</div>`;
-
-groups[cat].forEach(val=>{
-
-let el=document.createElement("div");
-
-el.className="tag";
-
-el.innerText=val;
-
-el.onclick=(event)=>{
-
-event.preventDefault();
-event.stopPropagation();
-
-toggle(cat+":"+val,el);
-
-};
-
-block.appendChild(el);
-
-});
-
-/* MANUAL LOCKED CHIPS */
-
-const premiumRow = document.createElement("div");
-
-premiumRow.className = "locked-grid";
-
-/* CATEGORY: MEALS */
-
-if(cat === "Meals"){
-
-premiumRow.innerHTML = `
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Halal Dinner</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Halal Snacks</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Halal Certified Room Service</span>
-<div class="lock-icon"></div>
-</div>
-
-`;
-
-}
-
-/* CATEGORY: FACILITIES */
-
-if(cat === "Facilities"){
-
-premiumRow.innerHTML = `
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Designated Smoking Spaces</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Air Conditioning</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Ceiling Fan</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Complimentary High Speed Wi-Fi</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>TV With Entertainment Channels </span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Mini Fridge Provided</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Bathrobes And Slippers Provided</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Coffee And Tea Making Facilities</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Electric Kettle Available</span>
-<div class="lock-icon"></div>
-</div>
-
-
-`;
-
-}
-
-/* CATEGORY: TRANSPORT */
-
-if(cat === "Transport"){
-
-premiumRow.innerHTML = `
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>On Demand Transport</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Complimentary Parking For Guests</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Complimentary Valet Parking For Guests</span>
-<div class="lock-icon"></div>
-</div>
-
-`;
-
-}
-
-/* CATEGORY: FEMALE ONLY */
-
-if(cat === "Female Only"){
-
-premiumRow.innerHTML = `
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Female Only Spa Room</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Female Only Changing Facilities</span>
-<div class="lock-icon"></div>
-</div>
-
-<div class="locked-chip"
-onclick="openPremiumPopup(event)">
-<span>Female Only Gym</span>
-<div class="lock-icon"></div>
-</div>
-
-`;
-
-}
-
-/* only append if category has chips */
-
-if(premiumRow.innerHTML.trim() !== ""){
-block.appendChild(premiumRow);
-}
-
-container.appendChild(block);
-
-});
-
-}
-
-/* TOGGLE */
-
+/* =========================
+TOGGLE FILTER
+========================= */
 function toggle(tag,el){
 
 if(activeFilters.includes(tag)){
-
-activeFilters =
-activeFilters.filter(t => t !== tag);
-
+activeFilters=activeFilters.filter(t=>t!==tag);
 el.classList.remove("active");
-
 }else{
-
 activeFilters.push(tag);
-
 el.classList.add("active");
-
 }
-
-currentPage = 1;
-
-/* refresh UI */
-updateStickyBar();
-
-setTimeout(()=>{
-fixStickyBar();
-},50);
-
-/* helps mobile browsers repaint */
-requestAnimationFrame(()=>{
-
-render();
-
-/* force iframe resize again */
-setTimeout(sendHeight,300);
-
-});
-
-}
-
-/* CLEAR */
-
-function clearAll(){
-
-activeFilters=[];
 
 currentPage=1;
+updateStickyBar();
+render();
+}
 
-document.querySelectorAll(".tag").forEach(t=>{
-t.classList.remove("active");
-});
+/* =========================
+CLEAR
+========================= */
+function clearAll(){
+activeFilters=[];
+currentPage=1;
 
+document.querySelectorAll(".tag").forEach(t=>t.classList.remove("active"));
 document.getElementById("searchInput").value="";
-
 document.getElementById("sortSelect").value="default";
 
-/* sync sticky bar */
 updateStickyBar();
-
 render();
-
 }
 
-/* SCROLL */
-
-/* SCROLL TO FILTERS */
-
+/* =========================
+SCROLL
+========================= */
 function scrollToFilters(){
-
-document
-.getElementById("filters")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
+document.getElementById("filters").scrollIntoView({behavior:"smooth"});
 }
 
-/* REDIRECT */
-
-function redirectBooking(url){
-
-document.getElementById("redirectOverlay")
-.style.display="flex";
-
-setTimeout(()=>{
-
-window.open(url,"_blank");
-
-document.getElementById("redirectOverlay")
-.style.display="none";
-
-},900);
-
+function scrollTopSmooth(){
+window.scrollTo({top:0,behavior:"smooth"});
 }
 
-/* RENDER */
-
+/* =========================
+RENDER (MAIN ENGINE)
+========================= */
 function render(){
 
-const search=document.getElementById("searchInput")
-.value.toLowerCase();
+const search=document.getElementById("searchInput").value.toLowerCase();
 
 let filtered=data.filter(item=>{
 
 let tags=(item.filter_tags||"").toLowerCase();
-
 let isBasic=tags.includes("view: basic");
 
-let matchFilters=activeFilters.every(f=>
-tags.includes(f.toLowerCase())
-);
+let matchFilters=activeFilters.every(f=>tags.includes(f.toLowerCase()));
 
-let fullSearchText = `
-${item.name || ""}
-${item.description || ""}
-${item.city || ""}
-${item.country || ""}
-${item.filter_tags || ""}
-${item.card_tags || ""}
-${item.location || ""}
+let fullText=`
+${item.name||""}
+${item.description||""}
+${item.city||""}
+${item.country||""}
 `.toLowerCase();
 
-let searchMatch = fullSearchText.includes(search);
+let searchMatch=fullText.includes(search);
 
 return isBasic && matchFilters && searchMatch;
-
 });
 
 /* SORT */
+const sort=document.getElementById("sortSelect")?.value;
 
-const sort=document.getElementById("sortSelect")?.value || "default";
+if(sort==="lowHigh") filtered.sort((a,b)=>(a.price||0)-(b.price||0));
+if(sort==="highLow") filtered.sort((a,b)=>(b.price||0)-(a.price||0));
+if(sort==="ratingHigh") filtered.sort((a,b)=>(b.rating||0)-(a.rating||0));
+if(sort==="ratingLow") filtered.sort((a,b)=>(a.rating||0)-(b.rating||0));
 
-if(sort==="lowHigh"){
-
-filtered.sort((a,b)=>
-(parseFloat(a.price)||0)
--
-(parseFloat(b.price)||0)
-);
-
-}
-
-if(sort==="highLow"){
-
-filtered.sort((a,b)=>
-(parseFloat(b.price)||0)
--
-(parseFloat(a.price)||0)
-);
-
-}
-
-if(sort==="ratingHigh"){
-
-filtered.sort((a,b)=>
-(parseFloat(b.rating)||0)
--
-(parseFloat(a.rating)||0)
-);
-
-}
-
-if(sort==="ratingLow"){
-
-filtered.sort((a,b)=>
-(parseFloat(a.rating)||0)
--
-(parseFloat(b.rating)||0)
-);
-
-}
-
-if(filtered.length===0){
-
-document.getElementById("noResults")
-.style.display="block";
-
-}else{
-
-document.getElementById("noResults")
-.style.display="none";
-
-}
-
-filtered=filtered.slice(0,MAX_ITEMS);
-
+/* PAGINATION */
 const start=(currentPage-1)*ITEMS_PER_PAGE;
-
 const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
 
-const cards=document.getElementById("cards");
-
-cards.innerHTML=pageData.map(item=>{
-
-const folder = (item.media || "").trim();
-
-let mediaContent = "";
-
-if(folder){
-
-for(let i = 1; i <= 10; i++){
-
-mediaContent += `
-<img
-src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
-onerror="this.style.display='none'"
-onload="this.dataset.loaded='true'"
->
-`;
-
-}
-
-}else{
-
-mediaContent = `
-<img
-src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
->
-`;
-
-}
-
-return `
+/* RENDER CARDS */
+document.getElementById("cards").innerHTML=
+pageData.map(item=>`
 
 <div class="card">
-
 <div class="carouselWrap">
-
-${item.image_label &&
-item.image_label.trim() !== "-" ? `
-<div class="imageLabel">
-${item.image_label}
-</div>
-` : ""}
-
 <div class="carousel">
-${mediaContent}
+<img src="https://salamguest.github.io/salamguest-directory/images/${item.media}/1.jpg">
 </div>
-
-<div class="carouselIndicators"></div>
-
 </div>
 
 <div class="cardBody">
+<div class="title">${item.name}</div>
+<div class="location">${item.city}, ${item.country}</div>
+<div class="description">${item.description}</div>
 
-<div class="title">
-${item.name}
-</div>
-
-<div class="location">
-${item.city}, ${item.country}
-</div>
-
-<div class="description">
-${item.description}
-</div>
-
-<div class="bottom">
-
-<div class="priceWrap">
-
-<div class="priceLabel">
-ESTIMATED STARTING FROM 
-</div>
-
-
-
-<div class="priceAmount">
-${formatPrice(item.price)}
-</div>
-
-<div class="priceCurrency"
-onclick="openCurrencyPopup(event)">
-${currentCurrency} / night
-</div>
-
-</div>
-
-<div class="rating">
-${item.rating} / 5
-<div class="ratingSmall">
-Average Guest Rating <br/>
-Based On Public Reviews
-</div>
-</div>
+<div class="priceAmount">${formatPrice(item.price)}</div>
 
 <div class="tagsRow">
-
-${(item.card_tags||"")
-.split(",")
-.filter(tag=>tag.trim()!=="")
-.map(tag=>`
-<span class="cardTag">${tag}</span>
-`)
-.join("")}
-
+${(item.card_tags||"").split(",").map(t=>`
+<span class="cardTag">${t}</span>
+`).join("")}
 </div>
-
-<a class="book"
-href="javascript:void(0)"
-onclick="redirectBooking('${item.link}')">
-BOOK ↗
-</a>
-<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">Prices and availability may vary.</p>
-
 
 </div>
 </div>
-</div>
 
-`;
-
-}).join("");
-
-setTimeout(()=>{
-
-document.querySelectorAll(".carouselWrap")
-.forEach(wrap=>{
-
-const carousel=wrap.querySelector(".carousel");
-
-/* Fix for gray blank image
- instead of placeholder image
- for no uploaded images on cards */
- 
- const visibleImages = [...carousel.querySelectorAll("img")]
-.filter(img => img.style.display !== "none");
-
-if(visibleImages.length === 0){
-
-carousel.innerHTML = `
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
-`;
-
-return;
-
-}
-
-const indicators=wrap.querySelector(".carouselIndicators");
-
-const loadedImages = [
-...carousel.querySelectorAll("img")
-].filter(img =>
-img.dataset.loaded === "true" &&
-img.style.display !== "none"
-);
-
-if(loadedImages.length === 0){
-
-carousel.innerHTML = `
-<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
-`;
-
-return;
-
-}
-
-const items = loadedImages.length;
-
-if(items<=1){
-
-indicators.innerHTML="";
-return;
-
-}
-
-indicators.innerHTML="";
-
-for(let i=0;i<items;i++){
-
-const dot=document.createElement("span");
-
-if(i===0)dot.classList.add("active");
-
-indicators.appendChild(dot);
-
-}
-
-carousel.addEventListener("scroll",()=>{
-
-const index=Math.round(
-carousel.scrollLeft/carousel.offsetWidth
-);
-
-indicators.querySelectorAll("span")
-.forEach((d,i)=>{
-
-d.classList.toggle("active",i===index);
-
-});
-
-});
-
-});
-
-},1000);
+`).join("");
 
 renderPagination(filtered.length);
-
 updateStickyBar();
 
-setTimeout(sendHeight,300);
-
+/* IMPORTANT: only update iframe height here */
+setTimeout(sendHeight,400);
 }
 
-/* PAGINATION */
-
+/* =========================
+PAGINATION
+========================= */
 function renderPagination(total){
-
 const pages=Math.ceil(total/ITEMS_PER_PAGE);
-
 let html="";
 
 for(let i=1;i<=pages;i++){
-
 html+=`
-<button
-class="pageBtn ${i===currentPage?'active':''}"
-onclick="goPage(${i})"
->
-${i}
-</button>
-`;
-
+<button class="pageBtn ${i===currentPage?'active':''}"
+onclick="goPage(${i})">${i}</button>`;
 }
 
 document.getElementById("pagination").innerHTML=html;
-
 }
 
 function goPage(p){
-
 currentPage=p;
-
-render();
-
-}
-
-/* SEARCH ENTER */
-
-document.getElementById("searchInput")
-.addEventListener("keydown",e=>{
-
-if(e.key==="Enter"){
 render();
 }
-
-});
 
 /* =========================
-AUTO LOAD SEARCH/FILTER FROM URL
+STICKY BAR (SAFE VERSION)
 ========================= */
+function updateStickyBar(){
 
-function applyURLFilters(){
+const bar=document.getElementById("bottomFilterBar");
+if(!bar) return;
 
-const params =
-new URLSearchParams(window.location.search);
-
-const search =
-params.get("search");
-
-const filter =
-params.get("filter");
-
-/* AUTO SEARCH */
-
-if(search){
-
-document.getElementById(
-"searchInput"
-).value = search;
-
+if(window.innerWidth>900){
+bar.style.display="none";
+return;
 }
 
-/* AUTO FILTER TAG */
+bar.style.display="flex";
 
-if(filter){
-
-document.querySelectorAll(".tag")
-.forEach(tag=>{
-
-if(
-tag.innerText.trim()
-.toLowerCase()
-===
-filter.trim()
-.toLowerCase()
-){
-
-tag.classList.add("active");
-
-activeFilters.push(
-tag.parentElement
-.querySelector(".filterTitle")
-.innerText
-+
-":"
-+
-tag.innerText.trim()
-);
-
+document.getElementById("filterCount").innerHTML=
+activeFilters.length>0
+? `⌂ FILTERS • ${activeFilters.length} SELECTED`
+: `⌂ FILTERS`;
 }
 
-});
+/* =========================
+SEARCH BUTTON (BFSB)
+========================= */
+function runStickySearch(){
 
-}
+const overlay=document.getElementById("searchOverlay");
+overlay.style.display="flex";
+
+setTimeout(()=>{
 
 render();
+overlay.style.display="none";
+scrollTopSmooth();
 
+setTimeout(sendHeight,400);
+
+},600);
 }
 
+/* =========================
+IFRAME HEIGHT (PAYHIP FIX)
+========================= */
 function sendHeight(){
-
-const height =
-document.body.scrollHeight;
-
 window.parent.postMessage({
 type:"SET_IFRAME_HEIGHT",
-height:height
+height:document.body.scrollHeight
 },"*");
+}
 
+/* =========================
+LOAD
+========================= */
+async function load(){
+await loadRates();
+const res=await fetch(SHEET_URL);
+const text=await res.text();
+
+data=parseCSV(text);
+buildFilters();
+applyURLFilters();
+render();
 }
 
 load();
 
-window.addEventListener(
-"load",
-fixStickyBar
-);
-
-window.addEventListener(
-"resize",
-fixStickyBar
-);
-
-window.addEventListener(
-"scroll",
-fixStickyBar
-);
-
-window.addEventListener(
-"touchstart",
-fixStickyBar
-);
-
-
-/* Premium Popup */
-
-function openPremiumPopup(event){
-
-const popup =
-document.getElementById("premiumPopup");
-
-popup.style.display = "block";
-
-popup.style.position = "absolute";
-
-/* popup width */
-const popupWidth = 270;
-const padding = 14;
-
-/* screen width */
-const screenWidth = window.innerWidth;
-
-/* click position */
-let x = event.pageX;
-let y = event.pageY;
-
-/* default position */
-let left = x;
-let top = y + 10;
-
-/* prevent overflow right */
-if(left + popupWidth > screenWidth){
-
-left = screenWidth - popupWidth - padding;
-
-}
-
-/* never too left */
-if(left < padding){
-
-left = padding;
-
-}
-
-popup.style.left = left + "px";
-popup.style.top = top + "px";
-
-}
-
-function closePremiumPopup(){
-
-document.getElementById("premiumPopup")
-.style.display = "none";
-
-}
-
-/* close clicking outside */
-document.addEventListener("click", function(e){
-
-/* PREMIUM POPUP */
-
-const premium =
-document.getElementById("premiumPopup");
-
-if(
-premium &&
-!premium.contains(e.target)
-&&
-!e.target.closest(".locked-chip")
-){
-
-premium.style.display = "none";
-
-}
-
-/* CURRENCY POPUP */
-
-const currency =
-document.getElementById("currencyPopup");
-
-if(
-currency &&
-!currency.contains(e.target)
-&&
-!e.target.closest(".currencyTopBtn")
-&&
-!e.target.closest(".priceCurrency")
-){
-
-currency.style.display = "none";
-
-}
-
+window.addEventListener("message", function(e){
+  if(e.data?.type === "SET_IFRAME_HEIGHT"){
+    document.body.style.minHeight = e.data.height + "px";
+  }
 });
-  
-  
-function scrollTopSmooth(){
-
-document.documentElement.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-document.body.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-/* =========================
-BOTTOM STICKY BAR
-========================= */
-
-function updateStickyBar(){
-
-const bar =
-document.getElementById(
-"bottomFilterBar"
-);
-
-if(!bar) return;
-
-/* mobile only */
-if(window.innerWidth <= 900){
-
-bar.style.display = "flex";
-
-const count =
-activeFilters.length;
-
-document.getElementById(
-"filterCount"
-).innerHTML =
-count > 0
-? `⌂ FILTERS • ${count} SELECTED`
-: `⌂ FILTERS`;
-
-}else{
-
-bar.style.display =
-"none";
-
-}
-
-}
-
-/* =========================
-KEEP BAR STICKY
-========================= */
-
-function fixStickyBar(){
-
-const bar =
-document.getElementById(
-"bottomFilterBar"
-);
-
-if(!bar) return;
-
-/* desktop hide */
-if(window.innerWidth > 900){
-
-bar.style.display =
-"none";
-
-return;
-
-}
-
-/* always visible mobile */
-bar.style.display =
-"flex";
-
-}
-
-/* =========================
-SEARCH BUTTON
-========================= */
-
-function runStickySearch(){
-
-const overlay =
-document.getElementById(
-"searchOverlay"
-);
-
-overlay.style.display =
-"flex";
-
-/* render results */
-render();
-
-/* scroll to top after search */
-setTimeout(()=>{
-
-overlay.style.display =
-"none";
-
-scrollToFilters();
-
-/* resize iframe */
-setTimeout(
-sendHeight,
-300
-);
-
-},650);
-
-}
-
-
- 
-
-function sendHeight(){
-
-const height =
-document.body.scrollHeight;
-
-window.parent.postMessage({
-type:"SET_IFRAME_HEIGHT",
-height:height
-},"*");
-
-}
 
 </script>
 
-
-<!-- SEARCH POPUP -->
-
-<div id="searchOverlay">
-
-<div class="searchPopup">
-
-<div id="searchStatusText">
-SEARCHING
-</div>
-
-</div>
-
-</div>
-
-<!-- MOBILE FILTER ACTION BAR -->
-
-<div id="bottomFilterBar">
-
-<div
-id="filterCount"
-onclick="scrollToFilters()">
-
-⌂ FILTERS • 0 SELECTED
-
-</div>
-
-<div
-id="floatingSearchBtn"
-onclick="runStickySearch()">
-
-SEARCH
-
-</div>
-
-</div>
-  
 </body>
 </html>
