@@ -15,21 +15,6 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* kills internal page scroll */
-}
-
-.container{
-  height: 100vh;
-  overflow: hidden;
-}
-
-.main{
-  flex:1;
-  min-width:0;
-
-  height:100vh;
-  overflow-y:auto !important;   /* ONLY scroll region allowed */
-  padding-bottom:140px; /* space for sticky bar */
 }
 
 body{
@@ -38,7 +23,6 @@ font-family:Lexend,sans-serif;
 background:#fff;
 color:#222;
 overflow-x: hidden;
-overflow: hidden !important;
 }
 
 .container{
@@ -729,8 +713,14 @@ BOTTOM FILTER STICKY BAR (FIXED TOOLTIP STYLE)
 #bottomFilterBar{
   display:none;
 
-  position:sticky;
-  top:0;
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+
+  bottom:18px;
+
+  width:calc(100% - 24px);
+  max-width:520px;
 
   z-index:999999;
 
@@ -741,10 +731,12 @@ BOTTOM FILTER STICKY BAR (FIXED TOOLTIP STYLE)
 
   padding:10px;
 
+  border-radius:18px;
+
   background:rgba(255,255,255,0.92);
   backdrop-filter: blur(10px);
 
-  border-bottom:1px solid #eef3ff;
+  box-shadow:0 10px 30px rgba(0,0,0,0.12);
 }
 
 @media(min-width:901px){
@@ -818,7 +810,6 @@ html, body{
 }
 
 body{
-overflow-x:hidden;
 position:relative;
 }
 
@@ -2271,6 +2262,165 @@ function runStickySearch(){
   }, 800);
 }
  
+/* =========================
+GLOBAL SCROLL LOCK (IMPORTANT)
+This removes internal scrolling inside embed
+========================= */
+(function lockInnerScroll(){
+  document.documentElement.style.overflow = "visible";
+  document.body.style.overflow = "visible";
+
+  // prevent any accidental fixed-height scroll containers
+  const main = document.querySelector(".container");
+  if(main){
+    main.style.overflow = "visible";
+    main.style.height = "auto";
+    main.style.maxHeight = "none";
+  }
+
+  const sidebar = document.querySelector(".sidebar");
+  if(sidebar){
+    sidebar.style.overflow = "visible";
+    sidebar.style.height = "auto";
+    sidebar.style.maxHeight = "none";
+  }
+
+  const mainCol = document.querySelector(".main");
+  if(mainCol){
+    mainCol.style.overflow = "visible";
+    mainCol.style.height = "auto";
+    mainCol.style.maxHeight = "none";
+  }
+})();
+
+
+/* =========================
+BFsB STICKY FLOAT CONTROLLER
+(THIS IS YOUR NEW BEHAVIOUR LAYER)
+========================= */
+
+let bfsbMode = "filters"; 
+// filters | cards
+
+function initBFSBSticky(){
+
+  const bar = document.getElementById("bottomFilterBar");
+  if(!bar) return;
+
+  bar.style.position = "fixed";
+  bar.style.left = "14px";
+  bar.style.right = "14px";
+  bar.style.zIndex = "999999";
+  bar.style.transition = "all 0.25s ease";
+
+  updateBFSBPosition();
+}
+
+function updateBFSBPosition(){
+
+  const bar = document.getElementById("bottomFilterBar");
+  if(!bar) return;
+
+  const filters = document.getElementById("filters");
+  const cards = document.getElementById("cards");
+
+  if(!filters || !cards) return;
+
+  const scrollY = window.scrollY;
+  const filtersBottom = filters.offsetTop + filters.offsetHeight;
+  const cardsTop = cards.offsetTop;
+
+  /* =========================
+  MODE SWITCH LOGIC
+  ========================= */
+
+  if(scrollY < filtersBottom - 120){
+    bfsbMode = "filters";
+  } else if(scrollY >= filtersBottom - 120){
+    bfsbMode = "cards";
+  }
+
+  /* =========================
+  POSITION BEHAVIOUR
+  ========================= */
+
+  if(bfsbMode === "filters"){
+    // stick under filters section top area
+    bar.style.top = "10px";
+  }
+
+  if(bfsbMode === "cards"){
+    // move slightly lower but still floating
+    bar.style.top = "18px";
+  }
+
+  /* safety: keep inside viewport */
+  const maxTop = window.innerHeight - bar.offsetHeight - 10;
+  const currentTop = parseInt(bar.style.top || "10");
+
+  if(currentTop > maxTop){
+    bar.style.top = maxTop + "px";
+  }
+}
+
+/* run continuously */
+window.addEventListener("scroll", updateBFSBPosition);
+window.addEventListener("resize", updateBFSBPosition);
+
+setTimeout(()=>{
+  initBFSBSticky();
+  updateBFSBPosition();
+}, 800);
+
+
+/* =========================
+CLICK BEHAVIOUR HOOKS
+========================= */
+
+function scrollToFilters(){
+  document.getElementById("filters").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+  bfsbMode = "filters";
+  updateBFSBPosition();
+}
+
+function runStickySearch(){
+  const overlay = document.getElementById("searchOverlay");
+  const text = document.getElementById("searchStatusText");
+
+  overlay.style.display = "flex";
+  text.innerHTML = "SEARCHING...";
+
+  setTimeout(() => {
+
+    render();
+
+    bfsbMode = "cards";
+    updateBFSBPosition();
+
+    const count = document.getElementById("cards").children.length;
+
+    text.innerHTML =
+      count > 0
+      ? `${count} RESULTS FOUND ↓`
+      : `NO RESULTS FOUND ↓<br>Try adjusting filters`;
+
+    setTimeout(() => {
+      overlay.style.display = "none";
+
+      document.getElementById("cards").scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+    }, 1000);
+
+  }, 700);
+}
+
 
 </script>
 
