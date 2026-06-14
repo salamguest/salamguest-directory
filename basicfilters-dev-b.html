@@ -2219,14 +2219,19 @@ BOTTOM STICKY BAR
 function updateStickyBar(){
 
 const bar =
-document.getElementById("bottomFilterBar");
+document.getElementById(
+"bottomFilterBar"
+);
 
-const count =
-activeFilters.length;
+if(!bar) return;
 
+/* mobile only */
 if(window.innerWidth <= 900){
 
 bar.style.display = "flex";
+
+const count =
+activeFilters.length;
 
 document.getElementById(
 "filterCount"
@@ -2237,14 +2242,15 @@ count > 0
 
 }else{
 
-bar.style.display = "none";
+bar.style.display =
+"none";
 
 }
 
 }
 
 /* =========================
-SEARCH BUTTON (FINAL CLEAN VERSION)
+KEEP BAR STICKY
 ========================= */
 
 function fixStickyBar(){
@@ -2256,18 +2262,25 @@ document.getElementById(
 
 if(!bar) return;
 
-/* mobile only */
+/* desktop hide */
 if(window.innerWidth > 900){
 
-bar.style.display = "none";
+bar.style.display =
+"none";
+
 return;
 
 }
 
-/* always visible on mobile */
-bar.style.display = "flex";
+/* always visible mobile */
+bar.style.display =
+"flex";
 
 }
+
+/* =========================
+SEARCH BUTTON
+========================= */
 
 function runStickySearch(){
 
@@ -2279,35 +2292,28 @@ document.getElementById(
 overlay.style.display =
 "flex";
 
+/* render results */
 render();
 
+/* scroll to top after search */
 setTimeout(()=>{
 
 overlay.style.display =
 "none";
 
-scrollTopSmooth();
+scrollToFilters();
 
-/* refresh iframe height */
-setTimeout(sendHeight,300);
+/* resize iframe */
+setTimeout(
+sendHeight,
+300
+);
 
 },650);
 
 }
 
-bar.style.transform =
-"translateZ(0)";
 
-bar.getBoundingClientRect();
-
-bar.style.opacity =
-"1";
-
-});
-
-});
-
-}
  
 
 function sendHeight(){
