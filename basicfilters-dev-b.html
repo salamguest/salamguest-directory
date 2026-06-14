@@ -11,12 +11,34 @@ l<!DOCTYPE html>
 
 <style>
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* kills internal page scroll */
+}
+
+.container{
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main{
+  flex:1;
+  min-width:0;
+
+  height:100vh;
+  overflow-y:auto !important;   /* ONLY scroll region allowed */
+  padding-bottom:140px; /* space for sticky bar */
+}
+
 body{
 margin:0;
 font-family:Lexend,sans-serif;
 background:#fff;
 color:#222;
 overflow-x: hidden;
+overflow: hidden !important;
 }
 
 .container{
@@ -706,29 +728,23 @@ BOTTOM FILTER STICKY BAR (FIXED TOOLTIP STYLE)
 
 #bottomFilterBar{
   display:none;
+
+  position:sticky;
+  top:0;
+
+  z-index:999999;
+
+  display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
 
-  position:fixed;
-  left:50%;
-  transform:translateX(-50%);
-
-  bottom:18px;
-
-  width:calc(100% - 24px);
-  max-width:520px;
-
-  z-index:999999;
-
   padding:10px;
-
-  border-radius:18px;
 
   background:rgba(255,255,255,0.92);
   backdrop-filter: blur(10px);
 
-  box-shadow:0 10px 30px rgba(0,0,0,0.12);
+  border-bottom:1px solid #eef3ff;
 }
 
 @media(min-width:901px){
