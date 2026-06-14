@@ -1122,6 +1122,38 @@ AED
 
 <script>
 
+/* =========================
+KILL INTERNAL SCROLL (PAYHIP + GITHUB EMBED FIX)
+========================= */
+document.documentElement.style.overflow = "visible";
+document.body.style.overflow = "visible";
+
+const containerFix = () => {
+  const container = document.querySelector(".container");
+  if(container){
+    container.style.height = "auto";
+    container.style.maxHeight = "none";
+    container.style.overflow = "visible";
+  }
+
+  const sidebar = document.querySelector(".sidebar");
+  const main = document.querySelector(".main");
+
+  if(sidebar){
+    sidebar.style.height = "auto";
+    sidebar.style.overflow = "visible";
+  }
+
+  if(main){
+    main.style.height = "auto";
+    main.style.overflow = "visible";
+  }
+};
+
+window.addEventListener("load", containerFix);
+
+
+
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
 const MAX_ITEMS=20;
@@ -1595,6 +1627,12 @@ currentPage = 1;
 
 /* refresh UI */
 updateStickyBar();
+
+if(activeFilters.length > 0){
+  setTimeout(() => {
+    updateBFSBPosition();
+  }, 50);
+}
 
 /* helps mobile browsers repaint */
 requestAnimationFrame(()=>{
@@ -2196,29 +2234,23 @@ BOTTOM STICKY BAR
 
 function updateStickyBar(){
 
-const bar =
-document.getElementById("bottomFilterBar");
+  const bar = document.getElementById("bottomFilterBar");
+  const count = activeFilters.length;
 
-const count =
-activeFilters.length;
+  bfsbVisible = count > 0;
 
-if(window.innerWidth <= 900){
+  if(window.innerWidth <= 900){
 
-bar.style.display = "flex";
+    bar.style.display = bfsbVisible ? "flex" : "none";
 
-document.getElementById(
-"filterCount"
-).innerHTML =
-count > 0
-? `⌂ FILTERS • ${count} SELECTED`
-: `⌂ FILTERS`;
+    document.getElementById("filterCount").innerHTML =
+      count > 0
+        ? `⌂ FILTERS • ${count} SELECTED`
+        : `⌂ FILTERS`;
 
-}else{
-
-bar.style.display = "none";
-
-}
-
+  } else {
+    bar.style.display = "none";
+  }
 }
 
 /* =========================
@@ -2302,14 +2334,18 @@ BFsB STICKY FLOAT CONTROLLER
 let bfsbMode = "filters"; 
 // filters | cards
 
+let bfsbVisible = false;
+
 function initBFSBSticky(){
 
   const bar = document.getElementById("bottomFilterBar");
   if(!bar) return;
 
   bar.style.position = "fixed";
-  bar.style.left = "14px";
-  bar.style.right = "14px";
+  bar.style.left = "50%";
+  bar.style.transform = "translateX(-50%)";
+  bar.style.width = "calc(100% - 24px)";
+  bar.style.maxWidth = "520px";
   bar.style.zIndex = "999999";
   bar.style.transition = "all 0.25s ease";
 
@@ -2319,7 +2355,7 @@ function initBFSBSticky(){
 function updateBFSBPosition(){
 
   const bar = document.getElementById("bottomFilterBar");
-  if(!bar) return;
+  if(!bar || !bfsbVisible) return;
 
   const filters = document.getElementById("filters");
   const cards = document.getElementById("cards");
@@ -2328,7 +2364,14 @@ function updateBFSBPosition(){
 
   const scrollY = window.scrollY;
   const filtersBottom = filters.offsetTop + filters.offsetHeight;
-  const cardsTop = cards.offsetTop;
+
+  if(scrollY < filtersBottom - 120){
+    bar.style.top = "14px";
+  } else {
+    bar.style.top = "18px";
+  }
+
+}
 
   /* =========================
   MODE SWITCH LOGIC
