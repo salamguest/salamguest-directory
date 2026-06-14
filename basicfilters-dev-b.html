@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -2064,6 +2063,18 @@ tag.innerText.trim()
 }
 
 render();
+
+}
+
+function sendHeight(){
+
+const height =
+document.body.scrollHeight;
+
+window.parent.postMessage({
+type:"SET_IFRAME_HEIGHT",
+height:height
+},"*");
 
 }
 
