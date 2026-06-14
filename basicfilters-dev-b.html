@@ -9,108 +9,39 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
 
-<style>
+<link rel="stylesheet" href="style.css">
 
+  <style>
 body{
 margin:0;
 font-family:Lexend,sans-serif;
 background:#fff;
-color:#222;
-overflow-x: hidden;
+overflow-x:hidden;
 }
 
 .container{
 display:flex;
-align-items:flex-start;
 gap:20px;
 padding:20px;
 max-width:1400px;
-margin:0 auto;
-box-sizing:border-box;
+margin:auto;
 }
 
-.sidebar{
-width:260px;
-flex-shrink:0;
-}
+.sidebar{width:260px;}
 
-/* =========================
-LOADING FILTERS
-========================= */
-
-#loadingFilters{
-font-family:"Libre Bodoni",serif;
-font-size:14px;
-letter-spacing:1.8px;
-text-transform:uppercase;
-color:#0042FD;
-margin-top: 20px;
-margin-bottom:30px;
-animation:softBlink 1.8s ease-in-out infinite;
-}
-
-@keyframes softBlink{
-0%{
-opacity:0.45;
-}
-50%{
-opacity:1;
-}
-100%{
-opacity:0.45;
-}
-}
-
-.filterTitle{
-font-size:14px;
-font-weight:500;
-margin-top:18px;
-margin-bottom:8px;
-color:#001A66;
-}
-
-.tag{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-padding:8px 14px;
-margin:4px 4px 0 0;
-background:#f2f2f2;
-border-radius:999px;
-font-size:13px;
-cursor:pointer;
-transition:0.2s;
-text-align:center;
-color:#001A66;
-}
-
-.tag.active{
-background:#0042FD;
-color:#fff;
-}
-
-.main{
-flex:1;
-min-width:0;
-}
+.main{flex:1;}
 
 /* SEARCH */
-
 .search{
 position:relative;
+margin-bottom:10px;
 }
 
 .search input{
 width:100%;
-padding:12px 52px 12px 14px;
+padding:12px 50px 12px 14px;
 border-radius:12px;
-border:1px solid #dbe4ff;
-background:#eef3ff;
-font-family:Lexend;
-font-size:14px;
-box-sizing:border-box;
-box-shadow:inset 0 2px 6px rgba(0,0,0,0.08);
-outline:none;
+border:1px solid #ddd;
 }
 
 .searchBtn{
@@ -118,1277 +49,375 @@ position:absolute;
 right:8px;
 top:50%;
 transform:translateY(-50%);
-width:36px;
-height:36px;
-border:none;
-background:#0042FD;
-border-radius:999px;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-padding:0;
-}
-
-.searchBtn svg{
-width:18px;
-height:18px;
-stroke:white;
-stroke-width:2.2;
-fill:none;
-}
-
-/* TOP BUTTONS */
-
-.topButtons{
-margin-top:10px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-align-items:center;
-}
-
-.clearBtn{
-padding:8px 16px;
-border-radius:999px;
-border:2px solid #0042FD;
-background:white;
-color:#0042FD;
-cursor:pointer;
-font-family:Lexend;
-}
-
-.sortSelect{
-padding:8px 14px;
-border-radius:999px;
-border:1px solid #dbe4ff;
-background:#eef3ff;
-font-family:Lexend;
-font-size:13px;
-cursor:pointer;
-outline:none;
-color:#444;
-}
-
-.currencyTopBtn{
-padding:8px 14px;
-border-radius:999px;
-border:1px solid #dbe4ff;
-background:#eef3ff;
-font-family:Lexend;
-font-size:13px;
-cursor:pointer;
-color:#444;
 }
 
 /* GRID */
-
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:22px;
-margin-top:20px;
+gap:20px;
 }
 
 /* CARD */
-
 .card{
-background:white;
-border-radius:16px;
+background:#fff;
+border-radius:14px;
+box-shadow:0 3px 10px rgba(0,0,0,0.12);
 overflow:hidden;
-box-shadow:0 3px 10px rgba(0,0,0,0.14);
-display:flex;
-flex-direction:column;
 }
 
-/* CAROUSEL */
-
-.carouselWrap{
-position:relative;
-overflow:hidden;
-min-height:220px;
-background:#f5f5f5;
-}
-
-.carousel{
-display:flex;
-overflow-x:auto;
-scroll-snap-type:x mandatory;
-scroll-behavior:smooth;
--ms-overflow-style:none;
-scrollbar-width:none;
-min-height:220px;
-}
-
-.carousel::-webkit-scrollbar{
-display:none;
-}
-
-.carousel img{
-width:100%;
-height:220px;
-object-fit:cover;
-flex-shrink:0;
-scroll-snap-align:start;
-}
-
-/* INDICATORS */
-
-.carouselIndicators{
-position:absolute;
-bottom:10px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:5px;
-z-index:2;
-}
-
-.carouselIndicators{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:8px;
-margin-top:10px;
-}
-
-.carouselIndicators span{
-width:28px;
-height:4px;
-border-radius:999px;
-background:#d8d8d8;
-transition:.25s;
-}
-
-.carouselIndicators span.active{
-width:42px;
-background:#0042FD;
-}
-
-
-/* CARD BODY */
-
-.cardBody{
-padding:16px;
-display:flex;
-flex-direction:column;
-flex-grow:1;
-}
-
-.title{
-font-family:"Libre Bodoni",serif;  
-color: #001A66;
-font-size:24px;
-line-height:1.2;
-margin-bottom:4px;
-}
-
-.location{
-font-size:13px;
-color:#666;
-margin-bottom:2px;
-}
-
-.description{
-font-size:13px;
-line-height:1.6;
-color:#444;
-white-space:pre-line;
-}
-
-/* PRICE */
-
-.priceWrap{
-margin-top:14px;
-display:flex;
-flex-direction:column;
-align-items:flex-start;
-}
-
-.priceLabel{
-font-family:"Libre Bodoni",serif;
-font-size:10px;
-letter-spacing:1.4px;
-color:#001A66;
-line-height:1;
-margin-bottom:8px;
-}
-
-.priceAmount{
-font-family:"Libre Bodoni",serif;
-font-size:26px;
-line-height:1;
-color:#001A66;
-}
-
-.priceCurrency{
-margin-top:8px;
-font-size:11px;
-color:#111;
-letter-spacing:0.3px;
-cursor:pointer;
-display:inline-block;
-border-bottom:1px dotted #111;
-width:fit-content;
-}
-
-/* RATING */
-
-.rating{
-margin-top:12px;
-font-size:14px;
-color:#0042FD;
-}
-
-.ratingSmall{
-font-size:10px;
-color:#777;
-margin-top:2px;
-}
-
-/* TAGS */
-
-.tagsRow{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
-margin-top:12px;
-}
-
-.cardTag{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-background:#eaf0ff;
-color:#0042FD;
-padding:8px 12px;
-border-radius:999px;
-font-size:11px;
-line-height:1.2;
-}
-
-/* BOOK */
-
-.book{
-display:block;
-margin-top:16px;
-padding:12px;
-text-align:center;
-background:#0042FD;
-color:white;
-text-decoration:none;
-border-radius:999px;
-border:2px solid #0042FD;
-transition:0.2s;
-}
-
-.book:hover{
-background:#f5f5f5;
-color:#0042FD;
-}
-
-/* RELATED LINKS */
-
-.relatedLinks{
-margin-top:12px;
-font-size:11px;
-line-height:1.8;
-letter-spacing:0.4px;
-}
-
-.relatedLinks a{
-color:#324a7d;
-text-decoration:underline;
-margin-right:10px;
-}
-
-.relatedLinks a:hover{
-color:#0042FD;
-}
-
-.bottom{
-margin-top:auto;
-}
-
-.bottomNav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:24px;
-}
-
-.pageBtn{
-padding:7px 12px;
-margin:2px;
-border:1px solid #0042FD;
-background:white;
-color:#0042FD;
-cursor:pointer;
-border-radius:8px;
-}
-
-.pageBtn.active{
-background:#0042FD;
-color:white;
-}
-
-#noResults{
-display:none;
-text-align:center;
-margin-top:40px;
-font-size:14px;
-color:#666;
-}
-
-.currencyOption{
-padding:10px 12px;
-cursor:pointer;
-border-radius:8px;
-font-size:13px;
-}
-
-.currencyOption:hover{
-background:#eef3ff;
-}
-
-#currencyModal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.45);
-z-index:99999;
-align-items:center;
-justify-content:center;
-}
-
-.currencyBox{
-background:white;
-padding:20px;
-border-radius:18px;
-width:240px;
-}
-
-#redirectOverlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.45);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:99999;
-}
-
-.redirectBox{
-background:white;
-padding:24px;
-border-radius:18px;
-text-align:center;
-width:240px;
-box-shadow:0 10px 40px rgba(0,0,0,0.15);
-}
-
-.spinner{
-width:32px;
-height:32px;
-border:3px solid #ddd;
-border-top-color:#0042FD;
-border-radius:50%;
-margin:0 auto 16px;
-animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-to{
-transform:rotate(360deg);
-}
-}
-
-@media(max-width:900px){
-
-.container{
-flex-direction:column;
-padding:12px;
-}
-
-.sidebar{
-width:100%;
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
+/* TOP BUTTONS */
 .topButtons{
-flex-direction:column;
-align-items:stretch;
-}
-
-.clearBtn,
-.sortSelect,
-.currencyTopBtn{
-width:100%;
-text-align:center;
-}
-
-.sortSelect{
-text-align:center;
-text-align-last:center;
-}
-
-.currencyTopBtn{
 display:flex;
-justify-content:center;
-align-items:center;
-}
-
-}
-
-/* =========================
-LOCKED FILTER CHIPS (UPDATED)
-========================= */
-
-.locked-chip {
-  display:inline-flex;
-align-items:center;
-justify-content:center;
-
-padding:9px 14px;
-border-radius:999px;
-
-background:#EEF1F7;
-color:#b2bad1;
-
-font-family:Lexend,sans-serif;
-font-size:13px;
-font-weight:500;
-
-cursor:pointer;
-transition:0.2s ease;
-
-opacity:0.82;
-}
-
-.locked-chip:hover{
-opacity:1;
-transform:translateY(-1px);
-}
-
-/* blurred text ONLY */
-.locked-chip span {
-  filter: blur(0.5px);
-} 
-
-/* =========================
-FLAT LOCK ICON (FIXED - NO HANDBAG LOOK
-========================= */
-.lock-icon {
-  width: 10px;
-  height: 10px;
-  background: #8c8c8c;
-  border-radius: 2px;
-  display: none;
-  flex-shrink: 0;
-}
-
-/* top shackle (closed lock look) */
-.lock-icon::before {
-  content: "";
-  position: absolute;
-  width: 8px;
-  height: 6px;
-  border: 2px solid #8c8c8c;
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
-  top: -7px;
-  left: 1px;
+gap:10px;
+margin:10px 0;
 }
 
 /* =========================
-LOCKED GRID (spacing fix only)
-========================= */
-.locked-grid{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin-top:10px;
-margin-bottom:6px;
-}
-
-/* =========================
-MOBILE SPACING IMPROVEMENT
-========================= */
-@media (max-width: 768px) {
-  .locked-grid {
-    margin-bottom: 24px;
-  }
-}
-
-/* =========================
-PREMIUM TOOLTIP
+BFSB FIX (IMPORTANT)
 ========================= */
 
-
-.premiumPopup{
-position:fixed;
-display:none;
-background:white;
-border-radius:18px;
-padding:18px;
-width:260px;
-max-width:calc(100vw - 28px);
-box-sizing:border-box;
-box-shadow:0 10px 40px rgba(0,0,0,0.14);
+#bfsbWrapper{
+position:sticky;
+bottom:10px;
 z-index:999999;
-border:1px solid #eef3ff;
 }
-
-.premiumTitle{
-font-family:"Libre Bodoni",serif;
-font-size:18px;
-margin-bottom:8px;
-color:#111;
-}
-
-.premiumText{
-font-size:13px;
-line-height:1.6;
-color:#555;
-margin-bottom:14px;
-}
-
-.premiumBtn{
-display:block;
-width:100%;
-padding:12px;
-border:none;
-border-radius:999px;
-background:#0042FD;
-color:white;
-font-family:Lexend;
-cursor:pointer;
-font-size:13px;
-}
-
-.closeMini{
-position:absolute;
-top:10px;
-right:12px;
-cursor:pointer;
-font-size:16px;
-color:#999;
-}
-
-
-/* IMAGE LABEL */
-
-.imageLabel{
-position:absolute;
-top:12px;
-left:12px;
-z-index:5;
-padding:6px 10px;
-border-radius:999px;
-font-family: Lexend, sans-serif;
-font-size:7px;
-font-weight:normal;
-letter-spacing:.1px;
-text-transform:uppercase;
-background:rgba(255,255,255,.82);
-backdrop-filter:blur(10px);
-color:#909090;
-box-shadow: 0 2px 10px rgba(0,0,0,.08);
-}
-
-
-
-/* =========================
-BOTTOM FILTER STICKY BAR
-========================= */
 
 #bottomFilterBar{
-  position: fixed !important;
-  bottom: 12px !important;
-  left: 12px !important;
-  right: 12px !important;
-
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-
-  z-index: 2147483647 !important;
-
-align-items:center;
+display:flex;
 justify-content:space-between;
+align-items:center;
 gap:10px;
 
 padding:12px;
+margin:0 12px;
 
-background:rgba(255,255,255,.94);
-
-backdrop-filter:blur(14px);
--webkit-backdrop-filter:blur(14px);
-
-border-radius:20px;
-
-box-shadow:0 8px 30px rgba(0,0,0,.12);
-
-box-sizing:border-box;
-
-transition:
-transform .25s ease,
-opacity .25s ease;
-
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(12px);
+border-radius:18px;
+box-shadow:0 8px 25px rgba(0,0,0,0.12);
 }
 
-/* desktop hide */
+/* MOBILE ONLY */
 @media(min-width:901px){
-
-#bottomFilterBar{
-display:none !important;
+#bfsbWrapper{display:none;}
 }
-
-}
-
-html, body {
-  height: auto !important;
-  overflow-x: hidden;
-}
-
-#filterCount{
-
-flex:1;
-
-background:#F5F6F8;
-
-padding:12px 16px;
-
-border-radius:14px;
-
-font-size:13px;
-font-weight:500;
-
-text-align:center;
-
-cursor:pointer;
-
-touch-action:manipulation;
-}
-
-#floatingSearchBtn{
-
-background:#697CA5;
-color:white;
-
-padding:12px 18px;
-
-border-radius:14px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-font-size:13px;
-font-weight:600;
-
-cursor:pointer;
-
-white-space:nowrap;
-}
-
-/* SAME SEARCH ICON */
-#floatingSearchBtn
-.searchIcon{
-
-border-color:white;
-
-}
-
-#floatingSearchBtn
-.searchIcon::after{
-
-background:white;
-
-}
-
-html, body{
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body{
-overflow-x:hidden;
-position:relative;
-padding-bottom:120px;
-}
-
-/* SEARCH POPUP */
-
-#searchOverlay{
-
-position:fixed;
-
-inset:0;
-
-display:none;
-justify-content:center;
-align-items:center;
-
-background:
-rgba(255,255,255,.74);
-
-backdrop-filter:
-blur(3px);
-
-z-index:999999;
-
--webkit-backdrop-filter:
-blur(3px);
-
-}
-
-.searchPopup{
-background:white;
-padding:20px 28px;
-border-radius:20px;
-box-shadow:0 6px 24px rgba(0,0,0,0.08);
-font-family:Lexend,sans-serif;
-font-size:15px;
-letter-spacing:.4px;
-color:#697CA5;
-text-align:center;
-}
-
-
-</style>
-
-
-<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
-  (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.src = 'https://emrld.ltd/NTMzNDI3.js?t=533427';
-      document.head.appendChild(script);
-  })();
-</script>
+    
+  </style>
 
 </head>
 
-<body> 
+<body>
 
 <div class="container">
 
-<div class="sidebar">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
 
-<div id="loadingFilters">
-LOADING FILTERS
-</div>
+    <div id="loadingFilters">LOADING FILTERS</div>
+    <div id="filters"></div>
 
-<div id="filters"></div>
-
-<!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
-<div class="locked-grid" style="display:none;">
-
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Halal Certified</span>
-    <div class="lock-icon"></div>
   </div>
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Mini Fridge Provided</span>
-    <div class="lock-icon"></div>
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SEARCH -->
+    <div class="search">
+      <input id="searchInput" placeholder="Search hotel, stay or keyword">
+
+      <button class="searchBtn" onclick="runStickySearch()">
+        🔍
+      </button>
+    </div>
+
+    <!-- TOP BUTTONS -->
+    <div class="topButtons">
+      <button class="clearBtn" onclick="clearAll()">Clear</button>
+
+      <select id="sortSelect" onchange="render()">
+        <option value="default">Sort</option>
+        <option value="lowHigh">Price Low</option>
+        <option value="highLow">Price High</option>
+        <option value="ratingHigh">Top Rated</option>
+      </select>
+
+      <button class="currencyTopBtn" onclick="openCurrencyPopup(event)">
+        MYR ▼
+      </button>
+    </div>
+
+    <div id="noResults">No results found</div>
+
+    <!-- CARDS -->
+    <div class="grid" id="cards"></div>
+
+    <!-- PAGINATION -->
+    <div class="bottomNav">
+      <button onclick="scrollTopSmooth()">Back To Top</button>
+      <div id="pagination"></div>
+    </div>
+
   </div>
+</div>
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Prayer Room Nearby</span>
-    <div class="lock-icon"></div>
+<!-- BFSB (IMPORTANT FIXED WRAPPER) -->
+<div id="bfsbWrapper">
+  <div id="bottomFilterBar">
+
+    <div id="filterCount" onclick="scrollToFilters()">
+      ⌂ FILTERS
+    </div>
+
+    <div id="floatingSearchBtn" onclick="runStickySearch()">
+      SEARCH
+    </div>
+
   </div>
-
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Family Friendly</span>
-    <div class="lock-icon"></div>
-  </div>
-
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Nearby Mosque</span>
-    <div class="lock-icon"></div>
-  </div>
-
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Quiet Stay</span>
-    <div class="lock-icon"></div>
-  </div>
-
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Luxury Muslim Stay</span>
-    <div class="lock-icon"></div>
-  </div>
-
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Transit Friendly</span>
-    <div class="lock-icon"></div>
-  </div>
-
 </div>
 
+<!-- OVERLAYS -->
+<div id="searchOverlay">
+  <div class="searchPopup">SEARCHING...</div>
 </div>
-
-
-
-<div class="main">
-
-
-
-<div class="search">
-
-<input id="searchInput"
-placeholder="Search hotel, stay or any keyword">
-
-<button class="searchBtn"
-onclick="runStickySearch()">
-
-<svg viewBox="0 0 24 24">
-<circle cx="11" cy="11" r="7"></circle>
-<line x1="16.65" y1="16.65" x2="21" y2="21"></line>
-</svg>
-
-</button>
-
-</div>
-
-<div class="topButtons">
-
-<button class="clearBtn" onclick="clearAll()">
-Clear
-</button>
-
-<select id="sortSelect"
-class="sortSelect"
-onchange="render()">
-
-<option value="default">Sort</option>
-<option value="lowHigh">Price: Low to High</option>
-<option value="highLow">Price: High to Low</option>
-<option value="ratingHigh">Highest Rated</option>
-<option value="ratingLow">Lowest Rated</option>
-
-</select>
-
-<button class="currencyTopBtn"
-onclick="openCurrencyPopup(event)">
-MYR ▼
-</button>
-
-</div>
-
-<div id="noResults">
-No results found. Please try a different search.
-</div>
-
-<div class="grid" id="cards"></div>
-
-<div class="bottomNav">
-
-<button onclick="scrollTopSmooth()" style="
-cursor:pointer;
-color:#0042FD;
-font-size:14px;
-background:none;
-border:none;
-padding:0;
-font-family:Lexend,sans-serif;
-">
-Back To Top
-</button>
-
-<div id="pagination"></div>
-
-</div>
-
-</div>
-</div>
-
-<!-- CURRENCY MODAL -->
-
-
-
-<!-- REDIRECT -->
 
 <div id="redirectOverlay">
-
-<div class="redirectBox">
-
-<div class="spinner"></div>
-
-<div style="font-size:14px;">
-Redirecting to booking partner...
+  <div class="redirectBox">
+    Redirecting...
+  </div>
 </div>
-
-</div>
-
-</div>
-
-
-  <div id="premiumPopup" class="premiumPopup">
-
-<div class="closeMini"
-onclick="closePremiumPopup()">
-✕
-</div>
-
-<div class="premiumTitle">
-Unlock Premium Filters
-</div>
-
-<div class="premiumText">
-Discover full filters including prayer access, bidets, halal dining, female-friendly spaces, private pools and more.
-</div>
-
-<button class="premiumBtn">
-Coming Soon
-</button>
-
-</div>
-
-
-<div id="currencyPopup"
-class="premiumPopup">
-
-<div class="closeMini"
-onclick="closeCurrencyPopup()">
-✕
-</div>
-
-<div class="premiumTitle">
-Choose Currency
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('MYR')">
-MYR
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('USD')">
-USD
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('SGD')">
-SGD
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('GBP')">
-GBP
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('EUR')">
-EUR
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('JPY')">
-JPY
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('SAR')">
-SAR
-</div>
-
-<div class="currencyOption"
-onclick="setCurrency('AED')">
-AED
-</div>
-
-</div>
-
-
 
 <script>
 
-const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
-const MAX_ITEMS=20;
-const ITEMS_PER_PAGE=12;
+const ITEMS_PER_PAGE = 12;
 
-let data=[];
-let activeFilters=[];
-let currentPage=1;
-let currentCurrency="MYR";
+let data = [];
+let activeFilters = [];
+let currentPage = 1;
+let currentCurrency = "MYR";
 
-let exchangeRates={ MYR:1 };
+let exchangeRates = { MYR: 1 };
 
-/* =========================
-LOAD RATES
-========================= */
-async function loadRates(){
-try{
-const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
-const json=await res.json();
+/* LOAD RATES */
+async function loadRates() {
+  try {
+    const res = await fetch("https://api.exchangerate.host/latest?base=MYR");
+    const json = await res.json();
 
-exchangeRates={
-MYR:1,
-USD:json.rates.USD,
-SGD:json.rates.SGD,
-GBP:json.rates.GBP,
-EUR:json.rates.EUR,
-JPY:json.rates.JPY,
-SAR:json.rates.SAR,
-AED:json.rates.AED
-};
+    exchangeRates = {
+      MYR: 1,
+      USD: json.rates.USD,
+      SGD: json.rates.SGD,
+      GBP: json.rates.GBP,
+      EUR: json.rates.EUR,
+      JPY: json.rates.JPY,
+      SAR: json.rates.SAR,
+      AED: json.rates.AED
+    };
 
-}catch(err){
-exchangeRates={MYR:1,USD:0.21,SGD:0.3,GBP:0.16,EUR:0.19};
-}
+  } catch {
+    exchangeRates = { MYR: 1, USD: 0.21, SGD: 0.3 };
+  }
 }
 
-/* =========================
-FORMAT PRICE
-========================= */
-function formatPrice(price){
-let num=parseFloat(price)||0;
-return (num * exchangeRates[currentCurrency]).toFixed(2);
+/* CSV PARSER */
+function parseCSV(text) {
+  const rows = text.split("\n").map(r => r.split(","));
+  const headers = rows[0];
+
+  return rows.slice(1).map(row => {
+    let obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = (row[i] || "").trim());
+    return obj;
+  });
 }
 
-/* =========================
-CURRENCY
-========================= */
-function setCurrency(c){
-currentCurrency=c;
-document.querySelector(".currencyTopBtn").innerHTML=c+" ▼";
-closeCurrencyPopup();
-render();
+/* PRICE */
+function formatPrice(price) {
+  return ((parseFloat(price) || 0) * exchangeRates[currentCurrency]).toFixed(2);
 }
 
-function openCurrencyPopup(event){
-const popup=document.getElementById("currencyPopup");
-popup.style.display="block";
-popup.style.position="absolute";
+/* LOAD DATA */
+async function load() {
+  await loadRates();
 
-let x=event.pageX;
-let y=event.pageY;
+  const res = await fetch(SHEET_URL);
+  const text = await res.text();
 
-popup.style.left=x+"px";
-popup.style.top=(y+10)+"px";
+  data = parseCSV(text);
+
+  buildFilters();
+  render();
 }
 
-function closeCurrencyPopup(){
-document.getElementById("currencyPopup").style.display="none";
+/* FILTERS */
+function buildFilters() {
+  const container = document.getElementById("filters");
+
+  const groups = {};
+
+  data.forEach(item => {
+    (item.filter_tags || "").split(",").forEach(tag => {
+      if (!tag.includes(":")) return;
+
+      let [cat, val] = tag.split(":");
+      if (!groups[cat]) groups[cat] = new Set();
+      groups[cat].add(val.trim());
+    });
+  });
+
+  container.innerHTML = "";
+
+  Object.keys(groups).forEach(cat => {
+
+    let block = document.createElement("div");
+    block.innerHTML = `<div class="filterTitle">${cat}</div>`;
+
+    groups[cat].forEach(val => {
+      let el = document.createElement("div");
+      el.className = "tag";
+      el.innerText = val;
+
+      el.onclick = () => toggle(cat + ":" + val, el);
+
+      block.appendChild(el);
+    });
+
+    container.appendChild(block);
+  });
 }
 
-/* =========================
-TOGGLE FILTER
-========================= */
-function toggle(tag,el){
+/* TOGGLE */
+function toggle(tag, el) {
+  if (activeFilters.includes(tag)) {
+    activeFilters = activeFilters.filter(t => t !== tag);
+    el.classList.remove("active");
+  } else {
+    activeFilters.push(tag);
+    el.classList.add("active");
+  }
 
-if(activeFilters.includes(tag)){
-activeFilters=activeFilters.filter(t=>t!==tag);
-el.classList.remove("active");
-}else{
-activeFilters.push(tag);
-el.classList.add("active");
+  currentPage = 1;
+  render();
 }
 
-currentPage=1;
-updateStickyBar();
-render();
+/* RENDER */
+function render() {
+
+  const search = document.getElementById("searchInput").value.toLowerCase();
+
+  let filtered = data.filter(item => {
+
+    let tags = (item.filter_tags || "").toLowerCase();
+
+    let matchFilters = activeFilters.every(f =>
+      tags.includes(f.toLowerCase())
+    );
+
+    let text =
+      (item.name + item.description + item.city + item.country).toLowerCase();
+
+    let matchSearch = text.includes(search);
+
+    return matchFilters && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    document.getElementById("noResults").style.display = "block";
+  } else {
+    document.getElementById("noResults").style.display = "none";
+  }
+
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const pageData = filtered.slice(start, start + ITEMS_PER_PAGE);
+
+  document.getElementById("cards").innerHTML = pageData.map(item => `
+    <div class="card">
+      <div class="carouselWrap">
+        <img src="https://salamguest.github.io/salamguest-directory/images/${item.media}/1.jpg">
+      </div>
+
+      <div class="cardBody">
+        <div class="title">${item.name}</div>
+        <div class="location">${item.city}, ${item.country}</div>
+        <div class="description">${item.description}</div>
+
+        <div class="priceAmount">${formatPrice(item.price)}</div>
+      </div>
+    </div>
+  `).join("");
+
+  renderPagination(filtered.length);
+  updateStickyBar();
+  sendHeight();
 }
-
-/* =========================
-CLEAR
-========================= */
-function clearAll(){
-activeFilters=[];
-currentPage=1;
-
-document.querySelectorAll(".tag").forEach(t=>t.classList.remove("active"));
-document.getElementById("searchInput").value="";
-document.getElementById("sortSelect").value="default";
-
-updateStickyBar();
-render();
-}
-
-/* =========================
-SCROLL
-========================= */
-function scrollToFilters(){
-document.getElementById("filters").scrollIntoView({behavior:"smooth"});
-}
-
-function scrollTopSmooth(){
-window.scrollTo({top:0,behavior:"smooth"});
-}
-
-/* =========================
-RENDER (MAIN ENGINE)
-========================= */
-function render(){
-
-const search=document.getElementById("searchInput").value.toLowerCase();
-
-let filtered=data.filter(item=>{
-
-let tags=(item.filter_tags||"").toLowerCase();
-let isBasic=tags.includes("view: basic");
-
-let matchFilters=activeFilters.every(f=>tags.includes(f.toLowerCase()));
-
-let fullText=`
-${item.name||""}
-${item.description||""}
-${item.city||""}
-${item.country||""}
-`.toLowerCase();
-
-let searchMatch=fullText.includes(search);
-
-return isBasic && matchFilters && searchMatch;
-});
-
-/* SORT */
-const sort=document.getElementById("sortSelect")?.value;
-
-if(sort==="lowHigh") filtered.sort((a,b)=>(a.price||0)-(b.price||0));
-if(sort==="highLow") filtered.sort((a,b)=>(b.price||0)-(a.price||0));
-if(sort==="ratingHigh") filtered.sort((a,b)=>(b.rating||0)-(a.rating||0));
-if(sort==="ratingLow") filtered.sort((a,b)=>(a.rating||0)-(b.rating||0));
 
 /* PAGINATION */
-const start=(currentPage-1)*ITEMS_PER_PAGE;
-const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
+function renderPagination(total) {
+  const pages = Math.ceil(total / ITEMS_PER_PAGE);
 
-/* RENDER CARDS */
-document.getElementById("cards").innerHTML=
-pageData.map(item=>`
-
-<div class="card">
-<div class="carouselWrap">
-<div class="carousel">
-<img src="https://salamguest.github.io/salamguest-directory/images/${item.media}/1.jpg">
-</div>
-</div>
-
-<div class="cardBody">
-<div class="title">${item.name}</div>
-<div class="location">${item.city}, ${item.country}</div>
-<div class="description">${item.description}</div>
-
-<div class="priceAmount">${formatPrice(item.price)}</div>
-
-<div class="tagsRow">
-${(item.card_tags||"").split(",").map(t=>`
-<span class="cardTag">${t}</span>
-`).join("")}
-</div>
-
-</div>
-</div>
-
-`).join("");
-
-renderPagination(filtered.length);
-updateStickyBar();
-
-/* IMPORTANT: only update iframe height here */
-setTimeout(sendHeight,400);
+  document.getElementById("pagination").innerHTML =
+    Array.from({ length: pages }, (_, i) => `
+      <button class="pageBtn ${i + 1 === currentPage ? "active" : ""}"
+        onclick="goPage(${i + 1})">${i + 1}</button>
+    `).join("");
 }
 
-/* =========================
-PAGINATION
-========================= */
-function renderPagination(total){
-const pages=Math.ceil(total/ITEMS_PER_PAGE);
-let html="";
-
-for(let i=1;i<=pages;i++){
-html+=`
-<button class="pageBtn ${i===currentPage?'active':''}"
-onclick="goPage(${i})">${i}</button>`;
+function goPage(p) {
+  currentPage = p;
+  render();
 }
 
-document.getElementById("pagination").innerHTML=html;
+/* CLEAR */
+function clearAll() {
+  activeFilters = [];
+  currentPage = 1;
+  document.querySelectorAll(".tag").forEach(t => t.classList.remove("active"));
+  document.getElementById("searchInput").value = "";
+  render();
 }
 
-function goPage(p){
-currentPage=p;
-render();
-}
+/* STICKY BAR */
+function updateStickyBar() {
+  const bar = document.getElementById("bottomFilterBar");
+  if (!bar) return;
 
-/* =========================
-STICKY BAR (SAFE VERSION)
-========================= */
-function updateStickyBar(){
-
-const bar=document.getElementById("bottomFilterBar");
-if(!bar) return;
-
-if(window.innerWidth>900){
-bar.style.display="none";
-return;
-}
-
-bar.style.display="flex";
-
-document.getElementById("filterCount").innerHTML=
-activeFilters.length>0
-? `⌂ FILTERS • ${activeFilters.length} SELECTED`
-: `⌂ FILTERS`;
-}
-
-/* =========================
-SEARCH BUTTON (BFSB)
-========================= */
-function runStickySearch(){
-
-const overlay=document.getElementById("searchOverlay");
-overlay.style.display="flex";
-
-setTimeout(()=>{
-
-render();
-overlay.style.display="none";
-scrollTopSmooth();
-
-setTimeout(sendHeight,400);
-
-},600);
-}
-
-/* =========================
-IFRAME HEIGHT (PAYHIP FIX)
-========================= */
-function sendHeight(){
-window.parent.postMessage({
-type:"SET_IFRAME_HEIGHT",
-height:document.body.scrollHeight
-},"*");
-}
-
-/* =========================
-LOAD
-========================= */
-async function load(){
-await loadRates();
-const res=await fetch(SHEET_URL);
-const text=await res.text();
-
-data=parseCSV(text);
-buildFilters();
-applyURLFilters();
-render();
-}
-
-load();
-
-window.addEventListener("message", function(e){
-  if(e.data?.type === "SET_IFRAME_HEIGHT"){
-    document.body.style.minHeight = e.data.height + "px";
+  if (window.innerWidth > 900) {
+    bar.style.display = "none";
+    return;
   }
-});
 
+  bar.style.display = "flex";
+
+  document.getElementById("filterCount").innerText =
+    activeFilters.length > 0
+      ? `FILTERS • ${activeFilters.length} SELECTED`
+      : `FILTERS`;
+}
+
+/* SEARCH BUTTON */
+function runStickySearch() {
+  document.getElementById("searchOverlay").style.display = "flex";
+
+  setTimeout(() => {
+    render();
+    document.getElementById("searchOverlay").style.display = "none";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 600);
+}
+
+/* HEIGHT FIX (PAYHIP) */
+function sendHeight() {
+  window.parent.postMessage({
+    type: "SET_IFRAME_HEIGHT",
+    height: document.body.scrollHeight
+  }, "*");
+}
+
+/* INIT */
+load();
 </script>
 
 </body>
