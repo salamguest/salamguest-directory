@@ -842,7 +842,7 @@ transform:translateX(-50%);
 width:calc(100% - 24px);
 max-width:520px;
 
-bottom:0px;
+bottom:-80px;
 
 padding:12px 18px;
 
@@ -911,14 +911,14 @@ onclick="runStickySearch()">
 <div class="topButtons">
 
 <button class="clearBtn" onclick="clearAll()">
-Clear All
+CLEAR ALL
 </button>
 
 <select id="sortSelect"
 class="sortSelect"
 onchange="render()">
 
-<option value="default">Sort</option>
+<option value="default">SORT</option>
 <option value="lowHigh">Price: Low to High</option>
 <option value="highLow">Price: High to Low</option>
 <option value="ratingHigh">Highest Rated</option>
@@ -1018,48 +1018,8 @@ LOADING FILTERS
 <div class="main">
 
 
+/* where search bar section used to be */
 
-<div class="search">
-
-<input id="searchInput"
-placeholder="Search hotel, stay or any keyword">
-
-<button class="searchBtn"
-onclick="runStickySearch()">
-
-<svg viewBox="0 0 24 24">
-<circle cx="11" cy="11" r="7"></circle>
-<line x1="16.65" y1="16.65" x2="21" y2="21"></line>
-</svg>
-
-</button>
-
-</div>
-
-<div class="topButtons">
-
-<button class="clearBtn" onclick="clearAll()">
-Clear All
-</button>
-
-<select id="sortSelect"
-class="sortSelect"
-onchange="render()">
-
-<option value="default">Sort</option>
-<option value="lowHigh">Price: Low to High</option>
-<option value="highLow">Price: High to Low</option>
-<option value="ratingHigh">Highest Rated</option>
-<option value="ratingLow">Lowest Rated</option>
-
-</select>
-
-<button class="currencyTopBtn"
-onclick="openCurrencyPopup(event)">
-MYR ▼
-</button>
-
-</div>
 
 <div id="noResults">
 No results found. Please try a different search.
