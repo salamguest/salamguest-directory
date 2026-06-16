@@ -706,15 +706,12 @@ BOTTOM FILTER STICKY BAR
 ========================= */
 
 #bottomFilterBar{
-
 display:none;
-
 align-items:center;
 justify-content:space-between;
 gap:10px;
-
-margin-bottom:18px;
-
+margin-top:18px;
+margin-bottom:18px
 }
 
 @media(min-width:901px){
@@ -934,7 +931,7 @@ MYR ▼
 </div>
 
 
-<!-- MOBILE FILTER ACTION BAR -->
+<!-- MOBILE FILTER STICKY BAR -->
 
 <div id="bottomFilterBar">
 
@@ -1018,12 +1015,35 @@ LOADING FILTERS
 <div class="main">
 
 
-/* where search bar section used to be */
+<!-- where search bar section used to be -->
 
 
 <div id="noResults">
 No results found. Please try a different search.
 </div>
+
+<!-- MOBILE FILTER STICKY BAR -->
+
+<div id="bottomFilterBar">
+
+<div
+id="filterCount"
+onclick="scrollToFilters()">
+
+⌂ FILTERS • 0 SELECTED
+
+</div>
+
+<div
+id="floatingSearchBtn"
+onclick="runStickySearch()">
+
+SEARCH
+
+</div>
+
+</div>
+
 
 <div class="grid" id="cards"></div>
 
