@@ -885,74 +885,228 @@ pointer-events:none;
 
 </head>
 
-<body>
+<body> 
 
 <div class="container">
 
 <div class="sidebar">
 
-<div id="bottomFilterBar">
-<div id="filterCount" onclick="scrollToFilters()">⌂ FILTERS • 0 SELECTED</div>
-<div id="floatingSearchBtn" onclick="runStickySearch()">SEARCH</div>
-</div>
-
-<div id="searchInlineStatus">SEARCHING...</div>
-
-<div id="loadingFilters">LOADING FILTERS</div>
-
-<div id="filters"></div>
-
-<div class="locked-grid" style="display:none;"></div>
-
-</div>
-
-<div class="main">
-
-<!-- SEARCH BAR IS NOW FIRST CLEARLY ABOVE EVERYTHING -->
 <div class="search">
-<input id="searchInput" placeholder="Search hotel, stay or any keyword">
-<button class="searchBtn" onclick="runStickySearch()">
+
+<input id="searchInput"
+placeholder="Search hotel, stay or any keyword">
+
+<button class="searchBtn"
+onclick="runStickySearch()">
+
 <svg viewBox="0 0 24 24">
 <circle cx="11" cy="11" r="7"></circle>
 <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
 </svg>
+
 </button>
+
 </div>
 
 <div class="topButtons">
-<button class="clearBtn" onclick="clearAll()">Clear</button>
-<select id="sortSelect" class="sortSelect" onchange="render()">
+
+<button class="clearBtn" onclick="clearAll()">
+Clear All
+</button>
+
+<select id="sortSelect"
+class="sortSelect"
+onchange="render()">
+
 <option value="default">Sort</option>
 <option value="lowHigh">Price: Low to High</option>
 <option value="highLow">Price: High to Low</option>
 <option value="ratingHigh">Highest Rated</option>
 <option value="ratingLow">Lowest Rated</option>
+
 </select>
-<button class="currencyTopBtn" onclick="openCurrencyPopup(event)">MYR ▼</button>
+
+<button class="currencyTopBtn"
+onclick="openCurrencyPopup(event)">
+MYR ▼
+</button>
+
 </div>
 
-<div id="noResults">No results found. Please try a different search.</div>
+
+<!-- MOBILE FILTER ACTION BAR -->
+
+<div id="bottomFilterBar">
+
+<div
+id="filterCount"
+onclick="scrollToFilters()">
+
+⌂ FILTERS • 0 SELECTED
+
+</div>
+
+<div
+id="floatingSearchBtn"
+onclick="runStickySearch()">
+
+SEARCH
+
+</div>
+
+</div>
+
+<div id="searchInlineStatus">
+SEARCHING...
+</div>
+
+<div id="loadingFilters">
+LOADING FILTERS
+</div>
+
+<div id="filters"></div>
+
+<!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
+<div class="locked-grid" style="display:none;">
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Halal Certified</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Mini Fridge Provided</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Prayer Room Nearby</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Family Friendly</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Nearby Mosque</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Quiet Stay</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Luxury Muslim Stay</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Transit Friendly</span>
+    <div class="lock-icon"></div>
+  </div>
+
+</div>
+
+</div>
+
+
+
+<div class="main">
+
+
+
+<div class="search">
+
+<input id="searchInput"
+placeholder="Search hotel, stay or any keyword">
+
+<button class="searchBtn"
+onclick="runStickySearch()">
+
+<svg viewBox="0 0 24 24">
+<circle cx="11" cy="11" r="7"></circle>
+<line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+</svg>
+
+</button>
+
+</div>
+
+<div class="topButtons">
+
+<button class="clearBtn" onclick="clearAll()">
+Clear All
+</button>
+
+<select id="sortSelect"
+class="sortSelect"
+onchange="render()">
+
+<option value="default">Sort</option>
+<option value="lowHigh">Price: Low to High</option>
+<option value="highLow">Price: High to Low</option>
+<option value="ratingHigh">Highest Rated</option>
+<option value="ratingLow">Lowest Rated</option>
+
+</select>
+
+<button class="currencyTopBtn"
+onclick="openCurrencyPopup(event)">
+MYR ▼
+</button>
+
+</div>
+
+<div id="noResults">
+No results found. Please try a different search.
+</div>
 
 <div class="grid" id="cards"></div>
 
 <div class="bottomNav">
-<button onclick="scrollTopSmooth()" style="cursor:pointer;color:#0042FD;font-size:14px;background:none;border:none;padding:0;font-family:Lexend;">
+
+<button onclick="scrollTopSmooth()" style="
+cursor:pointer;
+color:#0042FD;
+font-size:14px;
+background:none;
+border:none;
+padding:0;
+font-family:Lexend,sans-serif;
+">
 Back To Top
 </button>
+
 <div id="pagination"></div>
+
 </div>
 
 </div>
 </div>
 
-<!-- ALL MODALS + OVERLAYS (UNCHANGED) -->
+<!-- CURRENCY MODAL -->
+
+
+
+<!-- REDIRECT -->
+
 <div id="redirectOverlay">
+
 <div class="redirectBox">
+
 <div class="spinner"></div>
-<div>Redirecting to booking partner...</div>
-</div>
+
+<div style="font-size:14px;">
+Redirecting to booking partner...
 </div>
 
+</div>
+
+</div>
 
 
   <div id="premiumPopup" class="premiumPopup">
