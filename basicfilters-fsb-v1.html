@@ -317,6 +317,29 @@ color:#444;
 white-space:pre-line;
 }
 
+.contentRow{
+display:flex;
+gap:20px;
+margin-top:12px;
+margin-bottom:14px;
+align-items:flex-start;
+}
+
+.descriptionCol{
+flex:0 0 60%;
+min-width:0;
+}
+
+.metaCol{
+flex:0 0 40%;
+min-width:0;
+
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+text-align:right;
+}
+
 /* PRICE */
 
 .priceWrap{
@@ -1905,19 +1928,23 @@ ${item.name}
 ⚲ ${item.city}, ${item.country}
 </div>
 
+<div class="contentRow">
+
+<div class="descriptionCol">
+
 <div class="description">
 ${item.description}
 </div>
 
-<div class="bottom">
+</div>
+
+<div class="metaCol">
 
 <div class="priceWrap">
 
 <div class="priceLabel">
-ESTIMATED STARTING FROM 
+ESTIMATED STARTING FROM
 </div>
-
-
 
 <div class="priceAmount">
 ${formatPrice(item.price)}
@@ -1932,11 +1959,19 @@ ${currentCurrency} / night
 
 <div class="rating">
 ★ ${item.rating} / 5
+
 <div class="ratingSmall">
 Average Guest Rating <br/>
 Based On Public Reviews
 </div>
+
 </div>
+
+</div>
+
+</div>
+
+<div class="bottom">
 
 <div class="tagsRow">
 
