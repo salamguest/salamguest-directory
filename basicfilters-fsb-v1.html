@@ -330,6 +330,7 @@ padding-right:10px;
 border-right:5px solid #DCE6FF;
 box-sizing:border-box;
 margin-top:0;
+margin-bottom:5;
 padding-top:0;
 }
 
@@ -949,7 +950,7 @@ pointer-events:none;
 }
 
 
-/* Detail lines inside description */
+/* Icon label quick facts under description */
 
 .detailItem{
 display:flex;
@@ -957,7 +958,7 @@ align-items:flex-start;
 gap:8px;
 margin-top:6px;
 font-size:11px;
-font-style:bold;
+font-weight:bold;
 line-height:1.2;
 color:#000;
 }
@@ -967,11 +968,14 @@ width:15px;
 height:15px;
 flex-shrink:0;
 margin-top:2px;
-stroke:#697CA5;
+stroke:#000;
 stroke-width:1.8;
 fill:none;
 stroke-linecap:round;
 stroke-linejoin:round;
+align-items:flex-start;
+vertical-align:top;
+vertical-align:text-top;
 }
 
 .detailItem svg.fill{
