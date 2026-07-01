@@ -162,9 +162,9 @@ align-items:center;
 .clearBtn{
 padding:10px 16px;
 border-radius:999px;
-border:2px solid #697CA5;
+border:2px solid #0042FD;
 background:white;
-color:#697CA5;
+color:#0042FD;
 cursor:pointer;
 font-family:Lexend;
 }
@@ -312,31 +312,9 @@ margin-bottom:0px;
 
 .description{
 font-size:13px;
-line-height:1.3;
+line-height:1.6;
 color:#444;
-text-align:left;
-}
-
-.contentRow{
-display:flex;
-gap:10px;
-margin-top:12px;
-margin-bottom:14px;
-}
-
-.descriptionCol{
-width:60%;
-padding-right:10px;
-border-right:5px solid #DCE6FF;
-box-sizing:border-box;
-margin-top:0;
-padding-top:0;
-}
-
-.metaCol{
-width:40%;
-padding-left:5px;
-box-sizing:border-box;
+white-space:pre-line;
 }
 
 /* PRICE */
@@ -346,7 +324,6 @@ margin-top:14px;
 display:flex;
 flex-direction:column;
 align-items:flex-start;
-margin-top:0;
 }
 
 .priceLabel{
@@ -356,7 +333,6 @@ letter-spacing:1.4px;
 color:#001A66;
 line-height:1;
 margin-bottom:8px;
-text-align:left;
 }
 
 .priceAmount{
@@ -364,7 +340,6 @@ font-family:"Libre Bodoni",serif;
 font-size:21px;
 line-height:1;
 color:#001A66;
-text-align:left;
 }
 
 .priceCurrency{
@@ -384,14 +359,12 @@ width:fit-content;
 margin-top:12px;
 font-size:14px;
 color:#0042FD;
-text-align:left;
 }
 
 .ratingSmall{
 font-size:10px;
 color:#777;
 margin-top:2px;
-text-align:left;
 }
 
 /* TAGS */
@@ -811,11 +784,11 @@ flex:1;
 
 background:#F5F6F8;
 
-padding:16px 16px;
+padding:14px 16px;
 border-radius:14px;
 font-family:Libre bodoni;
 background:#eef3ff;
-color:#001A66;
+color:#697CA5;
 font-size:13px;
 font-weight:500;
 text-align:center;
@@ -825,10 +798,10 @@ touch-action:manipulation;
 
 #floatingSearchBtn{
 
-background:#0042FD;
+background:#697CA5;
 color:white;
 
-padding:16px 18px;
+padding:14px 18px;
 
 border-radius:14px;
 
@@ -948,6 +921,39 @@ pointer-events:none;
 
 }
 
+.infoList{
+margin-top:12px;
+padding-top:10px;
+border-top:2px solid #EEF2FA;
+
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.infoItem{
+display:flex;
+align-items:center;
+gap:10px;
+
+font-size:12px;
+line-height:1.4;
+color:#555;
+}
+
+.infoItem svg{
+width:18px;
+height:18px;
+flex-shrink:0;
+
+stroke:#697CA5;
+stroke-width:2;
+
+fill:none;
+
+stroke-linecap:round;
+stroke-linejoin:round;
+}
 
 </style>
 
@@ -1932,23 +1938,19 @@ ${item.name}
 ⚲ ${item.city}, ${item.country}
 </div>
 
-<div class="contentRow">
-
-<div class="descriptionCol">
-
 <div class="description">
 ${item.description}
 </div>
 
-</div>
-
-<div class="metaCol">
+<div class="bottom">
 
 <div class="priceWrap">
 
 <div class="priceLabel">
-ESTIMATED STARTING FROM
+ESTIMATED STARTING FROM 
 </div>
+
+
 
 <div class="priceAmount">
 ${formatPrice(item.price)}
@@ -1963,19 +1965,40 @@ ${currentCurrency} / night
 
 <div class="rating">
 ★ ${item.rating} / 5
-
 <div class="ratingSmall">
 Average Guest Rating <br/>
 Based On Public Reviews
 </div>
-
 </div>
 
-</div>
+/* INFO LIST TAGS */
+
+<div class="infoList">
+
+${(item.info_icons || "")
+.split("\n")
+.filter(i => i.trim() !== "")
+.map(i=>{
+
+const parts=i.split("|");
+
+const icon=parts[0].trim();
+
+const text=parts[1].trim();
+
+return `
+<div class="infoItem">
+
+${getIcon(icon)}
+
+<span>${text}</span>
 
 </div>
+`;
 
-<div class="bottom">
+}).join("")}
+
+</div>
 
 <div class="tagsRow">
 
@@ -1994,7 +2017,10 @@ href="javascript:void(0)"
 onclick="redirectBooking('${item.link}')">
 BOOK ↗
 </a>
-<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">Prices and availability may vary</p>
+<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">
+A portion of eligible bookings helps support charitable causes |
+Prices and availability may vary
+</p>
 
 
 </div>
@@ -2451,6 +2477,62 @@ setTimeout(
 repositionBottomBar,
 500
 );
+
+/* INFO LIST TAGS JS */
+
+function getIcon(name){
+
+switch(name){
+
+case "mosque":
+
+return `
+<svg>.....mosque svg.....</svg>
+`;
+
+case "halal":
+
+return `
+<svg>.....halal svg.....</svg>
+`;
+
+case "taxi":
+
+return `
+<svg>.....taxi svg.....</svg>
+`;
+
+case "wifi":
+
+return `
+<svg>.....wifi svg.....</svg>
+`;
+
+case "bidet":
+
+return `
+<svg>.....bidet svg.....</svg>
+`;
+
+case "clock":
+
+return `
+<svg>.....clock svg.....</svg>
+`;
+
+case "website":
+
+return `
+<svg>.....globe svg.....</svg>
+`;
+
+default:
+
+return "";
+
+}
+
+}
 
 
 </script>
