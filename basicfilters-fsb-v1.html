@@ -974,7 +974,7 @@ display:block;
 
 }
 
-.destinationChip{
+.locationChip{
 display:inline-flex
 padding:8px 14px;
 margin:4px;
@@ -1083,29 +1083,6 @@ SEARCHING...
 LOADING FILTERS
 </div>
 
-
-<div id="locationFilters">
-
-<div class="locationFilter">
-
-<button class="locationBtn" onclick="toggleLocation('countryList',this)">Country ▼
-</button>
-
-<div id="countryList" class="locationList"></div>
-
-</div>
-
-<div class="locationFilter">
-
-<button class="locationBtn" onclick="toggleLocation('cityList',this)">
-City ▼
-</button>
-
-<div id="cityList" class="locationList"></div>
-
-</div>
-
-</div>
 
 <div id="filters"></div>
 
@@ -1545,6 +1522,32 @@ const order=[
 const container=document.getElementById("filters");
 
 document.getElementById("loadingFilters").style.display="none";
+
+const container=document.getElementById("filters");
+
+container.insertAdjacentHTML("beforeend",`
+<div id="locationFilters">
+
+<div class="locationFilter">
+<button class="locationBtn"
+onclick="toggleLocation('countryList',this)">
+Choose Country ▼
+</button>
+<div id="countryList" class="locationList"></div>
+</div>
+
+<div class="locationFilter">
+<button class="locationBtn"
+onclick="toggleLocation('cityList',this)">
+Choose City ▼
+</button>
+<div id="cityList" class="locationList"></div>
+</div>
+
+</div>
+`);
+
+buildLocationLists();
 
 document.getElementById("loadingFilters").style.display="none";
 
@@ -2537,14 +2540,14 @@ const countries=[...new Set(data.map(i=>i.country).filter(Boolean))].sort();
 
 const cities=[...new Set(data.map(i=>i.city).filter(Boolean))].sort();
 
-document.getElementById("countryList").innerHTML=
-countries.map(c=>
-`<div class="destinationChip">${c}</div>`
+document.getElementById("countryList").innerHTML =
+countries.map(c =>
+  `<div class="tag" onclick="toggle('Country:${c}', this)">${c}</div>`
 ).join("");
 
-document.getElementById("cityList").innerHTML=
-cities.map(c=>
-`<div class="destinationChip">${c}</div>`
+document.getElementById("cityList").innerHTML =
+cities.map(c =>
+  `<div class="tag" onclick="toggle('City:${c}', this)">${c}</div>`
 ).join("");
 
 }
