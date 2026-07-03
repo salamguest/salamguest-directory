@@ -330,7 +330,6 @@ padding-right:10px;
 border-right:5px solid #DCE6FF;
 box-sizing:border-box;
 margin-top:0;
-margin-bottom:5;
 padding-top:0;
 }
 
@@ -949,38 +948,6 @@ pointer-events:none;
 
 }
 
-
-/* Icon label quick facts under description */
-
-.detailItem{
-display:flex;
-align-items:flex-start;
-gap:8px;
-margin-top:10px;
-font-size:11px;
-line-height:1.2;
-color:#000;
-}
-
-.detailItem svg{
-width:15px;
-height:15px;
-flex-shrink:0;
-margin-top:2px;
-stroke:#000;
-stroke-width:1.8;
-fill:none;
-stroke-linecap:round;
-stroke-linejoin:round;
-align-items:flex-start;
-vertical-align:top;
-vertical-align:text-top;
-}
-
-.detailItem svg.fill{
-fill:#000;
-stroke:none;
-}
 
 </style>
 
@@ -1815,8 +1782,6 @@ const search=document.getElementById("searchInput")
 .value.toLowerCase();
 
 let filtered=data.filter(item=>{
-const country=
-document.getElementById("countrySelect").value;
 
 let tags=(item.filter_tags||"").toLowerCase();
 
@@ -1838,19 +1803,7 @@ ${item.location || ""}
 
 let searchMatch = fullSearchText.includes(search);
 
-let countryMatch=true;
-
-if(country){
-
-countryMatch=
-item.country===country;
-
-}
-
-return isBasic &&
-matchFilters &&
-searchMatch &&
-countryMatch;
+return isBasic && matchFilters && searchMatch;
 
 });
 
@@ -2240,13 +2193,6 @@ tag.innerText.trim()
 });
 
 }
-
-render();
-
-}
-
-.getElementById("countrySelect")
-.onchange=function(){
 
 render();
 
