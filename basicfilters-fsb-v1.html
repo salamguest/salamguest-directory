@@ -1080,18 +1080,6 @@ SEARCHING...
 LOADING FILTERS
 </div>
 
-<div class="locationFilters">
-
-<select id="countrySelect" class="locationSelect">
-<option value="">Choose Country</option>
-</select>
-
-<select id="citySelect" class="locationSelect">
-<option value="">Choose City</option>
-</select>
-
-</div>
-
 <div id="filters"></div>
 
 <!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
@@ -1286,8 +1274,6 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 let currentCurrency="MYR";
-let selectedCountry="";
-let selectedCity="";
 
 let exchangeRates={
 MYR:1
@@ -1489,34 +1475,6 @@ data=parseCSV(text);
 buildFilters();
 
 applyURLFilters();
-
-}
-
-/* FILTERS COUNTRY CITY */
-
-function buildLocationFilters(){
-
-const countries=[
-...new Set(
-data.map(item=>item.country)
-)
-].sort();
-
-const country=
-document.getElementById("countrySelect");
-
-country.innerHTML=
-'<option value="">Choose Country</option>';
-
-countries.forEach(c=>{
-
-country.innerHTML+=`
-<option value="${c}">
-${c}
-</option>
-`;
-
-});
 
 }
 
