@@ -909,43 +909,26 @@ text-align:center;
 }
 
 #searchInlineStatus{
-
 display:none;
-
 position:fixed;
-
 left:50%;
 transform:translateX(-50%);
-
 width:calc(100% - 24px);
 max-width:520px;
-
 top:0px;
-
 padding:20px 18px;
-
 border-radius:14px;
-
 background:rgba(255,255,255,.95);
-
 backdrop-filter:blur(12px);
-
 box-shadow:
 0 10px 24px rgba(0,0,0,.12);
-
 font-size:13px;
 font-weight:500;
-
 text-align:center;
-
 color:#697CA5;
-
 z-index:999998;
-
 transition:opacity .25s ease;
-
 pointer-events:none;
-
 }
 
 .locationFilter{
@@ -953,27 +936,27 @@ margin-bottom:12px;
 }
 
 .locationBtn{
-
-width:100%;
-
-display:flex;
+display:inline-flex;
 justify-content:space-between;
 align-items:center;
-
-padding:12px 16px;
-
-border:none;
+padding:10px 16px;
+border:2px solid #001A66;
 border-radius:999px;
-
-background:#EEF3FF;
-
+background:#F5F5F5;
 color:#001A66;
-
 font-family:Lexend,sans-serif;
 font-size:13px;
 font-weight:500;
+cursor:pointer
+gap:14px;
 
-cursor:pointer;
+}
+
+@media(min-width:901px){
+
+.locationBtn{
+width:100%;
+}
 
 }
 
@@ -990,6 +973,18 @@ margin-top:10px;
 display:block;
 
 }
+
+.destinationChip{
+display:inline-flex
+padding:8px 14px;
+margin:4px;
+border-radius:999px;
+background:#EEF3FF;
+cursor:pointer;
+font-size:13px;
+color:#001A66;
+}
+
 </style>
 
 
@@ -1093,8 +1088,7 @@ LOADING FILTERS
 
 <div class="locationFilter">
 
-<button class="locationBtn" onclick="toggleLocation('countryList', this)">
-🌍 Country ▼
+<button class="locationBtn" onclick="toggleLocation('countryList',this)">Country ▼
 </button>
 
 <div id="countryList" class="locationList"></div>
@@ -1103,8 +1097,8 @@ LOADING FILTERS
 
 <div class="locationFilter">
 
-<button class="locationBtn" onclick="toggleLocation('cityList', this)">
-📍 City ▼
+<button class="locationBtn" onclick="toggleLocation('cityList',this)">
+City ▼
 </button>
 
 <div id="cityList" class="locationList"></div>
@@ -1507,8 +1501,6 @@ data=parseCSV(text);
 
 buildFilters();
 
-buildLocationLists();
-
 applyURLFilters();
 
 }
@@ -1749,6 +1741,8 @@ block.appendChild(premiumRow);
 container.appendChild(block);
 
 });
+
+buildLocationLists();
 
 }
 
@@ -2522,11 +2516,18 @@ repositionBottomBar,
 500
 );
 
-function toggleLocation(id){
+function toggleLocation(id,btn){
 
 const list=document.getElementById(id);
 
 list.classList.toggle("open");
+
+const opened=list.classList.contains("open");
+
+btn.innerHTML=btn.innerHTML.replace(
+opened ? "▼" : "▲",
+opened ? "▲" : "▼"
+);
 
 }
 
@@ -2538,12 +2539,12 @@ const cities=[...new Set(data.map(i=>i.city).filter(Boolean))].sort();
 
 document.getElementById("countryList").innerHTML=
 countries.map(c=>
-`<div class="tag">${c}</div>`
+`<div class="destinationChip">${c}</div>`
 ).join("");
 
 document.getElementById("cityList").innerHTML=
 cities.map(c=>
-`<div class="tag">${c}</div>`
+`<div class="destinationChip">${c}</div>`
 ).join("");
 
 }
