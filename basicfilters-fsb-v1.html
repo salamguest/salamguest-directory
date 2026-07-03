@@ -909,26 +909,43 @@ text-align:center;
 }
 
 #searchInlineStatus{
+
 display:none;
+
 position:fixed;
+
 left:50%;
 transform:translateX(-50%);
+
 width:calc(100% - 24px);
 max-width:520px;
+
 top:0px;
+
 padding:20px 18px;
+
 border-radius:14px;
+
 background:rgba(255,255,255,.95);
+
 backdrop-filter:blur(12px);
+
 box-shadow:
 0 10px 24px rgba(0,0,0,.12);
+
 font-size:13px;
 font-weight:500;
+
 text-align:center;
+
 color:#697CA5;
+
 z-index:999998;
+
 transition:opacity .25s ease;
+
 pointer-events:none;
+
 }
 
 .locationFilter{
@@ -936,27 +953,27 @@ margin-bottom:12px;
 }
 
 .locationBtn{
-display:inline-flex;
+
+width:100%;
+
+display:flex;
 justify-content:space-between;
 align-items:center;
-padding:10px 16px;
-border:2px solid #001A66;
+
+padding:12px 16px;
+
+border:none;
 border-radius:999px;
-background:#F5F5F5;
+
+background:#EEF3FF;
+
 color:#001A66;
+
 font-family:Lexend,sans-serif;
 font-size:13px;
 font-weight:500;
-cursor:pointer
-gap:14px;
 
-}
-
-@media(min-width:901px){
-
-.locationBtn{
-width:100%;
-}
+cursor:pointer;
 
 }
 
@@ -973,18 +990,6 @@ margin-top:10px;
 display:block;
 
 }
-
-.locationChip{
-display:inline-flex
-padding:8px 14px;
-margin:4px;
-border-radius:999px;
-background:#EEF3FF;
-cursor:pointer;
-font-size:13px;
-color:#001A66;
-}
-
 </style>
 
 
@@ -1083,6 +1088,30 @@ SEARCHING...
 LOADING FILTERS
 </div>
 
+
+<div id="locationFilters">
+
+<div class="locationFilter">
+
+<button class="locationBtn" onclick="toggleLocation('countryList', this)">
+🌍 Country ▼
+</button>
+
+<div id="countryList" class="locationList"></div>
+
+</div>
+
+<div class="locationFilter">
+
+<button class="locationBtn" onclick="toggleLocation('cityList', this)">
+📍 City ▼
+</button>
+
+<div id="cityList" class="locationList"></div>
+
+</div>
+
+</div>
 
 <div id="filters"></div>
 
@@ -1478,6 +1507,8 @@ data=parseCSV(text);
 
 buildFilters();
 
+buildLocationLists();
+
 applyURLFilters();
 
 }
@@ -1522,35 +1553,6 @@ const order=[
 const container=document.getElementById("filters");
 
 document.getElementById("loadingFilters").style.display="none";
-
-const container=document.getElementById("filters");
-
-container.insertAdjacentHTML("beforeend",`
-<div id="locationFilters">
-
-<div class="locationFilter">
-<button class="locationBtn"
-onclick="toggleLocation('countryList',this)">
-Choose Country ▼
-</button>
-<div id="countryList" class="locationList"></div>
-</div>
-
-<div class="locationFilter">
-<button class="locationBtn"
-onclick="toggleLocation('cityList',this)">
-Choose City ▼
-</button>
-<div id="cityList" class="locationList"></div>
-</div>
-
-</div>
-`);
-
-
-console.log("CHECK DATA BEFORE BUILD:", data);
-
-buildLocationLists();
 
 document.getElementById("loadingFilters").style.display="none";
 
@@ -1747,8 +1749,6 @@ block.appendChild(premiumRow);
 container.appendChild(block);
 
 });
-
-buildLocationLists();
 
 }
 
@@ -2522,37 +2522,28 @@ repositionBottomBar,
 500
 );
 
-function toggleLocation(id,btn){
+function toggleLocation(id){
 
 const list=document.getElementById(id);
 
 list.classList.toggle("open");
 
-const opened=list.classList.contains("open");
-
-btn.innerHTML=btn.innerHTML.replace(
-opened ? "▼" : "▲",
-opened ? "▲" : "▼"
-);
-
 }
 
 function buildLocationLists(){
-
-console.log("DATA CHECK:", data);
 
 const countries=[...new Set(data.map(i=>i.country).filter(Boolean))].sort();
 
 const cities=[...new Set(data.map(i=>i.city).filter(Boolean))].sort();
 
-document.getElementById("countryList").innerHTML =
-countries.map(c =>
-  `<div class="tag" onclick="toggle('Country:${c}', this)">${c}</div>`
+document.getElementById("countryList").innerHTML=
+countries.map(c=>
+`<div class="tag">${c}</div>`
 ).join("");
 
-document.getElementById("cityList").innerHTML =
-cities.map(c =>
-  `<div class="tag" onclick="toggle('City:${c}', this)">${c}</div>`
+document.getElementById("cityList").innerHTML=
+cities.map(c=>
+`<div class="tag">${c}</div>`
 ).join("");
 
 }
