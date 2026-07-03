@@ -2522,16 +2522,23 @@ list.classList.toggle("open");
 
 ...
 
-buildCountryList();
+buildLocationLists();
 
-function buildCountryList(){
+function buildLocationLists(){
 
-  const countries = [...new Set(data.map(i => i.country).filter(Boolean))].sort();
+const countries=[...new Set(data.map(i=>i.country).filter(Boolean))].sort();
 
-  document.getElementById("countryList").innerHTML =
-    countries.map(c =>
-      `<div class="tag" onclick="toggle('Country:${c}', this)">${c}</div>`
-    ).join("");
+const cities=[...new Set(data.map(i=>i.city).filter(Boolean))].sort();
+
+document.getElementById("countryList").innerHTML=
+countries.map(c=>
+`<div class="locationChip">${c}</div>`
+).join("");
+
+document.getElementById("cityList").innerHTML=
+cities.map(c=>
+`<div class="locationChip">${c}</div>`
+).join("");
 
 }
 
