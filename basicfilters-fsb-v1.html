@@ -1080,6 +1080,18 @@ SEARCHING...
 LOADING FILTERS
 </div>
 
+<div class="locationFilters">
+
+<select id="countrySelect" class="locationSelect">
+<option value="">Choose Country</option>
+</select>
+
+<select id="citySelect" class="locationSelect">
+<option value="">Choose City</option>
+</select>
+
+</div>
+
 <div id="filters"></div>
 
 <!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
@@ -1274,6 +1286,8 @@ let data=[];
 let activeFilters=[];
 let currentPage=1;
 let currentCurrency="MYR";
+let selectedCountry="";
+let selectedCity="";
 
 let exchangeRates={
 MYR:1
@@ -1474,7 +1488,37 @@ data=parseCSV(text);
 
 buildFilters();
 
+buildLocationFilters();
+
 applyURLFilters();
+
+}
+
+/* FILTERS COUNTRY CITY */
+
+function buildLocationFilters(){
+
+const countries=[
+...new Set(
+data.map(item=>item.country)
+)
+].sort();
+
+const country=
+document.getElementById("countrySelect");
+
+country.innerHTML=
+'<option value="">Choose Country</option>';
+
+countries.forEach(c=>{
+
+country.innerHTML+=`
+<option value="${c}">
+${c}
+</option>
+`;
+
+});
 
 }
 
@@ -1815,6 +1859,8 @@ const search=document.getElementById("searchInput")
 .value.toLowerCase();
 
 let filtered=data.filter(item=>{
+const country=
+document.getElementById("countrySelect").value;
 
 let tags=(item.filter_tags||"").toLowerCase();
 
@@ -1836,7 +1882,19 @@ ${item.location || ""}
 
 let searchMatch = fullSearchText.includes(search);
 
-return isBasic && matchFilters && searchMatch;
+let countryMatch=true;
+
+if(country){
+
+countryMatch=
+item.country===country;
+
+}
+
+return isBasic &&
+matchFilters &&
+searchMatch &&
+countryMatch;
 
 });
 
@@ -2226,6 +2284,13 @@ tag.innerText.trim()
 });
 
 }
+
+render();
+
+}
+
+.getElementById("countrySelect")
+.onchange=function(){
 
 render();
 
