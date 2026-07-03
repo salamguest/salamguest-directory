@@ -2536,6 +2536,8 @@ opened ? "▲" : "▼"
 
 function buildLocationLists(){
 
+console.log("DATA CHECK:", data);
+
 const countries=[...new Set(data.map(i=>i.country).filter(Boolean))].sort();
 
 const cities=[...new Set(data.map(i=>i.city).filter(Boolean))].sort();
