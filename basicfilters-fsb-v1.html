@@ -1466,21 +1466,15 @@ data.forEach(item=>{
   groups[cat].add(val.trim());
 });
 
-/* ADD AUTO COUNTRY + CITY (ONLY BASIC VIEW) */
-if ((item.filter_tags || "").toLowerCase().includes("view:basic")) {
+/* TEMP TEST */
+if (item.country) {
+  if (!groups["Country"]) groups["Country"] = new Set();
+  groups["Country"].add(item.country.trim());
+}
 
-  const country = item.country || item.Country;
-  const city = item.city || item.City;
-
-  if (country) {
-    if (!groups["Country"]) groups["Country"] = new Set();
-    groups["Country"].add(country.trim());
-  }
-
-  if (city) {
-    if (!groups["City"]) groups["City"] = new Set();
-    groups["City"].add(city.trim());
-  }
+if (item.city) {
+  if (!groups["City"]) groups["City"] = new Set();
+  groups["City"].add(item.city.trim());
 }
 
 });
@@ -1505,7 +1499,6 @@ document.getElementById("loadingFilters").style.display="none";
 document.getElementById("loadingFilters").style.display="none";
 
 console.log("GROUP KEYS:", Object.keys(groups));
-
 order.forEach(cat=>{
 
 if(!groups[cat])return;
