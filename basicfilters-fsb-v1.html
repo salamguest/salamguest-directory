@@ -1469,16 +1469,18 @@ data.forEach(item=>{
 /* ADD AUTO COUNTRY + CITY (ONLY BASIC VIEW) */
 if ((item.filter_tags || "").toLowerCase().includes("view:basic")) {
 
-  if (item.country) {
+  const country = item.country || item.Country;
+  const city = item.city || item.City;
+
+  if (country) {
     if (!groups["Country"]) groups["Country"] = new Set();
-    groups["Country"].add(item.country.trim());
+    groups["Country"].add(country.trim());
   }
 
-  if (item.city) {
+  if (city) {
     if (!groups["City"]) groups["City"] = new Set();
-    groups["City"].add(item.city.trim());
+    groups["City"].add(city.trim());
   }
-
 }
 
 });
