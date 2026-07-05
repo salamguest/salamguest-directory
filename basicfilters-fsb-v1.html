@@ -1455,17 +1455,27 @@ data.forEach(item=>{
 
 (item.filter_tags||"").split(",").forEach(tag=>{
 
-if(tag.toLowerCase().includes("view:")) return;
+  if(tag.toLowerCase().includes("view:")) return;
 
-let [cat,val]=tag.split(":");
+  let [cat,val]=tag.split(":");
 
-if(!cat||!val)return;
+  if(!cat||!val)return;
 
-if(!groups[cat])groups[cat]=new Set();
+  if(!groups[cat])groups[cat]=new Set();
 
-groups[cat].add(val.trim());
-
+  groups[cat].add(val.trim());
 });
+
+/* ADD AUTO COUNTRY + CITY */
+if(item.country){
+  if(!groups["Country"])groups["Country"]=new Set();
+  groups["Country"].add(item.country.trim());
+}
+
+if(item.city){
+  if(!groups["City"])groups["City"]=new Set();
+  groups["City"].add(item.city.trim());
+}
 
 });
 
