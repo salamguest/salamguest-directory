@@ -1515,6 +1515,16 @@ block.appendChild(el);
 
 });
 
+let destinationBlock = document.createElement("div");
+
+destinationBlock.innerHTML = `
+<div class="filterTitle">Destination</div>
+<div class="tag">Country</div>
+<div class="tag">City</div>
+`;
+
+filters.appendChild(destinationBlock);
+
 /* MANUAL LOCKED CHIPS */
 
 const premiumRow = document.createElement("div");
