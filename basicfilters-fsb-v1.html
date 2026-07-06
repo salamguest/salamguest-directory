@@ -956,6 +956,44 @@ select.sortSelect {
   background-size: 14px;
 }
 
+.filterSelect{
+    width:100%;
+    padding:10px 40px 10px 14px;
+    border-radius:999px;
+    border:1px solid #dbe4ff;
+    background:#eef3ff;
+    font-family:Lexend,sans-serif;
+    font-size:13px;
+    color:#444;
+
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23697CA5' stroke-width='2' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+}
+
+/* Desktop */
+@media (min-width:901px){
+
+.filterSelect{
+    width:100%;
+}
+
+}
+
+/* Mobile */
+@media (max-width:900px){
+
+.filterSelect{
+    width:auto;
+    min-width:170px;
+}
+
+}
+
 </style>
 
 
@@ -1526,7 +1564,7 @@ block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 if (cat === "Country") {
 
   const select = document.createElement("select");
-  select.className = "sortSelect"; // reuse your style
+  select.className = "filterSelect"; // reuse your style
 
   const defaultOpt = document.createElement("option");
   defaultOpt.value = "";
@@ -1570,7 +1608,7 @@ if (cat === "City") {
 
   const select = document.createElement("select");
   select.id = "cityFilter";
-  select.className = "sortSelect";
+  select.className = "filterSelect";
 
   const defaultOpt = document.createElement("option");
   defaultOpt.value = "";
