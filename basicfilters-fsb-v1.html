@@ -1801,9 +1801,24 @@ let tags=(item.filter_tags||"").toLowerCase();
 
 let isBasic=tags.includes("view: basic");
 
-let matchFilters=activeFilters.every(f=>
-tags.includes(f.toLowerCase())
-);
+let matchFilters = activeFilters.every(f => {
+
+  let [cat, val] = f.split(":");
+
+  cat = (cat || "").trim().toLowerCase();
+  val = (val || "").trim().toLowerCase();
+
+  if (cat === "country") {
+    return (item.country || "").toLowerCase() === val;
+  }
+
+  if (cat === "city") {
+    return (item.city || "").toLowerCase() === val;
+  }
+
+  return tags.includes(f.toLowerCase());
+
+});
 
 let fullSearchText = `
 ${item.name || ""}
