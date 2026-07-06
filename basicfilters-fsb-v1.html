@@ -1232,6 +1232,8 @@ AED
 
 <script>
 
+const CURRENT_VIEW = "basic";
+
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
 
 const MAX_ITEMS=20;
@@ -1452,6 +1454,10 @@ function buildFilters(){
 const groups={};
 
 data.forEach(item=>{
+
+const tags = (item.filter_tags || "").toLowerCase();
+
+if (!tags.includes("view:" + CURRENT_VIEW)) return;
 
 (item.filter_tags||"").split(",").forEach(tag=>{
 
