@@ -1805,7 +1805,7 @@ let filtered=data.filter(item=>{
 
 let tags=(item.filter_tags||"").toLowerCase();
 
-let isBasic=tags.includes("view: basic");
+let isCurrentView = tags.includes("view:" + CURRENT_VIEW);
 
 let matchFilters = activeFilters.every(f => {
 
@@ -1838,7 +1838,7 @@ ${item.location || ""}
 
 let searchMatch = fullSearchText.includes(search);
 
-return isBasic && matchFilters && searchMatch;
+return isCurrentView && matchFilters && searchMatch;
 
 });
 
