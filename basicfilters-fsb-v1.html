@@ -1520,6 +1520,9 @@ let block=document.createElement("div");
 
 block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
+
+// Country dropdown
+
 if (cat === "Country") {
 
   const select = document.createElement("select");
@@ -1560,6 +1563,53 @@ if (cat === "Country") {
 
   return; // IMPORTANT: skip chip rendering for Country
 }
+
+// City dropdown
+
+if (cat === "City") {
+
+  const select = document.createElement("select");
+  select.id = "cityFilter";
+  select.className = "sortSelect";
+
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent = "All Cities";
+  select.appendChild(defaultOpt);
+
+  [...groups["City"]].sort().forEach(val => {
+
+    const opt = document.createElement("option");
+    opt.value = val.toLowerCase();
+    opt.textContent = val;
+    select.appendChild(opt);
+
+  });
+
+  select.onchange = (e) => {
+
+    const value = e.target.value;
+
+    activeFilters = activeFilters.filter(f => !f.startsWith("city:"));
+
+    if (value) {
+      activeFilters.push("city:" + value);
+    }
+
+    currentPage = 1;
+    render();
+    updateStickyBar();
+
+  };
+
+  block.appendChild(select);
+  container.appendChild(block);
+
+  return;
+}
+
+
+// Normal chips
 
 groups[cat].forEach(val=>{
 
