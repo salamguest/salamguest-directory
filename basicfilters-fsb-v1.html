@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-<title>SalamGuest Directory</title>
+<title>SalamGuest Directory</title> 
 
-<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@400;500&display=swap" rel="stylesheet"> 
 
-<style>
+<style> 
 
 body{
 margin:0;
@@ -17,7 +17,7 @@ font-family:Lexend,sans-serif;
 background:#fff;
 color:#222;
 overflow-x: hidden;
-}
+} 
 
 .container{
 display:flex;
@@ -27,16 +27,16 @@ padding:20px;
 max-width:1400px;
 margin:0 auto;
 box-sizing:border-box;
-}
+} 
 
 .sidebar{
 width:260px;
 flex-shrink:0;
-}
+} 
 
 /* =========================
 LOADING FILTERS
-========================= */
+========================= */ 
 
 #loadingFilters{
 font-family:"Libre Bodoni",serif;
@@ -48,7 +48,7 @@ color:#0042FD;
 margin-top: 40px;
 margin-bottom:30px;
 animation:softBlink 1.8s ease-in-out infinite;
-}
+} 
 
 @keyframes softBlink{
 0%{
@@ -60,7 +60,7 @@ opacity:1;
 100%{
 opacity:0.45;
 }
-}
+} 
 
 .filterTitle{
 font-size:14px;
@@ -68,7 +68,7 @@ font-weight:500;
 margin-top:18px;
 margin-bottom:8px;
 color:#001A66;
-}
+} 
 
 .tag{
 display:inline-flex;
@@ -83,24 +83,24 @@ cursor:pointer;
 transition:0.2s;
 text-align:center;
 color:#001A66;
-}
+} 
 
 .tag.active{
 background:#0042FD;
 color:#fff;
-}
+} 
 
 .main{
 flex:1;
 min-width:0;
-}
+} 
 
-/* SEARCH */
+/* SEARCH */ 
 
 .search{
 position:relative;
 max-width:900px;
-}
+} 
 
 .search input{
 width:100%;
@@ -117,12 +117,12 @@ box-sizing:border-box;
 box-shadow:inset 0 2px 6px rgba(0,0,0,0.08);
 outline:none;
 filter:blur(0.3px);
-}
+} 
 
 .search input::placeholder{
 color: #697CA5;
 filter: blur(0.3px);
-}
+} 
 
 .searchBtn{
 position:absolute;
@@ -139,7 +139,7 @@ align-items:center;
 justify-content:center;
 cursor:pointer;
 padding:0;
-}
+} 
 
 .searchBtn svg{
 width:18px;
@@ -147,9 +147,9 @@ height:18px;
 stroke:white;
 stroke-width:2.2;
 fill:none;
-}
+} 
 
-/* TOP BUTTONS */
+/* TOP BUTTONS */ 
 
 .topButtons{
 margin-top:2px;
@@ -157,7 +157,7 @@ display:flex;
 gap:10px;
 flex-wrap:wrap;
 align-items:center;
-}
+} 
 
 .clearBtn{
 padding:10px 16px;
@@ -167,16 +167,16 @@ background:white;
 color:#697CA5;
 cursor:pointer;
 font-family:Lexend;
-}
+} 
 
-@media(min-width:901px){
+@media(min-width:901px){ 
 
 .clearBtn{
 width:100%;
 display:block;
-}
+} 
 
-}
+} 
 
 .sortSelect{
 padding:10px 14px;
@@ -188,7 +188,7 @@ font-size:13px;
 cursor:pointer;
 outline:none;
 color:#444;
-}
+} 
 
 .currencyTopBtn{
 padding:10px 14px;
@@ -199,9 +199,9 @@ font-family:Lexend;
 font-size:13px;
 cursor:pointer;
 color:#444;
-}
+} 
 
-/* GRID */
+/* GRID */ 
 
 .grid{
 display:grid;
@@ -209,9 +209,9 @@ grid-template-columns:repeat(2,1fr);
 max-width:1100px;
 gap:22px;
 margin-top:10px;
-}
+} 
 
-/* CARD */
+/* CARD */ 
 
 .card{
 background:white;
@@ -220,16 +220,16 @@ overflow:hidden;
 box-shadow:0 3px 10px rgba(0,0,0,0.14);
 display:flex;
 flex-direction:column;
-}
+} 
 
-/* CAROUSEL */
+/* CAROUSEL */ 
 
 .carouselWrap{
 position:relative;
 overflow:hidden;
 min-height:220px;
 background:#f5f5f5;
-}
+} 
 
 .carousel{
 display:flex;
@@ -239,11 +239,11 @@ scroll-behavior:smooth;
 -ms-overflow-style:none;
 scrollbar-width:none;
 min-height:220px;
-}
+} 
 
 .carousel::-webkit-scrollbar{
 display:none;
-}
+} 
 
 .carousel img{
 width:100%;
@@ -251,9 +251,9 @@ height:220px;
 object-fit:cover;
 flex-shrink:0;
 scroll-snap-align:start;
-}
+} 
 
-/* INDICATORS */
+/* INDICATORS */ 
 
 .carouselIndicators{
 position:absolute;
@@ -263,7 +263,7 @@ transform:translateX(-50%);
 display:flex;
 gap:5px;
 z-index:2;
-}
+} 
 
 .carouselIndicators{
 display:flex;
@@ -271,7 +271,7 @@ justify-content:center;
 align-items:center;
 gap:8px;
 margin-top:10px;
-}
+} 
 
 .carouselIndicators span{
 width:28px;
@@ -279,7 +279,7 @@ height:4px;
 border-radius:999px;
 background:#d8d8d8;
 transition:.25s;
-}
+} 
 
 .carouselIndicators span.active{
 width:42px;
@@ -287,42 +287,42 @@ background:#0042FD;
 }
 
 
-/* CARD BODY */
+/* CARD BODY */ 
 
 .cardBody{
 padding:16px;
 display:flex;
 flex-direction:column;
 flex-grow:1;
-}
+} 
 
 .title{
-font-family:"Libre Bodoni",serif;  
+font-family:"Libre Bodoni",serif;  
 color: #001A66;
 font-size:21px;
 line-height:1.2;
 margin-bottom:4px;
-}
+} 
 
 .location{
 font-size:13px;
 color:#697CA5;
 margin-bottom:0px;
-}
+} 
 
 .description{
 font-size:13px;
 line-height:1.3;
 color:#444;
 text-align:left;
-}
+} 
 
 .contentRow{
 display:flex;
 gap:10px;
 margin-top:12px;
 margin-bottom:14px;
-}
+} 
 
 .descriptionCol{
 width:60%;
@@ -331,15 +331,15 @@ border-right:5px solid #DCE6FF;
 box-sizing:border-box;
 margin-top:0;
 padding-top:0;
-}
+} 
 
 .metaCol{
 width:40%;
 padding-left:5px;
 box-sizing:border-box;
-}
+} 
 
-/* PRICE */
+/* PRICE */ 
 
 .priceWrap{
 margin-top:14px;
@@ -347,7 +347,7 @@ display:flex;
 flex-direction:column;
 align-items:flex-start;
 margin-top:0;
-}
+} 
 
 .priceLabel{
 font-family:"Libre Bodoni",serif;
@@ -357,7 +357,7 @@ color:#001A66;
 line-height:1;
 margin-bottom:8px;
 text-align:left;
-}
+} 
 
 .priceAmount{
 font-family:"Libre Bodoni",serif;
@@ -365,7 +365,7 @@ font-size:21px;
 line-height:1;
 color:#001A66;
 text-align:left;
-}
+} 
 
 .priceCurrency{
 margin-top:8px;
@@ -376,32 +376,32 @@ cursor:pointer;
 display:inline-block;
 border-bottom:1px dotted #111;
 width:fit-content;
-}
+} 
 
-/* RATING */
+/* RATING */ 
 
 .rating{
 margin-top:12px;
 font-size:14px;
 color:#0042FD;
 text-align:left;
-}
+} 
 
 .ratingSmall{
 font-size:10px;
 color:#777;
 margin-top:2px;
 text-align:left;
-}
+} 
 
-/* TAGS */
+/* TAGS */ 
 
 .tagsRow{
 display:flex;
 flex-wrap:wrap;
 gap:6px;
 margin-top:12px;
-}
+} 
 
 .cardTag{
 display:inline-flex;
@@ -413,9 +413,9 @@ padding:8px 12px;
 border-radius:999px;
 font-size:11px;
 line-height:1.2;
-}
+} 
 
-/* BOOK */
+/* BOOK */ 
 
 .book{
 display:block;
@@ -428,42 +428,42 @@ text-decoration:none;
 border-radius:999px;
 border:2px solid #0042FD;
 transition:0.2s;
-}
+} 
 
 .book:hover{
 background:#f5f5f5;
 color:#0042FD;
-}
+} 
 
-/* RELATED LINKS */
+/* RELATED LINKS */ 
 
 .relatedLinks{
 margin-top:12px;
 font-size:11px;
 line-height:1.8;
 letter-spacing:0.4px;
-}
+} 
 
 .relatedLinks a{
 color:#324a7d;
 text-decoration:underline;
 margin-right:10px;
-}
+} 
 
 .relatedLinks a:hover{
 color:#0042FD;
-}
+} 
 
 .bottom{
 margin-top:auto;
-}
+} 
 
 .bottomNav{
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-top:24px;
-}
+} 
 
 .pageBtn{
 padding:7px 12px;
@@ -473,12 +473,12 @@ background:white;
 color:#0042FD;
 cursor:pointer;
 border-radius:8px;
-}
+} 
 
 .pageBtn.active{
 background:#0042FD;
 color:white;
-}
+} 
 
 #noResults{
 display:none;
@@ -486,18 +486,18 @@ text-align:center;
 margin-top:40px;
 font-size:14px;
 color:#666;
-}
+} 
 
 .currencyOption{
 padding:10px 12px;
 cursor:pointer;
 border-radius:8px;
 font-size:13px;
-}
+} 
 
 .currencyOption:hover{
 background:#eef3ff;
-}
+} 
 
 #currencyModal{
 display:none;
@@ -507,14 +507,33 @@ background:rgba(0,0,0,0.45);
 z-index:99999;
 align-items:center;
 justify-content:center;
-}
+} 
 
 .currencyBox{
 background:white;
 padding:20px;
 border-radius:18px;
 width:240px;
-}
+} 
+
+.countryPopupList{
+max-height:360px; /* roughly 10 items */
+overflow-y:auto;
+overflow-x:hidden;
+} 
+
+.countryPopupList::-webkit-scrollbar{
+width:6px;
+} 
+
+.countryPopupList::-webkit-scrollbar-thumb{
+background:#d6dceb;
+border-radius:999px;
+} 
+
+.countryPopupList::-webkit-scrollbar-track{
+background:transparent;
+} 
 
 #redirectOverlay{
 position:fixed;
@@ -524,7 +543,7 @@ display:none;
 align-items:center;
 justify-content:center;
 z-index:99999;
-}
+} 
 
 .redirectBox{
 background:white;
@@ -533,7 +552,7 @@ border-radius:18px;
 text-align:center;
 width:240px;
 box-shadow:0 10px 40px rgba(0,0,0,0.15);
-}
+} 
 
 .spinner{
 width:32px;
@@ -543,147 +562,147 @@ border-top-color:#0042FD;
 border-radius:50%;
 margin:0 auto 16px;
 animation:spin 1s linear infinite;
-}
+} 
 
 @keyframes spin{
 to{
 transform:rotate(360deg);
 }
-}
+} 
 
 .containertopbar{
 max-width:1400px;
 margin:0 auto;
 padding:20px;
 box-sizing:border-box;
-}
+} 
 
 .topbar{
 width:100%;
 display:flex;
 justify-content:center;
-}
+} 
 
 .search{
 position:relative;
 max-width:850px;
 width:100%;
-}
+} 
 
-@media(max-width:900px){
+@media(max-width:900px){ 
 
 .container{
 flex-direction:column;
 padding:12px;
-}
+} 
 
 .containertopbar{
 padding:12px;
-}
+} 
 
 .search{
 max-width:none;
 width:100%;
-}
+} 
 
 .topbar{
 width:100%;
-}
+} 
 
 .sidebar{
 max-width:none;
 width:100%;
-}
+} 
 
 .grid{
 grid-template-columns:1fr;
-}
+} 
 
 .topButtons{
 flex-direction:column;
 align-items:stretch;
 margin-top:2px;
-}
+} 
 
 .clearBtn,
 .sortSelect,
 .currencyTopBtn{
 width:100%;
 text-align:center;
-}
+} 
 
 .sortSelect{
 text-align:center;
 text-align-last:center;
-}
+} 
 
 .currencyTopBtn{
 display:flex;
 justify-content:center;
 align-items:center;
-}
+} 
 
-}
+} 
 
 /* =========================
 LOCKED FILTER CHIPS (UPDATED)
-========================= */
+========================= */ 
 
 .locked-chip {
-  display:inline-flex;
+  display:inline-flex;
 align-items:center;
-justify-content:center;
+justify-content:center; 
 
 padding:9px 14px;
-border-radius:999px;
+border-radius:999px; 
 
 background:#EEF1F7;
-color:#b2bad1;
+color:#b2bad1; 
 
 font-family:Lexend,sans-serif;
 font-size:13px;
-font-weight:500;
+font-weight:500; 
 
 cursor:pointer;
-transition:0.2s ease;
+transition:0.2s ease; 
 
 opacity:0.82;
-}
+} 
 
 .locked-chip:hover{
 opacity:1;
 transform:translateY(-1px);
-}
+} 
 
 /* blurred text ONLY */
 .locked-chip span {
-  filter: blur(0.5px);
+  filter: blur(0.5px);
 } 
 
 /* =========================
 FLAT LOCK ICON (FIXED - NO HANDBAG LOOK
 ========================= */
 .lock-icon {
-  width: 10px;
-  height: 10px;
-  background: #8c8c8c;
-  border-radius: 2px;
-  display: none;
-  flex-shrink: 0;
-}
+  width: 10px;
+  height: 10px;
+  background: #8c8c8c;
+  border-radius: 2px;
+  display: none;
+  flex-shrink: 0;
+} 
 
 /* top shackle (closed lock look) */
 .lock-icon::before {
-  content: "";
-  position: absolute;
-  width: 8px;
-  height: 6px;
-  border: 2px solid #8c8c8c;
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
-  top: -7px;
-  left: 1px;
-}
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 6px;
+  border: 2px solid #8c8c8c;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  top: -7px;
+  left: 1px;
+} 
 
 /* =========================
 LOCKED GRID (spacing fix only)
@@ -694,16 +713,16 @@ flex-wrap:wrap;
 gap:8px;
 margin-top:10px;
 margin-bottom:6px;
-}
+} 
 
 /* =========================
 MOBILE SPACING IMPROVEMENT
 ========================= */
 @media (max-width: 768px) {
-  .locked-grid {
-    margin-bottom: 24px;
-  }
-}
+  .locked-grid {
+    margin-bottom: 24px;
+  }
+} 
 
 /* =========================
 PREMIUM TOOLTIP
@@ -722,21 +741,21 @@ box-sizing:border-box;
 box-shadow:0 10px 40px rgba(0,0,0,0.14);
 z-index:999999;
 border:1px solid #eef3ff;
-}
+} 
 
 .premiumTitle{
 font-family:"Libre Bodoni",serif;
 font-size:18px;
 margin-bottom:8px;
 color:#111;
-}
+} 
 
 .premiumText{
 font-size:13px;
 line-height:1.6;
 color:#555;
 margin-bottom:14px;
-}
+} 
 
 .premiumBtn{
 display:block;
@@ -749,7 +768,7 @@ color:white;
 font-family:Lexend;
 cursor:pointer;
 font-size:13px;
-}
+} 
 
 .closeMini{
 position:absolute;
@@ -761,7 +780,7 @@ color:#999;
 }
 
 
-/* IMAGE LABEL */
+/* IMAGE LABEL */ 
 
 .imageLabel{
 position:absolute;
@@ -785,7 +804,7 @@ box-shadow: 0 2px 10px rgba(0,0,0,.08);
 
 /* =========================
 BOTTOM FILTER STICKY BAR
-========================= */
+========================= */ 
 
 #bottomFilterBar{
 display:none;
@@ -794,22 +813,22 @@ justify-content:space-between;
 gap:10px;
 margin-top:18px;
 margin-bottom:18px
-}
+} 
 
-@media(min-width:901px){
+@media(min-width:901px){ 
 
 #bottomFilterBar{
 display:none !important;
-}
+} 
 
 }
 
 
-#filterCount{
+#filterCount{ 
 
-flex:1;
+flex:1; 
 
-background:#F5F6F8;
+background:#F5F6F8; 
 
 padding:16px 16px;
 border-radius:14px;
@@ -821,80 +840,80 @@ font-weight:500;
 text-align:center;
 cursor:pointer;
 touch-action:manipulation;
-}
+} 
 
-#floatingSearchBtn{
+#floatingSearchBtn{ 
 
 background:#0042FD;
-color:white;
+color:white; 
 
-padding:16px 18px;
+padding:16px 18px; 
 
-border-radius:14px;
+border-radius:14px; 
 
 display:flex;
 align-items:center;
-justify-content:center;
+justify-content:center; 
 
 font-size:13px;
-font-weight:600;
+font-weight:600; 
 
-cursor:pointer;
+cursor:pointer; 
 
 white-space:nowrap;
-}
+} 
 
 /* SAME SEARCH ICON */
 #floatingSearchBtn
-.searchIcon{
+.searchIcon{ 
 
-border-color:white;
+border-color:white; 
 
-}
+} 
 
 #floatingSearchBtn
-.searchIcon::after{
+.searchIcon::after{ 
 
-background:white;
+background:white; 
 
-}
+} 
 
 html, body{
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  height: 100%;
+  margin: 0;
+  padding: 0;
+} 
 
 body{
 overflow-x:hidden;
 position:relative;
 padding-bottom:120px;
-}
+} 
 
-/* SEARCH POPUP */
+/* SEARCH POPUP */ 
 
-#searchOverlay{
+#searchOverlay{ 
 
-position:fixed;
+position:fixed; 
 
-inset:0;
+inset:0; 
 
 display:none;
 justify-content:center;
-align-items:center;
+align-items:center; 
 
 background:
-rgba(255,255,255,.74);
+rgba(255,255,255,.74); 
 
 backdrop-filter:
-blur(3px);
+blur(3px); 
 
-z-index:999999;
+z-index:999999; 
 
 -webkit-backdrop-filter:
-blur(3px);
+blur(3px); 
 
-}
+} 
 
 .searchPopup{
 background:white;
@@ -906,238 +925,238 @@ font-size:15px;
 letter-spacing:.4px;
 color:#697CA5;
 text-align:center;
-}
+} 
 
-#searchInlineStatus{
+#searchInlineStatus{ 
 
-display:none;
+display:none; 
 
-position:fixed;
+position:fixed; 
 
 left:50%;
-transform:translateX(-50%);
+transform:translateX(-50%); 
 
 width:calc(100% - 24px);
-max-width:520px;
+max-width:520px; 
 
-top:0px;
+top:0px; 
 
-padding:20px 18px;
+padding:20px 18px; 
 
-border-radius:14px;
+border-radius:14px; 
 
-background:rgba(255,255,255,.95);
+background:rgba(255,255,255,.95); 
 
-backdrop-filter:blur(12px);
+backdrop-filter:blur(12px); 
 
 box-shadow:
-0 10px 24px rgba(0,0,0,.12);
+0 10px 24px rgba(0,0,0,.12); 
 
 font-size:13px;
-font-weight:500;
+font-weight:500; 
 
-text-align:center;
+text-align:center; 
 
-color:#697CA5;
+color:#697CA5; 
 
-z-index:999998;
+z-index:999998; 
 
-transition:opacity .25s ease;
+transition:opacity .25s ease; 
 
-pointer-events:none;
+pointer-events:none; 
 
-}
+} 
 
 select.sortSelect {
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%23697CA5' height='20' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 14px;
-}
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23697CA5' height='20' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+} 
 
 .filterSelect{
-    width:100%;
-    padding:10px 40px 10px 14px;
-    border-radius:999px;
-    border:1px solid #dbe4ff;
-    background:#eef3ff;
-    font-family:Lexend,sans-serif;
-    font-size:13px;
-    color:#444;
+    width:100%;
+    padding:10px 40px 10px 14px;
+    border-radius:999px;
+    border:1px solid #dbe4ff;
+    background:#eef3ff;
+    font-family:Lexend,sans-serif;
+    font-size:13px;
+    color:#444; 
 
-    appearance:none;
-    -webkit-appearance:none;
-    -moz-appearance:none;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none; 
 
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23697CA5' stroke-width='2' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 14px center;
-}
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23697CA5' stroke-width='2' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+} 
 
 /* Desktop */
-@media (min-width:901px){
+@media (min-width:901px){ 
 
 .filterSelect{
-    width:100%;
-}
+    width:100%;
+} 
 
-}
+} 
 
 /* Mobile */
-@media (max-width:900px){
+@media (max-width:900px){ 
 
 .filterSelect{
-    width:auto;
-    min-width:170px;
-}
+    width:auto;
+    min-width:170px;
+} 
 
-}
+} 
 
 </style>
 
 
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
-  (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.src = 'https://emrld.ltd/NTMzNDI3.js?t=533427';
-      document.head.appendChild(script);
-  })();
-</script>
+  (function () {
+      var script = document.createElement("script");
+      script.async = 1;
+      script.src = 'https://emrld.ltd/NTMzNDI3.js?t=533427';
+      document.head.appendChild(script);
+  })();
+</script> 
 
-</head>
+</head> 
 
 <body> 
 
 <div class="containertopbar">
 <div class="topbar">
-<div class="search">
+<div class="search"> 
 
 <input id="searchInput"
-placeholder="Search hotel, stay or any keyword">
+placeholder="Search hotel, stay or any keyword"> 
 
 <button class="searchBtn"
-onclick="runStickySearch()">
+onclick="runStickySearch()"> 
 
 <svg viewBox="0 0 24 24">
 <circle cx="11" cy="11" r="7"></circle>
 <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
-</svg>
+</svg> 
 
-</button>
+</button> 
 
 </div>
 </div>
 </div>
 
 
-<div class="container">
+<div class="container"> 
 
-<div class="sidebar">
+<div class="sidebar"> 
 
-<div class="topButtons">
+<div class="topButtons"> 
 
 <button class="clearBtn" onclick="clearAll()">
 CLEAR ALL
-</button>
+</button> 
 
 <select id="sortSelect"
 class="sortSelect"
-onchange="render()">
+onchange="render()"> 
 
 <option value="default">SORT</option>
 <option value="lowHigh">Price: Low to High</option>
 <option value="highLow">Price: High to Low</option>
 <option value="ratingHigh">Highest Rated</option>
-<option value="ratingLow">Lowest Rated</option>
+<option value="ratingLow">Lowest Rated</option> 
 
-</select>
+</select> 
 
 <button class="currencyTopBtn"
 onclick="openCurrencyPopup(event)">
 MYR ▼
-</button>
+</button> 
 
 </div>
 
 
-<!-- MOBILE FILTER STICKY BAR -->
+<!-- MOBILE FILTER STICKY BAR --> 
 
-<div id="bottomFilterBar">
+<div id="bottomFilterBar"> 
 
 <div
 id="filterCount"
-onclick="scrollToFilters()">
+onclick="scrollToFilters()"> 
 
-⌂ FILTERS • 0 SELECTED
+⌂ FILTERS • 0 SELECTED 
 
-</div>
+</div> 
 
 <div
 id="floatingSearchBtn"
-onclick="runStickySearch()">
+onclick="runStickySearch()"> 
 
-SEARCH
+SEARCH 
 
-</div>
+</div> 
 
-</div>
+</div> 
 
 <div id="searchInlineStatus">
 SEARCHING...
-</div>
+</div> 
 
 <div id="loadingFilters">
 LOADING FILTERS
-</div>
+</div> 
 
-<div id="filters"></div>
+<div id="filters"></div> 
 
 <!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
-<div class="locked-grid" style="display:none;">
+<div class="locked-grid" style="display:none;"> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Halal Certified</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Halal Certified</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Mini Fridge Provided</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Mini Fridge Provided</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Prayer Room Nearby</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Prayer Room Nearby</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Family Friendly</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Family Friendly</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Nearby Mosque</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Nearby Mosque</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Quiet Stay</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Quiet Stay</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Luxury Muslim Stay</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Luxury Muslim Stay</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-  <div class="locked-chip" onclick="openPremiumPopup(event)">
-    <span>Transit Friendly</span>
-    <div class="lock-icon"></div>
-  </div>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Transit Friendly</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-</div>
+</div> 
 
 </div>
 
@@ -1151,11 +1170,11 @@ LOADING FILTERS
 
 <div id="noResults">
 No results found. Please try a different search.
-</div>
+</div> 
 
-<div class="grid" id="cards"></div>
+<div class="grid" id="cards"></div> 
 
-<div class="bottomNav">
+<div class="bottomNav"> 
 
 <button onclick="scrollTopSmooth()" style="
 cursor:pointer;
@@ -1167,141 +1186,152 @@ padding:0;
 font-family:Lexend,sans-serif;
 ">
 Back To Top
-</button>
+</button> 
 
-<div id="pagination"></div>
+<div id="pagination"></div> 
+
+</div> 
 
 </div>
-
-</div>
-</div>
+</div> 
 
 <!-- CURRENCY MODAL -->
 
 
 
-<!-- REDIRECT -->
+<!-- REDIRECT --> 
 
-<div id="redirectOverlay">
+<div id="redirectOverlay"> 
 
-<div class="redirectBox">
+<div class="redirectBox"> 
 
-<div class="spinner"></div>
+<div class="spinner"></div> 
 
 <div style="font-size:14px;">
 Redirecting to booking partner...
-</div>
+</div> 
+
+</div> 
 
 </div>
 
-</div>
 
-
-  <div id="premiumPopup" class="premiumPopup">
+  <div id="premiumPopup" class="premiumPopup"> 
 
 <div class="closeMini"
 onclick="closePremiumPopup()">
 ✕
-</div>
+</div> 
 
 <div class="premiumTitle">
 Unlock Premium Filters
-</div>
+</div> 
 
 <div class="premiumText">
 Discover full filters including prayer access, bidets, halal dining, female-friendly spaces, private pools and more.
-</div>
+</div> 
 
 <button class="premiumBtn">
 Coming Soon
-</button>
+</button> 
 
 </div>
 
 
 <div id="currencyPopup"
-class="premiumPopup">
+class="premiumPopup"> 
 
 <div class="closeMini"
 onclick="closeCurrencyPopup()">
 ✕
-</div>
+</div> 
 
 <div class="premiumTitle">
 Choose Currency
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('MYR')">
 MYR
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('USD')">
 USD
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('SGD')">
 SGD
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('GBP')">
 GBP
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('EUR')">
 EUR
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('JPY')">
 JPY
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('SAR')">
 SAR
-</div>
+</div> 
 
 <div class="currencyOption"
 onclick="setCurrency('AED')">
 AED
-</div>
+</div> 
 
 </div>
 
 
 
-<script>
+<script> 
 
-const CURRENT_VIEW = "basic";
+const CURRENT_VIEW = "basic"; 
 
-const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+const COUNTRY_MODE = "exclude"; 
+
+const COUNTRY_LIST = [ 
+
+"Israel",
+"North Korea" 
+
+]; 
+
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv"; 
 
 const MAX_ITEMS=20;
-const ITEMS_PER_PAGE=12;
+const ITEMS_PER_PAGE=12; 
 
 let data=[];
 let activeFilters=[];
 let currentPage=1;
-let currentCurrency="MYR";
+let currentCurrency="MYR"; 
+
+let selectedCountry = ""; 
 
 let exchangeRates={
 MYR:1
-};
+}; 
 
-/* EXCHANGE RATES */
+/* EXCHANGE RATES */ 
 
-async function loadRates(){
+async function loadRates(){ 
 
-try{
+try{ 
 
-const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
+const res=await fetch("https://api.exchangerate.host/latest?base=MYR"); 
 
-const json=await res.json();
+const json=await res.json(); 
 
 exchangeRates={
 MYR:1,
@@ -1314,9 +1344,9 @@ SAR:json.rates.SAR,
 AED:json.rates.AED,
 IDR:json.rates.IDR,
 TRY:json.rates.TRY
-};
+}; 
 
-}catch(err){
+}catch(err){ 
 
 exchangeRates={
 MYR:1,
@@ -1329,206 +1359,206 @@ SAR:0.79,
 AED:0.77,
 IDR:3300,
 TRY:6.5
-};
+}; 
 
-}
+} 
 
-}
+} 
 
-/* PRICE */
+/* PRICE */ 
 
-function formatPrice(price){
+function formatPrice(price){ 
 
-let num=parseFloat(price)||0;
+let num=parseFloat(price)||0; 
 
-let converted=num*exchangeRates[currentCurrency];
+let converted=num*exchangeRates[currentCurrency]; 
 
-return converted.toFixed(2);
+return converted.toFixed(2); 
 
-}
+} 
 
 /* CURRENCY */
 
 
-function openCurrencyPopup(event){
+function openCurrencyPopup(event){ 
 
 const popup =
-document.getElementById("currencyPopup");
+document.getElementById("currencyPopup"); 
 
-popup.style.display = "block";
+popup.style.display = "block"; 
 
-popup.style.position = "absolute";
+popup.style.position = "absolute"; 
 
 const popupWidth = 260;
 const padding = 14;
-const screenWidth = window.innerWidth;
+const screenWidth = window.innerWidth; 
 
 let x = event.pageX;
-let y = event.pageY;
+let y = event.pageY; 
 
 let left = x;
-let top = y + 10;
+let top = y + 10; 
 
-if(left + popupWidth > screenWidth){
+if(left + popupWidth > screenWidth){ 
 
 left =
-screenWidth - popupWidth - padding;
+screenWidth - popupWidth - padding; 
 
-}
+} 
 
-if(left < padding){
+if(left < padding){ 
 
-left = padding;
+left = padding; 
 
-}
+} 
 
 popup.style.left = left + "px";
-popup.style.top = top + "px";
+popup.style.top = top + "px"; 
 
-}
+} 
 
-function closeCurrencyPopup(){
+function closeCurrencyPopup(){ 
 
 document.getElementById("currencyPopup")
-.style.display = "none";
+.style.display = "none"; 
 
 }
 
 
-function setCurrency(currency){
+function setCurrency(currency){ 
 
-currentCurrency=currency;
+currentCurrency=currency; 
 
 document.querySelector(".currencyTopBtn").innerHTML=
-currency+" ▼";
+currency+" ▼"; 
 
-closeCurrencyPopup();
+closeCurrencyPopup(); 
 
-render();
+render(); 
 
-}
+} 
 
-/* CSV */
+/* CSV */ 
 
-function parseCSV(text){
+function parseCSV(text){ 
 
 const rows = [];
 let row = [];
 let current = "";
-let inQuotes = false;
+let inQuotes = false; 
 
-for(let i = 0; i < text.length; i++){
+for(let i = 0; i < text.length; i++){ 
 
 const char = text[i];
-const next = text[i + 1];
+const next = text[i + 1]; 
 
-if(char === '"'){
+if(char === '"'){ 
 
 if(inQuotes && next === '"'){
 current += '"';
 i++;
 }else{
 inQuotes = !inQuotes;
-}
+} 
 
-}else if(char === "," && !inQuotes){
+}else if(char === "," && !inQuotes){ 
 
 row.push(current);
-current = "";
+current = ""; 
 
-}else if((char === "\n" || char === "\r") && !inQuotes){
+}else if((char === "\n" || char === "\r") && !inQuotes){ 
 
 if(current || row.length){
 row.push(current);
 rows.push(row);
 row = [];
 current = "";
-}
+} 
 
-}else{
+}else{ 
 
-current += char;
+current += char; 
 
-}
+} 
 
-}
+} 
 
 if(current || row.length){
 row.push(current);
 rows.push(row);
-}
+} 
 
-const headers = rows[0].map(h => h.trim());
+const headers = rows[0].map(h => h.trim()); 
 
-return rows.slice(1).map(cols => {
+return rows.slice(1).map(cols => { 
 
-let obj = {};
+let obj = {}; 
 
 headers.forEach((h,i)=>{
 obj[h] = (cols[i] || "").trim();
-});
+}); 
 
-return obj;
+return obj; 
 
-});
+}); 
 
-}
+} 
 
-/* LOAD */
+/* LOAD */ 
 
-async function load(){
+async function load(){ 
 
-await loadRates();
+await loadRates(); 
 
-const res=await fetch(SHEET_URL);
+const res=await fetch(SHEET_URL); 
 
-const text=await res.text();
+const text=await res.text(); 
 
-data=parseCSV(text);
+data=parseCSV(text); 
 
-buildFilters();
+buildFilters(); 
 
-applyURLFilters();
+applyURLFilters(); 
 
-}
+} 
 
-/* FILTERS */
+/* FILTERS */ 
 
-function buildFilters(){
+function buildFilters(){ 
 
-const groups={};
+const groups={}; 
 
-data.forEach(item=>{
+data.forEach(item=>{ 
 
-const tags = (item.filter_tags || "").toLowerCase();
+const tags = (item.filter_tags || "").toLowerCase(); 
 
-if (!tags.includes("view:" + CURRENT_VIEW)) return;
+if (!tags.includes("view:" + CURRENT_VIEW)) return; 
 
-(item.filter_tags||"").split(",").forEach(tag=>{
+(item.filter_tags||"").split(",").forEach(tag=>{ 
 
-  if(tag.toLowerCase().includes("view:")) return;
+  if(tag.toLowerCase().includes("view:")) return; 
 
-  let [cat,val]=tag.split(":");
+  let [cat,val]=tag.split(":"); 
 
-  if(!cat||!val)return;
+  if(!cat||!val)return; 
 
-  if(!groups[cat])groups[cat]=new Set();
+  if(!groups[cat])groups[cat]=new Set(); 
 
-  groups[cat].add(val.trim());
-});
+  groups[cat].add(val.trim());
+}); 
 
 /* TEMP TEST */
 if (item.country) {
-  if (!groups["Country"]) groups["Country"] = new Set();
-  groups["Country"].add(item.country.trim());
-}
+  if (!groups["Country"]) groups["Country"] = new Set();
+  groups["Country"].add(item.country.trim());
+} 
 
 if (item.city) {
-  if (!groups["City"]) groups["City"] = new Set();
-  groups["City"].add(item.city.trim());
-}
+  if (!groups["City"]) groups["City"] = new Set();
+  groups["City"].add(item.city.trim());
+} 
 
-});
+}); 
 
 const order=[
 "Country",
@@ -1541,223 +1571,259 @@ const order=[
 "Leisure",
 "Convenience",
 "Female Only"
-];
+]; 
 
-const container=document.getElementById("filters");
+const container=document.getElementById("filters"); 
 
-document.getElementById("loadingFilters").style.display="none";
+document.getElementById("loadingFilters").style.display="none"; 
 
-document.getElementById("loadingFilters").style.display="none";
+document.getElementById("loadingFilters").style.display="none"; 
 
 console.log("GROUP KEYS:", Object.keys(groups));
-order.forEach(cat=>{
+order.forEach(cat=>{ 
 
-if(!groups[cat])return;
+if(!groups[cat])return; 
 
-let block=document.createElement("div");
+let block=document.createElement("div"); 
 
 block.innerHTML=`<div class="filterTitle">${cat}</div>`;
 
 
-// Country dropdown
+// Country dropdown 
 
-if (cat === "Country") {
+if (cat === "Country") { 
 
-  const select = document.createElement("select");
-  select.className = "filterSelect"; // reuse your style
+  const select = document.createElement("select");
+  select.className = "filterSelect"; // reuse your style 
 
-  const defaultOpt = document.createElement("option");
-  defaultOpt.value = "";
-  defaultOpt.textContent = "All Countries";
-  select.appendChild(defaultOpt);
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent = "All Countries";
+  select.appendChild(defaultOpt); 
 
-  [...groups["Country"]].sort().forEach(val => {
+  [...groups["Country"]].sort().forEach(val => { 
 
-    const opt = document.createElement("option");
-    opt.value = val.toLowerCase();
-    opt.textContent = val;
-    select.appendChild(opt);
+    const opt = document.createElement("option");
+    opt.value = val.toLowerCase();
+    opt.textContent = val;
+    select.appendChild(opt); 
 
-  });
+  }); 
 
-  select.onchange = (e) => {
+  select.onchange = (e) => { 
 
-    const value = e.target.value;
+    const value = e.target.value; 
 
-    // remove old country filters
-    activeFilters = activeFilters.filter(f => !f.startsWith("country:"));
+    selectedCountry = value; 
 
-    if (value) {
-      activeFilters.push("country:" + value);
-    }
+    // remove old country filters
+    activeFilters = activeFilters.filter(f => !f.startsWith("country:")); 
 
-    currentPage = 1;
-    render();
-    updateStickyBar();
-  };
+    if (value) {
+      activeFilters.push("country:" + value);
+    } 
 
-  block.appendChild(select);
-  container.appendChild(block);
+    currentPage = 1;
+    buildFilters();
+    render();
+    updateStickyBar();
+  }; 
 
-  return; // IMPORTANT: skip chip rendering for Country
+  block.appendChild(select);
+  container.appendChild(block); 
+
+  return; // IMPORTANT: skip chip rendering for Country
+} 
+
+// City dropdown 
+
+if (cat === "City") { 
+
+  const select = document.createElement("select");
+  select.id = "cityFilter";
+  select.className = "filterSelect";
+  select.disabled = !selectedCountry; 
+
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent =
+selectedCountry
+? "All Cities"
+: "Select Country First"; 
+
+  select.appendChild(defaultOpt); 
+
+  const cities = new Set(); 
+
+if(selectedCountry){ 
+
+data.forEach(item=>{ 
+
+if(
+(item.country || "").toLowerCase() === selectedCountry
+){ 
+
+cities.add(item.city); 
+
+} 
+
+}); 
+
+} 
+
+[...cities].sort().forEach(val=>{ 
+
+const opt = document.createElement("option"); 
+
+opt.value = val.toLowerCase(); 
+
+opt.textContent = val; 
+
+select.appendChild(opt); 
+
+}); 
+
+    const opt = document.createElement("option");
+    opt.value = val.toLowerCase();
+    opt.textContent = val;
+    select.appendChild(opt); 
+
+  }); 
+
+  select.onchange = (e) => { 
+
+    const value = e.target.value; 
+
+    activeFilters = activeFilters.filter(f => !f.startsWith("city:")); 
+
+    if (value) {
+      activeFilters.push("city:" + value);
+    } 
+
+    currentPage = 1;
+    render();
+    updateStickyBar(); 
+
+  }; 
+
+  block.appendChild(select);
+  container.appendChild(block); 
+
+  return;
 }
 
-// City dropdown
 
-if (cat === "City") {
+// Normal chips 
 
-  const select = document.createElement("select");
-  select.id = "cityFilter";
-  select.className = "filterSelect";
+groups[cat].forEach(val=>{ 
 
-  const defaultOpt = document.createElement("option");
-  defaultOpt.value = "";
-  defaultOpt.textContent = "All Cities";
-  select.appendChild(defaultOpt);
+let el=document.createElement("div"); 
 
-  [...groups["City"]].sort().forEach(val => {
+el.className="tag"; 
 
-    const opt = document.createElement("option");
-    opt.value = val.toLowerCase();
-    opt.textContent = val;
-    select.appendChild(opt);
+el.innerText=val; 
 
-  });
-
-  select.onchange = (e) => {
-
-    const value = e.target.value;
-
-    activeFilters = activeFilters.filter(f => !f.startsWith("city:"));
-
-    if (value) {
-      activeFilters.push("city:" + value);
-    }
-
-    currentPage = 1;
-    render();
-    updateStickyBar();
-
-  };
-
-  block.appendChild(select);
-  container.appendChild(block);
-
-  return;
-}
-
-
-// Normal chips
-
-groups[cat].forEach(val=>{
-
-let el=document.createElement("div");
-
-el.className="tag";
-
-el.innerText=val;
-
-el.onclick=(event)=>{
+el.onclick=(event)=>{ 
 
 event.preventDefault();
-event.stopPropagation();
+event.stopPropagation(); 
 
-toggle(cat+":"+val,el);
+toggle(cat+":"+val,el); 
 
-};
+}; 
 
-block.appendChild(el);
+block.appendChild(el); 
 
 });
 
 
-/* MANUAL LOCKED CHIPS */
+/* MANUAL LOCKED CHIPS */ 
 
-const premiumRow = document.createElement("div");
+const premiumRow = document.createElement("div"); 
 
-premiumRow.className = "locked-grid";
+premiumRow.className = "locked-grid"; 
 
-/* CATEGORY: MEALS */
+/* CATEGORY: MEALS */ 
 
-if(cat === "Meals"){
+if(cat === "Meals"){ 
 
-premiumRow.innerHTML = `
+premiumRow.innerHTML = ` 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Halal Dinner</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Halal Snacks</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Halal Certified Room Service</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
-`;
+`; 
 
-}
+} 
 
-/* CATEGORY: FACILITIES */
+/* CATEGORY: FACILITIES */ 
 
-if(cat === "Facilities"){
+if(cat === "Facilities"){ 
 
-premiumRow.innerHTML = `
+premiumRow.innerHTML = ` 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Designated Smoking Spaces</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Air Conditioning</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Ceiling Fan</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Complimentary High Speed Wi-Fi</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>TV With Entertainment Channels </span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Mini Fridge Provided</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Bathrobes And Slippers Provided</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Coffee And Tea Making Facilities</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
@@ -1766,201 +1832,201 @@ onclick="openPremiumPopup(event)">
 </div>
 
 
-`;
+`; 
 
-}
+} 
 
-/* CATEGORY: TRANSPORT */
+/* CATEGORY: TRANSPORT */ 
 
-if(cat === "Transport"){
+if(cat === "Transport"){ 
 
-premiumRow.innerHTML = `
+premiumRow.innerHTML = ` 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>On Demand Transport</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Complimentary Parking For Guests</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Complimentary Valet Parking For Guests</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
-`;
+`; 
 
-}
+} 
 
-/* CATEGORY: FEMALE ONLY */
+/* CATEGORY: FEMALE ONLY */ 
 
-if(cat === "Female Only"){
+if(cat === "Female Only"){ 
 
-premiumRow.innerHTML = `
+premiumRow.innerHTML = ` 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Female Only Spa Room</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Female Only Changing Facilities</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
 <div class="locked-chip"
 onclick="openPremiumPopup(event)">
 <span>Female Only Gym</span>
 <div class="lock-icon"></div>
-</div>
+</div> 
 
-`;
+`; 
 
-}
+} 
 
-/* only append if category has chips */
+/* only append if category has chips */ 
 
 if(premiumRow.innerHTML.trim() !== ""){
 block.appendChild(premiumRow);
-}
+} 
 
-container.appendChild(block);
+container.appendChild(block); 
 
-});
+}); 
 
-}
+} 
 
-/* TOGGLE */
+/* TOGGLE */ 
 
-function toggle(tag,el){
+function toggle(tag,el){ 
 
-if(activeFilters.includes(tag)){
+if(activeFilters.includes(tag)){ 
 
 activeFilters =
-activeFilters.filter(t => t !== tag);
+activeFilters.filter(t => t !== tag); 
 
-el.classList.remove("active");
+el.classList.remove("active"); 
 
-}else{
+}else{ 
 
-activeFilters.push(tag);
+activeFilters.push(tag); 
 
-el.classList.add("active");
+el.classList.add("active"); 
 
-}
+} 
 
-currentPage = 1;
+currentPage = 1; 
 
 /* refresh UI */
-updateStickyBar();
+updateStickyBar(); 
 
 /* helps mobile browsers repaint */
-requestAnimationFrame(()=>{
+requestAnimationFrame(()=>{ 
 
-render();
+render(); 
 
 /* force iframe resize again */
-setTimeout(sendHeight,300);
+setTimeout(sendHeight,300); 
 
-});
+}); 
 
-}
+} 
 
-/* CLEAR */
+/* CLEAR */ 
 
-function clearAll(){
+function clearAll(){ 
 
-activeFilters=[];
+activeFilters=[]; 
 
-currentPage=1;
+currentPage=1; 
 
 document.querySelectorAll(".tag").forEach(t=>{
 t.classList.remove("active");
-});
+}); 
 
-document.getElementById("searchInput").value="";
+document.getElementById("searchInput").value=""; 
 
-document.getElementById("sortSelect").value="default";
+document.getElementById("sortSelect").value="default"; 
 
 /* sync sticky bar */
-updateStickyBar();
+updateStickyBar(); 
 
-render();
+render(); 
 
-}
+} 
 
-/* SCROLL */
+/* SCROLL */ 
 
-/* SCROLL TO FILTERS */
+/* SCROLL TO FILTERS */ 
 
-function scrollToFilters(){
+function scrollToFilters(){ 
 
 document
 .getElementById("filters")
 .scrollIntoView({
 behavior:"smooth",
 block:"start"
-});
+}); 
 
-}
+} 
 
-/* REDIRECT */
+/* REDIRECT */ 
 
-function redirectBooking(url){
-
-document.getElementById("redirectOverlay")
-.style.display="flex";
-
-setTimeout(()=>{
-
-window.open(url,"_blank");
+function redirectBooking(url){ 
 
 document.getElementById("redirectOverlay")
-.style.display="none";
+.style.display="flex"; 
 
-},900);
+setTimeout(()=>{ 
 
-}
+window.open(url,"_blank"); 
 
-/* RENDER */
+document.getElementById("redirectOverlay")
+.style.display="none"; 
 
-function render(){
+},900); 
+
+} 
+
+/* RENDER */ 
+
+function render(){ 
 
 const search=document.getElementById("searchInput")
-.value.toLowerCase();
+.value.toLowerCase(); 
 
-let filtered=data.filter(item=>{
+let filtered=data.filter(item=>{ 
 
-let tags=(item.filter_tags||"").toLowerCase();
+let tags=(item.filter_tags||"").toLowerCase(); 
 
-let isCurrentView = tags.includes("view:" + CURRENT_VIEW);
+let isCurrentView = tags.includes("view:" + CURRENT_VIEW); 
 
-let matchFilters = activeFilters.every(f => {
+let matchFilters = activeFilters.every(f => { 
 
-  let [cat, val] = f.split(":");
+  let [cat, val] = f.split(":"); 
 
-  cat = (cat || "").trim().toLowerCase();
-  val = (val || "").trim().toLowerCase();
+  cat = (cat || "").trim().toLowerCase();
+  val = (val || "").trim().toLowerCase(); 
 
-  if (cat === "country") {
-  return (item.country || "").toLowerCase() === val.toLowerCase();
-}
+  if (cat === "country") {
+  return (item.country || "").toLowerCase() === val.toLowerCase();
+} 
 
-  if (cat === "city") {
-    return (item.city || "").toLowerCase() === val;
-  }
+  if (cat === "city") {
+    return (item.city || "").toLowerCase() === val;
+  } 
 
-  return tags.includes(f.toLowerCase());
+  return tags.includes(f.toLowerCase()); 
 
-});
+}); 
 
 let fullSearchText = `
 ${item.name || ""}
@@ -1970,87 +2036,87 @@ ${item.country || ""}
 ${item.filter_tags || ""}
 ${item.card_tags || ""}
 ${item.location || ""}
-`.toLowerCase();
+`.toLowerCase(); 
 
-let searchMatch = fullSearchText.includes(search);
+let searchMatch = fullSearchText.includes(search); 
 
-return isCurrentView && matchFilters && searchMatch;
+return isCurrentView && matchFilters && searchMatch; 
 
-});
+}); 
 
-/* SORT */
+/* SORT */ 
 
-const sort=document.getElementById("sortSelect")?.value || "default";
+const sort=document.getElementById("sortSelect")?.value || "default"; 
 
-if(sort==="lowHigh"){
+if(sort==="lowHigh"){ 
 
 filtered.sort((a,b)=>
 (parseFloat(a.price)||0)
 -
 (parseFloat(b.price)||0)
-);
+); 
 
-}
+} 
 
-if(sort==="highLow"){
+if(sort==="highLow"){ 
 
 filtered.sort((a,b)=>
 (parseFloat(b.price)||0)
 -
 (parseFloat(a.price)||0)
-);
+); 
 
-}
+} 
 
-if(sort==="ratingHigh"){
+if(sort==="ratingHigh"){ 
 
 filtered.sort((a,b)=>
 (parseFloat(b.rating)||0)
 -
 (parseFloat(a.rating)||0)
-);
+); 
 
-}
+} 
 
-if(sort==="ratingLow"){
+if(sort==="ratingLow"){ 
 
 filtered.sort((a,b)=>
 (parseFloat(a.rating)||0)
 -
 (parseFloat(b.rating)||0)
-);
+); 
 
-}
+} 
 
-if(filtered.length===0){
-
-document.getElementById("noResults")
-.style.display="block";
-
-}else{
+if(filtered.length===0){ 
 
 document.getElementById("noResults")
-.style.display="none";
+.style.display="block"; 
 
-}
+}else{ 
 
-filtered=filtered.slice(0,MAX_ITEMS);
+document.getElementById("noResults")
+.style.display="none"; 
 
-const start=(currentPage-1)*ITEMS_PER_PAGE;
+} 
 
-const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
+filtered=filtered.slice(0,MAX_ITEMS); 
 
-const cards=document.getElementById("cards");
+const start=(currentPage-1)*ITEMS_PER_PAGE; 
 
-cards.innerHTML=pageData.map(item=>{
+const pageData=filtered.slice(start,start+ITEMS_PER_PAGE); 
 
-const folder = (item.media || "").trim();
+const cards=document.getElementById("cards"); 
 
-let mediaContent = "";
+cards.innerHTML=pageData.map(item=>{ 
 
-if(folder){
+const folder = (item.media || "").trim(); 
 
-for(let i = 1; i <= 10; i++){
+let mediaContent = ""; 
+
+if(folder){ 
+
+for(let i = 1; i <= 10; i++){ 
 
 mediaContent += `
 <img
@@ -2058,97 +2124,97 @@ src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg
 onerror="this.style.display='none'"
 onload="this.dataset.loaded='true'"
 >
-`;
+`; 
 
-}
+} 
 
-}else{
+}else{ 
 
 mediaContent = `
 <img
 src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
 >
-`;
+`; 
 
-}
+} 
 
-return `
+return ` 
 
-<div class="card">
+<div class="card"> 
 
-<div class="carouselWrap">
+<div class="carouselWrap"> 
 
 ${item.image_label &&
 item.image_label.trim() !== "-" ? `
 <div class="imageLabel">
 ${item.image_label}
 </div>
-` : ""}
+` : ""} 
 
 <div class="carousel">
 ${mediaContent}
-</div>
+</div> 
 
-<div class="carouselIndicators"></div>
+<div class="carouselIndicators"></div> 
 
-</div>
+</div> 
 
-<div class="cardBody">
+<div class="cardBody"> 
 
 <div class="title">
 ${item.name}
-</div>
+</div> 
 
 <div class="location">
 ⚲ ${item.city}, ${item.country}
-</div>
+</div> 
 
-<div class="contentRow">
+<div class="contentRow"> 
 
-<div class="descriptionCol">
+<div class="descriptionCol"> 
 
 <div class="description">
 ${item.description}
-</div>
+</div> 
 
-</div>
+</div> 
 
-<div class="metaCol">
+<div class="metaCol"> 
 
-<div class="priceWrap">
+<div class="priceWrap"> 
 
 <div class="priceLabel">
 ESTIMATED STARTING FROM
-</div>
+</div> 
 
 <div class="priceAmount">
 ${formatPrice(item.price)}
-</div>
+</div> 
 
 <div class="priceCurrency"
 onclick="openCurrencyPopup(event)">
 ${currentCurrency} / night
-</div>
+</div> 
 
-</div>
+</div> 
 
 <div class="rating">
-★ ${item.rating} / 5
+★ ${item.rating} / 5 
 
 <div class="ratingSmall">
 Average Guest Rating <br/>
 Based On Public Reviews
-</div>
+</div> 
 
-</div>
+</div> 
 
-</div>
+</div> 
 
-</div>
+</div> 
 
-<div class="bottom">
+<div class="bottom"> 
 
-<div class="tagsRow">
+<div class="tagsRow"> 
 
 ${(item.card_tags||"")
 .split(",")
@@ -2156,9 +2222,9 @@ ${(item.card_tags||"")
 .map(tag=>`
 <span class="cardTag">${tag}</span>
 `)
-.join("")}
+.join("")} 
 
-</div>
+</div> 
 
 <a class="book"
 href="javascript:void(0)"
@@ -2170,108 +2236,108 @@ BOOK ↗
 
 </div>
 </div>
-</div>
+</div> 
 
-`;
+`; 
 
-}).join("");
+}).join(""); 
 
-setTimeout(()=>{
+setTimeout(()=>{ 
 
 document.querySelectorAll(".carouselWrap")
-.forEach(wrap=>{
+.forEach(wrap=>{ 
 
-const carousel=wrap.querySelector(".carousel");
+const carousel=wrap.querySelector(".carousel"); 
 
 /* Fix for gray blank image
- instead of placeholder image
- for no uploaded images on cards */
- 
- const visibleImages = [...carousel.querySelectorAll("img")]
-.filter(img => img.style.display !== "none");
+instead of placeholder image
+for no uploaded images on cards */
 
-if(visibleImages.length === 0){
+const visibleImages = [...carousel.querySelectorAll("img")]
+.filter(img => img.style.display !== "none"); 
+
+if(visibleImages.length === 0){ 
 
 carousel.innerHTML = `
 <img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
-`;
+`; 
 
-return;
+return; 
 
-}
+} 
 
-const indicators=wrap.querySelector(".carouselIndicators");
+const indicators=wrap.querySelector(".carouselIndicators"); 
 
 const loadedImages = [
 ...carousel.querySelectorAll("img")
 ].filter(img =>
 img.dataset.loaded === "true" &&
 img.style.display !== "none"
-);
+); 
 
-if(loadedImages.length === 0){
+if(loadedImages.length === 0){ 
 
 carousel.innerHTML = `
 <img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
-`;
+`; 
 
-return;
+return; 
 
-}
+} 
 
-const items = loadedImages.length;
+const items = loadedImages.length; 
 
-if(items<=1){
-
-indicators.innerHTML="";
-return;
-
-}
+if(items<=1){ 
 
 indicators.innerHTML="";
+return; 
 
-for(let i=0;i<items;i++){
+} 
 
-const dot=document.createElement("span");
+indicators.innerHTML=""; 
 
-if(i===0)dot.classList.add("active");
+for(let i=0;i<items;i++){ 
 
-indicators.appendChild(dot);
+const dot=document.createElement("span"); 
 
-}
+if(i===0)dot.classList.add("active"); 
 
-carousel.addEventListener("scroll",()=>{
+indicators.appendChild(dot); 
+
+} 
+
+carousel.addEventListener("scroll",()=>{ 
 
 const index=Math.round(
 carousel.scrollLeft/carousel.offsetWidth
-);
+); 
 
 indicators.querySelectorAll("span")
-.forEach((d,i)=>{
+.forEach((d,i)=>{ 
 
-d.classList.toggle("active",i===index);
+d.classList.toggle("active",i===index); 
 
-});
+}); 
 
-});
+}); 
 
-});
+}); 
 
-},1000);
+},1000); 
 
-renderPagination(filtered.length);
+renderPagination(filtered.length); 
 
-}
+} 
 
-/* PAGINATION */
+/* PAGINATION */ 
 
-function renderPagination(total){
+function renderPagination(total){ 
 
-const pages=Math.ceil(total/ITEMS_PER_PAGE);
+const pages=Math.ceil(total/ITEMS_PER_PAGE); 
 
-let html="";
+let html=""; 
 
-for(let i=1;i<=pages;i++){
+for(let i=1;i<=pages;i++){ 
 
 html+=`
 <button
@@ -2280,64 +2346,64 @@ onclick="goPage(${i})"
 >
 ${i}
 </button>
-`;
+`; 
 
-}
+} 
 
-document.getElementById("pagination").innerHTML=html;
+document.getElementById("pagination").innerHTML=html; 
 
-}
+} 
 
-function goPage(p){
+function goPage(p){ 
 
-currentPage=p;
+currentPage=p; 
 
-render();
+render(); 
 
-}
+} 
 
-/* SEARCH ENTER */
+/* SEARCH ENTER */ 
 
 document.getElementById("searchInput")
-.addEventListener("keydown",e=>{
+.addEventListener("keydown",e=>{ 
 
 if(e.key==="Enter"){
 render();
-}
+} 
 
-});
+}); 
 
 /* =========================
 AUTO LOAD SEARCH/FILTER FROM URL
-========================= */
+========================= */ 
 
-function applyURLFilters(){
+function applyURLFilters(){ 
 
 const params =
-new URLSearchParams(window.location.search);
+new URLSearchParams(window.location.search); 
 
 const search =
-params.get("search");
+params.get("search"); 
 
 const filter =
-params.get("filter");
+params.get("filter"); 
 
-/* AUTO SEARCH */
+/* AUTO SEARCH */ 
 
-if(search){
+if(search){ 
 
 document.getElementById(
 "searchInput"
-).value = search;
+).value = search; 
 
-}
+} 
 
-/* AUTO FILTER TAG */
+/* AUTO FILTER TAG */ 
 
-if(filter){
+if(filter){ 
 
 document.querySelectorAll(".tag")
-.forEach(tag=>{
+.forEach(tag=>{ 
 
 if(
 tag.innerText.trim()
@@ -2345,9 +2411,9 @@ tag.innerText.trim()
 ===
 filter.trim()
 .toLowerCase()
-){
+){ 
 
-tag.classList.add("active");
+tag.classList.add("active"); 
 
 activeFilters.push(
 tag.parentElement
@@ -2357,96 +2423,96 @@ tag.parentElement
 ":"
 +
 tag.innerText.trim()
-);
+); 
 
-}
+} 
 
-});
+}); 
 
-}
+} 
 
-render();
+render(); 
 
-}
+} 
 
 load();
 
 
-/* Premium Popup */
+/* Premium Popup */ 
 
-function openPremiumPopup(event){
+function openPremiumPopup(event){ 
 
 const popup =
-document.getElementById("premiumPopup");
+document.getElementById("premiumPopup"); 
 
-popup.style.display = "block";
+popup.style.display = "block"; 
 
-popup.style.position = "absolute";
+popup.style.position = "absolute"; 
 
 /* popup width */
 const popupWidth = 270;
-const padding = 14;
+const padding = 14; 
 
 /* screen width */
-const screenWidth = window.innerWidth;
+const screenWidth = window.innerWidth; 
 
 /* click position */
 let x = event.pageX;
-let y = event.pageY;
+let y = event.pageY; 
 
 /* default position */
 let left = x;
-let top = y + 10;
+let top = y + 10; 
 
 /* prevent overflow right */
-if(left + popupWidth > screenWidth){
+if(left + popupWidth > screenWidth){ 
 
-left = screenWidth - popupWidth - padding;
+left = screenWidth - popupWidth - padding; 
 
-}
+} 
 
 /* never too left */
-if(left < padding){
+if(left < padding){ 
 
-left = padding;
+left = padding; 
 
-}
+} 
 
 popup.style.left = left + "px";
-popup.style.top = top + "px";
+popup.style.top = top + "px"; 
 
-}
+} 
 
-function closePremiumPopup(){
+function closePremiumPopup(){ 
 
 document.getElementById("premiumPopup")
-.style.display = "none";
+.style.display = "none"; 
 
-}
+} 
 
 /* close clicking outside */
-document.addEventListener("click", function(e){
+document.addEventListener("click", function(e){ 
 
-/* PREMIUM POPUP */
+/* PREMIUM POPUP */ 
 
 const premium =
-document.getElementById("premiumPopup");
+document.getElementById("premiumPopup"); 
 
 if(
 premium &&
 !premium.contains(e.target)
 &&
 !e.target.closest(".locked-chip")
-){
+){ 
 
-premium.style.display = "none";
+premium.style.display = "none"; 
 
-}
+} 
 
-/* CURRENCY POPUP */
+/* CURRENCY POPUP */ 
 
 const currency =
-document.getElementById("currencyPopup");
+document.getElementById("currencyPopup"); 
 
 if(
 currency &&
@@ -2455,167 +2521,167 @@ currency &&
 !e.target.closest(".currencyTopBtn")
 &&
 !e.target.closest(".priceCurrency")
-){
+){ 
 
-currency.style.display = "none";
+currency.style.display = "none"; 
 
-}
+} 
 
 });
-  
-  
-function scrollTopSmooth(){
+  
+  
+function scrollTopSmooth(){ 
 
 document.documentElement.scrollTo({
 top:0,
 behavior:"smooth"
-});
+}); 
 
 document.body.scrollTo({
 top:0,
 behavior:"smooth"
-});
+}); 
 
 window.scrollTo({
 top:0,
 behavior:"smooth"
-});
+}); 
 
-}
+} 
 
 /* =========================
 BOTTOM STICKY BAR
-========================= */
+========================= */ 
 
-function updateStickyBar(){
+function updateStickyBar(){ 
 
 const bar =
-document.getElementById("bottomFilterBar");
+document.getElementById("bottomFilterBar"); 
 
 const count =
-activeFilters.length;
+activeFilters.length; 
 
-if(window.innerWidth <= 900){
+if(window.innerWidth <= 900){ 
 
-bar.style.display = "flex";
+bar.style.display = "flex"; 
 
 document.getElementById(
 "filterCount"
 ).innerHTML =
 count > 0
 ? `⌂ FILTERS • ${count} SELECTED`
-: `⌂ FILTERS`;
+: `⌂ FILTERS`; 
 
-}else{
+}else{ 
 
-bar.style.display = "none";
+bar.style.display = "none"; 
 
-}
+} 
 
-}
+} 
 
 /* =========================
 SEARCH BUTTON (FINAL CLEAN VERSION)
-========================= */
+========================= */ 
 
-function runStickySearch(){
+function runStickySearch(){ 
 
-  const status =
-  document.getElementById(
-  "searchInlineStatus"
-  );
+  const status =
+  document.getElementById(
+  "searchInlineStatus"
+  ); 
 
-  status.style.display =
-  "block";
+  status.style.display =
+  "block"; 
 
-  status.innerHTML =
-  "SEARCHING...";
+  status.innerHTML =
+  "SEARCHING..."; 
 
-  requestAnimationFrame(()=>{
+  requestAnimationFrame(()=>{ 
 
-    setTimeout(()=>{
+    setTimeout(()=>{ 
 
-      render();
+      render(); 
 
-      const count =
-      document.getElementById("cards")
-      .children.length;
+      const count =
+      document.getElementById("cards")
+      .children.length; 
 
-      if(count > 0){
+      if(count > 0){ 
 
-        status.innerHTML =
-        `${count} RESULTS FOUND ↓`;
+        status.innerHTML =
+        `${count} RESULTS FOUND ↓`; 
 
-      }else{
+      }else{ 
 
-        status.innerHTML =
-        `NO RESULTS FOUND ↓<br>
-        Try adjusting filters`;
+        status.innerHTML =
+        `NO RESULTS FOUND ↓<br>
+        Try adjusting filters`; 
 
-      }
+      } 
 
-      setTimeout(()=>{
+      setTimeout(()=>{ 
 
-        document
-        .getElementById("cards")
-        .scrollIntoView({
-          behavior:"smooth",
-          block:"start"
-        });
+        document
+        .getElementById("cards")
+        .scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        }); 
 
-        setTimeout(()=>{
+        setTimeout(()=>{ 
 
-          status.style.display =
-          "none";
+          status.style.display =
+          "none"; 
 
-        },700);
+        },700); 
 
-      },900);
+      },900); 
 
-    },400);
+    },400); 
 
-  });
+  }); 
 
 }
- 
-/* PAYHIP IFRAME FLOATING BAR FIX */
 
-function repositionBottomBar(){
+/* PAYHIP IFRAME FLOATING BAR FIX */ 
 
-  const bar =
-  document.getElementById("bottomFilterBar");
+function repositionBottomBar(){ 
 
-  if(!bar) return;
+  const bar =
+  document.getElementById("bottomFilterBar"); 
 
-  const scrollTop =
-  window.scrollY;
+  if(!bar) return; 
 
-  const viewportHeight =
-  window.innerHeight;
+  const scrollTop =
+  window.scrollY; 
 
-  const barHeight =
-  bar.offsetHeight;
+  const viewportHeight =
+  window.innerHeight; 
 
-  const top =
-  scrollTop +
-  viewportHeight -
-  barHeight -
-  14;
+  const barHeight =
+  bar.offsetHeight; 
 
-  bar.style.top =
-  top + "px";
-}
+  const top =
+  scrollTop +
+  viewportHeight -
+  barHeight -
+  14; 
+
+  bar.style.top =
+  top + "px";
+} 
 
 /* update while scrolling */
 window.addEventListener(
 "scroll",
 repositionBottomBar
-);
+); 
 
 window.addEventListener(
 "resize",
 repositionBottomBar
-);
+); 
 
 /* run initially */
 setTimeout(
@@ -2627,19 +2693,19 @@ repositionBottomBar,
 </script>
 
 
-<!-- SEARCH POPUP -->
+<!-- SEARCH POPUP --> 
 
-<div id="searchOverlay">
+<div id="searchOverlay"> 
 
-<div class="searchPopup">
+<div class="searchPopup"> 
 
 <div id="searchStatusText">
 SEARCHING
-</div>
+</div> 
+
+</div> 
 
 </div>
-
-</div>
-  
+  
 </body>
 </html>
