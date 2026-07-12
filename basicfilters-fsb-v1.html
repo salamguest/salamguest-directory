@@ -975,40 +975,102 @@ select.sortSelect {
   background-size: 14px;
 } 
 
-.filterSelect{
-    width:100%;
-    padding:10px 40px 10px 14px;
-    border-radius:999px;
-    border:1px solid #dbe4ff;
-    background:#eef3ff;
-    font-family:Lexend,sans-serif;
-    font-size:13px;
-    color:#444; 
+/* =========================
+FILTER DROPDOWNS
+========================= */ 
 
-    appearance:none;
-    -webkit-appearance:none;
-    -moz-appearance:none; 
+.filterSelect{ 
 
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23697CA5' stroke-width='2' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 14px center;
+display:block;
+width:100%; 
+
+padding:10px 42px 10px 16px; 
+
+margin:4px 0 0 0; 
+
+border:2px solid #dbe4ff;
+border-radius:999px; 
+
+background:#eef3ff; 
+
+font-family:Lexend,sans-serif;
+font-size:13px;
+font-weight:500;
+color:#001A66; 
+
+cursor:pointer;
+outline:none; 
+
+box-sizing:border-box; 
+
+appearance:none;
+-webkit-appearance:none;
+-moz-appearance:none; 
+
+transition:.2s ease; 
+
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23697CA5' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); 
+
+background-repeat:no-repeat;
+background-position:right 14px center;
+background-size:14px; 
+
 } 
 
-/* Desktop */
+.filterSelect:hover{ 
+
+border-color:#c8d7ff;
+background:#f4f7ff; 
+
+} 
+
+.filterSelect:focus{ 
+
+border-color:#0042FD;
+box-shadow:0 0 0 3px rgba(0,66,253,.10); 
+
+} 
+
+.filterSelect:disabled{ 
+
+background:#f6f7fa;
+border-color:#eceff5;
+color:#b3b8c6;
+cursor:not-allowed;
+opacity:1; 
+
+} 
+
+.filterSelect option{ 
+
+font-family:Lexend,sans-serif;
+font-size:13px;
+color:#222; 
+
+} 
+
+/* Desktop */ 
+
 @media (min-width:901px){ 
 
-.filterSelect{
-    width:100%;
-} 
+.filterSelect{ 
+
+width:100%; 
 
 } 
 
-/* Mobile */
+} 
+
+/* Mobile */ 
+
 @media (max-width:900px){ 
 
-.filterSelect{
-    width:auto;
-    min-width:170px;
+.filterSelect{ 
+
+width:auto;
+min-width:180px;
+max-width:100%; 
+
 } 
 
 } 
@@ -1574,6 +1636,8 @@ const order=[
 ]; 
 
 const container=document.getElementById("filters"); 
+
+container.innerHTML = ""; 
 
 document.getElementById("loadingFilters").style.display="none"; 
 
