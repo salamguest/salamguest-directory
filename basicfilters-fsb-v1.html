@@ -1674,6 +1674,8 @@ if (cat === "Country") {
 
   }); 
 
+  select.value = selectedCountry; 
+
   select.onchange = (e) => { 
 
     const value = e.target.value; 
@@ -1746,6 +1748,8 @@ opt.textContent = val;
 select.appendChild(opt); 
 
 }); 
+
+select.value = selectedCity; 
 
   select.onchange = (e) => { 
 
