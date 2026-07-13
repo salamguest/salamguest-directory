@@ -2005,6 +2005,8 @@ function clearAll(){
 
 activeFilters=[]; 
 
+selectedCountry = ""; 
+
 currentPage=1; 
 
 document.querySelectorAll(".tag").forEach(t=>{
@@ -2017,6 +2019,8 @@ document.getElementById("sortSelect").value="default";
 
 /* sync sticky bar */
 updateStickyBar(); 
+
+buildFilters(); 
 
 render(); 
 
