@@ -62,6 +62,30 @@ opacity:0.45;
 }
 } 
 
+#loadingSpinner{ 
+
+width:34px;
+height:34px; 
+
+margin:40px auto 14px auto; 
+
+border:3px solid #dbe4ff;
+border-top:3px solid #0042FD; 
+
+border-radius:50%; 
+
+animation:loadingSpin .8s linear infinite; 
+
+} 
+
+@keyframes loadingSpin{ 
+
+to{
+transform:rotate(360deg);
+} 
+
+} 
+
 .filterTitle{
 font-size:14px;
 font-weight:500;
@@ -1169,6 +1193,8 @@ SEARCH
 SEARCHING...
 </div> 
 
+<div id="loadingSpinner"></div> 
+
 <div id="loadingFilters">
 LOADING FILTERS
 </div> 
@@ -1641,7 +1667,7 @@ container.innerHTML = "";
 
 document.getElementById("loadingFilters").style.display="none"; 
 
-document.getElementById("loadingFilters").style.display="none"; 
+document.getElementById("loadingSpinner").style.display="none"; 
 
 console.log("GROUP KEYS:", Object.keys(groups));
 order.forEach(cat=>{ 
