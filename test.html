@@ -2729,7 +2729,7 @@ function runStickySearch(){
 
     setTimeout(()=>{ 
 
-      render(); 
+     render(); 
 
       const count =
       document.getElementById("cards")
@@ -2875,19 +2875,49 @@ const descriptionIcons = {
 </svg>
 ` 
 
-};
+}; 
 
+function replaceDescriptionIcons(text){ 
 
+    if(!text) return ""; 
 
-function replaceDescriptionIcons(text){
+    return text
+        .split(/\r?\n/)
+        .map(line => { 
 
-    console.log(text);
+            line = line.trim(); 
 
-    return text;
+            if(line === "") return ""; 
 
-}
+            // Match: [parking] Parking Available
+            const match = line.match(/^\[([^\]]+)\]\s*(.*)$/); 
 
-  
+            // No shortcode → plain text
+            if(!match){
+                return `<div>${line}</div>`;
+            } 
+
+            const key = "[" + match[1].toLowerCase() + "]";
+            const label = match[2]; 
+
+            const svg = descriptionIcons[key]; 
+
+            const icon = svg
+                ? `<span class="detailIcon">${svg}</span>`
+                : `<span class="detailFallback">⌂</span>`; 
+
+            return `
+                <div class="detailItem">
+                    ${icon}
+                    <span>${label}</span>
+                </div>
+            `; 
+
+        })
+        .join(""); 
+
+} 
+
 </script>
 
 
