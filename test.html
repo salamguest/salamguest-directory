@@ -2879,56 +2879,62 @@ const descriptionIcons = {
 
 
 
-function replaceDescriptionIcons(text){ 
+function replaceDescriptionIcons(text){
 
-    if(!text) return "";
-
-
-    // Convert every line into detail item 
-
-    return text
-    .split("\n")
-    .map(line=>{ 
-
-        let icon = `
-        <span class="detailFallback">⌂</span>
-        `;
+    if(!text) return "";
 
 
-        let content = line;
+    return text
+    .split("\n")
+    .map(line=>{
+
+        let icon = "";
+        let content = line.trim();
 
 
-        Object.keys(descriptionIcons).forEach(code=>{ 
+        Object.keys(descriptionIcons).forEach(code=>{
 
-            if(line.startsWith(code)){ 
+            if(content.startsWith(code)){
 
-                icon = `
-                <span class="detailIcon">
-                ${descriptionIcons[code]}
-                </span>
-                `; 
+                icon = `
+                <span class="detailIcon">
+                ${descriptionIcons[code]}
+                </span>
+                `;
 
-                content = line.replace(code,"").trim(); 
+                content = content.replace(code,"").trim();
 
-            } 
+            }
 
-        });
-
-
-
-        return `
-        <div class="detailItem">
-            ${icon}
-            <span>${content}</span>
-        </div>
-        `;
+        });
 
 
-    })
-    .join(""); 
+        // If no shortcode exists, show normal text only
 
-} 
+        if(icon === ""){
+            return `
+            <div>
+                ${content}
+            </div>
+            `;
+        }
 
+
+        // If shortcode exists, show icon row
+
+        return `
+        <div class="detailItem">
+            ${icon}
+            <span>${content}</span>
+        </div>
+        `;
+
+
+    })
+    .join("");
+
+}
+  
 </script>
 
 
