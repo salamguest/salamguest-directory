@@ -2880,60 +2880,9 @@ const descriptionIcons = {
 
 
 function replaceDescriptionIcons(text){
-
-    if(!text) return "";
-
-
-    return text
-    .split("\n")
-    .map(line=>{
-
-        let icon = "";
-        let content = line.trim();
-
-
-        Object.keys(descriptionIcons).forEach(code=>{
-
-            if(content.startsWith(code)){
-
-                icon = `
-                <span class="detailIcon">
-                ${descriptionIcons[code]}
-                </span>
-                `;
-
-                content = content.replace(code,"").trim();
-
-            }
-
-        });
-
-
-        // If no shortcode exists, show normal text only
-
-        if(icon === ""){
-            return `
-            <div>
-                ${content}
-            </div>
-            `;
-        }
-
-
-        // If shortcode exists, show icon row
-
-        return `
-        <div class="detailItem">
-            ${icon}
-            <span>${content}</span>
-        </div>
-        `;
-
-
-    })
-    .join("");
-
+    return "TEST";
 }
+
   
 </script>
 
