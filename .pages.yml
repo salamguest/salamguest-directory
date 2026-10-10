@@ -1,0 +1,145 @@
+
+media:
+  input: images
+  output: /images
+
+content:
+  - name: pages
+    label: Website Pages
+    type: collection
+    path: content/pages
+    format: yaml
+    filename: "{primary}.yml"
+    subfolders: false
+    fields:
+      - name: title
+        label: Page Title
+        type: string
+        required: true
+
+      - name: slug
+        label: URL Slug
+        type: string
+        required: true
+
+      - name: description
+        label: Page Description
+        type: text
+
+      - name: hero_image
+        label: Hero Image
+        type: image
+
+      - name: body
+        label: Page Content
+        type: rich-text
+
+      - name: seo
+        label: SEO Settings
+        type: object
+        fields:
+          - name: title
+            label: SEO Title
+            type: string
+          - name: description
+            label: Meta Description
+            type: text
+
+  - name: posts
+    label: Blog Articles
+    type: collection
+    path: content/posts
+    format: yaml
+    filename: "{primary}.yml"
+    subfolders: false
+    fields:
+      - name: title
+        label: Article Title
+        type: string
+        required: true
+
+      - name: slug
+        label: URL Slug
+        type: string
+        required: true
+
+      - name: date
+        label: Publication Date
+        type: date
+
+      - name: excerpt
+        label: Article Excerpt
+        type: text
+
+      - name: featured_image
+        label: Featured Image
+        type: image
+
+      - name: body
+        label: Article Content
+        type: rich-text
+
+      - name: seo
+        label: SEO Settings
+        type: object
+        fields:
+          - name: title
+            label: SEO Title
+            type: string
+          - name: description
+            label: Meta Description
+            type: text
+
+  - name: settings
+    label: Site Settings
+    type: file
+    path: content/settings.yml
+    format: yaml
+    fields:
+      - name: site_name
+        label: Site Name
+        type: string
+
+      - name: tagline
+        label: Tagline
+        type: string
+
+      - name: logo
+        label: Logo
+        type: image
+
+      - name: favicon
+        label: Favicon
+        type: image
+
+      - name: contact_email
+        label: Contact Email
+        type: string
+
+      - name: social_links
+        label: Social Links
+        type: object
+        fields:
+          - name: facebook
+            label: Facebook
+            type: string
+          - name: instagram
+            label: Instagram
+            type: string
+          - name: pinterest
+            label: Pinterest
+            type: string
+          - name: youtube
+            label: YouTube
+            type: string
+
+      - name: seo
+        label: Default SEO
+        type: object
+        fields:
+          - name: title
+            label: Default SEO Title
+            type: string
+          - name: description
+            label: Default Meta Description
+            type: text
