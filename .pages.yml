@@ -90,7 +90,6 @@ content:
             label: Meta Description
             type: text
 
-
   - name: settings
     label: Site Settings
     type: file
