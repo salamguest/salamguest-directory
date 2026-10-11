@@ -1,29 +1,30 @@
-
-site_name: "SalamGuest"
-tagline: "Discover Muslim-friendly stays and travel resources"
-logo: ""
-favicon: ""
-
+site_name: SalamGuest
+tagline: Discover Muslim-friendly stays and travel resources
 desktop_nav:
-  links: []
-
+  links:
+    - label: Home
+      url: /
+      visible: true
+    - label: Explore Stays
+      url: /filters
+      visible: true
+    - label: Destinations
+      url: /destinations
+      visible: true
+    - label: blog
+      url: /blog
+      visible: true
+    - label: About
+      url: /about
+      visible: true
+    - label: Contact
+      url: /contact
+      visible: true
 mobile_nav:
-  logo: ""
-  heading: "Travel with confidence"
-  links: []
+  heading: Travel with confidence
   enable_submenus: false
-  cta_label: "Explore Stays"
-  cta_url: ""
-
-contact_email: ""
-
-social_links:
-  facebook: ""
-  instagram: ""
-  pinterest: ""
-  youtube: ""
-
+  cta_label: Explore Stays
+  cta_url: /filters
 seo:
-  title: "SalamGuest | Muslim-Friendly Travel Directory"
-  description: "Discover Muslim-friendly accommodation and travel resources around the world."
-
+  title: SalamGuest | Muslim-Friendly Travel Directory
+  description: Discover Muslim-friendly accommodation and travel resources around the world.
