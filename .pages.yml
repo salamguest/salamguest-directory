@@ -90,6 +90,7 @@ content:
             label: Meta Description
             type: text
 
+
   - name: settings
     label: Site Settings
     type: file
@@ -99,18 +100,102 @@ content:
       - name: site_name
         label: Site Name
         type: string
-
       - name: tagline
         label: Tagline
         type: string
-
       - name: logo
-        label: Logo
+        label: Desktop and Site Logo
         type: image
-
       - name: favicon
         label: Favicon
         type: image
+
+      - name: desktop_nav
+        label: Desktop Navigation
+        type: object
+        fields:
+          - name: links
+            label: Desktop Menu Links
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - name: label
+                label: Link Text
+                type: string
+              - name: url
+                label: Link URL
+                type: string
+              - name: visible
+                label: Show This Link
+                type: boolean
+              - name: submenu
+                label: Optional Dropdown Items
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - name: label
+                    label: Submenu Link Text
+                    type: string
+                  - name: url
+                    label: Submenu Link URL
+                    type: string
+
+      - name: mobile_nav
+        label: Mobile Navigation Drawer
+        type: object
+        fields:
+          - name: logo
+            label: Mobile Drawer Logo
+            type: image
+          - name: heading
+            label: Mobile Drawer Heading
+            type: string
+          - name: links
+            label: Mobile Menu Links
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - name: label
+                label: Link Text
+                type: string
+              - name: url
+                label: Link URL
+                type: string
+              - name: visible
+                label: Show This Link
+                type: boolean
+              - name: submenu
+                label: Optional Expandable Submenu
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - name: label
+                    label: Submenu Link Text
+                    type: string
+                  - name: url
+                    label: Submenu Link URL
+                    type: string
+          - name: enable_submenus
+            label: Enable Mobile Expandable Submenus
+            type: boolean
+          - name: cta_label
+            label: Mobile Button Text
+            type: string
+          - name: cta_url
+            label: Mobile Button URL
+            type: string
 
       - name: contact_email
         label: Contact Email
