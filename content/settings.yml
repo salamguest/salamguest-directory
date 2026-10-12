@@ -11,7 +11,7 @@ desktop_nav:
     - label: Destinations
       url: /destinations
       visible: true
-    - label: blog
+    - label: Blog
       url: /blog
       visible: true
     - label: About
