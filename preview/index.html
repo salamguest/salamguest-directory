@@ -1,131 +1,2981 @@
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0042FF"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"><title>SalamGuest | Muslim-Friendly Travel Directory</title><meta name="description" content="Discover Muslim-friendly accommodation, helpful travel facilities and resources for your next journey.">
+<style> 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SalamGuest — Preview</title>
-<meta name="description" content="Discover Muslim-friendly stays and thoughtful travel resources around the world.">
-<style>
-:root{--blue:#0756bd;--deep:#123d78;--cream:#fffdf9}
-*{box-sizing:border-box}
-body{margin:0;color:#17365f;background:var(--cream);font-family:Arial,sans-serif}
-header{position:sticky;top:0;z-index:10;background:var(--blue);color:white;display:flex;align-items:center;justify-content:space-between;padding:13px 5%;box-shadow:0 2px 8px #0002}
-.brand{font-family:Georgia,serif;font-size:25px;letter-spacing:1px;color:white;text-decoration:none}
-.menu-button{background:none;border:1px solid #ffffffa0;color:white;border-radius:8px;font-size:25px;padding:3px 12px}
-.desktop{display:none;gap:20px;align-items:center}
-.desktop a{color:white;text-decoration:none;font-size:14px}
-.drawer{display:none;position:fixed;inset:0;z-index:20;background:#0008}
-.drawer.open{display:block}
-.panel{height:100%;width:min(82%,340px);background:#fff;padding:25px;box-shadow:4px 0 15px #0002}
-.close{float:right;font-size:28px;border:0;background:none;color:var(--deep)}
-.panel h2{font-family:Georgia,serif;color:var(--blue);margin-top:48px}
-.panel p{color:#53677e;line-height:1.5}
-.panel nav a{display:block;padding:15px 4px;border-bottom:1px solid #e5eaf1;color:var(--deep);text-decoration:none}
-.cta{display:inline-block;background:var(--blue);color:white!important;text-decoration:none;border-radius:30px;padding:13px 25px;margin-top:16px}
-.hero{text-align:center;padding:54px 22px 58px}
-.hero h1{font: bold clamp(42px,10vw,64px) Georgia,serif;color:var(--blue);margin:0 0 16px}
-.hero p{font-size:17px;line-height:1.7;max-width:510px;margin:0 auto;color:var(--deep)}
-.section{padding:36px 5%}
-.promo{min-height:300px;border-radius:16px;overflow:hidden;background:linear-gradient(90deg,#082e65dd,#082e6520),url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=85') center/cover;display:flex;align-items:center;color:white;padding:28px}
-.promo h2{font:32px Georgia,serif;margin:0 0 12px}
-.promo p{line-height:1.6;max-width:370px}
-.promo .cta{background:white;color:var(--blue)!important}
-h2.section-title{font:29px Georgia,serif;color:var(--blue);line-height:1.3}
-.filters{background:#f1f6fc;border-radius:14px;padding:22px}
-input,select{width:100%;padding:13px;border:1px solid #c8d6e8;border-radius:8px;background:white;font-size:15px;margin:7px 0}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.note{font-size:13px;color:#53677e;line-height:1.6}
-footer{background:#123d78;color:white;padding:28px 5%;text-align:center;line-height:1.8}
-footer a{color:white}
-@media(min-width:760px){
-.menu-button{display:none}.desktop{display:flex}
-.hero{padding:75px 22px 80px}
-.section{padding:42px 8%}
-.promo{padding:48px;min-height:340px}
+body{
+margin:0;
+font-family:Lexend,sans-serif;
+background:#fff;
+color:#222;
+overflow-x: hidden;
+} 
+
+.container{
+display:flex;
+align-items:flex-start;
+gap:20px;
+padding:20px;
+max-width:1400px;
+margin:0 auto;
+box-sizing:border-box;
+} 
+
+.sidebar{
+width:260px;
+flex-shrink:0;
+} 
+
+/* =========================
+LOADING FILTERS
+========================= */ 
+
+#loadingFilters{
+font-family:"Libre Bodoni",serif;
+font-size:18px;
+letter-spacing:1.8px;
+text-transform:uppercase;
+text-align:center;
+color:#0042FD;
+margin-top: 50px;
+margin-bottom:30px;
+animation:softBlink 1.8s ease-in-out infinite;
+} 
+
+@keyframes softBlink{
+0%{
+opacity:0.45;
+}
+50%{
+opacity:1;
+}
+100%{
+opacity:0.45;
+}
+} 
+
+#loadingSpinner{ 
+
+width:34px;
+height:34px; 
+
+margin:40px auto 14px auto; 
+
+border:3px solid #dbe4ff;
+border-top:3px solid #0042FD; 
+
+border-radius:50%; 
+
+animation:loadingSpin .8s linear infinite; 
+
+} 
+
+@keyframes loadingSpin{ 
+
+to{
+transform:rotate(360deg);
+} 
+
+} 
+
+.filterTitle{
+font-size:14px;
+font-weight:500;
+margin-top:18px;
+margin-bottom:8px;
+color:#001A66;
+} 
+
+.tag{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:8px 14px;
+margin:4px 4px 0 0;
+background:#f2f2f2;
+border-radius:999px;
+font-size:13px;
+cursor:pointer;
+transition:0.2s;
+text-align:center;
+color:#001A66;
+} 
+
+.tag.active{
+background:#0042FD;
+color:#fff;
+} 
+
+.main{
+flex:1;
+min-width:0;
+} 
+
+/* SEARCH */ 
+
+.search{
+position:relative;
+max-width:900px;
+} 
+
+.search input{
+width:100%;
+padding:14px 52px 14px 14px;
+margin:0;
+border-radius:999px;
+border:3px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+color: #697CA5;
+font-size:14px;
+font-weight: 500;
+box-sizing:border-box;
+box-shadow:inset 0 2px 6px rgba(0,0,0,0.08);
+outline:none;
+filter:blur(0.3px);
+} 
+
+.search input::placeholder{
+color: #697CA5;
+filter: blur(0.3px);
+} 
+
+.searchBtn{
+position:absolute;
+right:8px;
+top:50%;
+transform:translateY(-50%);
+width:36px;
+height:36px;
+border:none;
+background:#0042FD;
+border-radius:999px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+padding:0;
+} 
+
+.searchBtn svg{
+width:18px;
+height:18px;
+stroke:white;
+stroke-width:2.2;
+fill:none;
+} 
+
+/* TOP BUTTONS */ 
+
+.topButtons{
+margin-top:2px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+align-items:center;
+} 
+
+.clearBtn{
+padding:10px 16px;
+border-radius:999px;
+border:2px solid #697CA5;
+background:white;
+color:#697CA5;
+cursor:pointer;
+font-family:Lexend;
+} 
+
+@media(min-width:901px){ 
+
+.clearBtn{
+width:100%;
+display:block;
+} 
+
+} 
+
+.sortSelect{
+padding:10px 14px;
+border-radius:999px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:14px;
+cursor:pointer;
+outline:none;
+color:#444;
+} 
+
+.currencyTopBtn{
+padding:10px 14px;
+border-radius:999px;
+border:1px solid #dbe4ff;
+background:#eef3ff;
+font-family:Lexend;
+font-size:14px;
+cursor:pointer;
+color:#444;
+} 
+
+/* GRID */ 
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+max-width:1100px;
+gap:22px;
+margin-top:10px;
+} 
+
+/* CARD */ 
+
+.card{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 3px 10px rgba(0,0,0,0.14);
+display:flex;
+flex-direction:column;
+} 
+
+/* CAROUSEL */ 
+
+.carouselWrap{
+position:relative;
+overflow:hidden;
+min-height:220px;
+background:#f5f5f5;
+} 
+
+.carousel{
+display:flex;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+scroll-behavior:smooth;
+-ms-overflow-style:none;
+scrollbar-width:none;
+min-height:220px;
+} 
+
+.carousel::-webkit-scrollbar{
+display:none;
+} 
+
+.carousel img{
+width:100%;
+height:220px;
+object-fit:cover;
+flex-shrink:0;
+scroll-snap-align:start;
+} 
+
+/* INDICATORS */ 
+
+.carouselIndicators{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:5px;
+z-index:2;
+} 
+
+.carouselIndicators{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:10px;
+} 
+
+.carouselIndicators span{
+width:28px;
+height:4px;
+border-radius:999px;
+background:#d8d8d8;
+transition:.25s;
+} 
+
+.carouselIndicators span.active{
+width:42px;
+background:#0042FD;
+}
+
+
+/* CARD BODY */ 
+
+.cardBody{
+padding:16px;
+display:flex;
+flex-direction:column;
+flex-grow:1;
+} 
+
+.title{
+font-family:"Libre Bodoni",serif;  
+color: #001A66;
+font-size:21px;
+line-height:1.2;
+margin-bottom:4px;
+} 
+
+.location{
+font-size:13px;
+color:#697CA5;
+margin-bottom:0px;
+} 
+
+.description{
+font-size:13px;
+line-height:1.3;
+color:#444;
+text-align:left;
+} 
+
+.contentRow{
+display:flex;
+gap:10px;
+margin-top:12px;
+margin-bottom:14px;
+} 
+
+.descriptionCol{
+width:60%;
+padding-right:10px;
+border-right:5px solid #DCE6FF;
+box-sizing:border-box;
+margin-top:0;
+padding-top:0;
+} 
+
+.metaCol{
+width:40%;
+padding-left:5px;
+box-sizing:border-box;
+} 
+
+/* PRICE */ 
+
+.priceWrap{
+margin-top:14px;
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+margin-top:0;
+} 
+
+.priceLabel{
+font-family:"Libre Bodoni",serif;
+font-size:10px;
+letter-spacing:1.4px;
+color:#001A66;
+line-height:1;
+margin-bottom:8px;
+text-align:left;
+} 
+
+.priceAmount{
+font-family:"Libre Bodoni",serif;
+font-size:21px;
+line-height:1;
+color:#001A66;
+text-align:left;
+} 
+
+.priceCurrency{
+margin-top:8px;
+font-size:11px;
+color:#111;
+letter-spacing:0.3px;
+cursor:pointer;
+display:inline-block;
+border-bottom:1px dotted #111;
+width:fit-content;
+} 
+
+/* RATING */ 
+
+.rating{
+margin-top:12px;
+font-size:14px;
+color:#0042FD;
+text-align:left;
+} 
+
+.ratingSmall{
+font-size:10px;
+color:#777;
+margin-top:2px;
+text-align:left;
+} 
+
+/* TAGS */ 
+
+.tagsRow{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-top:12px;
+} 
+
+.cardTag{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:#eaf0ff;
+color:#0042FD;
+padding:8px 12px;
+border-radius:999px;
+font-size:11px;
+line-height:1.2;
+} 
+
+/* BOOK */ 
+
+.book{
+display:block;
+margin-top:16px;
+padding:12px;
+text-align:center;
+background:#0042FD;
+color:white;
+text-decoration:none;
+border-radius:999px;
+border:2px solid #0042FD;
+transition:0.2s;
+} 
+
+.book:hover{
+background:#f5f5f5;
+color:#0042FD;
+} 
+
+/* RELATED LINKS */ 
+
+.relatedLinks{
+margin-top:12px;
+font-size:11px;
+line-height:1.8;
+letter-spacing:0.4px;
+} 
+
+.relatedLinks a{
+color:#324a7d;
+text-decoration:underline;
+margin-right:10px;
+} 
+
+.relatedLinks a:hover{
+color:#0042FD;
+} 
+
+.bottom{
+margin-top:auto;
+} 
+
+.bottomNav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:24px;
+} 
+
+.pageBtn{
+padding:7px 12px;
+margin:2px;
+border:1px solid #0042FD;
+background:white;
+color:#0042FD;
+cursor:pointer;
+border-radius:8px;
+} 
+
+.pageBtn.active{
+background:#0042FD;
+color:white;
+} 
+
+#noResults{
+display:none;
+text-align:center;
+margin-top:40px;
+font-size:14px;
+color:#666;
+} 
+
+.currencyOption{
+padding:10px 12px;
+cursor:pointer;
+border-radius:8px;
+font-size:13px;
+} 
+
+.currencyOption:hover{
+background:#eef3ff;
+} 
+
+#currencyModal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+z-index:99999;
+align-items:center;
+justify-content:center;
+} 
+
+.currencyBox{
+background:white;
+padding:20px;
+border-radius:18px;
+width:240px;
+} 
+
+.countryPopupList{
+max-height:360px; /* roughly 10 items */
+overflow-y:auto;
+overflow-x:hidden;
+} 
+
+.countryPopupList::-webkit-scrollbar{
+width:6px;
+} 
+
+.countryPopupList::-webkit-scrollbar-thumb{
+background:#d6dceb;
+border-radius:999px;
+} 
+
+.countryPopupList::-webkit-scrollbar-track{
+background:transparent;
+} 
+
+#redirectOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:99999;
+} 
+
+.redirectBox{
+background:white;
+padding:24px;
+border-radius:18px;
+text-align:center;
+width:240px;
+box-shadow:0 10px 40px rgba(0,0,0,0.15);
+} 
+
+.spinner{
+width:32px;
+height:32px;
+border:3px solid #ddd;
+border-top-color:#0042FD;
+border-radius:50%;
+margin:0 auto 16px;
+animation:spin 1s linear infinite;
+} 
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+} 
+
+.containertopbar{
+max-width:1400px;
+margin:0 auto;
+padding:20px;
+box-sizing:border-box;
+} 
+
+.topbar{
+width:100%;
+display:flex;
+justify-content:center;
+} 
+
+.search{
+position:relative;
+max-width:850px;
+width:100%;
+} 
+
+@media(max-width:900px){ 
+
+.container{
+flex-direction:column;
+padding:12px;
+} 
+
+.containertopbar{
+padding:12px;
+} 
+
+.search{
+max-width:none;
+width:100%;
+} 
+
+.topbar{
+width:100%;
+} 
+
+.sidebar{
+max-width:none;
+width:100%;
+} 
+
+.grid{
+grid-template-columns:1fr;
+} 
+
+.topButtons{
+flex-direction:column;
+align-items:stretch;
+margin-top:2px;
+} 
+
+.clearBtn,
+.sortSelect,
+.currencyTopBtn{
+width:100%;
+text-align:center;
+} 
+
+.sortSelect{
+text-align:center;
+text-align-last:center;
+} 
+
+.currencyTopBtn{
+display:flex;
+justify-content:center;
+align-items:center;
+} 
+
+} 
+
+/* =========================
+LOCKED FILTER CHIPS (UPDATED)
+========================= */ 
+
+.locked-chip {
+  display:inline-flex;
+align-items:center;
+justify-content:center; 
+
+padding:9px 14px;
+border-radius:999px; 
+
+background:#EEF1F7;
+color:#b2bad1; 
+
+font-family:Lexend,sans-serif;
+font-size:13px;
+font-weight:500; 
+
+cursor:pointer;
+transition:0.2s ease; 
+
+opacity:0.82;
+} 
+
+.locked-chip:hover{
+opacity:1;
+transform:translateY(-1px);
+} 
+
+/* blurred text ONLY */
+.locked-chip span {
+  filter: blur(0.5px);
+} 
+
+/* =========================
+FLAT LOCK ICON (FIXED - NO HANDBAG LOOK
+========================= */
+.lock-icon {
+  width: 10px;
+  height: 10px;
+  background: #8c8c8c;
+  border-radius: 2px;
+  display: none;
+  flex-shrink: 0;
+} 
+
+/* top shackle (closed lock look) */
+.lock-icon::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 6px;
+  border: 2px solid #8c8c8c;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  top: -7px;
+  left: 1px;
+} 
+
+/* =========================
+LOCKED GRID (spacing fix only)
+========================= */
+.locked-grid{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:10px;
+margin-bottom:6px;
+} 
+
+/* =========================
+MOBILE SPACING IMPROVEMENT
+========================= */
+@media (max-width: 768px) {
+  .locked-grid {
+    margin-bottom: 24px;
+  }
+} 
+
+/* =========================
+PREMIUM TOOLTIP
+========================= */
+
+
+.premiumPopup{
+position:fixed;
+display:none;
+background:white;
+border-radius:18px;
+padding:18px;
+width:260px;
+max-width:calc(100vw - 28px);
+box-sizing:border-box;
+box-shadow:0 10px 40px rgba(0,0,0,0.14);
+z-index:999999;
+border:1px solid #eef3ff;
+} 
+
+.premiumTitle{
+font-family:"Libre Bodoni",serif;
+font-size:18px;
+margin-bottom:8px;
+color:#111;
+} 
+
+.premiumText{
+font-size:14px;
+line-height:1.6;
+color:#555;
+margin-bottom:14px;
+} 
+
+.premiumBtn{
+display:block;
+width:100%;
+padding:12px;
+border:none;
+border-radius:999px;
+background:#0042FD;
+color:white;
+font-family:Lexend;
+cursor:pointer;
+font-size:14px;
+} 
+
+.closeMini{
+position:absolute;
+top:10px;
+right:12px;
+cursor:pointer;
+font-size:16px;
+color:#999;
+}
+
+
+/* IMAGE LABEL */ 
+
+.imageLabel{
+position:absolute;
+top:12px;
+left:12px;
+z-index:5;
+padding:6px 10px;
+border-radius:999px;
+font-family: Lexend, sans-serif;
+font-size:7px;
+font-weight:normal;
+letter-spacing:.1px;
+text-transform:uppercase;
+background:rgba(255,255,255,.82);
+backdrop-filter:blur(10px);
+color:#909090;
+box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+
+
+/* =========================
+BOTTOM FILTER STICKY BAR
+========================= */ 
+
+#bottomFilterBar{
+display:none;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-top:18px;
+margin-bottom:18px
+} 
+
+@media(min-width:901px){ 
+
+#bottomFilterBar{
+display:none !important;
+} 
+
+}
+
+
+#filterCount{ 
+
+flex:1; 
+
+background:#F5F6F8; 
+
+padding:16px 16px;
+border-radius:14px;
+font-family:Libre bodoni;
+background:#eef3ff;
+color:#001A66;
+font-size:13px;
+font-weight:500;
+text-align:center;
+cursor:pointer;
+touch-action:manipulation;
+} 
+
+#floatingSearchBtn{ 
+
+background:#0042FD;
+color:white; 
+
+padding:16px 18px; 
+
+border-radius:14px; 
+
+display:flex;
+align-items:center;
+justify-content:center; 
+
+font-size:14px;
+font-weight:600; 
+
+cursor:pointer; 
+
+white-space:nowrap;
+} 
+
+/* SAME SEARCH ICON */
+#floatingSearchBtn
+.searchIcon{ 
+
+border-color:white; 
+
+} 
+
+#floatingSearchBtn
+.searchIcon::after{ 
+
+background:white; 
+
+} 
+
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+body{
+overflow-x:hidden;
+position:relative;
+padding-bottom:120px;
+} 
+
+/* SEARCH POPUP */ 
+
+#searchOverlay{ 
+
+position:fixed; 
+
+inset:0; 
+
+display:none;
+justify-content:center;
+align-items:center; 
+
+background:
+rgba(255,255,255,.74); 
+
+backdrop-filter:
+blur(3px); 
+
+z-index:999999; 
+
+-webkit-backdrop-filter:
+blur(3px); 
+
+} 
+
+.searchPopup{
+background:white;
+padding:20px 28px;
+border-radius:20px;
+box-shadow:0 6px 24px rgba(0,0,0,0.08);
+font-family:Lexend,sans-serif;
+font-size:15px;
+letter-spacing:.4px;
+color:#697CA5;
+text-align:center;
+} 
+
+#searchInlineStatus{ 
+
+display:none; 
+
+position:fixed; 
+
+left:50%;
+transform:translateX(-50%); 
+
+width:calc(100% - 24px);
+max-width:520px; 
+
+top:0px; 
+
+padding:20px 18px; 
+
+border-radius:14px; 
+
+background:rgba(255,255,255,.95); 
+
+backdrop-filter:blur(12px); 
+
+box-shadow:
+0 10px 24px rgba(0,0,0,.12); 
+
+font-size:14px;
+font-weight:500; 
+
+text-align:center; 
+
+color:#697CA5; 
+
+z-index:999998; 
+
+transition:opacity .25s ease; 
+
+pointer-events:none; 
+
+} 
+
+select.sortSelect {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23697CA5' height='20' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+} 
+
+/* =========================
+FILTER DROPDOWNS
+========================= */ 
+
+.filterSelect{ 
+
+display:block;
+width:100%; 
+
+padding:10px 42px 10px 16px; 
+
+margin:4px 0 0 0; 
+
+border:2px solid #dbe4ff;
+border-radius:999px; 
+
+background:#eef3ff; 
+
+font-family:Lexend,sans-serif;
+font-size:14px;
+font-weight:500;
+color:#001A66; 
+
+cursor:pointer;
+outline:none; 
+
+box-sizing:border-box; 
+
+appearance:none;
+-webkit-appearance:none;
+-moz-appearance:none; 
+
+transition:.2s ease; 
+
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23697CA5' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); 
+
+background-repeat:no-repeat;
+background-position:right 14px center;
+background-size:14px; 
+
+} 
+
+.filterSelect:hover{ 
+
+border-color:#c8d7ff;
+background:#f4f7ff; 
+
+} 
+
+.filterSelect:focus{ 
+
+border-color:#0042FD;
+box-shadow:0 0 0 3px rgba(0,66,253,.10); 
+
+} 
+
+.filterSelect:disabled{ 
+
+background:#f6f7fa;
+border-color:#eceff5;
+color:#b3b8c6;
+cursor:not-allowed;
+opacity:1; 
+
+} 
+
+.filterSelect option{ 
+
+font-family:Lexend,sans-serif;
+font-size:14px;
+color:#222; 
+
+} 
+
+/* Desktop */ 
+
+@media (min-width:901px){ 
+
+.filterSelect{ 
+
+width:100%; 
+
+} 
+
+} 
+
+/* Mobile */ 
+
+@media (max-width:900px){ 
+
+.filterSelect{ 
+
+width:auto;
+min-width:180px;
+max-width:100%; 
+
+} 
+
+} 
+
+
+/* Compact first-screen layout tuned to the supplied mobile reference */
+.sg-header{height:auto;min-height:72px}
+.sg-header-inner{min-height:72px;padding:8px 6%;gap:0}
+.sg-menu{margin-right:clamp(18px,8vw,56px);flex:0 0 32px;width:32px;height:38px}
+.sg-menu:before{font-size:31px}
+.sg-brand{font-size:clamp(21px,5.8vw,40px);gap:10px;letter-spacing:0}
+.sg-hero{min-height:0;height:auto;padding:32px 16px 28px;gap:0}
+.sg-hero h1{font-size:clamp(30px,7.1vw,54px);line-height:1.12;margin:0 0 24px;white-space:normal}
+.sg-hero h1:before{margin-right:9px}
+.sg-hero p{font-size:clamp(19px,4.6vw,30px);line-height:1.42;max-width:600px}
+.sg-hero .sg-btn{margin-top:28px;min-width:0;min-height:0;padding:15px 28px;font-size:16px;letter-spacing:.12em}
+.sg-carousel{margin:0 0 26px;padding:0}
+.sg-slide{height:clamp(205px,34vh,290px);min-height:0;padding:22px 42px;border-radius:0;background-position:center}
+.sg-slide h2{font-size:clamp(26px,5.7vw,40px);line-height:1.15;margin:0 auto 14px}
+.sg-slide p{font-size:clamp(14px,3.5vw,20px);line-height:1.4;margin:0 auto 17px}
+.sg-slide .sg-btn{min-width:0;min-height:0;padding:13px 23px;font-size:13px;letter-spacing:.08em}
+.sg-carousel-arrow{top:50%;bottom:auto;transform:translateY(-50%);width:32px;height:42px;border:1px solid #ffffff80;border-radius:50%;background:#001a6640;color:white;font-size:25px}
+.sg-prev{left:8px}.sg-next{right:8px}
+.sg-dots{display:none}
+@media(max-width:760px){
+ .sg-header{height:auto;min-height:72px}
+ .sg-header-inner{height:72px;min-height:72px;padding:0 16px;gap:0}
+ .sg-menu{margin:0 18px 0 0;flex:0 0 30px;width:30px;height:38px}
+ .sg-menu:before{font-size:30px}
+ .sg-brand{font-size:clamp(20px,5.5vw,34px);gap:8px;white-space:nowrap}
+ .sg-hero{min-height:0;padding:31px 14px 26px}
+ .sg-hero h1{font-size:clamp(30px,7.2vw,48px);line-height:1.12;margin-bottom:22px;white-space:normal}
+ .sg-hero p{font-size:clamp(19px,4.5vw,29px);line-height:1.42}
+ .sg-hero .sg-btn{margin-top:25px;min-width:0;max-width:none;min-height:0;padding:14px 27px;font-size:15px}
+ .sg-carousel{margin:0 0 24px}
+ .sg-slide{height:clamp(205px,32vh,270px);min-height:0;padding:22px 39px}
+ .sg-slide h2{font-size:clamp(25px,6vw,39px);line-height:1.16;margin-bottom:13px}
+ .sg-slide p{font-size:clamp(14px,3.7vw,20px);line-height:1.4;margin-bottom:16px}
+ .sg-slide .sg-btn{min-height:0;padding:12px 20px;font-size:13px}
+ .sg-carousel-arrow{top:50%;bottom:auto;height:40px;width:30px;transform:translateY(-50%);background:#001a6640;border:1px solid #ffffff80;border-radius:50%;font-size:23px}
+ .sg-section{padding:22px 16px 42px}
 }
 </style>
-</head>
-<body>
-<header>
-<a class="brand" href="#home">SALAM GUEST</a>
-<nav class="desktop" aria-label="Main navigation">
-<a href="#home">Home</a><a href="#explore">Explore Stays</a>
-<a href="#destinations">Destinations</a><a href="#guides">Travel Guides</a>
-<a href="#about">About</a>
-</nav>
-<button class="menu-button" id="openMenu" aria-label="Open menu">☰</button>
-</header>
+<style>
+:root{--sg-blue:#0042FF;--sg-brown:#592700;--sg-white:#FDFDFD;--sg-ink:#172033;--sg-muted:#667085;--sg-radius:20px}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--sg-white);color:var(--sg-ink);font-family:Lexend,Arial,sans-serif;line-height:1.55}
+a{color:inherit}.sg-header{position:sticky;top:0;z-index:5000;background:var(--sg-blue);color:white;box-shadow:0 4px 18px #001a6630}.sg-header-inner{max-width:1200px;margin:auto;min-height:76px;padding:12px 22px;display:flex;align-items:center;gap:28px}.sg-brand{font-family:'Playfair Display',Georgia,serif;font-size:25px;letter-spacing:.04em;text-decoration:none;white-space:nowrap}.sg-brand small{display:block;font:10px Arial,sans-serif;letter-spacing:.22em}.sg-nav{margin-left:auto;display:flex;gap:22px;align-items:center}.sg-nav a,.sg-drawer a{font-size:13px;text-decoration:none}.sg-nav a:hover,.sg-drawer a:hover{text-decoration:underline}.sg-menu{display:none;margin-left:auto;border:1px solid #ffffff90;background:transparent;color:white;border-radius:12px;padding:9px 12px;font-size:22px}.sg-hero{max-width:1200px;margin:auto;padding:62px 24px 45px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:32px}.sg-eyebrow{font-size:11px;letter-spacing:.2em;color:var(--sg-brown);font-weight:700}.sg-hero h1{font:clamp(42px,6vw,72px)/1.02 'Playfair Display',Georgia,serif;color:var(--sg-blue);margin:12px 0 18px}.sg-hero p{font-size:16px;max-width:530px;color:#364152}.sg-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--sg-blue);color:white!important;text-decoration:none;border:0;border-radius:999px;padding:13px 23px;font-weight:700;font-size:12px;letter-spacing:.04em;cursor:pointer}.sg-hero-art{min-height:300px;border-radius:26px;background:linear-gradient(135deg,#0042ff 0%,#275dff 55%,#592700 170%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;color:white;padding:30px}.sg-hero-art:before,.sg-hero-art:after{content:'';position:absolute;border:1px solid #ffffff50;border-radius:50%;width:260px;height:260px;right:-45px;top:-65px}.sg-hero-art:after{width:180px;height:180px;right:55px;top:90px}.sg-art-copy{position:relative;z-index:1;text-align:center}.sg-art-copy strong{display:block;font:36px 'Playfair Display',Georgia,serif}.sg-art-copy span{font-size:12px;letter-spacing:.14em}.sg-carousel{max-width:1200px;margin:0 auto 58px;padding:0 24px}.sg-slide{min-height:240px;border-radius:var(--sg-radius);padding:35px 58px;display:flex;align-items:center;background:linear-gradient(100deg,#0042ffef,#0042ff88),linear-gradient(135deg,#592700,#0042ff);color:white;position:relative;overflow:hidden}.sg-slide[ data-align="center"]{justify-content:center;text-align:center}.sg-slide[data-align="right"]{justify-content:flex-end;text-align:right}.sg-slide h2{font:clamp(27px,4vw,42px)/1.12 'Playfair Display',Georgia,serif;margin:0 0 10px;max-width:700px}.sg-slide p{margin:0 0 20px;max-width:620px}.sg-slide .sg-btn{background:white;color:var(--sg-blue)!important}.sg-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:1px solid #ffffffaa;background:#ffffff20;color:white;font-size:22px;cursor:pointer}.sg-prev{left:12px}.sg-next{right:12px}.sg-dots{display:flex;gap:7px;justify-content:center;margin-top:12px}.sg-dot{height:7px;width:7px;border-radius:99px;border:0;background:#b7c5ff;padding:0}.sg-dot[aria-current=true]{background:var(--sg-blue);width:22px}.sg-section{max-width:1200px;margin:0 auto;padding:22px 24px 60px}.sg-section-head{text-align:center;margin-bottom:28px}.sg-section-head h2{font:clamp(29px,4vw,42px) 'Playfair Display',Georgia,serif;color:var(--sg-blue);margin:0 0 8px}.sg-section-head p{color:var(--sg-muted);margin:0}.sg-features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.sg-feature{border:1px solid #e4e9f5;border-radius:18px;padding:24px;display:flex;gap:17px;background:white}.sg-feature-icon{width:52px;height:52px;flex:0 0 52px;border-radius:15px;background:#edf1ff;color:var(--sg-blue);display:grid;place-items:center;font-size:23px}.sg-feature h3{margin:0 0 6px;font-size:16px}.sg-feature p{margin:0 0 12px;font-size:13px;color:var(--sg-muted)}.sg-feature a{font-size:12px;color:var(--sg-blue);font-weight:700}.sg-faq-list{max-width:850px;margin:auto}.sg-faq-item{border-bottom:1px solid #dce2ef}.sg-faq-q{width:100%;text-align:left;background:transparent;border:0;padding:19px 0;font:600 15px Arial,sans-serif;display:flex;justify-content:space-between;gap:18px;cursor:pointer;color:var(--sg-ink)}.sg-faq-a{padding:0 0 18px;color:var(--sg-muted);font-size:14px}.sg-footer{background:#101d43;color:#fdfdfd;padding:40px 24px 22px}.sg-footer-inner{max-width:1152px;margin:auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}.sg-footer h3{font:22px 'Playfair Display',Georgia,serif;margin:0 0 12px}.sg-footer h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase}.sg-footer a{display:block;text-decoration:none;font-size:13px;color:#dce4ff;margin:8px 0}.sg-copyright{max-width:1152px;margin:28px auto 0;padding-top:17px;border-top:1px solid #ffffff30;color:#c6d0f0;font-size:11px}.sg-overlay{display:none;position:fixed;inset:0;background:#07122c80;z-index:6000}.sg-overlay.open{display:block}.sg-drawer{position:absolute;left:0;top:0;bottom:0;width:min(84vw,340px);background:white;color:var(--sg-ink);padding:24px;box-shadow:10px 0 30px #0002;overflow:auto}.sg-drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.sg-drawer-top button{font-size:25px;background:none;border:0}.sg-drawer h2{font:26px 'Playfair Display',Georgia,serif;color:var(--sg-blue);margin:12px 0}.sg-drawer nav{display:grid;gap:18px;margin:22px 0}.sg-drawer .sg-btn{width:100%}.sg-filter-section{padding-top:28px}.sg-note{font-size:12px;color:#667085;text-align:center;margin:10px auto 22px;max-width:800px}
+@media(max-width:760px){.sg-header-inner{min-height:66px;padding:10px 16px}.sg-brand{font-size:22px}.sg-nav{display:none}.sg-menu{display:block}.sg-hero{grid-template-columns:1fr;padding:40px 18px 30px;gap:22px}.sg-hero-art{min-height:210px}.sg-carousel{padding:0 14px;margin-bottom:35px}.sg-slide{padding:30px 45px;min-height:220px}.sg-section{padding:18px 16px 42px}.sg-features{grid-template-columns:1fr}.sg-feature{padding:19px}.sg-footer-inner{grid-template-columns:1fr;gap:18px}.sg-footer{padding:32px 20px 18px}}
+</style>
+<style id="salamguest-design-match">
+:root{--sg-blue:#0645f5;--sg-brown:#592700;--sg-white:#fff;--sg-ink:#071d52;--sg-muted:#667085;--sg-radius:0}
+html,body{margin:0!important;padding:0!important;width:100%;overflow-x:hidden;background:#fff;font-family:'Lexend',sans-serif;color:#071d52}
+.sg-header{height:114px;position:relative;top:auto;box-shadow:none;background:#0645f5;color:#fff;border-bottom:2px solid #dce4ff}
+.sg-header-inner{height:100%;min-height:0;max-width:none;padding:0 6.5%;gap:22px;justify-content:flex-start}
+.sg-brand{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(23px,5vw,48px);letter-spacing:.015em;color:#fff;display:flex;align-items:center;gap:14px}
+.sg-brand small{display:none}
+.sg-menu{display:block;order:-1;margin:0 38px 0 0;border:0;padding:0;background:transparent;color:#fff;border-radius:0;font-size:0;width:38px;height:42px;position:relative;flex:0 0 38px}
+.sg-menu:before{content:'☰';font:38px/1 'Lexend',sans-serif;color:white}
+.sg-nav{display:none}
+.sg-hero{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:0;text-align:center;max-width:none;width:100%;padding:50px 20px 52px;min-height:586px;box-sizing:border-box}
+.sg-hero>div:first-child{display:flex;flex-direction:column;align-items:center;width:100%}
+.sg-eyebrow{display:none}
+.sg-hero h1{font:700 clamp(38px,7.7vw,68px)/1.15 'Playfair Display',serif;color:#0645d9;margin:0 0 52px;letter-spacing:-.025em}
+.sg-hero h1:before{content:'⌂';display:inline-block;font:400 .62em/1 'Lexend',sans-serif;margin-right:18px;vertical-align:middle}
+.sg-hero p{font:400 clamp(23px,4.6vw,46px)/1.52 'Lexend',sans-serif;letter-spacing:-.025em;color:#071d52;max-width:700px;margin:0 auto}
+.sg-hero .sg-btn{margin-top:110px;min-width:345px;min-height:102px;padding:25px 40px;font:400 27px/1 'Lexend',sans-serif;letter-spacing:.14em;background:#0645f5;border-radius:60px;color:white!important}
+.sg-hero-art{display:none}
+.sg-carousel{width:100%;max-width:none;margin:0 0 48px;padding:0}
+.sg-slide{height:594px;min-height:0;border-radius:0;padding:38px 7%;display:flex;align-items:center;justify-content:center;text-align:center;background-image:linear-gradient(90deg,rgba(16,30,89,.60),rgba(14,28,88,.55)),url('https://imageupload.io/f/CkwpT2TV.jpg');background-size:cover;background-position:center;color:#fff}
+.sg-slide>div{width:100%;display:flex;flex-direction:column;align-items:center}
+.sg-slide h2{font:700 clamp(35px,7.3vw,66px)/1.42 'Playfair Display',serif;max-width:720px;margin:0 auto 48px;color:#fff}
+.sg-slide p{font:400 clamp(21px,4.6vw,42px)/1.65 'Lexend',sans-serif;max-width:780px;margin:0 auto 42px;color:#fff}
+.sg-slide .sg-btn{min-width:min(455px,82vw);min-height:98px;padding:22px 35px;border-radius:60px;background:#fff;color:#0645c8!important;font:400 clamp(18px,3.5vw,29px)/1.2 'Lexend',sans-serif;letter-spacing:.08em}
+.sg-carousel-arrow{top:auto;bottom:-108px;transform:none;width:50%;height:108px;border:0;border-radius:0;background:#0645f5;color:#dce5ff;font:48px/1 'Lexend',sans-serif}
+.sg-prev{left:0}.sg-next{right:0}
+.sg-dots{display:none}
+.sg-section{max-width:1200px;margin:0 auto;padding:28px 24px 60px}
+.sg-section-head h2,.sg-footer h3,.sg-drawer h2{font-family:'Playfair Display',serif}
+.sg-section-head h2{color:#0645d9}
+.sg-faq-q{font-family:'Lexend',sans-serif}
+@media(max-width:760px){
+.sg-header{height:114px}.sg-header-inner{padding:0 6.5%;min-height:0;gap:0}.sg-menu{margin-right:72px;width:38px;flex-basis:38px}.sg-brand{font-size:clamp(24px,6.3vw,48px);white-space:nowrap;gap:12px}.sg-hero{min-height:586px;padding:50px 18px 52px}.sg-hero h1{font-size:clamp(37px,7.8vw,62px);margin-bottom:52px;white-space:nowrap}.sg-hero h1:before{margin-right:12px}.sg-hero p{font-size:clamp(22px,4.7vw,36px);line-height:1.6}.sg-hero .sg-btn{margin-top:110px;min-width:345px;max-width:90vw;min-height:102px;font-size:26px}.sg-carousel{margin-bottom:160px}.sg-slide{height:594px;min-height:594px;padding:38px 7%;background-position:center}.sg-slide h2{font-size:clamp(35px,7.3vw,58px);line-height:1.42;margin-bottom:48px}.sg-slide p{font-size:clamp(21px,4.6vw,36px);line-height:1.65;margin-bottom:42px}.sg-slide .sg-btn{min-height:98px}.sg-carousel-arrow{bottom:-108px;height:108px}.sg-section{padding:22px 16px 42px}
+}
+</style>
+<style id="sg-compact-correction">
+/* Final compact mobile-first correction based on the supplied screenshot */
+.sg-header{position:sticky!important;top:0!important;height:64px!important;min-height:64px!important;z-index:9000!important}
+.sg-header-inner{height:64px!important;min-height:64px!important;padding:0 14px!important;gap:0!important}
+.sg-menu{width:28px!important;height:32px!important;flex:0 0 28px!important;margin:0 18px 0 0!important}
+.sg-menu:before{font-size:28px!important}
+.sg-brand{font-size:clamp(20px,5.4vw,32px)!important;gap:7px!important;letter-spacing:0!important;white-space:nowrap!important}
+.sg-hero{width:100%!important;min-height:0!important;height:auto!important;padding:22px 12px 18px!important;gap:0!important}
+.sg-hero>div:first-child{width:100%!important}
+.sg-hero h1{font-size:clamp(27px,6.6vw,42px)!important;line-height:1.08!important;letter-spacing:-.025em!important;margin:0 0 14px!important;white-space:normal!important}
+.sg-hero h1:before{font-size:.58em!important;margin-right:7px!important}
+.sg-hero p{font-size:clamp(16px,4.1vw,22px)!important;line-height:1.32!important;max-width:520px!important;margin:0 auto!important}
+.sg-hero .sg-btn{margin-top:16px!important;min-width:0!important;min-height:0!important;height:42px!important;padding:0 22px!important;font-size:12px!important;letter-spacing:.1em!important;line-height:1!important}
+.sg-carousel{width:100%!important;max-width:none!important;margin:0 0 24px!important;padding:0!important}
+.sg-slide{height:clamp(170px,25vh,220px)!important;min-height:0!important;padding:16px 38px!important;border-radius:0!important;background-size:cover!important;background-position:center!important}
+.sg-slide>div{width:100%!important}
+.sg-slide h2{font-size:clamp(23px,5.8vw,34px)!important;line-height:1.12!important;margin:0 auto 8px!important;max-width:520px!important}
+.sg-slide p{font-size:clamp(13px,3.6vw,17px)!important;line-height:1.3!important;margin:0 auto 10px!important;max-width:560px!important}
+.sg-slide .sg-btn{min-width:0!important;min-height:0!important;height:38px!important;padding:0 18px!important;font-size:11px!important;letter-spacing:.07em!important;line-height:1!important}
+.sg-carousel-arrow{top:50%!important;bottom:auto!important;transform:translateY(-50%)!important;width:28px!important;height:36px!important;background:#001a6640!important;border:1px solid #ffffff80!important;border-radius:50%!important;font-size:22px!important}
+.sg-prev{left:7px!important}.sg-next{right:7px!important}
+.sg-section{padding:20px 14px 38px!important}
+@media(min-width:761px){
+ .sg-header{height:72px!important;min-height:72px!important}.sg-header-inner{height:72px!important;min-height:72px!important}
+ .sg-hero{padding:28px 18px 22px!important}.sg-hero h1{font-size:44px!important;margin-bottom:12px!important}.sg-hero p{font-size:21px!important}.sg-hero .sg-btn{height:42px!important;margin-top:14px!important}
+ .sg-slide{height:220px!important}.sg-slide h2{font-size:34px!important}.sg-slide p{font-size:17px!important}
+}
+</style>
 
-<div class="drawer" id="drawer">
-<div class="panel">
-<button class="close" id="closeMenu" aria-label="Close menu">×</button>
-<h2>SALAM GUEST</h2>
-<p>Travel with confidence.</p>
-<nav>
-<a href="#home">Home</a>
-<a href="#explore">Explore Stays</a>
-<a href="#destinations">Destinations</a>
-<a href="#guides">Travel Guides</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
-</nav>
-<a class="cta" href="../basicfilters-fsb-v1.html">Explore Stays →</a>
+<style id="sg-design-system-v2">
+/* Shared rhythm: section content uses the same compact vertical breathing room as the nav brand. */
+:root{--sg-unit:12px;--sg-section-bg:#fdfdfd;--sg-section-image:none;--sg-faq-bg:#0645f5;--sg-faq-text:#ffffff}
+.sg-slide{padding:var(--sg-unit) 38px!important;box-sizing:border-box!important}
+.sg-slide>div{padding-block:var(--sg-unit)!important;box-sizing:border-box}
+.sg-slide h2{margin-bottom:8px!important}
+.sg-slide p{margin-bottom:10px!important}
+.sg-section{background-color:var(--section-bg,var(--sg-section-bg));background-image:var(--section-image,var(--sg-section-image));background-size:cover;background-position:center;background-repeat:no-repeat}
+/* Feature layout variants: set data-layout="stack" for centered icon, heading and description in one column. */
+.sg-feature[data-layout="stack"],.sg-feature.sg-feature--stack{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.sg-feature[data-layout="stack"] .sg-feature-icon,.sg-feature.sg-feature--stack .sg-feature-icon{margin:0 auto;width:46px;height:46px;flex-basis:46px}
+.sg-feature[data-layout="stack"]>div:not(.sg-feature-icon),.sg-feature.sg-feature--stack>div:not(.sg-feature-icon){width:100%}
+.sg-feature[data-layout="stack"] h3,.sg-feature.sg-feature--stack h3{margin:0 0 6px}
+.sg-feature[data-layout="stack"] p,.sg-feature.sg-feature--stack p{margin:0 0 10px}
+/* Per-section background controls are represented by CSS custom properties, ready for CMS fields. */
+#faqs{max-width:none!important;margin:0!important;padding:24px 16px 34px!important;background-color:var(--faq-background,#0642ff)!important;background-image:var(--faq-image,none)!important;background-size:cover;background-position:center;color:var(--faq-foreground,#fff)}
+#faqs .sg-section-head h2,#faqs .sg-section-head p,#faqs .sg-faq-q,#faqs .sg-faq-a{color:var(--faq-foreground,#fff)!important}
+#faqs .sg-faq-item{border-color:#ffffff55}
+#faqs .sg-faq-q{font-family:'Lexend',sans-serif}
+@media(max-width:760px){.sg-slide{padding:12px 34px!important}.sg-slide>div{padding-block:12px!important}.sg-section{padding-top:12px!important;padding-bottom:24px!important}}
+</style>
+
+<style id="sg-screenshot-match-v3">
+/* Visual hierarchy from the supplied mobile screenshot: Playfair Display headings, small uppercase Lexend subheadings. */
+:root{--sg-line-hero-subtitle:1.25;--sg-line-slider-title:1.12;--sg-line-slider-subtitle:1.3;--sg-line-feature-body:1.45;--sg-line-faq-body:1.45;--sg-section-space-top:12px;--sg-section-space-bottom:24px;--sg-slider-copy-space:12px}
+.sg-header{position:sticky!important;top:0!important;z-index:9000!important}
+.sg-hero{padding:22px 12px 16px!important;min-height:0!important;height:auto!important;gap:0!important}
+.sg-hero h1{margin:0 0 10px!important;line-height:1.08!important}
+.sg-hero p{font-size:clamp(16px,3.7vw,22px)!important;line-height:var(--sg-line-hero-subtitle)!important;margin:0 auto!important}
+.sg-hero .sg-btn{height:36px!important;min-height:36px!important;padding:0 18px!important;margin-top:10px!important;font-size:10px!important;letter-spacing:.1em!important}
+.sg-carousel{margin:0 0 18px!important;padding:0!important}
+.sg-slide{height:clamp(168px,24vh,215px)!important;min-height:0!important;padding:var(--sg-slider-copy-space) 34px!important;border-radius:0!important;}
+.sg-slide>div{padding-block:var(--sg-slider-copy-space)!important}
+.sg-slide h2{font-size:clamp(23px,5.5vw,34px)!important;line-height:var(--sg-line-slider-title)!important;margin:0 auto 7px!important;text-transform:none!important}
+.sg-slide p{font-size:12px!important;line-height:var(--sg-line-slider-subtitle)!important;text-transform:uppercase!important;letter-spacing:.045em!important;margin:0 auto 9px!important;max-width:560px!important}
+.sg-slide .sg-btn{height:32px!important;min-height:32px!important;padding:0 15px!important;font-size:10px!important;min-width:0!important;letter-spacing:.07em!important}
+.sg-carousel-arrow{top:50%!important;bottom:auto!important;width:25px!important;height:32px!important;transform:translateY(-50%)!important;background:#001a6640!important;border:1px solid #ffffff80!important;border-radius:50%!important;font-size:20px!important}
+.sg-carousel-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px}
+.sg-carousel-controls .sg-dots{display:flex!important;margin:0!important;gap:5px}
+.sg-autoplay-toggle{border:1px solid #dce4ff;border-radius:999px;background:#fff;color:#0645f5;font:500 9px/1 Lexend,sans-serif;letter-spacing:.06em;padding:6px 9px;cursor:pointer}
+.sg-section{padding-top:var(--sg-section-space-top)!important;padding-bottom:var(--sg-section-space-bottom)!important}
+.sg-section-head{margin-bottom:14px!important}
+.sg-section-head p,.sg-feature p,.sg-faq-a{line-height:var(--sg-line-feature-body)}
+.sg-feature p{line-height:var(--sg-line-feature-body)!important}
+.sg-faq-a{line-height:var(--sg-line-faq-body)!important}
+.sg-feature[data-layout="stack"]{flex-direction:column!important;align-items:center!important;text-align:center!important}
+@media(min-width:761px){.sg-hero{padding:26px 18px 18px!important}.sg-carousel{margin-bottom:22px!important}.sg-slide{height:230px!important}.sg-slide p{font-size:13px!important}.sg-hero .sg-btn{margin-top:12px!important}}
+</style>
+
+</head><body>
+<header class="sg-header"><div class="sg-header-inner"><button class="sg-menu" id="sgOpenMenu" aria-label="Open menu">☰</button><a class="sg-brand" href="#top"><span style="font-family:Lexend,sans-serif;font-weight:300">⌂</span> SALAM, GUEST</a><nav class="sg-nav"><a href="#top">Home</a><a href="#explore">Explore Stays</a><a href="#destinations">Destinations</a><a href="#guides">Travel Guides</a><a href="#about">About</a><a href="#contact">Contact</a></nav></div></header>
+<div class="sg-overlay" id="sgOverlay"><aside class="sg-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu"><div class="sg-drawer-top"><a class="sg-brand" href="#top" style="color:#0042FF">⌂ SALAM GUEST</a><button id="sgCloseMenu" aria-label="Close menu">×</button></div><h2>Travel with confidence</h2><p>Thoughtful travel resources for Muslim travellers.</p><nav><a href="#top">Home</a><a href="#explore">Explore Stays</a><a href="#destinations">Destinations</a><a href="#guides">Travel Guides</a><a href="#about">About</a><a href="#contact">Contact</a></nav><a class="sg-btn" href="#explore">EXPLORE STAYS →</a></aside></div>
+<main id="top"><section class="sg-hero"><div><h1>SALAM, GUEST</h1><p>Search Halal-Filters,<br>For Muslim friendly Stays</p><a class="sg-btn" href="#explore">BROWSE ⟶</a></div></section>
+<section class="sg-carousel" aria-label="Featured highlights"><div class="sg-slide" id="sgSlide" data-align="left"><div><h2 id="sgSlideTitle">Find stays that fit your needs</h2><p id="sgSlideText">Explore useful facilities and Muslim-friendly travel essentials around the world.</p><a class="sg-btn" id="sgSlideButton" href="#explore">EXPLORE STAYS →</a></div><button class="sg-carousel-arrow sg-prev" id="sgPrev" aria-label="Previous slide">‹</button><button class="sg-carousel-arrow sg-next" id="sgNext" aria-label="Next slide">›</button></div><div class="sg-carousel-controls"><div class="sg-dots" id="sgDots"></div><button type="button" id="sgAutoplayToggle" class="sg-autoplay-toggle" aria-pressed="true">AUTOPLAY: ON</button></div></section>
+<section class="sg-section sg-filter-section" id="explore"><div class="sg-section-head"><h2>Explore Halal Filters for Muslim-Friendly Stays &amp; Experiences</h2><p>Use the filters below to narrow down your search.</p></div><p class="sg-note">Live directory filters are integrated below. Listings depend on the current published spreadsheet data.</p><div class="containertopbar">
+<div class="topbar">
+<div class="search">
+<input id="searchInput" placeholder="Search hotel, stay or any keyword"/>
+<button class="searchBtn" onclick="runStickySearch()">
+<svg viewbox="0 0 24 24">
+<circle cx="11" cy="11" r="7"></circle>
+<line x1="16.65" x2="21" y1="16.65" y2="21"></line>
+</svg>
+</button>
 </div>
 </div>
+</div>
+<div class="container">
+<div class="sidebar">
+<div class="topButtons">
+<button class="clearBtn" onclick="clearAll()">
+CLEAR ALL
+</button>
+<select class="sortSelect" id="sortSelect" onchange="render()">
+<option value="default">SORT</option>
+<option value="lowHigh">Price: Low to High</option>
+<option value="highLow">Price: High to Low</option>
+<option value="ratingHigh">Highest Rated</option>
+<option value="ratingLow">Lowest Rated</option>
+</select>
+<button class="currencyTopBtn" onclick="openCurrencyPopup(event)">
+MYR ▼
+</button>
+</div>
+<!-- MOBILE FILTER STICKY BAR -->
+<div id="bottomFilterBar">
+<div id="filterCount" onclick="scrollToFilters()"> 
 
-<main>
-<section class="hero" id="home">
-<h1>SALAM, GUEST</h1>
-<p>Search Halal Filters for Muslim-friendly Stays</p>
-<a class="cta" href="../basicfilters-fsb-v1.html">BROWSE →</a>
-</section>
+⌂ FILTERS • 0 SELECTED 
 
-<section class="section" id="destinations">
-<div class="promo">
-<div>
-<h2>Halal Stays &amp; Experiences</h2>
-<p>Discover places to stay and travel experiences that better suit your needs.</p>
-<a class="cta" href="../basicfilters-fsb-v1.html">Explore stays →</a>
+</div>
+<div id="floatingSearchBtn" onclick="runStickySearch()"> 
+
+SEARCH 
+
 </div>
 </div>
-</section>
-
-<section class="section" id="explore">
-<h2 class="section-title">Explore Halal Filters for Muslim-friendly Stays &amp; Experiences</h2>
-<div class="filters">
-<input id="search" type="search" placeholder="Search stays and facilities…" aria-label="Search">
-<div class="controls">
-<button class="cta" style="border:0;cursor:pointer;margin:7px 0" id="clear">CLEAR ALL</button>
-<select aria-label="Sort"><option>Sort by</option><option>Name</option></select>
+<div id="searchInlineStatus">
+SEARCHING...
 </div>
-<p class="note">Ready to find a stay? Open the existing SalamGuest filters to search available listings.</p>
-<a class="cta" href="../basicfilters-fsb-v1.html">OPEN STAY FILTERS →</a>
+<div id="loadingSpinner"></div>
+<div id="loadingFilters">
+LOADING FILTERS
 </div>
-</section>
+<div id="filters"></div>
+<!-- LOCKED FILTER PREVIEW BOTTOM OF FILTER BAR -->
+<div class="locked-grid" style="display:none;"> 
 
-<section class="section" id="about">
-<h2 class="section-title">Travel with more confidence</h2>
-<p>SalamGuest helps you discover Muslim-friendly accommodation, useful facilities and thoughtful travel resources around the world.</p>
-</section>
-<section class="section" id="guides">
-<h2 class="section-title">Travel resources</h2>
-<p>Explore useful information as you plan your next journey.</p>
-</section>
-</main>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Halal Certified</span>
+    <div class="lock-icon"></div>
+  </div> 
 
-<footer id="contact">
-<strong>SALAM GUEST</strong><br>
-Discover Muslim-friendly stays and travel resources.<br>
-<small>Frontend preview — not the live Payhip website.</small>
-</footer>
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Mini Fridge Provided</span>
+    <div class="lock-icon"></div>
+  </div> 
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Prayer Room Nearby</span>
+    <div class="lock-icon"></div>
+  </div> 
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Family Friendly</span>
+    <div class="lock-icon"></div>
+  </div> 
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Nearby Mosque</span>
+    <div class="lock-icon"></div>
+  </div> 
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Quiet Stay</span>
+    <div class="lock-icon"></div>
+  </div> 
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Luxury Muslim Stay</span>
+    <div class="lock-icon"></div>
+  </div> 
+
+  <div class="locked-chip" onclick="openPremiumPopup(event)">
+    <span>Transit Friendly</span>
+    <div class="lock-icon"></div>
+  </div>
+</div>
+</div>
+<div class="main">
+<!-- where search bar section used to be -->
+<div id="noResults">
+No results found. Please try a different search.
+</div>
+<div class="grid" id="cards"></div>
+<div class="bottomNav">
+<button onclick="scrollTopSmooth()" style="
+cursor:pointer;
+color:#0042FD;
+font-size:14px;
+background:none;
+border:none;
+padding:0;
+font-family:Lexend,sans-serif;
+">
+Back To Top
+</button>
+<div id="pagination"></div>
+</div>
+</div>
+</div>
+<div id="redirectOverlay">
+<div class="redirectBox">
+<div class="spinner"></div>
+<div style="font-size:14px;">
+Redirecting to booking partner...
+</div>
+</div>
+</div>
+<div class="premiumPopup" id="premiumPopup">
+<div class="closeMini" onclick="closePremiumPopup()">
+✕
+</div>
+<div class="premiumTitle">
+Unlock Premium Filters
+</div>
+<div class="premiumText">
+Discover full filters including prayer access, bidets, halal dining, female-friendly spaces, private pools and more.
+</div>
+<button class="premiumBtn">
+Coming Soon
+</button>
+</div>
+<div class="premiumPopup" id="currencyPopup">
+<div class="closeMini" onclick="closeCurrencyPopup()">
+✕
+</div>
+<div class="premiumTitle">
+Choose Currency
+</div>
+<div class="currencyOption" onclick="setCurrency('MYR')">
+MYR
+</div>
+<div class="currencyOption" onclick="setCurrency('USD')">
+USD
+</div>
+<div class="currencyOption" onclick="setCurrency('SGD')">
+SGD
+</div>
+<div class="currencyOption" onclick="setCurrency('GBP')">
+GBP
+</div>
+<div class="currencyOption" onclick="setCurrency('EUR')">
+EUR
+</div>
+<div class="currencyOption" onclick="setCurrency('JPY')">
+JPY
+</div>
+<div class="currencyOption" onclick="setCurrency('SAR')">
+SAR
+</div>
+<div class="currencyOption" onclick="setCurrency('AED')">
+AED
+</div>
+</div>
+<div id="searchOverlay">
+<div class="searchPopup">
+<div id="searchStatusText">
+SEARCHING
+</div>
+</div>
+</div></section>
+<section class="sg-section" id="about"><div class="sg-section-head"><h2>Travel with confidence</h2><p>Useful details can make planning a little easier.</p></div><div class="sg-features"><article class="sg-feature" data-layout="stack"><div class="sg-feature-icon">⌂</div><div><h3>Travel with confidence</h3><p>Find accommodation details and facilities that matter to your journey.</p><a href="#explore">EXPLORE FILTERS →</a></div></article><article class="sg-feature" id="destinations"><div class="sg-feature-icon">◎</div><div><h3>Discover destinations</h3><p>Explore stays and travel ideas across destinations around the world.</p><a href="#explore">BROWSE STAYS →</a></div></article><article class="sg-feature" id="guides"><div class="sg-feature-icon">✧</div><div><h3>Helpful travel resources</h3><p>Keep useful travel information close while planning your next trip.</p></div></article><article class="sg-feature" data-layout="stack"><div class="sg-feature-icon">♡</div><div><h3>Travel thoughtfully</h3><p>Support a more considerate approach to travel and local communities.</p></div></article></div></section>
+<section class="sg-section" id="faqs"><div class="sg-section-head"><h2>Frequently Asked Questions</h2><p>A few helpful things to know before you browse.</p></div><div class="sg-faq-list"><div class="sg-faq-item"><button class="sg-faq-q" aria-expanded="false">What is SalamGuest? <span>＋</span></button><div class="sg-faq-a" hidden>SalamGuest is a directory to help travellers discover Muslim-friendly accommodation and useful travel resources.</div></div><div class="sg-faq-item"><button class="sg-faq-q" aria-expanded="false">Do the filters guarantee a property is halal-certified? <span>＋</span></button><div class="sg-faq-a" hidden>No. Filter labels describe information available in directory listings and should be checked with the property before booking.</div></div><div class="sg-faq-item"><button class="sg-faq-q" aria-expanded="false">How can I verify a facility before booking? <span>＋</span></button><div class="sg-faq-a" hidden>Contact the accommodation directly to confirm current facilities, policies and availability.</div></div></div></section></main>
+<footer class="sg-footer" id="contact"><div class="sg-footer-inner"><div><h3>⌂ SALAM GUEST</h3><p style="font-size:13px;color:#dce4ff;max-width:300px">Discover Muslim-friendly stays, helpful travel facilities and resources for your next journey.</p></div><div><h4>Quick Links</h4><a href="#top">Home</a><a href="#explore">Explore Stays</a><a href="#destinations">Destinations</a><a href="#guides">Travel Guides</a></div><div><h4>Travel Resources</h4><a href="#faqs">Frequently Asked Questions</a><a href="#about">About SalamGuest</a><a href="mailto:hello@salamguest.com">Contact</a></div></div><div class="sg-copyright">© 2026 SalamGuest. Travel thoughtfully.</div></footer>
 <script>
-const drawer=document.getElementById('drawer');
-document.getElementById('openMenu').onclick=()=>drawer.classList.add('open');
-document.getElementById('closeMenu').onclick=()=>drawer.classList.remove('open');
-drawer.addEventListener('click',e=>{if(e.target===drawer||e.target.closest('a'))drawer.classList.remove('open')});
-document.getElementById('clear').onclick=()=>{document.getElementById('search').value=''};
-</script>
-</body>
-</html>
+(function(){
+/* Homepage design settings. These values are intended to become editable Pages CMS fields. */
+const designSettings={
+  autoplay:true, autoplayIntervalMs:7000,
+  lineHeight:{heroSubtitle:1.25,sliderHeading:1.12,sliderSubtitle:1.3,featureBody:1.45,faqBody:1.45},
+  subtitleTransform:'uppercase', subtitleFontSize:'12px',
+  sectionSpacing:{sliderTextVertical:'12px',sectionTop:'12px',sectionBottom:'24px'}
+};
+const slides=[{title:'Halal Stays & Experiences',text:'Halal filter system, curated for the Muslim guest and traveller',button:'EXPLORE FILTERS',url:'#explore',align:'center'},{title:'Travel with confidence',text:'Discover useful facilities and Muslim-friendly travel essentials around the world.',button:'EXPLORE FILTERS',url:'#explore',align:'center'},{title:'Thoughtful travel starts here',text:'A growing directory for discovering places and useful facilities.',button:'EXPLORE FILTERS',url:'#explore',align:'center'}];
+let idx=0,timer=null,autoplay=designSettings.autoplay;
+const slide=document.getElementById('sgSlide'),dots=document.getElementById('sgDots'),toggle=document.getElementById('sgAutoplayToggle');
+function render(){const s=slides[idx];slide.dataset.align=s.align;document.getElementById('sgSlideTitle').textContent=s.title;document.getElementById('sgSlideText').textContent=s.text;const b=document.getElementById('sgSlideButton');b.textContent=s.button;b.href=s.url;dots.innerHTML='';slides.forEach((_,i)=>{const d=document.createElement('button');d.className='sg-dot';d.setAttribute('aria-label','Go to slide '+(i+1));d.setAttribute('aria-current',String(i===idx));d.onclick=()=>{idx=i;render();restart()};dots.appendChild(d)})}
+function next(n){idx=(idx+n+slides.length)%slides.length;render()}
+function stop(){if(timer){clearInterval(timer);timer=null}}
+function restart(){stop();if(autoplay)timer=setInterval(()=>next(1),designSettings.autoplayIntervalMs);toggle.textContent='AUTOPLAY: '+(autoplay?'ON':'OFF');toggle.setAttribute('aria-pressed',String(autoplay))}
+toggle.onclick=()=>{autoplay=!autoplay;restart()};document.getElementById('sgPrev').onclick=()=>{next(-1);restart()};document.getElementById('sgNext').onclick=()=>{next(1);restart()};
+/* Apply shared line-height settings by section. */
+document.querySelector('.sg-hero p').style.lineHeight=designSettings.lineHeight.heroSubtitle;
+document.getElementById('sgSlideTitle').style.lineHeight=designSettings.lineHeight.sliderHeading;
+document.getElementById('sgSlideText').style.lineHeight=designSettings.lineHeight.sliderSubtitle;
+document.querySelectorAll('.sg-feature p').forEach(el=>el.style.lineHeight=designSettings.lineHeight.featureBody);
+document.querySelectorAll('.sg-faq-a').forEach(el=>el.style.lineHeight=designSettings.lineHeight.faqBody);
+render();restart();
+const overlay=document.getElementById('sgOverlay');document.getElementById('sgOpenMenu').onclick=()=>overlay.classList.add('open');document.getElementById('sgCloseMenu').onclick=()=>overlay.classList.remove('open');overlay.addEventListener('click',e=>{if(e.target===overlay||e.target.closest('a'))overlay.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')overlay.classList.remove('open')});document.querySelectorAll('.sg-faq-q').forEach(q=>q.addEventListener('click',()=>{const a=q.nextElementSibling,open=q.getAttribute('aria-expanded')!=='true';q.setAttribute('aria-expanded',String(open));a.hidden=!open;q.lastElementChild.textContent=open?'−':'＋'}));
+})();
+</script><script>
+ 
 
+const CURRENT_VIEW = "basic"; 
+
+const COUNTRY_MODE = "exclude"; 
+
+const COUNTRY_LIST = [ 
+
+"Israel",
+"North Korea" 
+
+]; 
+
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv"; 
+
+const MAX_ITEMS=20;
+const ITEMS_PER_PAGE=12; 
+
+let data=[];
+let activeFilters=[];
+let currentPage=1;
+let currentCurrency="MYR"; 
+
+let selectedCountry = ""; 
+
+let exchangeRates={
+MYR:1
+}; 
+
+/* EXCHANGE RATES */ 
+
+async function loadRates(){ 
+
+try{ 
+
+const res=await fetch("https://api.exchangerate.host/latest?base=MYR"); 
+
+const json=await res.json(); 
+
+exchangeRates={
+MYR:1,
+USD:json.rates.USD,
+SGD:json.rates.SGD,
+GBP:json.rates.GBP,
+EUR:json.rates.EUR,
+JPY:json.rates.JPY,
+SAR:json.rates.SAR,
+AED:json.rates.AED,
+IDR:json.rates.IDR,
+TRY:json.rates.TRY
+}; 
+
+}catch(err){ 
+
+exchangeRates={
+MYR:1,
+USD:0.21,
+SGD:0.30,
+GBP:0.16,
+EUR:0.19,
+JPY:30,
+SAR:0.79,
+AED:0.77,
+IDR:3300,
+TRY:6.5
+}; 
+
+} 
+
+} 
+
+/* PRICE */ 
+
+function formatPrice(price){ 
+
+let num=parseFloat(price)||0; 
+
+let converted=num*exchangeRates[currentCurrency]; 
+
+return converted.toFixed(2); 
+
+} 
+
+/* CURRENCY */
+
+
+function openCurrencyPopup(event){ 
+
+const popup =
+document.getElementById("currencyPopup"); 
+
+popup.style.display = "block"; 
+
+popup.style.position = "absolute"; 
+
+const popupWidth = 260;
+const padding = 14;
+const screenWidth = window.innerWidth; 
+
+let x = event.pageX;
+let y = event.pageY; 
+
+let left = x;
+let top = y + 10; 
+
+if(left + popupWidth > screenWidth){ 
+
+left =
+screenWidth - popupWidth - padding; 
+
+} 
+
+if(left < padding){ 
+
+left = padding; 
+
+} 
+
+popup.style.left = left + "px";
+popup.style.top = top + "px"; 
+
+} 
+
+function closeCurrencyPopup(){ 
+
+document.getElementById("currencyPopup")
+.style.display = "none"; 
+
+}
+
+
+function setCurrency(currency){ 
+
+currentCurrency=currency; 
+
+document.querySelector(".currencyTopBtn").innerHTML=
+currency+" ▼"; 
+
+closeCurrencyPopup(); 
+
+render(); 
+
+} 
+
+/* CSV */ 
+
+function parseCSV(text){ 
+
+const rows = [];
+let row = [];
+let current = "";
+let inQuotes = false; 
+
+for(let i = 0; i < text.length; i++){ 
+
+const char = text[i];
+const next = text[i + 1]; 
+
+if(char === '"'){ 
+
+if(inQuotes && next === '"'){
+current += '"';
+i++;
+}else{
+inQuotes = !inQuotes;
+} 
+
+}else if(char === "," && !inQuotes){ 
+
+row.push(current);
+current = ""; 
+
+}else if((char === "\n" || char === "\r") && !inQuotes){ 
+
+if(current || row.length){
+row.push(current);
+rows.push(row);
+row = [];
+current = "";
+} 
+
+}else{ 
+
+current += char; 
+
+} 
+
+} 
+
+if(current || row.length){
+row.push(current);
+rows.push(row);
+} 
+
+const headers = rows[0].map(h => h.trim()); 
+
+return rows.slice(1).map(cols => { 
+
+let obj = {}; 
+
+headers.forEach((h,i)=>{
+obj[h] = (cols[i] || "").trim();
+}); 
+
+return obj; 
+
+}); 
+
+} 
+
+/* LOAD */ 
+
+async function load(){ 
+
+await loadRates(); 
+
+const res=await fetch(SHEET_URL); 
+
+const text=await res.text(); 
+
+data=parseCSV(text); 
+
+buildFilters(); 
+
+applyURLFilters(); 
+
+} 
+
+/* FILTERS */ 
+
+function buildFilters(){ 
+
+const groups={}; 
+
+data.forEach(item=>{ 
+
+const tags = (item.filter_tags || "").toLowerCase(); 
+
+if (!tags.includes("view:" + CURRENT_VIEW)) return; 
+
+(item.filter_tags||"").split(",").forEach(tag=>{ 
+
+  if(tag.toLowerCase().includes("view:")) return; 
+
+  let [cat,val]=tag.split(":"); 
+
+  if(!cat||!val)return; 
+
+  if(!groups[cat])groups[cat]=new Set(); 
+
+  groups[cat].add(val.trim());
+}); 
+
+/* TEMP TEST */
+if (item.country) {
+  if (!groups["Country"]) groups["Country"] = new Set();
+  groups["Country"].add(item.country.trim());
+} 
+
+if (item.city) {
+  if (!groups["City"]) groups["City"] = new Set();
+  groups["City"].add(item.city.trim());
+} 
+
+}); 
+
+const order=[
+"Country",
+"City",
+"Property Type",
+"Meals",
+"Facilities",
+"Transport",
+"Retail",
+"Leisure",
+"Convenience",
+"Female Only"
+]; 
+
+const container=document.getElementById("filters"); 
+
+container.innerHTML = ""; 
+
+document.getElementById("loadingFilters").style.display="none"; 
+
+document.getElementById("loadingSpinner").style.display="none"; 
+
+console.log("GROUP KEYS:", Object.keys(groups));
+order.forEach(cat=>{ 
+
+if(!groups[cat])return; 
+
+let block=document.createElement("div"); 
+
+block.innerHTML=`<div class="filterTitle">${cat}</div>`;
+
+
+// Country dropdown 
+
+if (cat === "Country") { 
+
+  const select = document.createElement("select");
+  select.className = "filterSelect"; // reuse your style 
+
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent = "All Countries";
+  select.appendChild(defaultOpt); 
+
+  [...groups["Country"]].sort().forEach(val => { 
+
+    const opt = document.createElement("option");
+    opt.value = val.toLowerCase();
+    opt.textContent = val;
+    select.appendChild(opt); 
+
+  }); 
+
+  select.value = selectedCountry; 
+
+  select.onchange = (e) => { 
+
+    const value = e.target.value; 
+
+    selectedCountry = value; 
+
+    // remove old country filters
+    activeFilters = activeFilters.filter(f => !f.startsWith("country:")); 
+
+    if (value) {
+      activeFilters.push("country:" + value);
+    } 
+
+    currentPage = 1;
+    buildFilters();
+    render();
+    updateStickyBar();
+  }; 
+
+  block.appendChild(select);
+  container.appendChild(block); 
+
+  return; // IMPORTANT: skip chip rendering for Country
+} 
+
+// City dropdown 
+
+if (cat === "City") { 
+
+  const select = document.createElement("select");
+  select.id = "cityFilter";
+  select.className = "filterSelect";
+  select.disabled = !selectedCountry; 
+
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent =
+selectedCountry
+? "All Cities"
+: "Select Country First"; 
+
+  select.appendChild(defaultOpt); 
+
+  const cities = new Set(); 
+
+if(selectedCountry){ 
+
+data.forEach(item=>{ 
+
+if(
+(item.country || "").toLowerCase() === selectedCountry
+){ 
+
+cities.add(item.city); 
+
+} 
+
+}); 
+
+} 
+
+[...cities].sort().forEach(val=>{ 
+
+const opt = document.createElement("option"); 
+
+opt.value = val.toLowerCase(); 
+
+opt.textContent = val; 
+
+select.appendChild(opt); 
+
+}); 
+
+  select.onchange = (e) => { 
+
+    const value = e.target.value; 
+
+    activeFilters = activeFilters.filter(f => !f.startsWith("city:")); 
+
+    if (value) {
+      activeFilters.push("city:" + value);
+    } 
+
+    currentPage = 1;
+    render();
+    updateStickyBar(); 
+
+  }; 
+
+  block.appendChild(select);
+  container.appendChild(block); 
+
+  return;
+}
+
+
+// Normal chips 
+
+groups[cat].forEach(val=>{ 
+
+let el=document.createElement("div"); 
+
+el.className="tag"; 
+
+el.innerText=val; 
+
+el.onclick=(event)=>{ 
+
+event.preventDefault();
+event.stopPropagation(); 
+
+toggle(cat+":"+val,el); 
+
+}; 
+
+block.appendChild(el); 
+
+});
+
+
+/* MANUAL LOCKED CHIPS */ 
+
+const premiumRow = document.createElement("div"); 
+
+premiumRow.className = "locked-grid"; 
+
+/* CATEGORY: MEALS */ 
+
+if(cat === "Meals"){ 
+
+premiumRow.innerHTML = ` 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Dinner</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Snacks</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Halal Certified Room Service</span>
+<div class="lock-icon"></div>
+</div> 
+
+`; 
+
+} 
+
+/* CATEGORY: FACILITIES */ 
+
+if(cat === "Facilities"){ 
+
+premiumRow.innerHTML = ` 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Designated Smoking Spaces</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Air Conditioning</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Ceiling Fan</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary High Speed Wi-Fi</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>TV With Entertainment Channels </span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Mini Fridge Provided</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Bathrobes And Slippers Provided</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Coffee And Tea Making Facilities</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Electric Kettle Available</span>
+<div class="lock-icon"></div>
+</div>
+
+
+`; 
+
+} 
+
+/* CATEGORY: TRANSPORT */ 
+
+if(cat === "Transport"){ 
+
+premiumRow.innerHTML = ` 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>On Demand Transport</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary Parking For Guests</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Complimentary Valet Parking For Guests</span>
+<div class="lock-icon"></div>
+</div> 
+
+`; 
+
+} 
+
+/* CATEGORY: FEMALE ONLY */ 
+
+if(cat === "Female Only"){ 
+
+premiumRow.innerHTML = ` 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Spa Room</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Changing Facilities</span>
+<div class="lock-icon"></div>
+</div> 
+
+<div class="locked-chip"
+onclick="openPremiumPopup(event)">
+<span>Female Only Gym</span>
+<div class="lock-icon"></div>
+</div> 
+
+`; 
+
+} 
+
+/* only append if category has chips */ 
+
+if(premiumRow.innerHTML.trim() !== ""){
+block.appendChild(premiumRow);
+} 
+
+container.appendChild(block); 
+
+}); 
+
+} 
+
+/* TOGGLE */ 
+
+function toggle(tag,el){ 
+
+if(activeFilters.includes(tag)){ 
+
+activeFilters =
+activeFilters.filter(t => t !== tag); 
+
+el.classList.remove("active"); 
+
+}else{ 
+
+activeFilters.push(tag); 
+
+el.classList.add("active"); 
+
+} 
+
+currentPage = 1; 
+
+/* refresh UI */
+updateStickyBar(); 
+
+/* helps mobile browsers repaint */
+requestAnimationFrame(()=>{ 
+
+render(); 
+
+/* force iframe resize again */
+// iframe resize call omitted: this is a full page, not an iframe. 
+
+}); 
+
+} 
+
+/* CLEAR */ 
+
+function clearAll(){ 
+
+activeFilters=[]; 
+
+selectedCountry = ""; 
+
+currentPage=1; 
+
+document.querySelectorAll(".tag").forEach(t=>{
+t.classList.remove("active");
+}); 
+
+document.getElementById("searchInput").value=""; 
+
+document.getElementById("sortSelect").value="default"; 
+
+/* sync sticky bar */
+updateStickyBar(); 
+
+buildFilters(); 
+
+render(); 
+
+} 
+
+/* SCROLL */ 
+
+/* SCROLL TO FILTERS */ 
+
+function scrollToFilters(){ 
+
+document
+.getElementById("filters")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+}); 
+
+} 
+
+/* REDIRECT */ 
+
+function redirectBooking(url){ 
+
+document.getElementById("redirectOverlay")
+.style.display="flex"; 
+
+setTimeout(()=>{ 
+
+window.open(url,"_blank"); 
+
+document.getElementById("redirectOverlay")
+.style.display="none"; 
+
+},900); 
+
+} 
+
+/* RENDER */ 
+
+function render(){ 
+
+const search=document.getElementById("searchInput")
+.value.toLowerCase(); 
+
+let filtered=data.filter(item=>{ 
+
+let tags=(item.filter_tags||"").toLowerCase(); 
+
+let isCurrentView = tags.includes("view:" + CURRENT_VIEW); 
+
+let matchFilters = activeFilters.every(f => { 
+
+  let [cat, val] = f.split(":"); 
+
+  cat = (cat || "").trim().toLowerCase();
+  val = (val || "").trim().toLowerCase(); 
+
+  if (cat === "country") {
+  return (item.country || "").toLowerCase() === val.toLowerCase();
+} 
+
+  if (cat === "city") {
+    return (item.city || "").toLowerCase() === val;
+  } 
+
+  return tags.includes(f.toLowerCase()); 
+
+}); 
+
+let fullSearchText = `
+${item.name || ""}
+${item.description || ""}
+${item.city || ""}
+${item.country || ""}
+${item.filter_tags || ""}
+${item.card_tags || ""}
+${item.location || ""}
+`.toLowerCase(); 
+
+let searchMatch = fullSearchText.includes(search); 
+
+return isCurrentView && matchFilters && searchMatch; 
+
+}); 
+
+/* SORT */ 
+
+const sort=document.getElementById("sortSelect")?.value || "default"; 
+
+if(sort==="lowHigh"){ 
+
+filtered.sort((a,b)=>
+(parseFloat(a.price)||0)
+-
+(parseFloat(b.price)||0)
+); 
+
+} 
+
+if(sort==="highLow"){ 
+
+filtered.sort((a,b)=>
+(parseFloat(b.price)||0)
+-
+(parseFloat(a.price)||0)
+); 
+
+} 
+
+if(sort==="ratingHigh"){ 
+
+filtered.sort((a,b)=>
+(parseFloat(b.rating)||0)
+-
+(parseFloat(a.rating)||0)
+); 
+
+} 
+
+if(sort==="ratingLow"){ 
+
+filtered.sort((a,b)=>
+(parseFloat(a.rating)||0)
+-
+(parseFloat(b.rating)||0)
+); 
+
+} 
+
+if(filtered.length===0){ 
+
+document.getElementById("noResults")
+.style.display="block"; 
+
+}else{ 
+
+document.getElementById("noResults")
+.style.display="none"; 
+
+} 
+
+filtered=filtered.slice(0,MAX_ITEMS); 
+
+const start=(currentPage-1)*ITEMS_PER_PAGE; 
+
+const pageData=filtered.slice(start,start+ITEMS_PER_PAGE); 
+
+const cards=document.getElementById("cards"); 
+
+cards.innerHTML=pageData.map(item=>{ 
+
+const folder = (item.media || "").trim(); 
+
+let mediaContent = ""; 
+
+if(folder){ 
+
+for(let i = 1; i <= 10; i++){ 
+
+mediaContent += `
+<img
+src="https://salamguest.github.io/salamguest-directory/images/${folder}/${i}.jpg"
+onerror="this.style.display='none'"
+onload="this.dataset.loaded='true'"
+>
+`; 
+
+} 
+
+}else{ 
+
+mediaContent = `
+<img
+src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg"
+>
+`; 
+
+} 
+
+return ` 
+
+<div class="card"> 
+
+<div class="carouselWrap"> 
+
+${item.image_label &&
+item.image_label.trim() !== "-" ? `
+<div class="imageLabel">
+${item.image_label}
+</div>
+` : ""} 
+
+<div class="carousel">
+${mediaContent}
+</div> 
+
+<div class="carouselIndicators"></div> 
+
+</div> 
+
+<div class="cardBody"> 
+
+<div class="title">
+${item.name}
+</div> 
+
+<div class="location">
+⟟ ${item.city}, ${item.country}
+</div> 
+
+<div class="contentRow"> 
+
+<div class="descriptionCol"> 
+
+<div class="description">
+${item.description}
+</div> 
+
+</div> 
+
+<div class="metaCol"> 
+
+<div class="priceWrap"> 
+
+<div class="priceLabel">
+ESTIMATED STARTING FROM
+</div> 
+
+<div class="priceAmount">
+${formatPrice(item.price)}
+</div> 
+
+<div class="priceCurrency"
+onclick="openCurrencyPopup(event)">
+${currentCurrency} / night
+</div> 
+
+</div> 
+
+<div class="rating">
+★ ${item.rating} / 5 
+
+<div class="ratingSmall">
+Average Guest Rating <br/>
+Based On Public Reviews
+</div> 
+
+</div> 
+
+</div> 
+
+</div> 
+
+<div class="bottom"> 
+
+<div class="tagsRow"> 
+
+${(item.card_tags||"")
+.split(",")
+.filter(tag=>tag.trim()!=="")
+.map(tag=>`
+<span class="cardTag">${tag}</span>
+`)
+.join("")} 
+
+</div> 
+
+<a class="book"
+href="javascript:void(0)"
+onclick="redirectBooking('${item.link}')">
+BOOK ⬈
+</a>
+<p class="ratingSmall" style="text-align:center; padding-top: 3px; color:#697CA5;">Prices and availability may vary</p>
+
+
+</div>
+</div>
+</div> 
+
+`; 
+
+}).join(""); 
+
+setTimeout(()=>{ 
+
+document.querySelectorAll(".carouselWrap")
+.forEach(wrap=>{ 
+
+const carousel=wrap.querySelector(".carousel"); 
+
+/* Fix for gray blank image
+instead of placeholder image
+for no uploaded images on cards */
+
+const visibleImages = [...carousel.querySelectorAll("img")]
+.filter(img => img.style.display !== "none"); 
+
+if(visibleImages.length === 0){ 
+
+carousel.innerHTML = `
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+`; 
+
+return; 
+
+} 
+
+const indicators=wrap.querySelector(".carouselIndicators"); 
+
+const loadedImages = [
+...carousel.querySelectorAll("img")
+].filter(img =>
+img.dataset.loaded === "true" &&
+img.style.display !== "none"
+); 
+
+if(loadedImages.length === 0){ 
+
+carousel.innerHTML = `
+<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg">
+`; 
+
+return; 
+
+} 
+
+const items = loadedImages.length; 
+
+if(items<=1){ 
+
+indicators.innerHTML="";
+return; 
+
+} 
+
+indicators.innerHTML=""; 
+
+for(let i=0;i<items;i++){ 
+
+const dot=document.createElement("span"); 
+
+if(i===0)dot.classList.add("active"); 
+
+indicators.appendChild(dot); 
+
+} 
+
+carousel.addEventListener("scroll",()=>{ 
+
+const index=Math.round(
+carousel.scrollLeft/carousel.offsetWidth
+); 
+
+indicators.querySelectorAll("span")
+.forEach((d,i)=>{ 
+
+d.classList.toggle("active",i===index); 
+
+}); 
+
+}); 
+
+}); 
+
+},1000); 
+
+renderPagination(filtered.length); 
+
+} 
+
+/* PAGINATION */ 
+
+function renderPagination(total){ 
+
+const pages=Math.ceil(total/ITEMS_PER_PAGE); 
+
+let html=""; 
+
+for(let i=1;i<=pages;i++){ 
+
+html+=`
+<button
+class="pageBtn ${i===currentPage?'active':''}"
+onclick="goPage(${i})"
+>
+${i}
+</button>
+`; 
+
+} 
+
+document.getElementById("pagination").innerHTML=html; 
+
+} 
+
+function goPage(p){ 
+
+currentPage=p; 
+
+render(); 
+
+} 
+
+/* SEARCH ENTER */ 
+
+document.getElementById("searchInput")
+.addEventListener("keydown",e=>{ 
+
+if(e.key==="Enter"){
+render();
+} 
+
+}); 
+
+/* =========================
+AUTO LOAD SEARCH/FILTER FROM URL
+========================= */ 
+
+function applyURLFilters(){ 
+
+const params =
+new URLSearchParams(window.location.search); 
+
+const search =
+params.get("search"); 
+
+const filter =
+params.get("filter"); 
+
+/* AUTO SEARCH */ 
+
+if(search){ 
+
+document.getElementById(
+"searchInput"
+).value = search; 
+
+} 
+
+/* AUTO FILTER TAG */ 
+
+if(filter){ 
+
+document.querySelectorAll(".tag")
+.forEach(tag=>{ 
+
+if(
+tag.innerText.trim()
+.toLowerCase()
+===
+filter.trim()
+.toLowerCase()
+){ 
+
+tag.classList.add("active"); 
+
+activeFilters.push(
+tag.parentElement
+.querySelector(".filterTitle")
+.innerText
++
+":"
++
+tag.innerText.trim()
+); 
+
+} 
+
+}); 
+
+} 
+
+render(); 
+
+} 
+
+load();
+
+
+/* Premium Popup */ 
+
+function openPremiumPopup(event){ 
+
+const popup =
+document.getElementById("premiumPopup"); 
+
+popup.style.display = "block"; 
+
+popup.style.position = "absolute"; 
+
+/* popup width */
+const popupWidth = 270;
+const padding = 14; 
+
+/* screen width */
+const screenWidth = window.innerWidth; 
+
+/* click position */
+let x = event.pageX;
+let y = event.pageY; 
+
+/* default position */
+let left = x;
+let top = y + 10; 
+
+/* prevent overflow right */
+if(left + popupWidth > screenWidth){ 
+
+left = screenWidth - popupWidth - padding; 
+
+} 
+
+/* never too left */
+if(left < padding){ 
+
+left = padding; 
+
+} 
+
+popup.style.left = left + "px";
+popup.style.top = top + "px"; 
+
+} 
+
+function closePremiumPopup(){ 
+
+document.getElementById("premiumPopup")
+.style.display = "none"; 
+
+} 
+
+/* close clicking outside */
+document.addEventListener("click", function(e){ 
+
+/* PREMIUM POPUP */ 
+
+const premium =
+document.getElementById("premiumPopup"); 
+
+if(
+premium &&
+!premium.contains(e.target)
+&&
+!e.target.closest(".locked-chip")
+){ 
+
+premium.style.display = "none"; 
+
+} 
+
+/* CURRENCY POPUP */ 
+
+const currency =
+document.getElementById("currencyPopup"); 
+
+if(
+currency &&
+!currency.contains(e.target)
+&&
+!e.target.closest(".currencyTopBtn")
+&&
+!e.target.closest(".priceCurrency")
+){ 
+
+currency.style.display = "none"; 
+
+} 
+
+});
+  
+  
+function scrollTopSmooth(){ 
+
+document.documentElement.scrollTo({
+top:0,
+behavior:"smooth"
+}); 
+
+document.body.scrollTo({
+top:0,
+behavior:"smooth"
+}); 
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+}); 
+
+} 
+
+/* =========================
+BOTTOM STICKY BAR
+========================= */ 
+
+function updateStickyBar(){ 
+
+const bar =
+document.getElementById("bottomFilterBar"); 
+
+const count =
+activeFilters.length; 
+
+if(window.innerWidth <= 900){ 
+
+bar.style.display = "flex"; 
+
+document.getElementById(
+"filterCount"
+).innerHTML =
+count > 0
+? `⌂ FILTERS • ${count} SELECTED`
+: `⌂ FILTERS`; 
+
+}else{ 
+
+bar.style.display = "none"; 
+
+} 
+
+} 
+
+/* =========================
+SEARCH BUTTON (FINAL CLEAN VERSION)
+========================= */ 
+
+function runStickySearch(){ 
+
+  const status =
+  document.getElementById(
+  "searchInlineStatus"
+  ); 
+
+  status.style.display =
+  "block"; 
+
+  status.innerHTML =
+  "SEARCHING..."; 
+
+  requestAnimationFrame(()=>{ 
+
+    setTimeout(()=>{ 
+
+      render(); 
+
+      const count =
+      document.getElementById("cards")
+      .children.length; 
+
+      if(count > 0){ 
+
+        status.innerHTML =
+        `${count} RESULTS FOUND ↓`; 
+
+      }else{ 
+
+        status.innerHTML =
+        `NO RESULTS FOUND ↓<br>
+        Try adjusting filters`; 
+
+      } 
+
+      setTimeout(()=>{ 
+
+        document
+        .getElementById("cards")
+        .scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        }); 
+
+        setTimeout(()=>{ 
+
+          status.style.display =
+          "none"; 
+
+        },700); 
+
+      },900); 
+
+    },400); 
+
+  }); 
+
+}
+
+/* PAYHIP IFRAME FLOATING BAR FIX */ 
+
+function repositionBottomBar(){ 
+
+  const bar =
+  document.getElementById("bottomFilterBar"); 
+
+  if(!bar) return; 
+
+  const scrollTop =
+  window.scrollY; 
+
+  const viewportHeight =
+  window.innerHeight; 
+
+  const barHeight =
+  bar.offsetHeight; 
+
+  const top =
+  scrollTop +
+  viewportHeight -
+  barHeight -
+  14; 
+
+  bar.style.top =
+  top + "px";
+} 
+
+/* update while scrolling */
+window.addEventListener(
+"scroll",
+repositionBottomBar
+); 
+
+window.addEventListener(
+"resize",
+repositionBottomBar
+); 
+
+/* run initially */
+setTimeout(
+repositionBottomBar,
+500
+);
+
+
+
+</script><script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script>
+/* Pages CMS bridge: reads saved YAML without touching the filter data or Payhip site. */
+(async function(){
+  const base = new URL('../', window.location.href);
+  const pageUrl = new URL('content/pages/homepage.yml', base).href;
+  const settingsUrl = new URL('content/settings.yml', base).href;
+  const $ = (s, root=document) => root.querySelector(s);
+  const text = (el, value) => { if (el && value !== undefined && value !== null && String(value).trim() !== '') el.textContent = String(value); };
+  const first = (...vals) => vals.find(v => v !== undefined && v !== null && String(v).trim() !== '');
+  const setLine = (el, value) => { if (el && value !== undefined && value !== null && value !== '') { const n=Number(value); if (Number.isFinite(n) && n>0 && n<4) el.style.lineHeight=String(n); } };
+  async function yaml(url){
+    const response = await fetch(url, {cache:'no-store'});
+    if (!response.ok) throw new Error('Could not load '+url+' ('+response.status+')');
+    const source = await response.text();
+    if (!window.jsyaml) throw new Error('YAML parser did not load');
+    return window.jsyaml.load(source) || {};
+  }
+  function button(label,url){
+    if(!label || !url) return '';
+    const a=document.createElement('a'); a.className='sg-btn'; a.textContent=label; a.href=url; return a;
+  }
+  function applyBackground(el, image, color){
+    if(!el) return;
+    if(color) el.style.backgroundColor=color;
+    if(image) { const safe=String(image).replace(/["\\\n\r]/g,''); el.style.backgroundImage='linear-gradient(100deg,#08204dcc,#08204d30),url("'+safe+'")'; el.style.backgroundSize='cover'; el.style.backgroundPosition='center'; }
+  }
+  try {
+    const [page, site] = await Promise.all([yaml(pageUrl), yaml(settingsUrl).catch(()=>({}))]);
+    const design = page.homepage_design || page.design || page.homepage || {};
+    const hero = design.hero || design.hero_section || {};
+    const slider = design.slider || design.carousel || {};
+    const features = design.features || design.feature_section || {};
+    const faq = design.faq || design.faqs || design.faq_section || {};
+    const nav = site.navigation || site.nav || site.mobile_nav || {};
+
+    // Keep the existing logo and menu behaviour; update page metadata/content only when supplied.
+    text(document.querySelector('title'), first(page.seo?.title, page.title));
+    const desc = first(page.seo?.description, page.description);
+    if(desc){ let meta=$('meta[name="description"]'); if(meta) meta.content=desc; }
+    const heroHeading = first(hero.heading, hero.title, design.hero_heading);
+    const heroSub = first(hero.subheading, hero.subtitle, design.hero_subheading);
+    if(heroHeading) text($('.sg-hero h1'), heroHeading);
+    if(heroSub) text($('.sg-hero p'), heroSub);
+    if(hero.background_image) applyBackground($('.sg-hero'),hero.background_image,hero.background_color);
+    const heroButtonLabel=first(hero.button_label,hero.button_text);
+    const heroButtonUrl=first(hero.button_url,hero.button_link);
+    const heroButton=$('.sg-hero .sg-btn');
+    if(heroButtonLabel && heroButton) text(heroButton,heroButtonLabel);
+    if(heroButtonUrl && heroButton) heroButton.href=heroButtonUrl;
+    setLine($('.sg-hero p'), first(hero.subheading_line_height, hero.line_height));
+
+    const slideItems = Array.isArray(slider.slides) ? slider.slides : (Array.isArray(design.slides) ? design.slides : null);
+    if(slideItems && slideItems.length){
+      const clean=slideItems.filter(s=>s && first(s.heading,s.title,s.slide_heading));
+      if(clean.length){
+        const slides=clean.map(s=>({title:first(s.heading,s.title,s.slide_heading,''),text:first(s.subheading,s.subtitle,s.slide_subheading,''),button:first(s.button_label,s.button_text,''),url:first(s.button_url,s.button_link,''),align:first(s.text_alignment,s.alignment,'center'),image:first(s.background_image,''),color:first(s.background_color,''),hl:first(s.heading_line_height,''),sl:first(s.subheading_line_height,'')}));
+        let idx=0,timer=null;
+        const slide=$('#sgSlide'), dots=$('#sgDots'), toggle=$('#sgAutoplayToggle');
+        const autoplayEnabled=first(slider.autoplay,slider.autoplay_enabled,slider.enable_autoplay);
+        let autoplay=autoplayEnabled===undefined ? true : (autoplayEnabled===true || String(autoplayEnabled).toLowerCase()==='true' || String(autoplayEnabled).toLowerCase()==='on');
+        const interval=Math.max(2000,Number(first(slider.autoplay_seconds,slider.autoplay_interval,slider.interval_seconds,7))*1000||7000);
+        function render(){
+          const s=slides[idx]; slide.dataset.align=s.align; text($('#sgSlideTitle'),s.title); text($('#sgSlideText'),s.text);
+          const b=$('#sgSlideButton'); if(s.button && s.url){text(b,s.button);b.href=s.url;b.hidden=false;}else{b.hidden=true;}
+          applyBackground(slide,s.image,s.color); setLine($('#sgSlideTitle'),s.hl); setLine($('#sgSlideText'),s.sl);
+          dots.innerHTML=''; slides.forEach((_,i)=>{const d=document.createElement('button');d.className='sg-dot';d.setAttribute('aria-label','Go to slide '+(i+1));d.setAttribute('aria-current',String(i===idx));d.onclick=()=>{idx=i;render();restart()};dots.appendChild(d)});
+        }
+        function stop(){if(timer){clearInterval(timer);timer=null}}
+        function restart(){stop();if(autoplay && slides.length>1)timer=setInterval(()=>{idx=(idx+1)%slides.length;render()},interval);if(toggle){toggle.textContent='AUTOPLAY: '+(autoplay?'ON':'OFF');toggle.setAttribute('aria-pressed',String(autoplay));toggle.hidden=slides.length<2;}}
+        $('#sgPrev').onclick=()=>{idx=(idx-1+slides.length)%slides.length;render();restart()};
+        $('#sgNext').onclick=()=>{idx=(idx+1)%slides.length;render();restart()};
+        if(toggle) toggle.onclick=()=>{autoplay=!autoplay;restart()};
+        render();restart();
+      }
+    }
+    const featureItems=Array.isArray(features.items)?features.items:(Array.isArray(features.list)?features.list:null);
+    if(featureItems){
+      const grid=$('.sg-features');
+      if(grid){grid.innerHTML=''; featureItems.forEach(item=>{
+        if(!item)return;
+        const card=document.createElement('article');card.className='sg-feature';
+        const layout=first(item.layout,item.item_layout,features.item_layout,'side');card.dataset.layout=(String(layout).toLowerCase().includes('center')||String(layout).toLowerCase().includes('stack')||String(layout).toLowerCase().includes('column'))?'stack':'side';
+        applyBackground(card,item.background_image,item.background_color);
+        const icon=document.createElement('div');icon.className='sg-feature-icon';
+        if(item.icon_image){const img=document.createElement('img');img.src=item.icon_image;img.alt='';img.style.cssText='width:100%;height:100%;object-fit:contain';icon.appendChild(img)}else icon.textContent=first(item.icon,'✧');
+        const content=document.createElement('div');const h=document.createElement('h3');text(h,first(item.heading,item.title,''));content.appendChild(h);
+        const p=document.createElement('p');text(p,first(item.subheading,item.description,item.text,''));setLine(p,first(item.line_height,item.body_line_height,features.body_line_height));content.appendChild(p);
+        const b=button(first(item.button_label,item.button_text),first(item.button_url,item.button_link));if(b)content.appendChild(b);
+        card.append(icon,content);grid.appendChild(card);
+      });}
+    }
+    const faqItems=Array.isArray(faq.items)?faq.items:(Array.isArray(faq.questions)?faq.questions:null);
+    if(faqItems){
+      const section=$('#faqs');
+      if(section){
+        text($('.sg-section-head h2',section),first(faq.heading,faq.title,'Frequently Asked Questions'));
+        text($('.sg-section-head p',section),first(faq.subheading,faq.description,''));
+        applyBackground(section,faq.background_image,faq.background_color);
+        if(faq.text_color) section.style.setProperty('--faq-foreground',faq.text_color);
+        const list=$('.sg-faq-list',section);list.innerHTML='';
+        faqItems.forEach((item,i)=>{if(!item)return;const q=first(item.question,item.heading,item.title);const a=first(item.answer,item.body,item.description);if(!q)return;
+          const wrap=document.createElement('div');wrap.className='sg-faq-item';const btn=document.createElement('button');btn.className='sg-faq-q';btn.setAttribute('aria-expanded',String(faq.default_open===true && i===0));
+          const label=document.createElement('span');label.textContent=q;const symbol=document.createElement('span');symbol.textContent=faq.default_open===true && i===0?'−':'＋';btn.append(label,symbol);
+          const answer=document.createElement('div');answer.className='sg-faq-a';answer.textContent=a||'';answer.hidden=!(faq.default_open===true && i===0);setLine(answer,first(item.line_height,faq.body_line_height));
+          btn.addEventListener('click',()=>{const open=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',String(open));answer.hidden=!open;symbol.textContent=open?'−':'＋'});wrap.append(btn,answer);list.appendChild(wrap);
+        });
+      }
+    }
+    // Mobile nav values are optional. The existing drawer remains usable when no custom links are saved.
+    const mobileLinks=Array.isArray(nav.mobile_links)?nav.mobile_links:(Array.isArray(nav.links)?nav.links:null);
+    if(mobileLinks){const n=$('.sg-drawer nav');if(n){n.innerHTML='';mobileLinks.forEach(item=>{if(!item)return;const a=document.createElement('a');a.textContent=first(item.label,item.title,item.name,'');a.href=first(item.url,item.link,'#top');n.appendChild(a)})}}
+    document.documentElement.dataset.cmsLoaded='true';
+  } catch(error) {
+    console.warn('SalamGuest CMS content was not applied; keeping preview fallback content.',error);
+    document.documentElement.dataset.cmsLoaded='fallback';
+  }
+})();
+</script>
+
+</body></html>
