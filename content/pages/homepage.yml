@@ -29,6 +29,8 @@ homepage_design:
     enabled: true
     autoplay: true
     subheading_uppercase: false
+    subheading_font_size: 24px
+    text_padding_top: 20px
   faq:
     default_open: false
 seo:
