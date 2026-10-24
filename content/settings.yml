@@ -1,5 +1,5 @@
 site_name: SalamGuest
-tagline: Discover Muslim-friendly stays and travel resources
+tagline: Explore Halal Filters for Muslim Friendly Stays & Experiences
 desktop_nav:
   links:
     - label: Home
@@ -20,6 +20,7 @@ desktop_nav:
     - label: Contact
       url: /contact
       visible: true
+  enable_submenus: false
 mobile_nav:
   heading: Travel with confidence
   enable_submenus: false
@@ -27,4 +28,5 @@ mobile_nav:
   cta_url: /filters
 seo:
   title: SalamGuest | Muslim-Friendly Travel Directory
-  description: Discover Muslim-friendly accommodation and travel resources around the world.
+  description: SalamGuest helps Muslim guests and travellers discover stays and
+    experiences with useful comfort and convenience information.
