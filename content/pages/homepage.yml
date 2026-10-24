@@ -14,8 +14,10 @@ body: >-
   suit your needs.
 homepage_design:
   hero:
-    heading: Halal Stays & Experiences
-    subheading: Halal filter system, curated for the Muslim guest and traveller
+    heading: Salam, Guest
+    subheading: |-
+      Search Halal-Filters,
+      For Muslim friendly Stays
     subheading_uppercase: false
     subheading_font_size: 50px
     heading_line_height: "1.7"
