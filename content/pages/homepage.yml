@@ -39,6 +39,10 @@ homepage_design:
           places to stay and eat with Muslim needs in mind. Our listings
           highlight amenities such as halal food, prayer facilities, bidet
           availability, and more.
+      - question: How do the filters work?
+        answer: Each listing is tagged based on its available amenities. You can use the
+          filters to quickly find options that fit your preferences — from halal
+          breakfast to privacy-friendly rooms.
 seo:
   title: SalamGuest | Muslim-Friendly Travel Directory
   description: SalamGuest helps Muslim guests and travellers discover stays and
