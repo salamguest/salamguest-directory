@@ -24,7 +24,7 @@ homepage_design:
     subheading_line_height: "1.9"
     content_padding_top: "20"
     content_padding_bottom: "20"
-    button_label: Explore Filters
+    button_label: EXPLORE FILTERS
   slider:
     enabled: true
     autoplay: true
