@@ -1,16 +1,27 @@
-
-title: "About SalamGuest"
-slug: "about"
-description: "Learn about SalamGuest and our mission to make discovering Muslim-friendly travel resources easier."
-
-body: |
+title: About SalamGuest
+slug: about
+description: Learn about SalamGuest and our mission to make discovering
+  Muslim-friendly travel resources easier.
+body: >-
   About SalamGuest
 
-  SalamGuest is a directory designed to help travellers discover Muslim-friendly accommodation and useful travel facilities around the world.
 
-  Our goal is to make it easier to find relevant information, explore travel options and plan journeys with greater confidence.
+  SalamGuest is a directory designed to help travellers discover Muslim-friendly
+  accommodation and useful travel facilities around the world.
 
+
+  Our goal is to make it easier to find relevant information, explore travel
+  options and plan journeys with greater confidence.
+homepage_design:
+  hero:
+    subheading_uppercase: false
+  slider:
+    enabled: true
+    autoplay: true
+    subheading_uppercase: false
+  faq:
+    default_open: false
 seo:
-  title: "About SalamGuest | Our Mission"
-  description: "Discover the purpose behind SalamGuest and our mission to make Muslim-friendly travel resources easier to find."
-
+  title: About SalamGuest | Our Mission
+  description: Discover the purpose behind SalamGuest and our mission to make
+    Muslim-friendly travel resources easier to find.
