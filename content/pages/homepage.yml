@@ -1,18 +1,31 @@
-
-title: "Welcome to SalamGuest"
-slug: "home"
-description: "Discover Muslim-friendly stays, travel essentials and thoughtful travel resources around the world."
-
-hero_image: ""
-
-body: |
+title: Welcome to SalamGuest
+slug: home
+description: Discover Muslim-friendly stays, travel essentials and thoughtful
+  travel resources around the world.
+body: >-
   Welcome to SalamGuest
 
-  Your guide to discovering Muslim-friendly accommodation and travel essentials around the world.
 
-  Explore destinations, discover useful facilities and find stays that better suit your needs.
+  Your guide to discovering Muslim-friendly accommodation and travel essentials
+  around the world.
 
+
+  Explore destinations, discover useful facilities and find stays that better
+  suit your needs.
+homepage_design:
+  hero:
+    heading: Halal Stays & Experiences
+    subheading: Halal filter system, curated for the Muslim guest and traveller
+    subheading_uppercase: false
+    subheading_font_size: 30px
+    heading_line_height: "1.7"
+  slider:
+    enabled: true
+    autoplay: true
+    subheading_uppercase: false
+  faq:
+    default_open: false
 seo:
-  title: "SalamGuest | Muslim-Friendly Travel Directory"
-  description: "Discover Muslim-friendly accommodation, helpful travel facilities and resources for your next journey."
-
+  title: SalamGuest | Muslim-Friendly Travel Directory
+  description: Discover Muslim-friendly accommodation, helpful travel facilities
+    and resources for your next journey.
