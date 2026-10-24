@@ -17,7 +17,7 @@ homepage_design:
     heading: Halal Stays & Experiences
     subheading: Halal filter system, curated for the Muslim guest and traveller
     subheading_uppercase: false
-    subheading_font_size: 30px
+    subheading_font_size: 50px
     heading_line_height: "1.7"
   slider:
     enabled: true
