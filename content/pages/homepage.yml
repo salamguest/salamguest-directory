@@ -31,8 +31,12 @@ homepage_design:
     subheading_uppercase: false
     subheading_font_size: 24px
     text_padding_top: 20px
+  features:
+    layout: centred
   faq:
+    heading: FAQs
     default_open: false
+    view_all_label: VIEW FULL FAQ
     items:
       - question: What is SalamGuest?
         answer: SalamGuest is a halal-friendly travel directory that helps you find
@@ -57,6 +61,6 @@ homepage_design:
         answer: If you know a halal-friendly hotel or stay, you can suggest it through
           our contact page. Our team will review it for inclusion.
 seo:
-  title: SalamGuest | Muslim-Friendly Travel Directory
+  title: SalamGuest | Halal Filters For Muslim Friendly Travel & Experiences
   description: SalamGuest helps Muslim guests and travellers discover stays and
     experiences with useful comfort and convenience information.
