@@ -33,6 +33,12 @@ homepage_design:
     text_padding_top: 20px
   faq:
     default_open: false
+    items:
+      - question: What is Salam Guest?
+        answer: SalamGuest is a halal-friendly travel directory that helps you find
+          places to stay and eat with Muslim needs in mind. Our listings
+          highlight amenities such as halal food, prayer facilities, bidet
+          availability, and more.
 seo:
   title: SalamGuest | Muslim-Friendly Travel Directory
   description: SalamGuest helps Muslim guests and travellers discover stays and
