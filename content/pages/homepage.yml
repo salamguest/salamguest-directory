@@ -20,7 +20,7 @@ homepage_design:
       For Muslim friendly Stays
     subheading_uppercase: false
     subheading_font_size: 80px
-    heading_line_height: "3"
+    heading_line_height: "1.5"
     subheading_line_height: "1.5"
     content_padding_top: "20"
     content_padding_bottom: "20"
