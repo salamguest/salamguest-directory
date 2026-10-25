@@ -25,7 +25,7 @@ homepage_design:
     content_padding_top: "20"
     content_padding_bottom: "20"
     button_label: EXPLORE FILTERS
-    content_width: medium
+    content_width: small
     content_height: tall
   slider:
     enabled: true
