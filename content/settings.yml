@@ -21,11 +21,22 @@ desktop_nav:
       url: /contact
       visible: true
   enable_submenus: false
+  show_currency_button: true
+  show_language_button: false
 mobile_nav:
   heading: Travel with confidence
   enable_submenus: false
   cta_label: Explore Stays
   cta_url: /filters
+sticky_navbar: true
+desktop_nav_style: icon_buttons
+global_styles:
+  heading_font: Playfair Display
+  subheading_font: Lexend
+  body_font: Lexend
+cookie_popup:
+  enabled: true
+  remember_choice: false
 seo:
   title: SalamGuest | Muslim-Friendly Travel Directory
   description: SalamGuest helps Muslim guests and travellers discover stays and
