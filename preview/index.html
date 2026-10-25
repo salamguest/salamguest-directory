@@ -2902,6 +2902,7 @@ repositionBottomBar,
     const heroSub = first(hero.subheading, hero.subtitle, design.hero_subheading);
     if(heroHeading) text($('.sg-hero h1'), heroHeading);
     if(heroSub) text($('.sg-hero p'), heroSub);
+    setLine($('.sg-hero h1'), first(hero.heading_line_height));
     if(hero.background_image) applyBackground($('.sg-hero'),hero.background_image,hero.background_color);
     const heroButtonLabel=first(hero.button_label,hero.button_text);
     const heroButtonUrl=first(hero.button_url,hero.button_link);
