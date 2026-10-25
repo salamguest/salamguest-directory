@@ -19,9 +19,9 @@ homepage_design:
       Search Halal-Filters,
       For Muslim friendly Stays
     subheading_uppercase: false
-    subheading_font_size: 100px
+    subheading_font_size: 80px
     heading_line_height: "3"
-    subheading_line_height: 2.5rem
+    subheading_line_height: "1.5"
     content_padding_top: "20"
     content_padding_bottom: "20"
     button_label: EXPLORE FILTERS
