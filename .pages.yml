@@ -1,460 +1,1100 @@
 media:
   input: images
   output: /images
-
 content:
-  - name: pages
-    label: Website Pages
-    type: collection
-    path: content/pages
-    format: yaml
-    filename: "{primary}.yml"
-    subfolders: false
+- name: pages
+  label: Website Pages
+  type: collection
+  path: content/pages
+  format: yaml
+  filename: '{primary}.yml'
+  subfolders: false
+  fields:
+  - name: title
+    label: Page Title
+    type: string
+    required: true
+  - name: slug
+    label: URL Slug
+    type: string
+    required: true
+  - name: description
+    label: Page Description
+    type: text
+  - name: hero_image
+    label: Hero Image
+    type: image
+  - name: body
+    label: Page Content
+    type: rich-text
+  - name: homepage_design
+    label: Homepage Design
+    type: object
     fields:
-      - name: title
-        label: Page Title
+    - name: hero
+      label: First Screen / Hero
+      type: object
+      fields:
+      - name: heading
+        label: Hero Heading
         type: string
-        required: true
-      - name: slug
-        label: URL Slug
-        type: string
-        required: true
-      - name: description
-        label: Page Description
+      - name: subheading
+        label: Hero Subheading
         type: text
-      - name: hero_image
-        label: Hero Image
+      - name: subheading_uppercase
+        label: Make Hero Subheading Uppercase
+        type: boolean
+      - name: subheading_font_size
+        label: Hero Subheading Font Size (CSS value, e.g. 20px)
+        type: string
+      - name: heading_line_height
+        label: Hero Heading Line Height (e.g. 1.1)
+        type: string
+      - name: subheading_line_height
+        label: Hero Subheading Line Height (e.g. 1.35)
+        type: string
+      - name: content_padding_top
+        label: Hero Text Area Top Padding (e.g. 12px)
+        type: string
+      - name: content_padding_bottom
+        label: Hero Text Area Bottom Padding (e.g. 12px)
+        type: string
+      - name: button_label
+        label: Browse Button Text
+        type: string
+      - name: button_url
+        label: Browse Button URL
+        type: string
+      - name: button_height
+        label: Browse Button Height (e.g. 38px)
+        type: string
+      - name: background_color
+        label: Hero Background Colour
+        type: string
+      - name: background_image
+        label: Hero Background Image
         type: image
-      - name: body
-        label: Page Content
-        type: rich-text
-
-      - name: homepage_design
-        label: Homepage Design
-        type: object
-        fields:
-          - name: hero
-            label: First Screen / Hero
-            type: object
-            fields:
-              - name: heading
-                label: Hero Heading
-                type: string
-              - name: subheading
-                label: Hero Subheading
-                type: text
-              - name: subheading_uppercase
-                label: Make Hero Subheading Uppercase
-                type: boolean
-              - name: subheading_font_size
-                label: Hero Subheading Font Size (CSS value, e.g. 20px)
-                type: string
-              - name: heading_line_height
-                label: Hero Heading Line Height (e.g. 1.1)
-                type: string
-              - name: subheading_line_height
-                label: Hero Subheading Line Height (e.g. 1.35)
-                type: string
-              - name: content_padding_top
-                label: Hero Text Area Top Padding (e.g. 12px)
-                type: string
-              - name: content_padding_bottom
-                label: Hero Text Area Bottom Padding (e.g. 12px)
-                type: string
-              - name: button_label
-                label: Browse Button Text
-                type: string
-              - name: button_url
-                label: Browse Button URL
-                type: string
-              - name: button_height
-                label: Browse Button Height (e.g. 38px)
-                type: string
-              - name: background_color
-                label: Hero Background Colour
-                type: string
-              - name: background_image
-                label: Hero Background Image
-                type: image
-
-          - name: slider
-            label: Homepage Slider
-            type: object
-            fields:
-              - name: enabled
-                label: Show Slider
-                type: boolean
-              - name: autoplay
-                label: Autoplay On / Off
-                type: boolean
-              - name: autoplay_seconds
-                label: Autoplay Interval in Seconds
-                type: number
-              - name: height_mobile
-                label: Slider Height on Mobile (e.g. 190px)
-                type: string
-              - name: height_desktop
-                label: Slider Height on Desktop (e.g. 300px)
-                type: string
-              - name: heading_line_height
-                label: Slider Heading Line Height (e.g. 1.05)
-                type: string
-              - name: subheading_line_height
-                label: Slider Subheading Line Height (e.g. 1.3)
-                type: string
-              - name: subheading_uppercase
-                label: Make Slider Subheading Uppercase
-                type: boolean
-              - name: subheading_font_size
-                label: Slider Subheading Font Size (CSS value, e.g. 15px)
-                type: string
-              - name: text_padding_top
-                label: Text Area Top Padding (e.g. 12px)
-                type: string
-              - name: text_padding_bottom
-                label: Text Area Bottom Padding (e.g. 12px)
-                type: string
-              - name: slides
-                label: Slider Slides
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{heading}"
-                fields:
-                  - name: heading
-                    label: Slide Heading
-                    type: string
-                  - name: subheading
-                    label: Slide Subheading
-                    type: text
-                  - name: subheading_uppercase
-                    label: Uppercase Subheading
-                    type: boolean
-                  - name: background_image
-                    label: Slide Background Image
-                    type: image
-                  - name: background_color
-                    label: Slide Background Colour
-                    type: string
-                  - name: text_alignment
-                    label: Text Alignment (left, center, right)
-                    type: string
-                  - name: heading_line_height
-                    label: Heading Line Height (e.g. 1.05)
-                    type: string
-                  - name: subheading_line_height
-                    label: Subheading Line Height (e.g. 1.3)
-                    type: string
-                  - name: button_label
-                    label: Button Text (optional)
-                    type: string
-                  - name: button_url
-                    label: Button URL (optional)
-                    type: string
-
-          - name: features
-            label: Feature / List Section
-            type: object
-            fields:
-              - name: heading
-                label: Section Heading
-                type: string
-              - name: subheading
-                label: Section Subheading
-                type: text
-              - name: layout
-                label: Card Layout (centered or side-by-side)
-                type: string
-              - name: background_color
-                label: Section Background Colour
-                type: string
-              - name: background_image
-                label: Section Background Image
-                type: image
-              - name: heading_line_height
-                label: Section Heading Line Height
-                type: string
-              - name: subheading_line_height
-                label: Section Subheading Line Height
-                type: string
-              - name: body_line_height
-                label: Card Description Line Height
-                type: string
-              - name: items
-                label: Feature Items
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{heading}"
-                fields:
-                  - name: icon
-                    label: Icon Image
-                    type: image
-                  - name: heading
-                    label: Item Heading
-                    type: string
-                  - name: subheading
-                    label: Item Subheading / Description
-                    type: text
-                  - name: layout
-                    label: This Item Layout (centered or side-by-side)
-                    type: string
-                  - name: background_color
-                    label: Item Background Colour
-                    type: string
-                  - name: background_image
-                    label: Item Background Image
-                    type: image
-                  - name: button_label
-                    label: Optional Button Text
-                    type: string
-                  - name: button_url
-                    label: Optional Button URL
-                    type: string
-
-          - name: faq
-            label: FAQ Section
-            type: object
-            fields:
-              - name: heading
-                label: FAQ Heading
-                type: string
-              - name: background_color
-                label: FAQ Background Colour
-                type: string
-              - name: background_image
-                label: FAQ Background Image
-                type: image
-              - name: text_color
-                label: FAQ Text Colour
-                type: string
-              - name: answer_line_height
-                label: Answer Line Height
-                type: string
-              - name: default_open
-                label: Open Answers by Default
-                type: boolean
-              - name: view_all_label
-                label: View All FAQs Button Text
-                type: string
-              - name: view_all_url
-                label: View All FAQs Button URL
-                type: string
-              - name: items
-                label: Questions and Answers
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{question}"
-                fields:
-                  - name: question
-                    label: Question
-                    type: string
-                  - name: answer
-                    label: Answer
-                    type: rich-text
-
-      - name: seo
-        label: SEO Settings
-        type: object
-        fields:
-          - name: title
-            label: SEO Title
-            type: string
-          - name: description
-            label: Meta Description
-            type: text
-
-  - name: posts
-    label: Blog Articles
-    type: collection
-    path: content/posts
-    format: yaml
-    filename: "{primary}.yml"
-    subfolders: false
-    fields:
-      - name: title
-        label: Article Title
+      - name: content_width
+        label: Content Width
+        type: select
+        options:
+          values:
+          - small
+          - medium
+          - large
+          labels:
+          - Small
+          - Medium
+          - Large
+      - name: content_height
+        label: Content Height
+        type: select
+        options:
+          values:
+          - compact
+          - standard
+          - tall
+          labels:
+          - Compact
+          - Standard
+          - Tall
+      - name: content_line_height
+        label: Content Line Spacing (e.g. 1.5)
         type: string
-        required: true
-      - name: slug
-        label: URL Slug
+    - name: slider
+      label: Homepage Slider
+      type: object
+      fields:
+      - name: enabled
+        label: Show Slider
+        type: boolean
+      - name: autoplay
+        label: Autoplay On / Off
+        type: boolean
+      - name: autoplay_seconds
+        label: Autoplay Interval in Seconds
+        type: number
+      - name: height_mobile
+        label: Slider Height on Mobile (e.g. 190px)
         type: string
-        required: true
-      - name: date
-        label: Publication Date
-        type: date
-      - name: excerpt
-        label: Article Excerpt
+      - name: height_desktop
+        label: Slider Height on Desktop (e.g. 300px)
+        type: string
+      - name: heading_line_height
+        label: Slider Heading Line Height (e.g. 1.05)
+        type: string
+      - name: subheading_line_height
+        label: Slider Subheading Line Height (e.g. 1.3)
+        type: string
+      - name: subheading_uppercase
+        label: Make Slider Subheading Uppercase
+        type: boolean
+      - name: subheading_font_size
+        label: Slider Subheading Font Size (CSS value, e.g. 15px)
+        type: string
+      - name: text_padding_top
+        label: Text Area Top Padding (e.g. 12px)
+        type: string
+      - name: text_padding_bottom
+        label: Text Area Bottom Padding (e.g. 12px)
+        type: string
+      - name: slides
+        label: Slider Slides
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{heading}'
+        fields:
+        - name: heading
+          label: Slide Heading
+          type: string
+        - name: subheading
+          label: Slide Subheading
+          type: text
+        - name: subheading_uppercase
+          label: Uppercase Subheading
+          type: boolean
+        - name: background_image
+          label: Slide Background Image
+          type: image
+        - name: background_color
+          label: Slide Background Colour
+          type: string
+        - name: text_alignment
+          label: Text Alignment (left, center, right)
+          type: string
+        - name: heading_line_height
+          label: Heading Line Height (e.g. 1.05)
+          type: string
+        - name: subheading_line_height
+          label: Subheading Line Height (e.g. 1.3)
+          type: string
+        - name: button_label
+          label: Button Text (optional)
+          type: string
+        - name: button_url
+          label: Button URL (optional)
+          type: string
+      - name: content_width
+        label: Content Width
+        type: select
+        options:
+          values:
+          - small
+          - medium
+          - large
+          labels:
+          - Small
+          - Medium
+          - Large
+      - name: content_height
+        label: Content Height
+        type: select
+        options:
+          values:
+          - compact
+          - standard
+          - tall
+          labels:
+          - Compact
+          - Standard
+          - Tall
+      - name: content_line_height
+        label: Content Line Spacing (e.g. 1.5)
+        type: string
+    - name: features
+      label: Feature / List Section
+      type: object
+      fields:
+      - name: heading
+        label: Section Heading
+        type: string
+      - name: subheading
+        label: Section Subheading
         type: text
-      - name: featured_image
-        label: Featured Image
-        type: image
-      - name: body
-        label: Article Content
-        type: rich-text
-      - name: seo
-        label: SEO Settings
-        type: object
-        fields:
-          - name: title
-            label: SEO Title
-            type: string
-          - name: description
-            label: Meta Description
-            type: text
-
-  - name: settings
-    label: Site Settings
-    type: file
-    path: content/settings.yml
-    format: yaml
-    fields:
-      - name: site_name
-        label: Site Name
+      - name: layout
+        label: Card Layout (centered or side-by-side)
         type: string
-      - name: tagline
-        label: Tagline
+      - name: background_color
+        label: Section Background Colour
         type: string
-      - name: logo
-        label: Desktop and Site Logo
+      - name: background_image
+        label: Section Background Image
         type: image
-      - name: favicon
-        label: Favicon
-        type: image
-      - name: desktop_nav
-        label: Desktop Navigation
+      - name: heading_line_height
+        label: Section Heading Line Height
+        type: string
+      - name: subheading_line_height
+        label: Section Subheading Line Height
+        type: string
+      - name: body_line_height
+        label: Card Description Line Height
+        type: string
+      - name: items
+        label: Feature Items
         type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{heading}'
         fields:
-          - name: links
-            label: Desktop Menu Links
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: "{label}"
-            fields:
-              - name: label
-                label: Link Text
+        - name: icon
+          label: Icon Image
+          type: image
+        - name: heading
+          label: Item Heading
+          type: string
+        - name: subheading
+          label: Item Subheading / Description
+          type: text
+        - name: layout
+          label: This Item Layout (centered or side-by-side)
+          type: string
+        - name: background_color
+          label: Item Background Colour
+          type: string
+        - name: background_image
+          label: Item Background Image
+          type: image
+        - name: button_label
+          label: Optional Button Text
+          type: string
+        - name: button_url
+          label: Optional Button URL
+          type: string
+      - name: content_width
+        label: Content Width
+        type: select
+        options:
+          values:
+          - small
+          - medium
+          - large
+          labels:
+          - Small
+          - Medium
+          - Large
+      - name: content_height
+        label: Content Height
+        type: select
+        options:
+          values:
+          - compact
+          - standard
+          - tall
+          labels:
+          - Compact
+          - Standard
+          - Tall
+      - name: content_line_height
+        label: Content Line Spacing (e.g. 1.5)
+        type: string
+    - name: faq
+      label: FAQ Section
+      type: object
+      fields:
+      - name: heading
+        label: FAQ Heading
+        type: string
+      - name: background_color
+        label: FAQ Background Colour
+        type: string
+      - name: background_image
+        label: FAQ Background Image
+        type: image
+      - name: text_color
+        label: FAQ Text Colour
+        type: string
+      - name: answer_line_height
+        label: Answer Line Height
+        type: string
+      - name: default_open
+        label: Open Answers by Default
+        type: boolean
+      - name: view_all_label
+        label: View All FAQs Button Text
+        type: string
+      - name: view_all_url
+        label: View All FAQs Button URL
+        type: string
+      - name: items
+        label: Questions and Answers
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{question}'
+        fields:
+        - name: question
+          label: Question
+          type: string
+        - name: answer
+          label: Answer
+          type: rich-text
+      - name: content_width
+        label: Content Width
+        type: select
+        options:
+          values:
+          - small
+          - medium
+          - large
+          labels:
+          - Small
+          - Medium
+          - Large
+      - name: content_height
+        label: Content Height
+        type: select
+        options:
+          values:
+          - compact
+          - standard
+          - tall
+          labels:
+          - Compact
+          - Standard
+          - Tall
+      - name: content_line_height
+        label: Content Line Spacing (e.g. 1.5)
+        type: string
+    - name: sections
+      label: Page Sections — add, choose type, and reorder
+      type: block
+      list:
+        collapsible:
+          collapsed: true
+          summary: '{section_type}: {heading}'
+      blockKey: section_type
+      blocks:
+        - name: plain_text
+          label: Plain Text
+          fields:
+            - name: enabled
+              label: Show Section
+              type: boolean
+            - name: heading
+              label: Section Heading
+              type: string
+            - name: subheading
+              label: Section Subheading
+              type: text
+            - name: content_width
+              label: Content Width
+              type: select
+              options:
+                values: [small, medium, large]
+                labels: [Small, Medium, Large]
+            - name: content_height
+              label: Content Height
+              type: select
+              options:
+                values: [compact, standard, tall]
+                labels: [Compact, Standard, Tall]
+            - name: line_spacing
+              label: Line Spacing (e.g. 1.5)
+              type: string
+            - name: background_color
+              label: Background Colour (hex, e.g. #FDFDFD)
+              type: string
+            - name: text_color
+              label: Text Colour (hex, e.g. #222222)
+              type: string
+            - name: body
+              label: Main Text / Content
+              type: rich-text
+        - name: image_text
+          label: Image + Text
+          fields:
+            - name: enabled
+              label: Show Section
+              type: boolean
+            - name: heading
+              label: Section Heading
+              type: string
+            - name: subheading
+              label: Section Subheading
+              type: text
+            - name: content_width
+              label: Content Width
+              type: select
+              options:
+                values: [small, medium, large]
+                labels: [Small, Medium, Large]
+            - name: content_height
+              label: Content Height
+              type: select
+              options:
+                values: [compact, standard, tall]
+                labels: [Compact, Standard, Tall]
+            - name: line_spacing
+              label: Line Spacing (e.g. 1.5)
+              type: string
+            - name: background_color
+              label: Background Colour (hex, e.g. #FDFDFD)
+              type: string
+            - name: text_color
+              label: Text Colour (hex, e.g. #222222)
+              type: string
+            - name: image
+              label: Image
+              type: image
+            - name: image_position
+              label: Image Position
+              type: select
+              options:
+                values: [left, right, top]
+                labels: [Left, Right, Above]
+            - name: body
+              label: Main Text / Content
+              type: rich-text
+            - name: button_label
+              label: Button Text
+              type: string
+            - name: button_url
+              label: Button URL
+              type: string
+        - name: image
+          label: Image Only
+          fields:
+            - name: enabled
+              label: Show Section
+              type: boolean
+            - name: heading
+              label: Section Heading
+              type: string
+            - name: subheading
+              label: Section Subheading
+              type: text
+            - name: content_width
+              label: Content Width
+              type: select
+              options:
+                values: [small, medium, large]
+                labels: [Small, Medium, Large]
+            - name: content_height
+              label: Content Height
+              type: select
+              options:
+                values: [compact, standard, tall]
+                labels: [Compact, Standard, Tall]
+            - name: line_spacing
+              label: Line Spacing (e.g. 1.5)
+              type: string
+            - name: background_color
+              label: Background Colour (hex, e.g. #FDFDFD)
+              type: string
+            - name: text_color
+              label: Text Colour (hex, e.g. #222222)
+              type: string
+            - name: image
+              label: Image
+              type: image
+            - name: image_url
+              label: Image Link URL
+              type: string
+        - name: list
+          label: List / Cards
+          fields:
+            - name: enabled
+              label: Show Section
+              type: boolean
+            - name: heading
+              label: Section Heading
+              type: string
+            - name: subheading
+              label: Section Subheading
+              type: text
+            - name: content_width
+              label: Content Width
+              type: select
+              options:
+                values: [small, medium, large]
+                labels: [Small, Medium, Large]
+            - name: content_height
+              label: Content Height
+              type: select
+              options:
+                values: [compact, standard, tall]
+                labels: [Compact, Standard, Tall]
+            - name: line_spacing
+              label: Line Spacing (e.g. 1.5)
+              type: string
+            - name: background_color
+              label: Background Colour (hex, e.g. #FDFDFD)
+              type: string
+            - name: text_color
+              label: Text Colour (hex, e.g. #222222)
+              type: string
+            - name: items
+              label: List / Slider Items
+              type: object
+              list:
+                collapsible:
+                  collapsed: true
+                  summary: '{heading}'
+              fields:
+              - name: heading
+                label: Item Heading
                 type: string
+              - name: text
+                label: Item Text
+                type: text
+              - name: image
+                label: Item Image
+                type: image
               - name: url
-                label: Link URL
+                label: Item URL
                 type: string
-              - name: visible
-                label: Show This Link
-                type: boolean
-              - name: submenu
-                label: Optional Dropdown Items
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - name: label
-                    label: Submenu Link Text
-                    type: string
-                  - name: url
-                    label: Submenu Link URL
-                    type: string
-          - name: enable_submenus
-            label: Enable Mobile Expandable Submenus
-            type: boolean
-          - name: cta_label
-            label: Mobile Button Text
-            type: string
-          - name: cta_url
-            label: Mobile Button URL
-            type: string
-      - name: mobile_nav
-        label: Mobile Navigation
-        type: object
-        fields:
-          - name: logo
-            label: Mobile Logo
-            type: image
-          - name: heading
-            label: Drawer Heading
-            type: string
-          - name: enable_submenus
-            label: Enable Expandable Submenus
-            type: boolean
-          - name: cta_label
-            label: Mobile Button Text
-            type: string
-          - name: cta_url
-            label: Mobile Button URL
-            type: string
-      - name: contact_email
-        label: Contact Email
-        type: string
-      - name: social_links
-        label: Social Links
-        type: object
-        fields:
-          - name: facebook
-            label: Facebook
-            type: string
-          - name: instagram
-            label: Instagram
-            type: string
-          - name: pinterest
-            label: Pinterest
-            type: string
-          - name: youtube
-            label: YouTube
-            type: string
-      - name: footer
-        label: Footer
-        type: object
-        fields:
-          - name: background_color
-            label: Footer Background Colour
-            type: string
-          - name: text_color
-            label: Footer Text Colour
-            type: string
-          - name: alignment
-            label: Footer Alignment (left, center, right)
-            type: string
-          - name: copyright
-            label: Copyright Text
-            type: string
-          - name: columns
-            label: Footer Columns
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: "{heading}"
-            fields:
+        - name: slider
+          label: Slider
+          fields:
+            - name: enabled
+              label: Show Section
+              type: boolean
+            - name: heading
+              label: Section Heading
+              type: string
+            - name: subheading
+              label: Section Subheading
+              type: text
+            - name: content_width
+              label: Content Width
+              type: select
+              options:
+                values: [small, medium, large]
+                labels: [Small, Medium, Large]
+            - name: content_height
+              label: Content Height
+              type: select
+              options:
+                values: [compact, standard, tall]
+                labels: [Compact, Standard, Tall]
+            - name: line_spacing
+              label: Line Spacing (e.g. 1.5)
+              type: string
+            - name: background_color
+              label: Background Colour (hex, e.g. #FDFDFD)
+              type: string
+            - name: text_color
+              label: Text Colour (hex, e.g. #222222)
+              type: string
+            - name: items
+              label: List / Slider Items
+              type: object
+              list:
+                collapsible:
+                  collapsed: true
+                  summary: '{heading}'
+              fields:
               - name: heading
-                label: Column Heading
+                label: Item Heading
                 type: string
-              - name: links
-                label: Column Links
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - name: label
-                    label: Link Text
-                    type: string
-                  - name: url
-                    label: Link URL
-                    type: string
-      - name: seo
-        label: Default SEO
+              - name: text
+                label: Item Text
+                type: text
+              - name: image
+                label: Item Image
+                type: image
+              - name: url
+                label: Item URL
+                type: string
+            - name: autoplay
+              label: Auto-play Slider
+              type: boolean
+        - name: callout
+          label: Callout / Banner
+          fields:
+            - name: enabled
+              label: Show Section
+              type: boolean
+            - name: heading
+              label: Section Heading
+              type: string
+            - name: subheading
+              label: Section Subheading
+              type: text
+            - name: content_width
+              label: Content Width
+              type: select
+              options:
+                values: [small, medium, large]
+                labels: [Small, Medium, Large]
+            - name: content_height
+              label: Content Height
+              type: select
+              options:
+                values: [compact, standard, tall]
+                labels: [Compact, Standard, Tall]
+            - name: line_spacing
+              label: Line Spacing (e.g. 1.5)
+              type: string
+            - name: background_color
+              label: Background Colour (hex, e.g. #FDFDFD)
+              type: string
+            - name: text_color
+              label: Text Colour (hex, e.g. #222222)
+              type: string
+            - name: body
+              label: Main Text / Content
+              type: rich-text
+            - name: background_image
+              label: Background Image
+              type: image
+            - name: button_label
+              label: Button Text
+              type: string
+            - name: button_url
+              label: Button URL
+              type: string
+    - name: filter_section
+      label: Embedded Filters Section
+      type: object
+      fields:
+      - name: heading
+        label: Title Before Embedded Filter Code
+        type: string
+      - name: subheading
+        label: Subtitle
+        type: text
+      - name: enabled
+        label: Show Filter Section
+        type: boolean
+      - name: content_width
+        label: Content Width
+        type: select
+        options:
+          values:
+          - small
+          - medium
+          - large
+          labels:
+          - Small
+          - Medium
+          - Large
+      - name: content_height
+        label: Content Height
+        type: select
+        options:
+          values:
+          - compact
+          - standard
+          - tall
+          labels:
+          - Compact
+          - Standard
+          - Tall
+      - name: content_line_height
+        label: Content Line Spacing
+        type: string
+      - name: background_color
+        label: Background Colour
+        type: string
+      - name: text_color
+        label: Text Colour
+        type: string
+  - name: seo
+    label: SEO Settings
+    type: object
+    fields:
+    - name: title
+      label: SEO Title
+      type: string
+    - name: description
+      label: Meta Description
+      type: text
+- name: posts
+  label: Blog Articles
+  type: collection
+  path: content/posts
+  format: yaml
+  filename: '{primary}.yml'
+  subfolders: false
+  fields:
+  - name: title
+    label: Article Title
+    type: string
+    required: true
+  - name: slug
+    label: URL Slug
+    type: string
+    required: true
+  - name: date
+    label: Publication Date
+    type: date
+  - name: excerpt
+    label: Article Excerpt
+    type: text
+  - name: featured_image
+    label: Featured Image
+    type: image
+  - name: body
+    label: Article Content
+    type: rich-text
+  - name: seo
+    label: SEO Settings
+    type: object
+    fields:
+    - name: title
+      label: SEO Title
+      type: string
+    - name: description
+      label: Meta Description
+      type: text
+- name: settings
+  label: Site Settings
+  type: file
+  path: content/settings.yml
+  format: yaml
+  fields:
+  - name: site_name
+    label: Site Name
+    type: string
+  - name: tagline
+    label: Tagline
+    type: string
+  - name: logo
+    label: Desktop and Site Logo
+    type: image
+  - name: favicon
+    label: Favicon
+    type: image
+  - name: desktop_nav
+    label: Desktop Navigation
+    type: object
+    fields:
+    - name: links
+      label: Desktop Menu Links
+      type: object
+      list:
+        collapsible:
+          collapsed: true
+          summary: '{label}'
+      fields:
+      - name: label
+        label: Link Text
+        type: string
+      - name: url
+        label: Link URL
+        type: string
+      - name: visible
+        label: Show This Link
+        type: boolean
+      - name: submenu
+        label: Optional Dropdown Items
         type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{label}'
         fields:
-          - name: title
-            label: Default SEO Title
-            type: string
-          - name: description
-            label: Default Meta Description
-            type: text
+        - name: label
+          label: Submenu Link Text
+          type: string
+        - name: url
+          label: Submenu Link URL
+          type: string
+    - name: enable_submenus
+      label: Enable Mobile Expandable Submenus
+      type: boolean
+    - name: cta_label
+      label: Mobile Button Text
+      type: string
+    - name: cta_url
+      label: Mobile Button URL
+      type: string
+    - name: menu_layout
+      label: Menu Layout
+      type: select
+      options:
+        values:
+        - horizontal_dropdown
+        - icon_buttons
+        labels:
+        - Horizontal menu with dropdowns
+        - Icon buttons
+    - name: show_currency_button
+      label: Show Currency Button
+      type: boolean
+    - name: show_language_button
+      label: Show Language Button
+      type: boolean
+  - name: mobile_nav
+    label: Mobile Navigation
+    type: object
+    fields:
+    - name: logo
+      label: Mobile Logo
+      type: image
+    - name: heading
+      label: Drawer Heading
+      type: string
+    - name: enable_submenus
+      label: Enable Expandable Submenus
+      type: boolean
+    - name: cta_label
+      label: Mobile Button Text
+      type: string
+    - name: cta_url
+      label: Mobile Button URL
+      type: string
+  - name: sticky_navbar
+    label: Sticky Top Navbar
+    type: boolean
+    description: On keeps the header visible while scrolling; Off lets it scroll away.
+  - name: desktop_nav_style
+    label: Desktop Navigation Style
+    type: select
+    options:
+      values:
+      - horizontal_dropdown
+      - icon_buttons
+      labels:
+      - Horizontal menu with dropdowns
+      - Icon buttons
+  - name: desktop_nav_icons
+    label: Desktop Utility Icon Buttons
+    type: object
+    list:
+      collapsible:
+        collapsed: true
+        summary: '{label}'
+    fields:
+    - name: label
+      label: Button Label
+      type: string
+    - name: icon
+      label: Uploaded Icon
+      type: image
+    - name: action
+      label: Action
+      type: select
+      options:
+        values:
+        - language
+        - currency
+        - link
+        labels:
+        - Change language
+        - Switch currency (filter currency selector)
+        - Open link
+    - name: url
+      label: URL (for Open link)
+      type: string
+    - name: visible
+      label: Show Button
+      type: boolean
+  - name: language_options
+    label: Available Languages
+    type: object
+    list:
+      collapsible:
+        collapsed: true
+        summary: '{label}'
+    fields:
+    - name: label
+      label: Language Name
+      type: string
+    - name: code
+      label: Language Code
+      type: string
+  - name: global_styles
+    label: Global Styles
+    type: object
+    fields:
+    - name: primary_color
+      label: Primary Colour
+      type: string
+      description: 'Enter a hex colour, e.g. #0042FF.'
+    - name: secondary_color
+      label: Secondary Colour
+      type: string
+    - name: heading_font
+      label: Heading Font
+      type: select
+      options:
+        values:
+        - Playfair Display
+        - Lexend
+        - Arial
+        - Georgia
+        labels:
+        - Playfair Display
+        - Lexend
+        - Arial
+        - Georgia
+    - name: heading_color
+      label: Heading Colour
+      type: string
+    - name: heading_size
+      label: Heading Size (CSS value)
+      type: string
+    - name: heading_letter_spacing
+      label: Heading Letter Spacing (CSS value)
+      type: string
+    - name: subheading_font
+      label: Subheading Font
+      type: select
+      options:
+        values:
+        - Lexend
+        - Playfair Display
+        - Arial
+        - Georgia
+        labels:
+        - Lexend
+        - Playfair Display
+        - Arial
+        - Georgia
+    - name: subheading_color
+      label: Subheading Colour
+      type: string
+    - name: subheading_size
+      label: Subheading Size (CSS value)
+      type: string
+    - name: subheading_letter_spacing
+      label: Subheading Letter Spacing (CSS value)
+      type: string
+    - name: body_font
+      label: Body Font
+      type: select
+      options:
+        values:
+        - Lexend
+        - Arial
+        - Georgia
+        - Playfair Display
+        labels:
+        - Lexend
+        - Arial
+        - Georgia
+        - Playfair Display
+    - name: body_color
+      label: Body Text Colour
+      type: string
+    - name: body_size
+      label: Body Text Size (CSS value)
+      type: string
+    - name: body_letter_spacing
+      label: Body Letter Spacing (CSS value)
+      type: string
+  - name: cookie_popup
+    label: Homepage Cookie Popup
+    type: object
+    fields:
+    - name: enabled
+      label: Show Cookie Popup
+      type: boolean
+    - name: title
+      label: Popup Title
+      type: string
+    - name: message
+      label: Popup Message
+      type: text
+    - name: accept_label
+      label: Accept Button Text
+      type: string
+    - name: reject_label
+      label: Reject Button Text
+      type: string
+    - name: settings_label
+      label: Settings Button Text
+      type: string
+    - name: position
+      label: Popup Position
+      type: select
+      options:
+        values:
+        - bottom-left
+        - bottom-center
+        - bottom-right
+        labels:
+        - Bottom left
+        - Bottom centre
+        - Bottom right
+    - name: background_color
+      label: Popup Background Colour
+      type: string
+    - name: text_color
+      label: Popup Text Colour
+      type: string
+    - name: button_color
+      label: Accept Button Colour
+      type: string
+    - name: privacy_url
+      label: Privacy Policy URL
+      type: string
+    - name: remember_choice
+      label: Remember Visitor Choice
+      type: boolean
+  - name: contact_email
+    label: Contact Email
+    type: string
+  - name: social_links
+    label: Social Links
+    type: object
+    fields:
+    - name: facebook
+      label: Facebook
+      type: string
+    - name: instagram
+      label: Instagram
+      type: string
+    - name: pinterest
+      label: Pinterest
+      type: string
+    - name: youtube
+      label: YouTube
+      type: string
+  - name: footer
+    label: Footer
+    type: object
+    fields:
+    - name: background_color
+      label: Footer Background Colour
+      type: string
+    - name: text_color
+      label: Footer Text Colour
+      type: string
+    - name: alignment
+      label: Footer Alignment (left, center, right)
+      type: string
+    - name: copyright
+      label: Copyright Text
+      type: string
+    - name: columns
+      label: Footer Columns
+      type: object
+      list:
+        collapsible:
+          collapsed: true
+          summary: '{heading}'
+      fields:
+      - name: heading
+        label: Column Heading
+        type: string
+      - name: links
+        label: Column Links
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{label}'
+        fields:
+        - name: label
+          label: Link Text
+          type: string
+        - name: url
+          label: Link URL
+          type: string
+  - name: seo
+    label: Default SEO
+    type: object
+    fields:
+    - name: title
+      label: Default SEO Title
+      type: string
+    - name: description
+      label: Default Meta Description
+      type: text
