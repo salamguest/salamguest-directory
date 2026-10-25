@@ -25,12 +25,16 @@ homepage_design:
     content_padding_top: "20"
     content_padding_bottom: "20"
     button_label: EXPLORE FILTERS
+    content_width: medium
+    content_height: tall
   slider:
     enabled: true
     autoplay: true
     subheading_uppercase: false
     subheading_font_size: 24px
     text_padding_top: 20px
+    slides:
+      - subheading_uppercase: false
   features:
     layout: centred
   faq:
@@ -60,6 +64,8 @@ homepage_design:
       - question: "How do I suggest a new listing? "
         answer: If you know a halal-friendly hotel or stay, you can suggest it through
           our contact page. Our team will review it for inclusion.
+  filter_section:
+    enabled: false
 seo:
   title: SalamGuest | Halal Filters For Muslim Friendly Travel & Experiences
   description: SalamGuest helps Muslim guests and travellers discover stays and
