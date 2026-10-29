@@ -2779,6 +2779,40 @@ repositionBottomBar,
 );
 
 
+/* REPORT FILTER PAGE HEIGHT TO PARENT IFRAME */
+
+function reportFilterPageHeight() {
+  const height = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight
+  );
+
+  window.parent.postMessage(
+    {
+      type: "SET_IFRAME_HEIGHT",
+      height: height
+    },
+    "*"
+  );
+}
+
+window.addEventListener("load", reportFilterPageHeight);
+window.addEventListener("resize", reportFilterPageHeight);
+
+new MutationObserver(reportFilterPageHeight).observe(
+  document.body,
+  {
+    childList: true,
+    subtree: true,
+    attributes: true
+  }
+);
+
+setTimeout(reportFilterPageHeight, 500);
+setTimeout(reportFilterPageHeight, 1500);
+
+  
+
 </script>
 
 
