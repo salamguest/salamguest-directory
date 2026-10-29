@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+html, body{
+margin:0;
+padding:0;
+}
+
+iframe{
+width:100%;
+border:none;
+display:block;
+height:8900px; /* fallback only */
+}
+
+@media (min-width: 768px) {
+  iframe {
+    height: 4000px;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<iframe
+id="salamguestFrame"
+src="https://salamguest.github.io/salamguest-directory/filters.html?mode=basic" height="100%" scrolling="no">
+</iframe>
+
+<script>
+window.addEventListener("message", function(event) {
+  if (event.data.type === "SET_IFRAME_HEIGHT") {
+    document.getElementById("salamguestFrame").style.height =
+      event.data.height + "px";
+  }
+});
+</script>
+
+</body>
+</html>
