@@ -177,7 +177,7 @@ fill:none;
 
 .topButtons{
 margin-top:2px;
-display:flex;i
+display:flex;
 gap:10px;
 flex-wrap:wrap;
 align-items:center;
@@ -2135,7 +2135,7 @@ async function shareListing(button) {
     await navigator.clipboard.writeText(shareData.url);
     alert("Link copied. You can now share it!");
   } catch (error) {
-    window.prompt("Copy this property link:", shareData.url);
+    window.prompt("Copy this link:", shareData.url);
   }
 }
 
@@ -2392,6 +2392,7 @@ BOOK ⬈
   </svg>
   SHARE
 </button>
+
 
 </div>
 </div>
