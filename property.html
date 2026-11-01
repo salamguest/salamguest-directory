@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Property | SalamGuest</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@700&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#0042FD;--navy:#001A66;--pale:#eaf0ff;--ink:#222;}
+*{box-sizing:border-box}body{margin:0;font-family:Lexend,sans-serif;color:var(--ink);background:#fff;line-height:1.55}
+header{background:var(--blue);color:#fff;padding:14px 18px;position:sticky;top:0;z-index:5}
+.headerInner{max-width:1050px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:"Libre Bodoni",serif;font-size:23px;letter-spacing:1px;color:#fff;text-decoration:none}
+.back{color:#fff;text-decoration:none;font-size:13px;border:1px solid #ffffff99;border-radius:999px;padding:8px 12px;white-space:nowrap}
+main{max-width:950px;margin:0 auto;padding:22px 16px 50px}
+#status{text-align:center;padding:55px 12px;color:var(--navy)}
+h1{font-family:"Libre Bodoni",serif;color:var(--navy);font-size:clamp(28px,5vw,42px);line-height:1.15;margin:0 0 8px}
+.location{color:#53627e;margin-bottom:14px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 20px}.chip{background:var(--pale);color:var(--blue);border-radius:999px;padding:7px 11px;font-size:12px}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:18px 0 24px}.gallery img{width:100%;height:220px;object-fit:cover;border-radius:12px;background:#f1f4fa}.gallery img:first-child{grid-column:span 2;height:clamp(220px,48vw,430px)}
+.infoGrid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(180px,1fr);gap:24px}.panel{border:1px solid #e0e7f6;border-radius:14px;padding:18px}.eyebrow{font-size:11px;letter-spacing:1.4px;color:var(--navy);font-weight:600}.price{font-family:"Libre Bodoni",serif;font-size:29px;color:var(--navy);margin-top:4px}.currencyLink{display:inline-block;font-size:12px;color:#111;border-bottom:2px dotted var(--blue);padding-bottom:3px;text-decoration:none}.rating{margin-top:18px;color:var(--blue)}.book{display:block;text-align:center;text-decoration:none;background:var(--blue);color:white;border-radius:999px;padding:13px 16px;margin-top:18px;font-weight:600}.share{margin-top:10px;width:100%;padding:11px;border:1px solid var(--blue);border-radius:999px;background:#fff;color:var(--blue);font:inherit;cursor:pointer}.small{font-size:11px;color:#697CA5;text-align:center}.description{white-space:pre-line}.notFound{color:#9b1c1c}
+@media(max-width:650px){main{padding:18px 13px 35px}.gallery{gap:7px}.gallery img{height:145px}.infoGrid{grid-template-columns:1fr;gap:14px}.panel{padding:15px}.brand{font-size:20px}}
+</style>
+</head>
+<body>
+<header><div class="headerInner"><a class="brand" href="index.html">⌂ SALAM, GUEST</a><a class="back" href="index.html">← Back to directory</a></div></header>
+<main><div id="status">Loading property details…</div><article id="property" hidden></article></main>
+<script>
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYw1Ah01StvD_FKZvGw7M_pxB8_mxLhYDwE9rT7PEmK5n7VS7mxIi0FQZ1BezpycxRhOaXzrpwyRHU/pub?gid=0&single=true&output=csv";
+function parseCSV(text){const rows=[];let row=[],current="",inQuotes=false;for(let i=0;i<text.length;i++){const ch=text[i],next=text[i+1];if(ch==='"'){if(inQuotes&&next==='"'){current+='"';i++;}else inQuotes=!inQuotes;}else if(ch===','&&!inQuotes){row.push(current);current="";}else if((ch==='\n'||ch==='\r')&&!inQuotes){if(current||row.length){row.push(current);rows.push(row);row=[];current="";}}else current+=ch;}if(current||row.length){row.push(current);rows.push(row);}const headers=(rows.shift()||[]).map(h=>h.trim());return rows.map(cols=>{const o={};headers.forEach((h,i)=>o[h]=(cols[i]||'').trim());return o;});}
+function slug(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function formatPrice(v){const n=parseFloat(String(v||'').replace(/[^0-9.-]/g,''));return Number.isFinite(n)&&n>0?n.toLocaleString(undefined,{maximumFractionDigits:2}):'Check rates';}
+function render(item){const el=document.getElementById('property');const status=document.getElementById('status');const tags=(item.card_tags||'').split(',').map(x=>x.trim()).filter(Boolean);const folder=(item.media||'').trim();let imgs='';if(folder){for(let i=1;i<=10;i++)imgs+=`<img loading="lazy" src="https://salamguest.github.io/salamguest-directory/images/${encodeURIComponent(folder)}/${i}.jpg" alt="${esc(item.name)} photo ${i}" onerror="this.remove()">`;}else{imgs='<img src="https://salamguest.github.io/salamguest-directory/images/placeholder.jpg" alt="Property photo">';}
+const desc=esc(item.description||'More property information will be added soon.');const place=[item.city,item.country].filter(Boolean).map(esc).join(', ');const link=String(item.link||'').trim();el.innerHTML=`<h1>${esc(item.name)}</h1><div class="location">⌖ ${place}</div>${tags.length?`<div class="chips">${tags.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div>`:''}<div class="gallery">${imgs}</div><div class="infoGrid"><section class="panel"><div class="eyebrow">ABOUT THIS PROPERTY</div><p class="description">${desc}</p>${item.image_label&&item.image_label!=='-'?`<p><strong>${esc(item.image_label)}</strong></p>`:''}</section><aside class="panel"><div class="eyebrow">ESTIMATED STARTING FROM</div><div class="price">${formatPrice(item.price)}</div><a class="currencyLink" href="#" onclick="event.preventDefault();alert('Displayed currency is based on the directory settings. Check the booking provider for the final rate.');">Price per night · ${esc(item.currency||'check booking site')}</a><div class="rating">★ ${esc(item.rating||'Not listed')} / 5<br><span class="small">Average guest rating based on public reviews</span></div>${link?`<a class="book" href="${esc(link)}" target="_blank" rel="noopener">CHECK AVAILABILITY ↗</a>`:''}<button class="share" onclick="shareProperty()">↗ Share this property</button><p class="small">Prices and availability may vary. Check details with the booking provider.</p></aside></div>`;status.hidden=true;el.hidden=false;document.title=item.name+' | SalamGuest';}
+async function shareProperty(){const u=location.href;const d={title:document.title,text:'Discover this property on SalamGuest',url:u};if(navigator.share){try{await navigator.share(d);return;}catch(e){if(e.name==='AbortError')return;}}try{await navigator.clipboard.writeText(u);alert('Property link copied.');}catch(e){prompt('Copy this property link:',u);}}
+(async()=>{try{const wanted=new URLSearchParams(location.search).get('listing');if(!wanted)throw new Error('No property was selected. Please open this page from a listing title.');const res=await fetch(SHEET_URL);if(!res.ok)throw new Error('The property list could not be loaded.');const data=parseCSV(await res.text());const item=data.find(x=>slug(x.name)===wanted);if(!item)throw new Error('This property could not be found. It may have been renamed in the listing sheet.');render(item);}catch(e){const s=document.getElementById('status');s.classList.add('notFound');s.textContent=e.message+' Return to the SalamGuest directory and try again.';}})();
+</script>
+</body></html>
