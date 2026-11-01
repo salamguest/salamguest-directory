@@ -456,19 +456,20 @@ transition:0.2s;
 
 .shareBtn {
   width: 100%;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid #dbe4ff;
+  background: #eef3ff;
+  font-family: Lexend;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  color: #444;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   margin-top: 8px;
-  padding: 11px;
-  border: 1px solid #0042FF;
-  border-radius: 8px;
-  background: #fff;
-  color: #0042FF;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
 }
 
 .book:hover{
@@ -2102,6 +2103,8 @@ document.getElementById("redirectOverlay")
 
 } 
 
+/* SOCIAL SHARE BUTTON */
+
 async function shareListing(button) {
   const name = button.dataset.shareName;
 
@@ -2113,7 +2116,7 @@ async function shareListing(button) {
 
   const shareData = {
     title: name + " | SalamGuest",
-    text: "Discover this Muslim-friendly stay on SalamGuest:",
+    text: "Discover this on SalamGuest:",
     url: shareUrl.toString()
   };
 
@@ -2130,7 +2133,7 @@ async function shareListing(button) {
   // Fallback: copy the link
   try {
     await navigator.clipboard.writeText(shareData.url);
-    alert("Property link copied. You can now share it!");
+    alert("Link copied. You can now share it!");
   } catch (error) {
     window.prompt("Copy this property link:", shareData.url);
   }
