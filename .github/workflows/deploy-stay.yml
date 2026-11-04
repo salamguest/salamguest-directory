@@ -32,10 +32,16 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare Stay website
+        run: |
+          mkdir -p public
+          cp -r stay/. public/
+          cp -r images public/images
+
       - name: Upload Stay website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './stay'
+          path: './public'
 
       - name: Deploy
         id: deployment
